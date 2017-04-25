@@ -30,7 +30,7 @@ const lengthUnits = ({
   values,
   keySuffix = '',
   valueSuffix = '',
-  transform = valueSuffix === 'rem' ? [remify] : [identity],
+  transform = [identity],
   negative = false
 }) => {
   return values.reduce((obj, value) => {
