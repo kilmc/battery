@@ -1,0 +1,19 @@
+{
+  "name": "Battery",
+  "version": "0.0.1",
+  "main": "index.js",
+  "repository": "git@github.com:kilmc/battery",
+  "author": "Kilian McMahon, Robert Wiegmann",
+  "license": "MIT",
+  "description": "Battery is a system to generate infinite, composable, atomic styles that eliminates code bloat and automatically documents itself.",
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-jest": "^21.2.0",
+    "babel-preset-env": "^1.6.1",
+    "jest": "^21.2.1",
+    "regenerator-runtime": "^0.11.0"
+  },
+  "scripts": {
+    "test": "jest --watch"
+  }
+}
