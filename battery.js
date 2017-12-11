@@ -117,7 +117,7 @@ const addViewportWidth = addLengthUnit('vw');
 // to something other than 16px or 100%
 const pxToRem = (x, baseFontSize = baseFontSizeConfig) => x / baseFontSize;
 
-const hardPixel = (x, remify = useRems) => remify 
+const hardPixel = (x, remify = useRems) => remify
   ? addRem(pxToRem(x)) : addPixel(x);
 
 const scalar = (x) => addRem((x*6)/10);
@@ -150,17 +150,6 @@ const findDuplicates = (arr) => {
 
 // This function is used to generate a list of all
 // the duplicate base propnames in the propsConfig
-//
-// Reasoning: We use certain prefixes bg prefix to target
-// multiple properties. The bg prefix is a good example of this.
-// The values you reference after bg gives you context to which
-// property the bg prefix is mapped to. In the case of bg25p that maps to
-// background-position, but bg-none would map to background-image and
-// bg-cover would map to the background-size keyword value of cover.
-//
-// I'm trying to think through potential issues and so was just
-// experimenting with potential ways of determining what names
-// and naming conventions are tied to what properties.
 
 const getDuplicatePropNames = (obj) => {
   const allProps = Object.keys(obj)
@@ -221,3 +210,110 @@ const reverseLookup = (cx) => {
     value: scalar(value)
   })
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Fuckery
+
+// const inputClasses = [
+//   "flex",
+//   "border",
+//   "w100p",
+//   "h11",
+//   "px3-lg",
+//   "mb2",
+//   "items-center",
+//   "rounded",
+//   "border-grey-500",
+//   "hover-shadow",
+//   "focus-green-700-md",
+//   "pointer",
+//   "absolute",
+//   "t0",
+//   "r-5",
+//   "pointer",
+//   "hide",
+//   "block-sm",
+//   "py0",
+//   "bg-transparent",
+//   "absolute",
+//   "w100p",
+//   "h100p",
+//   "bg-grey-100_95",
+//   "z1"
+// ];
+
+
+// const uniqueClasses = [...new Set(inputClasses)];
+
+// const classSorter = filterGroups => arr => {
+//   const filterGroupKeys = Object.keys(filterGroups);
+
+//   return filterGroupKeys.reduce((xs, x) => {
+//     xs[x] = arr.filter(y => y.match(filterGroups[x]));
+//     return xs;
+//   }, {});
+// };
+
+// const pseudoRegexes = {
+//   hover: new RegExp("hover"),
+//   focus: new RegExp("focus")
+// };
+
+// const filterColors = classSorter({
+//   color: regexFromKeys(x => `${x}`)(systemColors)
+// });
+
+// const filterIntegers = classSorter({
+//   integers: regexFromKeys(x => `^${x}`)(propsConfig.integers)
+// });
+
+// const filterLengthUnits = classSorter({
+//   lengthUnits: regexFromKeys(x => `^${x}`)(propsConfig.lengthUnits)
+// });
+
+// const filterResponsiveClasses = classSorter({
+//   responsive: regexFromKeys(x => `${x}$`)(systemBreakpoints)
+// });
+// const filterPseudoClasses = classSorter(pseudoRegexes);
+
+// const bigFilters = [
+//   filterResponsiveClasses,
+//   filterPseudoClasses,
+//   filterColors,
+//   filterIntegers
+// ];
+
+// const sortAllClasses = arr => {
+//   let filteringArr = arr;
+//   return bigFilters.reduce((xs, x) => {
+//     const filteredClasses = x(filteringArr);
+//     const allMatchedClasses = Object.keys(filteredClasses)
+//       .map(y => filteredClasses[y])
+//       .reduce((zs, z) => zs.concat(z), []);
+//     allMatchedClasses.map(remove => {
+//       const index = filteringArr.indexOf(remove);
+//       if (index !== -1) {
+//         filteringArr.splice(index, 1);
+//       }
+//     });
+//     return Object.assign({}, xs, filteredClasses);
+//   }, {});
+// };
