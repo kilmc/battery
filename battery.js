@@ -43,8 +43,6 @@ const propsConfig = {
   }
 }
 
-['Kilian','Robert','Sarah','Robert']
-
 // Keyword Objects
 // ------------------------------------------------------------------
 // These objects are for CSS declarations whose values are keyword.
@@ -230,38 +228,6 @@ const reverseLookup = (cx) => {
 
 
 
-// Fuckery
-
-// const inputClasses = [
-//   "flex",
-//   "border",
-//   "w100p",
-//   "h11",
-//   "px3-lg",
-//   "mb2",
-//   "items-center",
-//   "rounded",
-//   "border-grey-500",
-//   "hover-shadow",
-//   "focus-green-700-md",
-//   "pointer",
-//   "absolute",
-//   "t0",
-//   "r-5",
-//   "pointer",
-//   "hide",
-//   "block-sm",
-//   "py0",
-//   "bg-transparent",
-//   "absolute",
-//   "w100p",
-//   "h100p",
-//   "bg-grey-100_95",
-//   "z1"
-// ];
-
-
-// const uniqueClasses = [...new Set(inputClasses)];
 
 // const classSorter = filterGroups => arr => {
 //   const filterGroupKeys = Object.keys(filterGroups);
@@ -298,22 +264,31 @@ const reverseLookup = (cx) => {
 //   filterResponsiveClasses,
 //   filterPseudoClasses,
 //   filterColors,
-//   filterIntegers
+//   filterIntegers,
+//   filterLengthUnits
 // ];
 
 // const sortAllClasses = arr => {
 //   let filteringArr = arr;
-//   return bigFilters.reduce((xs, x) => {
+//   let leftovers = {};
+
+//   return bigFilters.reduce((xs, x, i) => {
 //     const filteredClasses = x(filteringArr);
 //     const allMatchedClasses = Object.keys(filteredClasses)
 //       .map(y => filteredClasses[y])
 //       .reduce((zs, z) => zs.concat(z), []);
+
 //     allMatchedClasses.map(remove => {
 //       const index = filteringArr.indexOf(remove);
 //       if (index !== -1) {
 //         filteringArr.splice(index, 1);
 //       }
 //     });
-//     return Object.assign({}, xs, filteredClasses);
+
+//     if (i <= bigFilters.length) {
+//       leftovers = { leftovers: filteringArr };
+//     }
+//     return Object.assign({}, xs, filteredClasses, leftovers);
 //   }, {});
 // };
+
