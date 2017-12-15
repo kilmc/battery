@@ -43,6 +43,30 @@ const propsConfig = {
   }
 }
 
+const lengthUnitProps = [
+  { propName: 'bg', prop: 'background-size' },
+  { propName: 'border', prop: 'border-width' },
+  { propName: 'm', prop: 'margin' },
+  { propName: 'mt', prop: 'margin-top' },
+  { propName: 'mr', prop: 'margin-right' },
+  { propName: 'mb', prop: 'margin-bottom' },
+  { propName: 'ml', prop: 'margin-left' },
+  { propName: 'mx', prop: 'margin-left margin-right' },
+  { propName: 'my', prop: 'margin-top margin-bottom' },
+  { propName: 'p', prop: 'padding' },
+  { propName: 'pt', prop: 'padding-top' },
+  { propName: 'pr', prop: 'padding-right' },
+  { propName: 'pb', prop: 'padding-bottom' },
+  { propName: 'pl', prop: 'padding-left' },
+  { propName: 'h', prop: 'height' },
+  { propName: 'min-h', prop: 'min-height' },
+  { propName: 'max-h', prop: 'max-height' },
+  { propName: 'w', prop: 'width' },
+  { propName: 'min-w', prop: 'min-width' },
+  { propName: 'max-w', prop: 'max-width' }
+];
+
+
 // Keyword Objects
 // ------------------------------------------------------------------
 // These objects are for CSS declarations whose values are keyword.

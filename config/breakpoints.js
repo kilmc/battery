@@ -3,5 +3,3 @@ const systemBreakpoints = {
   md: '795px',
   lg: '1025px'
 };
-
-export default systemBreakpoints;
