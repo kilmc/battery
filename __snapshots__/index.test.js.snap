@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`generateColorsRegex 1`] = `
+Object {
+  "colorsRegex": "(green-800|green-700|green-500)",
+}
+`;
+
+exports[`generateLengthUnitRegex 1`] = `
+Object {
+  "lengthUnitRegex": "(bg)(\\\\d+|-\\\\d+)?)",
+}
+`;
+
+exports[`generateManualClassNameRegex 1`] = `
+Object {
+  "manualClassNameRegex": "(bg-cover|bg-contain|bg-full-height|bg-full-width)",
+}
+`;
+
+exports[`generateRegexes 1`] = `
+Object {
+  "colorsRegex": "(green-800|green-700|green-500)",
+  "lengthUnitRegex": "(bg)(\\\\d+|-\\\\d+)?)",
+  "manualClassNameRegex": "(bg-cover|bg-contain|bg-full-height|bg-full-width)",
+}
+`;

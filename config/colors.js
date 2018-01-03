@@ -1,4 +1,4 @@
-export const valuesConfig = {
+const colorsConfig = {
   'green-800': '#098530',
   'green-700': '#05AF3C',
   'green-500': '#25CB68',
@@ -15,3 +15,4 @@ export const valuesConfig = {
   'red-400': '#FF5151',
 };
 
+export default colorsConfig;

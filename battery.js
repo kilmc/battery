@@ -2,71 +2,6 @@
 // =====================  U S E R  C O N F I G  =====================
 // ------------------------------------------------------------------
 
-// CSS Properties
-// ------------------------------------------------------------------
-
-const propsConfig = {
-  color: {
-    'text': 'color',
-    'bg': 'background-color',
-    'fill': 'fill',
-    'stroke': 'stroke',
-    'border': 'border-color'
-  },
-  lengthUnits: {
-    'bg': 'background-size',
-    'border': 'border-width',
-    'm': 'margin',
-    'mt': 'margin-top',
-    'mr': 'margin-right',
-    'mb': 'margin-bottom',
-    'ml': 'margin-left',
-    'mx': 'margin-left margin-right',
-    'my': 'margin-top margin-bottom',
-    'p': 'padding',
-    'pt': 'padding-top',
-    'pr': 'padding-right',
-    'pb': 'padding-bottom',
-    'pl': 'padding-left',
-    'h': 'height',
-    'min-h': 'min-height',
-    'max-h': 'max-height',
-    'w': 'width',
-    'min-w': 'min-width',
-    'max-w': 'max-width'
-  },
-  integers: {
-    'grow': 'flex-grow',
-    'order': 'order',
-    'shrink': 'flex-shrink',
-    'z': 'z-index'
-  }
-}
-
-const lengthUnitProps = [
-  { propName: 'bg', prop: 'background-size' },
-  { propName: 'border', prop: 'border-width' },
-  { propName: 'm', prop: 'margin' },
-  { propName: 'mt', prop: 'margin-top' },
-  { propName: 'mr', prop: 'margin-right' },
-  { propName: 'mb', prop: 'margin-bottom' },
-  { propName: 'ml', prop: 'margin-left' },
-  { propName: 'mx', prop: 'margin-left margin-right' },
-  { propName: 'my', prop: 'margin-top margin-bottom' },
-  { propName: 'p', prop: 'padding' },
-  { propName: 'pt', prop: 'padding-top' },
-  { propName: 'pr', prop: 'padding-right' },
-  { propName: 'pb', prop: 'padding-bottom' },
-  { propName: 'pl', prop: 'padding-left' },
-  { propName: 'h', prop: 'height' },
-  { propName: 'min-h', prop: 'min-height' },
-  { propName: 'max-h', prop: 'max-height' },
-  { propName: 'w', prop: 'width' },
-  { propName: 'min-w', prop: 'min-width' },
-  { propName: 'max-w', prop: 'max-width' }
-];
-
-
 // Keyword Objects
 // ------------------------------------------------------------------
 // These objects are for CSS declarations whose values are keyword.
@@ -74,45 +9,8 @@ const lengthUnitProps = [
 // generated, we need an alternate interface to define and configure
 // keyword values
 
-const keywordConfig = [
-  // Display
-  {
-    prop: 'display',
-    propName: '',
-    values: {
-      'block': 'block',
-      'inline': 'inline',
-      'inline-block': 'inline-block',
-      'flex': 'flex',
-      'inline-flex': 'inline-flex'
-    }
-  },
-  // Position
-  {
-    prop: 'position',
-    propName: '',
-    values: {
-      'absolute': 'absolute',
-      'relative': 'relative',
-      'fixed': 'fixed'
-    }
-  }
-]
-
-// Length Units
-// ------------------------------------------------------------------
-
-const unitsConfig = {
-  '': 'baseline',
-  'p': 'percent',
-  'px': 'hardPixel',
-  'vh': 'viewportHeight',
-  'vw': 'viewportWidth'
-};
-
 const baseFontSizeConfig = 10
 const useRems = true;
-
 
 // ------------------------------------------------------------------
 // =====================  F O R M A T T E R S  ======================
@@ -142,7 +40,7 @@ const pxToRem = (x, baseFontSize = baseFontSizeConfig) => x / baseFontSize;
 const hardPixel = (x, remify = useRems) => remify
   ? addRem(pxToRem(x)) : addPixel(x);
 
-const scalar = (x) => addRem((x*6)/10);
+const scalar = (x) => addRem((x*6)/baseFontSizeConfig);
 
 // ------------------------------------------------------------------
 // ==============  N A M I N G  C O N V E N T I O N S  ==============
@@ -210,15 +108,35 @@ const generateAtom = ({
 	return ( { [className]: eachProp } )
 }
 
-// Converts a keywordObject to an atomObjects
-const keywordToAtom = (obj) => {
-  const values = Object.keys(obj.values);
+export const backgroundSize = {
+  prop: 'background-size',
+  propName: 'bg',
+  manual: {
+    separator: '-',
+    values: {
+      'cover': 'cover',
+      'contain': 'contain',
+      'full-height': 'auto 100%',
+      'full-width': '100% auto'
+    }
+  }
+}
 
-  return values.map(value => generateAtom({
-    className: `${obj.propName}${obj.values[value]}`,
-    cssProps: obj.prop,
-    value: value
-  }));
+// Converts a propObject to an atomObjects
+export const manualValuesToAtoms = ({
+  prop,
+  propName,
+  manual
+}) => {
+  const values = Object.keys(manual.values);
+
+  return values.map(value =>
+    generateAtom({
+      className: `${propName}${manual.separator}${manual[value]}`,
+      cssProps: prop,
+      value: value
+    })
+  );
 };
 
 // Generates an atomObject from a class
@@ -231,88 +149,69 @@ const reverseLookup = (cx) => {
     cssProps: propsConfig.lengthUnits[prop],
     value: scalar(value)
   })
-}
+};
+
+const classSorter = (filterGroups) => (arr) => {
+  const filterGroupKeys = Object.keys(filterGroups);
+
+  return filterGroupKeys.reduce((xs, x) => {
+    xs[x] = arr.filter(y => y.match(filterGroups[x]));
+    return xs;
+  }, {});
+};
+
+const pseudoRegexes = {
+  hover: new RegExp("hover"),
+  focus: new RegExp("focus")
+};
+
+const filterColors = classSorter({
+  color: regexFromKeys(x => `${x}`)(systemColors)
+});
+
+const filterIntegers = classSorter({
+  integers: regexFromKeys(x => `^${x}`)(propsConfig.integers)
+});
 
 
+const filterLengthUnits = classSorter({
+  lengthUnits: regexFromKeys(x => `^${x}`)(lengthUnitsConfig)
+});
 
+const filterResponsiveClasses = classSorter({
+  responsive: regexFromKeys(x => `${x}$`)(systemBreakpoints)
+});
+const filterPseudoClasses = classSorter(pseudoRegexes);
 
+const bigFilters = [
+  filterResponsiveClasses,
+  filterPseudoClasses,
+  filterColors,
+  filterIntegers,
+  filterLengthUnits
+];
 
+const sortAllClasses = arr => {
+  let filteringArr = arr;
+  let leftovers = {};
 
+  return bigFilters.reduce((xs, x, i) => {
+    const filteredClasses = x(filteringArr);
+    const allMatchedClasses = Object.keys(filteredClasses)
+      .map(y => filteredClasses[y])
+      .reduce((zs, z) => zs.concat(z), []);
 
+    allMatchedClasses.map(remove => {
+      const index = filteringArr.indexOf(remove);
+      if (index !== -1) {
+        filteringArr.splice(index, 1);
+      }
+    });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-// const classSorter = filterGroups => arr => {
-//   const filterGroupKeys = Object.keys(filterGroups);
-
-//   return filterGroupKeys.reduce((xs, x) => {
-//     xs[x] = arr.filter(y => y.match(filterGroups[x]));
-//     return xs;
-//   }, {});
-// };
-
-// const pseudoRegexes = {
-//   hover: new RegExp("hover"),
-//   focus: new RegExp("focus")
-// };
-
-// const filterColors = classSorter({
-//   color: regexFromKeys(x => `${x}`)(systemColors)
-// });
-
-// const filterIntegers = classSorter({
-//   integers: regexFromKeys(x => `^${x}`)(propsConfig.integers)
-// });
-
-// const filterLengthUnits = classSorter({
-//   lengthUnits: regexFromKeys(x => `^${x}`)(propsConfig.lengthUnits)
-// });
-
-// const filterResponsiveClasses = classSorter({
-//   responsive: regexFromKeys(x => `${x}$`)(systemBreakpoints)
-// });
-// const filterPseudoClasses = classSorter(pseudoRegexes);
-
-// const bigFilters = [
-//   filterResponsiveClasses,
-//   filterPseudoClasses,
-//   filterColors,
-//   filterIntegers,
-//   filterLengthUnits
-// ];
-
-// const sortAllClasses = arr => {
-//   let filteringArr = arr;
-//   let leftovers = {};
-
-//   return bigFilters.reduce((xs, x, i) => {
-//     const filteredClasses = x(filteringArr);
-//     const allMatchedClasses = Object.keys(filteredClasses)
-//       .map(y => filteredClasses[y])
-//       .reduce((zs, z) => zs.concat(z), []);
-
-//     allMatchedClasses.map(remove => {
-//       const index = filteringArr.indexOf(remove);
-//       if (index !== -1) {
-//         filteringArr.splice(index, 1);
-//       }
-//     });
-
-//     if (i <= bigFilters.length) {
-//       leftovers = { leftovers: filteringArr };
-//     }
-//     return Object.assign({}, xs, filteredClasses, leftovers);
-//   }, {});
-// };
+    if (i <= bigFilters.length) {
+      leftovers = { leftovers: filteringArr };
+    }
+    return Object.assign({}, xs, filteredClasses, leftovers);
+  }, {});
+};
 

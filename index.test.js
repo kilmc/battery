@@ -1,15 +1,61 @@
-import { generate } from './index';
+/* eslint-env jest, node */
+
+import {
+  generate,
+  generateColorsRegex,
+  generateLengthUnitRegex,
+  generateManualClassNameRegex,
+  generateRegexes,
+} from './index';
+
+import config from './config';
+
+const testConfig = {
+  colors: {
+    'green-800': '#098530',
+    'green-700': '#05AF3C',
+    'green-500': '#25CB68'
+  },
+  props: {
+    backgroundSize: {
+      prop: 'background-size',
+      propName: 'bg',
+      enableLengthUnits: true,
+      manual: {
+        separator: '-',
+        values: {
+          'cover': 'cover',
+          'contain': 'contain',
+          'full-height': 'auto 100%',
+          'full-width': '100% auto'
+        }
+      }
+    }
+  }
+};
 
 
-const inputClasses = [
-  "flex", "border", "w100p", "h11", "px3-lg",
-  "mb2", "items-center", "rounded", "border-grey-500", "hover-shadow",
-  "focus-green-700-md", "pointer", "t0", "r-5", "hide",
-  "block-sm", "py0", "bg-transparent", "absolute", "h100p",
-  "bg-grey-100_95", "z1"
-];
+const propsConfig = {
+  'basis': 'flex-basis',
+  'mt': 'margin-top'
+};
 
-test('generate', () => {
-  expect(generate('mt basis')).toBe('{"mt":{"margin-top":""},"basis":{"flex-basis":""}}');
+describe('generate', () => {
+  expect(generate('mt basis', propsConfig)).toBe('{"mt":{"margin-top":""},"basis":{"flex-basis":""}}');
 });
 
+test('generateManualClassNameRegex', () => {
+  expect(generateManualClassNameRegex(testConfig.props)).toMatchSnapshot();
+});
+
+test('generateLengthUnitRegex', () => {
+  expect(generateLengthUnitRegex(testConfig.props)).toMatchSnapshot();
+});
+
+test('generateColorsRegex', () => {
+  expect(generateColorsRegex(testConfig.colors)).toMatchSnapshot();
+});
+
+test('generateRegexes', () => {
+  expect(generateRegexes(testConfig)).toMatchSnapshot();
+});

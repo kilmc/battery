@@ -1,8 +1,9 @@
 // color
 // ------------------------------------------------------------------
-export const color = {
+const color = {
   prop: 'color',
   propName: '',
+  enableColors: true,
   allowedValues: ['red-500', 'grey-900', 'green-800'],
   allowedPseudoValues: {
     hover: [],
@@ -11,132 +12,314 @@ export const color = {
 
 // background-color
 // ------------------------------------------------------------------
-
-export const backgroundColor = {
+const backgroundColor = {
   prop: 'background-color',
   propName: 'bg',
-  allowedValues: ['red-500', 'grey-900', 'green-800'],
-  allowedPseudoValues: {
-    hover: []
+  enableColors: true,
+  auto: {
+    allowedClasses: [ 'red-500', 'grey-900', 'green-800' ],
+    allowedAutoPseudoClasses: {
+      hover: []
+    }
   }
 };
 
+// background-image
+// ------------------------------------------------------------------
+const backgroundImage = {}
+
+// background-position
+// ------------------------------------------------------------------
+const backgroundPosition = {}
+
+// background-repeat
+// ------------------------------------------------------------------
+const backgroundRepeat = {}
+
 // background-size
 // ------------------------------------------------------------------
-export const backgroundSize = { prop: 'background-size', propName: 'bg'}
+const backgroundSize = {
+  prop: 'background-size',
+  propName: 'bg',
+  enableLengthUnits: true,
+  manual: {
+    separator: '-',
+    values: {
+      'cover': 'cover',
+      'contain': 'contain',
+      'full-height': 'auto 100%',
+      'full-width': '100% auto'
+    }
+  }
+}
 
 // border
 // ------------------------------------------------------------------
+const borderColor = { prop: 'border-color', propName: "border"};
+const borderWidth = { prop: 'border-width', propName: 'border'}
+const borderRadius = {}
 
-export const borderColor = { prop: 'border-color', propName: "border"};
-export const borderWidth = { prop: 'border-width', propName: 'border'}
+// box-shadow
+// ------------------------------------------------------------------
+const boxShadow = {}
+
+// box-sizing
+// ------------------------------------------------------------------
+const boxSizing = {}
+
+// clear
+// ------------------------------------------------------------------
+const clear = {}
+
+// cursor
+// ------------------------------------------------------------------
+const cursor = {}
+
+// display
+// ------------------------------------------------------------------
+const display = {
+  prop: 'display',
+  propName: '',
+  manual: {
+    values: {
+      'block': 'block',
+      'inline': 'inline',
+      'inline-block': 'inline-block',
+      'flex': 'flex',
+      'inline-flex': 'inline-flex'
+    }
+  }
+};
 
 // fill
 // ------------------------------------------------------------------
+const fill = {
+  prop: 'fill',
+  propName: "fill",
+  enableColors: true
+};
 
-export const fill = { prop: 'fill', propName: "fill"};
-
-// stroke
+// flex
 // ------------------------------------------------------------------
+const flexGrow = { propName: 'grow', prop: 'flex-grow' };
+const flexShrink = { propName: 'shrink', prop: 'flex-shrink' };
+const order = { propName: 'order', prop: 'order' };
 
-export const stroke = { prop: 'stroke', propName: "stroke" }
-
-// margin
+// float
 // ------------------------------------------------------------------
-
-export const margin = { prop: 'margin', propName: 'm' }
-export const marginTop = { prop: 'margin-top', propName: 'mt' }
-export const marginRight = { prop: 'margin-right', propName: 'mr' }
-export const marginBottom = { prop: 'margin-bottom', propName: 'mb' }
-export const marginLeft = { prop: 'margin-left', propName: 'ml' }
-export const marginX = { prop: 'margin-left margin-right', propName: 'mx' }
-export const marginY = { prop: 'margin-top margin-bottom', propName: 'my' }
-
-// Padding
-// ------------------------------------------------------------------
-export const padding = { prop: 'padding', propName: 'p' }
-export const paddingTop = { prop: 'padding-top', propName: 'pt' }
-export const paddingRight = { prop: 'padding-right', propName: 'pr' }
-export const paddingBottom = { prop: 'padding-bottom', propName: 'pb' }
-export const paddingLeft = { prop: 'padding-left', propName: 'pl' }
-export const paddingX = { prop: 'padding-left padding-right', propName: 'px' }
-export const paddingY = { prop: 'padding-top padding-bottom', propName: 'py' }
-
-// height
-// ------------------------------------------------------------------
-export const height = { prop: 'height', propName: 'h' }
-export const minHeight = { prop: 'min-height', propName: 'min-h' }
-export const maxHeight = { prop: 'max-height', propName: 'max-h' }
-
-// width
-// ------------------------------------------------------------------
-export const width = { prop: 'width', propName: 'w' }
-export const minWidth = { prop: 'min-width', propName: 'min-w' }
-export const maxWidth = { prop: 'max-width', propName: 'max-w' }
+const float = {}
 
 // font-size
 // ------------------------------------------------------------------
-
-export const fontSize = {
+const fontSize = {
   propName: 'type',
-  prop: ['font-size'],
+  prop: 'font-size',
   allowedValues: [
     '132','100','66','60','48','38','34','28',
     '24','21','18','16','14','13','12','10'
   ]
 };
 
-export const fontFamily = {
-  prop: ['font-family'],
+// font-family
+// ------------------------------------------------------------------
+const fontFamily = {
+  prop: 'font-family',
   propName: ''
 }
 
-// flex
+// font-style
 // ------------------------------------------------------------------
+const fontStyle = {}
 
-export const flexGrow = { propName: 'grow', prop: 'flex-grow' };
-export const flexShrink = { propName: 'shrink', prop: 'flex-shrink' };
-export const order = { propName: 'order', prop: 'order' };
+// font-weight
+// ------------------------------------------------------------------
+const fontWeight = {}
 
+// height
+// ------------------------------------------------------------------
+const height = { prop: 'height', propName: 'h' }
+const minHeight = { prop: 'min-height', propName: 'min-h' }
+const maxHeight = { prop: 'max-height', propName: 'max-h' }
+
+
+// letter-spacing
+// ------------------------------------------------------------------
+const letterSpacing = {}
+
+// line-height
+// ------------------------------------------------------------------
+const lineHeight = {}
+
+// list-style
+// ------------------------------------------------------------------
+const listStyle = {}
+
+// margin
+// ------------------------------------------------------------------
+const margin = {
+  prop: 'margin',
+  propName: 'm'
+};
+
+const marginTop = { prop: 'margin-top', propName: 'mt' }
+const marginRight = { prop: 'margin-right', propName: 'mr' }
+const marginBottom = { prop: 'margin-bottom', propName: 'mb' }
+const marginLeft = { prop: 'margin-left', propName: 'ml' }
+const marginX = { prop: 'margin-left margin-right', propName: 'mx' }
+const marginY = { prop: 'margin-top margin-bottom', propName: 'my' }
+
+// opacity
+// ------------------------------------------------------------------
+const opacity = {}
+
+// outline
+// ------------------------------------------------------------------
+const outline = {}
+
+// overflow
+// ------------------------------------------------------------------
+const overflow = {}
+
+// padding
+// ------------------------------------------------------------------
+const padding = { prop: 'padding', propName: 'p' }
+const paddingTop = { prop: 'padding-top', propName: 'pt' }
+const paddingRight = { prop: 'padding-right', propName: 'pr' }
+const paddingBottom = { prop: 'padding-bottom', propName: 'pb' }
+const paddingLeft = { prop: 'padding-left', propName: 'pl' }
+const paddingX = { prop: 'padding-left padding-right', propName: 'px' }
+const paddingY = { prop: 'padding-top padding-bottom', propName: 'py' }
+
+// pointer-events
+// ------------------------------------------------------------------
+const pointerEvents = {}
+
+// position
+// ------------------------------------------------------------------
+const position = {
+  prop: 'position',
+  propName: '',
+  values: {
+    'absolute': 'absolute',
+    'relative': 'relative',
+    'fixed': 'fixed'
+  }
+}
+
+// resize
+// ------------------------------------------------------------------
+const resize = {}
+
+// stroke
+// ------------------------------------------------------------------
+const stroke = { prop: 'stroke', propName: "stroke" }
+
+// text-align
+// ------------------------------------------------------------------
+const textAlign = {}
+
+// text-decoration
+// ------------------------------------------------------------------
+const textDecoration = {}
+
+// text-overflow
+// ------------------------------------------------------------------
+const textOverflow = {}
+
+// text-transform
+// ------------------------------------------------------------------
+const textTransform = {}
+
+// vertical-align
+// ------------------------------------------------------------------
+const verticalAlign = {}
+
+// webkit
+// ------------------------------------------------------------------
+const webkit = {}
+
+// white-space
+// ------------------------------------------------------------------
+const whiteSpace = {}
+
+// width
+// ------------------------------------------------------------------
+const width = { prop: 'width', propName: 'w' }
+const minWidth = { prop: 'min-width', propName: 'min-w' }
+const maxWidth = { prop: 'max-width', propName: 'max-w' }
+
+// word-break
+// ------------------------------------------------------------------
+const wordBreak = {}
 
 // z-index
 // ------------------------------------------------------------------
-export const zIndex = { propName: 'z', prop: 'z-index' };
+const zIndex = { propName: 'z', prop: 'z-index' };
 
 
+const propsConfig = {
+  color,
+  backgroundColor,
+  backgroundImage,
+  backgroundPosition,
+  backgroundRepeat,
+  backgroundSize,
+  borderColor,
+  borderWidth,
+  borderRadius,
+  boxShadow,
+  boxSizing,
+  clear,
+  cursor,
+  display,
+  fill,
+  flexGrow,
+  flexShrink,
+  order,
+  float,
+  fontSize,
+  fontFamily,
+  fontStyle,
+  fontWeight,
+  height,
+  minHeight,
+  maxHeight,
+  letterSpacing,
+  lineHeight,
+  listStyle,
+  margin,
+  marginTop,
+  marginRight,
+  marginBottom,
+  marginLeft,
+  marginX,
+  marginY,
+  opacity,
+  outline,
+  overflow,
+  padding,
+  paddingTop,
+  paddingRight,
+  paddingBottom,
+  paddingLeft,
+  paddingX,
+  paddingY,
+  pointerEvents,
+  position,
+  resize,
+  stroke,
+  textAlign,
+  textDecoration,
+  textOverflow,
+  textTransform,
+  verticalAlign,
+  webkit,
+  whiteSpace,
+  width,
+  minWidth,
+  maxWidth,
+  wordBreak,
+  zIndex
+};
 
-export const backgroundImage = {}
-export const backgroundPosition = {}
-export const backgroundRepeat = {}
-export const backgroundSize = {}
-export const borderColor = {}
-export const borderRadius = {}
-export const borderWidth = {}
-export const boxShadow = {}
-export const boxSizing = {}
-export const clear = {}
-export const cursor = {}
-export const display = {}
-export const float = {}
-export const fontFamily = {}
-export const fontSize = {}
-export const fontStyle = {}
-export const fontWeight = {}
-export const letterSpacing = {}
-export const lineHeight = {}
-export const listStyle = {}
-export const marginPadding = {}
-export const opacity = {}
-export const outline = {}
-export const overflow = {}
-export const pointerEvents = {}
-export const position = {}
-export const resize = {}
-export const textAlign = {}
-export const textDecoration = {}
-export const textOverflow = {}
-export const textTransform = {}
-export const verticalAlign = {}
-export const webkit = {}
-export const whiteSpace = {}
-export const wordBreak = {}
+export default propsConfig;
