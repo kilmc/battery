@@ -6,18 +6,18 @@
 // ------------------------------------------------------------------
 
 export const generateAtom = ({
-	className,
+  className,
   cssProps,
   value,
 }) => {
   const eachProp = cssProps
     .split(' ')
     .reduce((props,prop) => {
-      props[prop] = value
-      return props
-    },{})
-  return ( { [className]: eachProp } )
-}
+      props[prop] = value;
+      return props;
+    },{});
+  return ( { [className]: eachProp } );
+};
 
 
 // ------------------------------------------------------------------
@@ -27,7 +27,7 @@ export const generateAtom = ({
 // Length Units
 // ------------------------------------------------------------------
 
-const addLengthUnit = (unit) => (num) => `${num}${unit}`
+const addLengthUnit = (unit) => (num) => `${num}${unit}`;
 
 // Pre-configured length unit functions for converting numbers
 // into length units compatible with CSS standards
@@ -55,21 +55,21 @@ export const formatLengthUnitValue = (length, lengthUnit, config) => {
 
   switch (config.units[lengthUnit]) {
     case 'baseline':
-      return baseline(length,baselineUnit,baseFontSize)
+      return baseline(length,baselineUnit,baseFontSize);
     case 'percent':
-      return addPercent(length)
+      return addPercent(length);
     case 'hardPixel':
-      return hardPixel(length,baseFontSize,useRems)
+      return hardPixel(length,baseFontSize,useRems);
     case 'viewportHeight':
-      return addViewportHeight(length)
+      return addViewportHeight(length);
     case 'viewportWidth':
-      return addViewportWidth(length)
+      return addViewportWidth(length);
     default:
-      return "Something cool"
+      return 'Something cool';
   }
 };
 
 export const formatPrefixOrSuffix = (key,separator,prefixOrSuffix) =>
   prefixOrSuffix === 'prefix'
     ? `${key}${separator}`
-    : `${separator}${key}`
+    : `${separator}${key}`;

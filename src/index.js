@@ -6,7 +6,7 @@ import {
 import {
   atomsToCSS,
   generateMediaQuery
-} from './printers'
+} from './printers';
 
 import {
   colorsConverter,
@@ -14,7 +14,7 @@ import {
   manualClassNameConverter,
   integersConverter,
   addPseudoSelectors
-} from './converters'
+} from './converters';
 
 
 // ------------------------------------------------------------------
@@ -36,21 +36,21 @@ export const generate = (arr,config) => {
     ...lengthUnitsConverter(lengthUnits,config),
     ...manualClassNameConverter(manualClasses,config),
     ...integersConverter(integers,config)
-  }
+  };
 
   // TODO: Figure out why mutations are happening to classNamesToAtoms
 
   const processPseudoSelectors =
-    addPseudoSelectors(classNamesToAtoms,css.pseudoSelectors)
+    addPseudoSelectors(classNamesToAtoms,css.pseudoSelectors);
 
   const sortedClasses =
-    sortBreakpoints(processPseudoSelectors,breakpoints)
+    sortBreakpoints(processPseudoSelectors,breakpoints);
 
   const fourthPassAtoms = (classes) => {
     let cssLibrary;
 
-    cssLibrary = atomsToCSS(classes.all)
-    Reflect.deleteProperty(classes,'all')
+    cssLibrary = atomsToCSS(classes.all);
+    Reflect.deleteProperty(classes,'all');
 
     const mediaQueries = Object.keys(classes)
       .map(breakpoint =>
@@ -59,12 +59,12 @@ export const generate = (arr,config) => {
           breakpoint,
           breakpoints.breakpoints
         ))
-      .join('\n')
+      .join('\n');
 
-    cssLibrary += mediaQueries
+    cssLibrary += mediaQueries;
 
-    return cssLibrary
-  }
+    return cssLibrary;
+  };
 
-  return fourthPassAtoms(sortedClasses)
-}
+  return fourthPassAtoms(sortedClasses);
+};

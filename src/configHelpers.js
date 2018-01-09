@@ -8,6 +8,6 @@ export const enablePropFeature = (featureName, propConfigs,propList) => {
       propConfigs[prop] = {
         ...propConfigs[prop],
         [enableBucket]: true
-      }
-    },{})
+      };
+    },{});
 };

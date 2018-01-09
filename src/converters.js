@@ -18,7 +18,7 @@ export const colorsConverter = (arr, config) => {
   // Filters out only propConfig objects with enableColors: true
   const colorProps = Object.keys(props)
     .map(prop => props[prop])
-    .filter(prop => prop.enableColors === true)
+    .filter(prop => prop.enableColors === true);
 
   // Checks for a key of empty string as the propName for any prop
 
@@ -27,7 +27,7 @@ export const colorsConverter = (arr, config) => {
       const { prop, propName, separator = '' } = propConfig;
 
       const matchedClasses = arr
-        .filter(cx => cx.match(propName+separator))
+        .filter(cx => cx.match(propName+separator));
 
       const convertedClasses = matchedClasses
         .reduce((accum,cx) => {
@@ -40,14 +40,14 @@ export const colorsConverter = (arr, config) => {
               cssProps: prop,
               value: colors[valueName]
             })
-          }
+          };
 
-          return accum
-        },{})
+          return accum;
+        },{});
 
-      allClasses = { ...allClasses, ...convertedClasses }
-      return allClasses
-    },{})
+      allClasses = { ...allClasses, ...convertedClasses };
+      return allClasses;
+    },{});
 
   return colorClasses;
 };
@@ -71,7 +71,7 @@ export const lengthUnitsConverter = (arr, config) => {
 
   const lengthUnitProps = Object.keys(props)
     .map(prop => props[prop])
-    .filter(prop => prop.enableLengthUnits === true)
+    .filter(prop => prop.enableLengthUnits === true);
 
   const lengthUnitClasses = lengthUnitProps
     .reduce((allClasses, propConfig) => {
@@ -81,14 +81,14 @@ export const lengthUnitsConverter = (arr, config) => {
         .filter(cx => cx.match(new RegExp(`(${propName}${separator}(\\d+|-\\d))`)));
 
       const convertedClasses = matchedClasses
-        .reduce((accum,cx) => {
-          const [ ,,, length, lengthUnit] = cx.match(new RegExp(`(.*?)(${propName}${separator})(\\d+|-\\d)(.*)`))
+        .reduce((accum, cx) => {
+          const [,,, length, lengthUnit] = cx.match(new RegExp(`(.*?)(${propName}${separator})(\\d+|-\\d)(.*)`));
           let value = '';
 
           if (hasEmptyStringIndicator && cx.match(matchNoSuffix)) {
-            value = formatLengthUnitValue(length,lengthUnit,config)
+            value = formatLengthUnitValue(length, lengthUnit, config);
           } else {
-            value = formatLengthUnitValue(length,"",config)
+            value = formatLengthUnitValue(length, '', config);
           }
 
           accum = {
@@ -96,18 +96,18 @@ export const lengthUnitsConverter = (arr, config) => {
             ...generateAtom({
               className: cx,
               cssProps: prop,
-              value
-            })
-          }
+              value,
+            }),
+          };
 
-          return accum
-        },{})
+          return accum;
+        },{});
 
-      allClasses = { ...allClasses, ...convertedClasses }
-      return allClasses
-    },{})
+      allClasses = { ...allClasses, ...convertedClasses };
+      return allClasses;
+    },{});
 
-  return lengthUnitClasses
+  return lengthUnitClasses;
 };
 
 // Integers
@@ -118,14 +118,14 @@ export const integersConverter = (arr, config) => {
 
   const integerProps = Object.keys(props)
     .map(prop => props[prop])
-    .filter(prop => prop.enableIntegers === true)
+    .filter(prop => prop.enableIntegers === true);
 
   const integerClasses = integerProps
     .reduce((allClasses, propConfig) => {
       const { prop, propName, separator = '' } = propConfig;
 
       const matchedClasses = arr
-        .filter(cx => cx.match(propName+separator))
+        .filter(cx => cx.match(propName+separator));
 
       const convertedClasses = matchedClasses
         .reduce((accum,cx) => {
@@ -138,17 +138,17 @@ export const integersConverter = (arr, config) => {
               cssProps: prop,
               value
             })
-          }
+          };
 
-          return accum
-        },{})
+          return accum;
+        },{});
 
-      allClasses = { ...allClasses, ...convertedClasses }
-      return allClasses
-    },{})
+      allClasses = { ...allClasses, ...convertedClasses };
+      return allClasses;
+    },{});
 
   return integerClasses;
-}
+};
 
 // Manual Class Names
 // ------------------------------------------------------------------
@@ -174,26 +174,27 @@ export const manualClassNameConverter = (arr, config) => {
               cssProps: prop,
               value: values[valueName]
             })
-          }
-          return accumAtoms
-        },{})
+          };
+
+          return accumAtoms;
+        },{});
       accumClassNames = {
         ...accumClassNames,
         ...classNames
-      }
-      return accumClassNames
+      };
+      return accumClassNames;
     },{});
 
-  const generatedAtomsKeys = Object.keys(generatedAtoms)
+  const generatedAtomsKeys = Object.keys(generatedAtoms);
   const returnedAtoms = arr
     .reduce((accum, cx) => {
       const cleanClass = cx.replace(
-        new RegExp(`(.*?)${regexStringFromArray(generatedAtomsKeys)}(.*)`), '$2')
-      accum[cx] = generatedAtoms[cleanClass]
-      return accum
-    },{})
+        new RegExp(`(.*?)${regexStringFromArray(generatedAtomsKeys)}(.*)`), '$2');
+      accum[cx] = generatedAtoms[cleanClass];
+      return accum;
+    },{});
 
-  return returnedAtoms
+  return returnedAtoms;
 };
 
 // Pseudo Selectors
@@ -204,15 +205,15 @@ export const addPseudoSelectors = (classes,pseudoConfig) => {
 
   Object.keys(pseudoConfig)
     .reduce((accum,selector) => {
-      const { pseudoName, pseudo } = pseudoConfig[selector]
+      const { pseudoName, pseudo } = pseudoConfig[selector];
 
       Object.keys(processedClasses)
         .filter(x => x.match(pseudoName))
         .reduce((accumCxs, cx) => {
-          processedClasses[`${cx}:${pseudo}`] = processedClasses[cx]
-          Reflect.deleteProperty(processedClasses,cx)
-        },{})
+          processedClasses[`${cx}:${pseudo}`] = processedClasses[cx];
+          Reflect.deleteProperty(processedClasses,cx);
+        },{});
 
-    },{})
-  return processedClasses
-}
+    },{});
+  return processedClasses;
+};

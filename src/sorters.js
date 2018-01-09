@@ -18,9 +18,9 @@ const generateBucketRegex = (bucketName,bucketRegexTemplate,propsConfig) => {
     .reduce((xs,x) => xs.concat(x.propName),[]);
 
   const fullBucketRegex = bucketRegexTemplate
-    .replace('propNames',regexStringFromArray(propNames))
+    .replace('propNames',regexStringFromArray(propNames));
 
-  return { [bucketName]: fullBucketRegex }
+  return { [bucketName]: fullBucketRegex };
 };
 
 
@@ -28,7 +28,7 @@ const generateBucketRegex = (bucketName,bucketRegexTemplate,propsConfig) => {
 // ------------
 
 export const generateColorsRegex = (colorConfig) => (
-  { "colors": regexStringFromArray(Object.keys(colorConfig)) }
+  { 'colors': regexStringFromArray(Object.keys(colorConfig)) }
 );
 
 
@@ -47,12 +47,12 @@ export const generateManualClassNameRegex = (propsConfig) => {
 
       const classNames = Object.keys(values).reduce((accumValues,value) => (
         accumValues.concat(`${propName}${separator}${value}`)
-      ),[])
+      ),[]);
 
-      return accumClassNames.concat(classNames)
+      return accumClassNames.concat(classNames);
     },[]);
 
-  return { "manualClasses": regexStringFromArray(generatedClassNames) };
+  return { 'manualClasses': regexStringFromArray(generatedClassNames) };
 };
 
 
@@ -60,7 +60,7 @@ export const generateManualClassNameRegex = (propsConfig) => {
 // ------------------------------------------------------------------
 export const generateLengthUnitRegex = (config) => (
   generateBucketRegex(
-    "lengthUnits",
+    'lengthUnits',
     '(propNames(\\d+|-\\d+))',
     config
   )
@@ -72,7 +72,7 @@ export const generateLengthUnitRegex = (config) => (
 
 export const generateIntegerRegex = (config) => (
   generateBucketRegex(
-    "integers",
+    'integers',
     '(propNames(\\d+|-\\d+))',
     config
   )
@@ -105,28 +105,28 @@ export const generateRegexes = (config) => {
     regexes = {
       ...regexes,
       ...generateColorsRegex(colors)
-    }
+    };
   }
 
   if (hasManualConfigs) {
     regexes = {
       ...regexes,
       ...generateManualClassNameRegex(props)
-    }
+    };
   }
 
   if (hasIntegers) {
     regexes = {
       ...regexes,
       ...generateIntegerRegex(props)
-    }
+    };
   }
 
   if (hasLengthUnits) {
     regexes = {
       ...regexes,
       ...generateLengthUnitRegex(props)
-    }
+    };
   }
 
   return regexes;
@@ -144,20 +144,20 @@ export const sortClasses = (arr, config) => {
   const sortedClasses = Object.keys(regexes)
     .reduce((sortGroups, sortGroup) => {
       const matchedClasses = sortingArr
-        .filter(cx => cx.match(regexes[sortGroup]))
+        .filter(cx => cx.match(regexes[sortGroup]));
 
       sortGroups[sortGroup] = matchedClasses;
 
       // Remove any sorted classes from the sortingArr
       sortingArr = subtractArrays(sortingArr,matchedClasses);
 
-      return sortGroups
-    },{})
+      return sortGroups;
+    },{});
 
   return {
     ...sortedClasses,
     leftovers: sortingArr
-  }
+  };
 };
 
 // Breakpoints
@@ -170,25 +170,25 @@ export const sortBreakpoints = (classes,breakpointsConfig) => {
   const breakpointsRegex = regexStringFromArray(
     Object.keys(breakpoints)
       .map(breakpoint =>
-        formatPrefixOrSuffix(breakpoint,separator,prefixorSuffix)))
+        formatPrefixOrSuffix(breakpoint,separator,prefixorSuffix)));
 
   const breakpointClasses = Object.keys(classes)
     .filter(x => x.match(breakpointsRegex))
     .reduce((accum,cx) => {
       const matchedBreakpoint = cx
         .match(breakpointsRegex)[0]
-        .replace(separator,'')
+        .replace(separator,'');
 
       accum[matchedBreakpoint] = {
         ...accum[matchedBreakpoint],
         [cx]: classes[cx]
-      }
-      Reflect.deleteProperty(allClasses,cx)
-      return accum
-    },{})
+      };
+      Reflect.deleteProperty(allClasses,cx);
+      return accum;
+    },{});
 
   return {
     all: allClasses,
     ...breakpointClasses
-  }
+  };
 };
