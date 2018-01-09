@@ -2,26 +2,27 @@
 
 exports[`generateColorsRegex 1`] = `
 Object {
-  "colorsRegex": "(green-800|green-700|green-500)",
+  "colors": "(green-800|green-700|green-500)",
 }
 `;
 
 exports[`generateLengthUnitRegex 1`] = `
 Object {
-  "lengthUnitRegex": "(bg)(\\\\d+|-\\\\d+)?)",
+  "lengthUnits": "((bg|h|m|mt)(\\\\d+|-\\\\d+))",
 }
 `;
 
 exports[`generateManualClassNameRegex 1`] = `
 Object {
-  "manualClassNameRegex": "(bg-cover|bg-contain|bg-full-height|bg-full-width)",
+  "manualClasses": "(bg-cover|bg-contain|bg-full-height|bg-full-width)",
 }
 `;
 
 exports[`generateRegexes 1`] = `
 Object {
-  "colorsRegex": "(green-800|green-700|green-500)",
-  "lengthUnitRegex": "(bg)(\\\\d+|-\\\\d+)?)",
-  "manualClassNameRegex": "(bg-cover|bg-contain|bg-full-height|bg-full-width)",
+  "colors": "(green-800|green-700|green-500)",
+  "integers": "((z)(\\\\d+|-\\\\d+))",
+  "lengthUnits": "((bg|h|m|mt)(\\\\d+|-\\\\d+))",
+  "manualClasses": "(bg-cover|bg-contain|bg-full-height|bg-full-width)",
 }
 `;

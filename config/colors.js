@@ -1,4 +1,7 @@
 const colorsConfig = {
+  'black': '#000000',
+  'white': '#ffffff',
+  'pink': '#ff0099',
   'green-800': '#098530',
   'green-700': '#05AF3C',
   'green-500': '#25CB68',

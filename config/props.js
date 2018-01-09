@@ -1,9 +1,10 @@
+import { enablePropFeature } from '../src/configHelpers';
+
 // color
 // ------------------------------------------------------------------
 const color = {
   prop: 'color',
   propName: '',
-  enableColors: true,
   allowedValues: ['red-500', 'grey-900', 'green-800'],
   allowedPseudoValues: {
     hover: [],
@@ -15,33 +16,62 @@ const color = {
 const backgroundColor = {
   prop: 'background-color',
   propName: 'bg',
-  enableColors: true,
-  auto: {
-    allowedClasses: [ 'red-500', 'grey-900', 'green-800' ],
-    allowedAutoPseudoClasses: {
-      hover: []
+  manual: {
+    separator: '-',
+    values: {
+      transparent: 'transparent'
     }
   }
 };
 
 // background-image
 // ------------------------------------------------------------------
-const backgroundImage = {}
+const backgroundImage = {
+  prop: 'background-image',
+  propName: 'bg',
+  manual: {
+    separator: '-',
+    values: {
+      none: 'none'
+    }
+  }
+}
 
 // background-position
 // ------------------------------------------------------------------
-const backgroundPosition = {}
+const backgroundPosition = {
+  prop: 'background-position',
+  propName: 'bg',
+  manual: {
+    separator: '-',
+    values: {
+      center: 'center center',
+      top: 'center top',
+      bottom: 'center bottom',
+      left: 'left center',
+      right: 'right center'
+    }
+  }
+}
 
 // background-repeat
 // ------------------------------------------------------------------
-const backgroundRepeat = {}
+const backgroundRepeat = {
+  prop: 'background-repeat',
+  propName: 'bg',
+  manual: {
+    separator: '-',
+    values: {
+      'no-repeat': 'no-repeat',
+    }
+  }
+}
 
 // background-size
 // ------------------------------------------------------------------
 const backgroundSize = {
   prop: 'background-size',
   propName: 'bg',
-  enableLengthUnits: true,
   manual: {
     separator: '-',
     values: {
@@ -55,8 +85,8 @@ const backgroundSize = {
 
 // border
 // ------------------------------------------------------------------
-const borderColor = { prop: 'border-color', propName: "border"};
-const borderWidth = { prop: 'border-width', propName: 'border'}
+const borderColor = { prop: 'border-color', propName: "border" };
+const borderWidth = { prop: 'border-width', propName: 'border' }
 const borderRadius = {}
 
 // box-shadow
@@ -69,7 +99,18 @@ const boxSizing = {}
 
 // clear
 // ------------------------------------------------------------------
-const clear = {}
+const clear = {
+  prop: 'clear',
+  propName: 'clear',
+  manual: {
+    separator: '-',
+    values: {
+      'left': 'left',
+      'right': 'right',
+      'both': 'both'
+    }
+  }
+}
 
 // cursor
 // ------------------------------------------------------------------
@@ -96,7 +137,6 @@ const display = {
 const fill = {
   prop: 'fill',
   propName: "fill",
-  enableColors: true
 };
 
 // flex
@@ -107,13 +147,23 @@ const order = { propName: 'order', prop: 'order' };
 
 // float
 // ------------------------------------------------------------------
-const float = {}
+const float = {
+  prop: 'float',
+  propName: '',
+  manual: {
+    values: {
+      'left': 'left',
+      'right': 'right',
+      'float-none': 'none'
+    }
+  }
+}
 
 // font-size
 // ------------------------------------------------------------------
 const fontSize = {
-  propName: 'type',
   prop: 'font-size',
+  propName: 'type',
   allowedValues: [
     '132','100','66','60','48','38','34','28',
     '24','21','18','16','14','13','12','10'
@@ -124,7 +174,12 @@ const fontSize = {
 // ------------------------------------------------------------------
 const fontFamily = {
   prop: 'font-family',
-  propName: ''
+  propName: '',
+  manual: {
+    values: {
+      'sans-serif': 'sans-serif'
+    }
+  }
 }
 
 // font-style
@@ -137,9 +192,20 @@ const fontWeight = {}
 
 // height
 // ------------------------------------------------------------------
-const height = { prop: 'height', propName: 'h' }
-const minHeight = { prop: 'min-height', propName: 'min-h' }
-const maxHeight = { prop: 'max-height', propName: 'max-h' }
+const height = {
+  prop: 'height',
+  propName: 'h'
+}
+
+const minHeight = {
+  prop: 'min-height',
+  propName: 'min-h'
+}
+
+const maxHeight = {
+  prop: 'max-height',
+  propName: 'max-h'
+}
 
 
 // letter-spacing
@@ -199,10 +265,12 @@ const pointerEvents = {}
 const position = {
   prop: 'position',
   propName: '',
-  values: {
-    'absolute': 'absolute',
-    'relative': 'relative',
-    'fixed': 'fixed'
+  manual: {
+    values: {
+      'absolute': 'absolute',
+      'relative': 'relative',
+      'fixed': 'fixed'
+    }
   }
 }
 
@@ -220,7 +288,16 @@ const textAlign = {}
 
 // text-decoration
 // ------------------------------------------------------------------
-const textDecoration = {}
+const textDecoration = {
+  prop: 'text-decoration',
+  propName: 'text',
+  manual: {
+    separator: '-',
+    values: {
+      'underline': 'underline'
+    }
+  }
+}
 
 // text-overflow
 // ------------------------------------------------------------------
@@ -256,37 +333,17 @@ const wordBreak = {}
 // ------------------------------------------------------------------
 const zIndex = { propName: 'z', prop: 'z-index' };
 
-
-const propsConfig = {
+let propsConfig = {
   color,
   backgroundColor,
-  backgroundImage,
-  backgroundPosition,
-  backgroundRepeat,
-  backgroundSize,
   borderColor,
-  borderWidth,
-  borderRadius,
-  boxShadow,
-  boxSizing,
-  clear,
-  cursor,
-  display,
   fill,
-  flexGrow,
-  flexShrink,
-  order,
-  float,
-  fontSize,
-  fontFamily,
-  fontStyle,
-  fontWeight,
+  stroke,
+  backgroundSize,
+  borderWidth,
   height,
   minHeight,
   maxHeight,
-  letterSpacing,
-  lineHeight,
-  listStyle,
   margin,
   marginTop,
   marginRight,
@@ -294,9 +351,6 @@ const propsConfig = {
   marginLeft,
   marginX,
   marginY,
-  opacity,
-  outline,
-  overflow,
   padding,
   paddingTop,
   paddingRight,
@@ -304,10 +358,35 @@ const propsConfig = {
   paddingLeft,
   paddingX,
   paddingY,
+  width,
+  minWidth,
+  maxWidth,
+  flexGrow,
+  flexShrink,
+  order,
+  backgroundImage,
+  backgroundPosition,
+  backgroundRepeat,
+  borderRadius,
+  boxShadow,
+  boxSizing,
+  clear,
+  cursor,
+  display,
+  float,
+  fontSize,
+  fontFamily,
+  fontStyle,
+  fontWeight,
+  letterSpacing,
+  lineHeight,
+  listStyle,
+  opacity,
+  outline,
+  overflow,
   pointerEvents,
   position,
   resize,
-  stroke,
   textAlign,
   textDecoration,
   textOverflow,
@@ -315,11 +394,45 @@ const propsConfig = {
   verticalAlign,
   webkit,
   whiteSpace,
-  width,
-  minWidth,
-  maxWidth,
   wordBreak,
   zIndex
 };
+
+enablePropFeature('colors',propsConfig,[
+  'color',
+  'backgroundColor',
+  'fill',
+  'stroke'
+])
+
+enablePropFeature('lengthUnits',propsConfig,[
+  'height',
+  'margin',
+  'marginBottom',
+  'marginLeft',
+  'marginRight',
+  'marginTop',
+  'marginX',
+  'marginY',
+  'maxHeight',
+  'maxWidth',
+  'minHeight',
+  'minWidth',
+  'padding',
+  'paddingBottom',
+  'paddingLeft',
+  'paddingRight',
+  'paddingTop',
+  'paddingX',
+  'paddingY',
+  'width',
+])
+
+enablePropFeature('integers',propsConfig,[
+  'flexGrow',
+  'flexShrink',
+  'order',
+  'zIndex'
+])
 
 export default propsConfig;
