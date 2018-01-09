@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 export const enablePropFeature = (featureName, propConfigs,propList) => {
   const enableBucket = _.camelCase(`enable ${featureName}`);
 
