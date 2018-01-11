@@ -1,4 +1,4 @@
-import { regexStringFromArray } from './helpers';
+import { regexStringFromArray, subtractArrays } from './helpers';
 import {
   generateAtom,
   formatLengthUnitValue
@@ -14,25 +14,40 @@ import {
 export const colorsConverter = (arr, config) => {
   const { props, colors } = config;
   const colorKeys = Object.keys(colors);
+  let sortingArr = arr;
+  let emptyStringProp;
 
   // Filters out only propConfig objects with enableColors: true
-  const colorProps = Object.keys(props)
+  let colorProps = Object.keys(props)
     .map(prop => props[prop])
     .filter(prop => prop.enableColors === true);
 
   // Checks for a key of empty string as the propName for any prop
+  const hasEmptyStringPropName = colorProps
+    .some(x => x.propName === '');
+
+  // Splits the colorProps in two to process the empty string propName
+  // separately below
+  if (hasEmptyStringPropName) {
+    emptyStringProp = colorProps
+      .filter(x => x.propName === '')
+      .map(x => `${x.prop}`)
+      .toString();
+    colorProps = colorProps.filter(x => x.propName !== '');
+  }
 
   const colorClasses = colorProps
     .reduce((allClasses, propConfig) => {
       const { prop, propName, separator = '' } = propConfig;
 
-      const matchedClasses = arr
+      const matchedClasses = sortingArr
         .filter(cx => cx.match(propName+separator));
 
       const convertedClasses = matchedClasses
         .reduce((accum,cx) => {
           const valueName = cx.replace(
             new RegExp(`(.*?)${regexStringFromArray(colorKeys)}(.*)`), '$2');
+
           accum = {
             ...accum,
             ...generateAtom({
@@ -46,10 +61,30 @@ export const colorsConverter = (arr, config) => {
         },{});
 
       allClasses = { ...allClasses, ...convertedClasses };
+      sortingArr = subtractArrays(sortingArr,matchedClasses);
       return allClasses;
     },{});
 
-  return colorClasses;
+  if (hasEmptyStringPropName) {
+    const emptyStringPropNameColorClasses = sortingArr
+      .reduce((accum,cx) => {
+        const valueName = cx.replace(new RegExp(`(.*?)(${cx})(.*)`), '$2');
+
+        accum = {
+          ...accum,
+          ...generateAtom({
+            className: cx,
+            cssProps: emptyStringProp,
+            value: colors[valueName]
+          })
+        };
+
+        return accum;
+      },{});
+    return { ...emptyStringPropNameColorClasses, ...colorClasses };
+  } else {
+    return colorClasses;
+  }
 };
 
 
@@ -153,10 +188,8 @@ export const integersConverter = (arr, config) => {
 // Manual Class Names
 // ------------------------------------------------------------------
 
-export const manualClassNameConverter = (arr, config) => {
-  const { props } = config;
-
-  const generatedAtoms = Object.keys(props)
+export const generateManualAtoms = (props) => (
+  Object.keys(props)
     .map(prop => props[prop])
     .filter(propConfig => typeof propConfig.manual === 'object' )
     .reduce((accumClassNames, propConfig) => {
@@ -183,7 +216,13 @@ export const manualClassNameConverter = (arr, config) => {
         ...classNames
       };
       return accumClassNames;
-    },{});
+    },{})
+);
+
+export const manualClassNameConverter = (arr, config) => {
+  const { props } = config;
+
+  const generatedAtoms = generateManualAtoms(props);
 
   const generatedAtomsKeys = Object.keys(generatedAtoms);
   const returnedAtoms = arr

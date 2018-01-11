@@ -1,5 +1,3 @@
-export const nestedKey = (obj,key) => Object.keys(obj).map(x => obj[x][key]);
-
 export const regexStringFromArray = (arr, fn = x => `${x}`) => {
   const propMatches = arr
     .map(fn)
@@ -7,7 +5,7 @@ export const regexStringFromArray = (arr, fn = x => `${x}`) => {
   return `(${propMatches})`;
 };
 
-export let subtractArrays = (arr1,arr2) => {
+export const subtractArrays = (arr1,arr2) => {
   let returnArr = arr1;
 
   arr2.map(remove => {

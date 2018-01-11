@@ -35,7 +35,7 @@ const backgroundImage = {
       none: 'none'
     }
   }
-}
+};
 
 // background-position
 // ------------------------------------------------------------------
@@ -52,7 +52,7 @@ const backgroundPosition = {
       right: 'right center'
     }
   }
-}
+};
 
 // background-repeat
 // ------------------------------------------------------------------
@@ -65,7 +65,7 @@ const backgroundRepeat = {
       'no-repeat': 'no-repeat',
     }
   }
-}
+};
 
 // background-size
 // ------------------------------------------------------------------
@@ -81,21 +81,21 @@ const backgroundSize = {
       'full-width': '100% auto'
     }
   }
-}
+};
 
 // border
 // ------------------------------------------------------------------
-const borderColor = { prop: 'border-color', propName: "border" };
-const borderWidth = { prop: 'border-width', propName: 'border' }
-const borderRadius = {}
+const borderColor = { prop: 'border-color', propName: 'border' };
+const borderWidth = { prop: 'border-width', propName: 'border' };
+const borderRadius = {};
 
 // box-shadow
 // ------------------------------------------------------------------
-const boxShadow = {}
+const boxShadow = {};
 
 // box-sizing
 // ------------------------------------------------------------------
-const boxSizing = {}
+const boxSizing = {};
 
 // clear
 // ------------------------------------------------------------------
@@ -110,11 +110,11 @@ const clear = {
       'both': 'both'
     }
   }
-}
+};
 
 // cursor
 // ------------------------------------------------------------------
-const cursor = {}
+const cursor = {};
 
 // display
 // ------------------------------------------------------------------
@@ -136,7 +136,7 @@ const display = {
 // ------------------------------------------------------------------
 const fill = {
   prop: 'fill',
-  propName: "fill",
+  propName: 'fill',
 };
 
 // flex
@@ -157,7 +157,7 @@ const float = {
       'float-none': 'none'
     }
   }
-}
+};
 
 // font-size
 // ------------------------------------------------------------------
@@ -180,45 +180,45 @@ const fontFamily = {
       'sans-serif': 'sans-serif'
     }
   }
-}
+};
 
 // font-style
 // ------------------------------------------------------------------
-const fontStyle = {}
+const fontStyle = {};
 
 // font-weight
 // ------------------------------------------------------------------
-const fontWeight = {}
+const fontWeight = {};
 
 // height
 // ------------------------------------------------------------------
 const height = {
   prop: 'height',
   propName: 'h'
-}
+};
 
 const minHeight = {
   prop: 'min-height',
   propName: 'min-h'
-}
+};
 
 const maxHeight = {
   prop: 'max-height',
   propName: 'max-h'
-}
+};
 
 
 // letter-spacing
 // ------------------------------------------------------------------
-const letterSpacing = {}
+const letterSpacing = {};
 
 // line-height
 // ------------------------------------------------------------------
-const lineHeight = {}
+const lineHeight = {};
 
 // list-style
 // ------------------------------------------------------------------
-const listStyle = {}
+const listStyle = {};
 
 // margin
 // ------------------------------------------------------------------
@@ -227,38 +227,38 @@ const margin = {
   propName: 'm'
 };
 
-const marginTop = { prop: 'margin-top', propName: 'mt' }
-const marginRight = { prop: 'margin-right', propName: 'mr' }
-const marginBottom = { prop: 'margin-bottom', propName: 'mb' }
-const marginLeft = { prop: 'margin-left', propName: 'ml' }
-const marginX = { prop: 'margin-left margin-right', propName: 'mx' }
-const marginY = { prop: 'margin-top margin-bottom', propName: 'my' }
+const marginTop = { prop: 'margin-top', propName: 'mt' };
+const marginRight = { prop: 'margin-right', propName: 'mr' };
+const marginBottom = { prop: 'margin-bottom', propName: 'mb' };
+const marginLeft = { prop: 'margin-left', propName: 'ml' };
+const marginX = { prop: 'margin-left margin-right', propName: 'mx' };
+const marginY = { prop: 'margin-top margin-bottom', propName: 'my' };
 
 // opacity
 // ------------------------------------------------------------------
-const opacity = {}
+const opacity = {};
 
 // outline
 // ------------------------------------------------------------------
-const outline = {}
+const outline = {};
 
 // overflow
 // ------------------------------------------------------------------
-const overflow = {}
+const overflow = {};
 
 // padding
 // ------------------------------------------------------------------
-const padding = { prop: 'padding', propName: 'p' }
-const paddingTop = { prop: 'padding-top', propName: 'pt' }
-const paddingRight = { prop: 'padding-right', propName: 'pr' }
-const paddingBottom = { prop: 'padding-bottom', propName: 'pb' }
-const paddingLeft = { prop: 'padding-left', propName: 'pl' }
-const paddingX = { prop: 'padding-left padding-right', propName: 'px' }
-const paddingY = { prop: 'padding-top padding-bottom', propName: 'py' }
+const padding = { prop: 'padding', propName: 'p' };
+const paddingTop = { prop: 'padding-top', propName: 'pt' };
+const paddingRight = { prop: 'padding-right', propName: 'pr' };
+const paddingBottom = { prop: 'padding-bottom', propName: 'pb' };
+const paddingLeft = { prop: 'padding-left', propName: 'pl' };
+const paddingX = { prop: 'padding-left padding-right', propName: 'px' };
+const paddingY = { prop: 'padding-top padding-bottom', propName: 'py' };
 
 // pointer-events
 // ------------------------------------------------------------------
-const pointerEvents = {}
+const pointerEvents = {};
 
 // position
 // ------------------------------------------------------------------
@@ -272,19 +272,19 @@ const position = {
       'fixed': 'fixed'
     }
   }
-}
+};
 
 // resize
 // ------------------------------------------------------------------
-const resize = {}
+const resize = {};
 
 // stroke
 // ------------------------------------------------------------------
-const stroke = { prop: 'stroke', propName: "stroke" }
+const stroke = { prop: 'stroke', propName: 'stroke' };
 
 // text-align
 // ------------------------------------------------------------------
-const textAlign = {}
+const textAlign = {};
 
 // text-decoration
 // ------------------------------------------------------------------
@@ -297,37 +297,37 @@ const textDecoration = {
       'underline': 'underline'
     }
   }
-}
+};
 
 // text-overflow
 // ------------------------------------------------------------------
-const textOverflow = {}
+const textOverflow = {};
 
 // text-transform
 // ------------------------------------------------------------------
-const textTransform = {}
+const textTransform = {};
 
 // vertical-align
 // ------------------------------------------------------------------
-const verticalAlign = {}
+const verticalAlign = {};
 
 // webkit
 // ------------------------------------------------------------------
-const webkit = {}
+const webkit = {};
 
 // white-space
 // ------------------------------------------------------------------
-const whiteSpace = {}
+const whiteSpace = {};
 
 // width
 // ------------------------------------------------------------------
-const width = { prop: 'width', propName: 'w' }
-const minWidth = { prop: 'min-width', propName: 'min-w' }
-const maxWidth = { prop: 'max-width', propName: 'max-w' }
+const width = { prop: 'width', propName: 'w' };
+const minWidth = { prop: 'min-width', propName: 'min-w' };
+const maxWidth = { prop: 'max-width', propName: 'max-w' };
 
 // word-break
 // ------------------------------------------------------------------
-const wordBreak = {}
+const wordBreak = {};
 
 // z-index
 // ------------------------------------------------------------------
@@ -403,7 +403,7 @@ enablePropFeature('colors',propsConfig,[
   'backgroundColor',
   'fill',
   'stroke'
-])
+]);
 
 enablePropFeature('lengthUnits',propsConfig,[
   'height',
@@ -426,13 +426,13 @@ enablePropFeature('lengthUnits',propsConfig,[
   'paddingX',
   'paddingY',
   'width',
-])
+]);
 
 enablePropFeature('integers',propsConfig,[
   'flexGrow',
   'flexShrink',
   'order',
   'zIndex'
-])
+]);
 
 export default propsConfig;

@@ -1,4 +1,4 @@
-import breakpointsConfig from './breakpoints'
+import breakpointsConfig from './breakpoints';
 import colorsConfig from './colors';
 import cssConfig from './css';
 import propsConfig from './props';
