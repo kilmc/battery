@@ -333,7 +333,7 @@ const wordBreak = {};
 // ------------------------------------------------------------------
 const zIndex = { propName: 'z', prop: 'z-index' };
 
-let propsConfig = {
+const propsConfig = {
   color,
   backgroundColor,
   borderColor,

@@ -1,4 +1,13 @@
 const config = {
+  breakpoints: {
+    prefixOrSuffix: 'suffix',
+    separator: '-',
+    breakpoints: {
+      sm: '600px',
+      md: '795px',
+      lg: '1025px'
+    }
+  },
   colors: {
     'green-800': '#098530',
     'green-700': '#05AF3C',

@@ -24,10 +24,10 @@ export const generateAtom = ({
 // Value Formatters
 // ------------------------------------------------------------------
 
-// Length Units
+// Length Units Indicators
 // ------------------------------------------------------------------
 
-const addLengthUnit = (unit) => (num) => `${num}${unit}`;
+export const addLengthUnit = (unit) => (num) => `${num}${unit}`;
 
 // Pre-configured length unit functions for converting numbers
 // into length units compatible with CSS standards
@@ -37,37 +37,43 @@ const addPixel = addLengthUnit('px');
 const addViewportHeight = addLengthUnit('vh');
 const addViewportWidth = addLengthUnit('vw');
 
+// Converters
+// ------------------------------------------------------------------
+const pxToRem = (x, baseFontSize = 16) => addRem(x/baseFontSize);
 
-// Convert pixel values into their rem equivalent. This can be
-// configured by the user if they have reset their body font size
-// to something other than 16px or 100%
-const pxToRem = (x, baseFontSize = 10) => addRem(x/baseFontSize);
-
-const hardPixel = (x,baseFontSize,remify) => remify
-  ? pxToRem(x,baseFontSize)
-  : addPixel(x);
-
-const baseline = (x,baselineUnit,baseFontSize) =>
-  addRem((x*baselineUnit)/baseFontSize);
+export const unboundFormatPx = (
+  baseFontSize,
+  useRems,
+  baselineUnit
+) => (x,baseline) => {
+  const convertedUnit = baseline ? x*baselineUnit : x;
+  return useRems
+    ? pxToRem(convertedUnit,baseFontSize)
+    : addPixel(convertedUnit);
+};
 
 export const formatLengthUnitValue = (length, lengthUnit, config) => {
   const { baseFontSize, baselineUnit, useRems } = config.misc;
+  const formatPx = unboundFormatPx(baseFontSize,useRems,baselineUnit);
 
   switch (config.units[lengthUnit]) {
     case 'baseline':
-      return baseline(length,baselineUnit,baseFontSize);
+      return formatPx(length,true);
     case 'percent':
       return addPercent(length);
     case 'hardPixel':
-      return hardPixel(length,baseFontSize,useRems);
+      return formatPx(length);
     case 'viewportHeight':
       return addViewportHeight(length);
     case 'viewportWidth':
       return addViewportWidth(length);
     default:
-      return 'Something cool';
+      return 'Unknown length unit';
   }
 };
+
+// Prefix or Suffix
+// ------------------------------------------------------------------
 
 export const formatPrefixOrSuffix = (key,separator,prefixOrSuffix) =>
   prefixOrSuffix === 'prefix'

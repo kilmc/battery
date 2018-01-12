@@ -10,7 +10,11 @@ import { formatPrefixOrSuffix } from './formatters';
 // ================  R E G E X  G E N E R A T O R S  ================
 // ------------------------------------------------------------------
 
-const generateBucketRegex = (bucketName,bucketRegexTemplate,propsConfig) => {
+export const generateBucketRegex = (
+  bucketName,
+  bucketRegexTemplate,
+  propsConfig
+) => {
   const enableBucket = _.camelCase(`enable ${bucketName}`);
   const propNames = Object.keys(propsConfig)
     .map(prop => propsConfig[prop])
@@ -25,7 +29,7 @@ const generateBucketRegex = (bucketName,bucketRegexTemplate,propsConfig) => {
 
 
 // Colors regex
-// ------------
+// ------------------------------------------------------------------
 
 export const generateColorsRegex = (colorConfig) => (
   { 'colors': regexStringFromArray(Object.keys(colorConfig)) }
