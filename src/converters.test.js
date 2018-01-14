@@ -3,6 +3,7 @@
 import {
   addPseudoSelectors,
   colorsConverter,
+  convertSubProps,
   generateManualAtoms,
   integersConverter,
   lengthUnitsConverter,
@@ -10,6 +11,88 @@ import {
 } from './converters';
 
 import config from './testConfig';
+
+const subPropsTestConfig = {
+  props: {
+    margin: {
+      prop: 'margin',
+      propName: 'm',
+      subProps: {
+        't': 'top',
+        'x': 'left right',
+      },
+      enableLengthUnits: true
+    }
+  },
+};
+
+const borderTestConfig = {
+  props: {
+    borderWidth: {
+      prop: 'border-width',
+      propName: 'border',
+      subPropSeparator: '-',
+      subProps: {
+        'top': 'top',
+        'x': 'left right',
+      },
+      enableLengthUnits: true
+    }
+  },
+};
+
+describe('convertSubProps', () => {
+  it('creates propsConfigs from subProps', () => {
+    expect(convertSubProps(subPropsTestConfig)).toEqual({
+      'props': {
+        'margin': {
+          'enableLengthUnits': true,
+          'prop': 'margin',
+          'propName': 'm',
+          'subProps': {'t': 'top', 'x': 'left right' }
+        },
+        'marginLeftRight': {
+          'enableLengthUnits': true,
+          'prop': 'margin-left margin-right',
+          'propName': 'mx'
+        },
+        'marginTop': {
+          'enableLengthUnits': true,
+          'prop': 'margin-top',
+          'propName': 'mt'
+        }
+      }
+    });
+  });
+
+  it('reorders the naming convention for border props', () => {
+    expect(convertSubProps(borderTestConfig)).toEqual({
+      'props': {
+        'borderWidth': {
+          'enableLengthUnits': true,
+          'prop': 'border-width',
+          'propName': 'border',
+          'subPropSeparator': '-',
+          'subProps': {
+            'top': 'top',
+            'x': 'left right'
+          }
+        },
+        'borderWidthTop': {
+          'enableLengthUnits': true,
+          'prop': 'border-top-width',
+          'propName': 'border-top'
+        },
+        'borderWidthLeftRight': {
+          'enableLengthUnits': true,
+          'prop': 'border-left-width border-right-width',
+          'propName': 'border-x'
+        }
+      }
+    });
+  });
+});
+
 
 describe('colorsConverter', () => {
   it('converts class names to atomObjects', () => {

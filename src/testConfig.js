@@ -1,3 +1,5 @@
+import { convertSubProps } from './converters';
+
 const config = {
   breakpoints: {
     prefixOrSuffix: 'suffix',
@@ -64,10 +66,18 @@ const config = {
       propName: 'grow',
       enableIntegers: true
     },
-    marginX: {
-      prop: 'margin-left margin-right',
-      propName: 'mx',
-      enableLengthUnits: true,
+    margin: {
+      prop: 'margin',
+      propName: 'm',
+      subProps: {
+        't': 'top',
+        'r': 'right',
+        'b': 'bottom',
+        'l': 'left',
+        'x': 'left right',
+        'y': 'top bottom'
+      },
+      enableLengthUnits: true
     },
     order: {
       prop: 'order',
@@ -99,4 +109,6 @@ const config = {
   }
 };
 
-export default config;
+const processedConfig = convertSubProps(config);
+
+export default processedConfig;

@@ -1,12 +1,50 @@
 import { regexStringFromArray, subtractArrays } from './helpers';
+import _ from 'lodash';
+
 import {
   generateAtom,
+  formatBorderProp,
   formatLengthUnitValue
 } from './formatters';
 
 // ------------------------------------------------------------------
 // =====================  C O N V E R T E R S  ======================
 // ------------------------------------------------------------------
+
+export const convertSubProps = (config) => {
+  const { props: propsConfigs } = config;
+
+  const subPropConfigs = Object.keys(propsConfigs)
+    .map(x => propsConfigs[x])
+    .filter(x => typeof x.subProps === 'object');
+
+  const convertedPropConfigs = subPropConfigs
+    .map(subPropConfig => {
+      const { prop, propName, subProps, subPropSeparator = '', ...rest } = subPropConfig;
+
+      return Object.keys(subProps)
+        .reduce((accumPropConfigs, x) => {
+          const propConfigName = _.camelCase(`${prop} ${subProps[x]}`);
+          const subProp = subProps[x].split(' ');
+          const processedSubProp = prop.match('border')
+            ? subProp.map(y => formatBorderProp(prop,y)).join(' ')
+            : subProp.map(y => `${prop}-${y}`).join(' ');
+
+          accumPropConfigs[propConfigName] = {
+            prop: processedSubProp,
+            propName: `${propName}${subPropSeparator}${x}`,
+            ...rest
+          };
+
+          return accumPropConfigs;
+        },{});
+    }).reduce((accum,x) => accum = { ...accum, ...x },{});
+
+  return {
+    ...config,
+    props: { ...config.props, ...convertedPropConfigs }
+  };
+};
 
 // Colors
 // ------------------------------------------------------------------

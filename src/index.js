@@ -10,6 +10,7 @@ import {
 
 import {
   colorsConverter,
+  convertSubProps,
   lengthUnitsConverter,
   manualClassNameConverter,
   integersConverter,
@@ -22,20 +23,21 @@ import {
 // ------------------------------------------------------------------
 
 export const generate = (arr,config) => {
-  const { css, breakpoints } = config;
+  const processedConfig = convertSubProps(config);
+  const { css, breakpoints } = processedConfig;
 
   const {
     colors,
     lengthUnits,
     manualClasses,
     integers
-  } = sortClasses(arr,config);
+  } = sortClasses(arr,processedConfig);
 
   const classNamesToAtoms = {
-    ...colorsConverter(colors,config),
-    ...lengthUnitsConverter(lengthUnits,config),
-    ...manualClassNameConverter(manualClasses,config),
-    ...integersConverter(integers,config)
+    ...colorsConverter(colors,processedConfig),
+    ...lengthUnitsConverter(lengthUnits,processedConfig),
+    ...manualClassNameConverter(manualClasses,processedConfig),
+    ...integersConverter(integers,processedConfig)
   };
 
   // TODO: Figure out why mutations are happening to classNamesToAtoms

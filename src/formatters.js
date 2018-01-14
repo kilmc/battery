@@ -79,3 +79,12 @@ export const formatPrefixOrSuffix = (key,separator,prefixOrSuffix) =>
   prefixOrSuffix === 'prefix'
     ? `${key}${separator}`
     : `${separator}${key}`;
+
+
+// CSS
+// ------------------------------------------------------------------
+
+export const formatBorderProp = (rootProp,subProp) => {
+  const [start, end] = rootProp.split('-');
+  return `${start}-${subProp}-${end}`;
+};
