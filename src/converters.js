@@ -26,6 +26,8 @@ export const colorsConverter = (arr, config) => {
   const hasEmptyStringPropName = colorProps
     .some(x => x.propName === '');
 
+
+
   // Splits the colorProps in two to process the empty string propName
   // separately below
   if (hasEmptyStringPropName) {
@@ -39,7 +41,6 @@ export const colorsConverter = (arr, config) => {
   const colorClasses = colorProps
     .reduce((allClasses, propConfig) => {
       const { prop, propName, separator = '' } = propConfig;
-
       const matchedClasses = sortingArr
         .filter(cx => cx.match(propName+separator));
 
@@ -68,7 +69,8 @@ export const colorsConverter = (arr, config) => {
   if (hasEmptyStringPropName) {
     const emptyStringPropNameColorClasses = sortingArr
       .reduce((accum,cx) => {
-        const valueName = cx.replace(new RegExp(`(.*?)(${cx})(.*)`), '$2');
+        const valueName = cx
+          .replace(new RegExp(`(.*?)(${regexStringFromArray(colorKeys)})(.*)`), '$2');
 
         accum = {
           ...accum,
@@ -165,7 +167,7 @@ export const integersConverter = (arr, config) => {
       const convertedClasses = matchedClasses
         .reduce((accum,cx) => {
           const value = cx.replace(
-            new RegExp(`(.*?)(${propName}${separator})(\\d+|-\\d)(.*)`), '$3');
+            new RegExp(`(.*?)(${propName}${separator})(\\d+|-\\d+)(.*)`), '$3');
           accum = {
             ...accum,
             ...generateAtom({
