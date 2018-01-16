@@ -1,6 +1,6 @@
 import { convertSubProps } from './converters';
 
-const config = {
+export const config = {
   breakpoints: {
     prefixOrSuffix: 'suffix',
     separator: '-',

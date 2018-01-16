@@ -22,7 +22,7 @@ import {
 // =======================  G E N E R A T E  ========================
 // ------------------------------------------------------------------
 
-export const generate = (arr,config) => {
+export const generateCSS = (arr,config) => {
   const processedConfig = convertSubProps(config);
   const { css, breakpoints } = processedConfig;
 

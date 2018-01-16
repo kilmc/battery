@@ -224,7 +224,16 @@ const listStyle = {};
 // ------------------------------------------------------------------
 const margin = {
   prop: 'margin',
-  propName: 'm'
+  propName: 'm',
+  subProps: {
+    't': 'top',
+    'r': 'right',
+    'b': 'bottom',
+    'l': 'left',
+    'x': 'left right',
+    'y': 'top bottom'
+  },
+  enableLengthUnits: true
 };
 
 const marginTop = { prop: 'margin-top', propName: 'mt' };

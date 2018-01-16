@@ -1,6 +1,6 @@
 /* eslint-env jest, node */
 
-import { generate } from './index';
+import { generateCSS } from './index';
 import config from './testConfig';
 
 const textClasses = [
@@ -15,9 +15,9 @@ const textClasses = [
   'order-100'
 ];
 
-describe('generate', () => {
+describe('generateCSS', () => {
   it('geneates an atomic css library', () => {
-    expect(generate(textClasses,config)).toEqual(`.green-500 { color: #25CB68; }
+    expect(generateCSS(textClasses,config)).toEqual(`.green-500 { color: #25CB68; }
 .bg-green-800 { background-color: #098530; }
 .w100p { width: 100%; }
 .bg-cover { background-size: cover; }
