@@ -18,4 +18,22 @@ const colorsConfig = {
   'red-400': '#FF5151',
 };
 
+export const themes = {
+  default: {
+    'primary-light': 'grey-900',
+    'primary-dark': 'black',
+    'primary-accent': 'green-400'
+  },
+  build: {
+    'primary-light': 'blue-500',
+    'primary-dark': 'blue-600',
+    'primary-accent': 'blue-500'
+  },
+  checkout: {
+    'primary-light': 'green-500',
+    'primary-dark': 'green-700',
+    'primary-accent': 'green-500'
+  }
+};
+
 export default colorsConfig;

@@ -234,8 +234,6 @@ export const generateManualAtoms = (props) => (
     .filter(propConfig => typeof propConfig.manual === 'object' )
     .reduce((accumClassNames, propConfig) => {
 
-      // For readability we desctructure the prop to get the
-      // component parts of the class names we want to generate
       const { prop, propName, manual: { separator = '', values } } = propConfig;
 
       const classNames = Object.keys(values)
@@ -251,6 +249,7 @@ export const generateManualAtoms = (props) => (
 
           return accumAtoms;
         },{});
+
       accumClassNames = {
         ...accumClassNames,
         ...classNames
@@ -280,19 +279,18 @@ export const manualClassNameConverter = (arr, config) => {
 // ------------------------------------------------------------------
 
 export const addPseudoSelectors = (classes,pseudoConfig) => {
-  const processedClasses = classes;
-
+  // TODO: Possible issue with mutation
   Object.keys(pseudoConfig)
     .reduce((accum,selector) => {
       const { pseudoName, pseudo } = pseudoConfig[selector];
 
-      Object.keys(processedClasses)
+      Object.keys(classes)
         .filter(x => x.match(pseudoName))
         .reduce((accumCxs, cx) => {
-          processedClasses[`${cx}:${pseudo}`] = processedClasses[cx];
-          Reflect.deleteProperty(processedClasses,cx);
+          classes[`${cx}:${pseudo}`] = classes[cx];
+          Reflect.deleteProperty(classes,cx);
         },{});
 
     },{});
-  return processedClasses;
+  return classes;
 };

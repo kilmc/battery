@@ -1,23 +1,24 @@
 /* eslint-env jest, node */
 
 import {
-  generateBucketRegex,
+  generateFeatureRegex,
   generateColorsRegex,
   generateManualClassNameRegex,
   generateRegexes,
   sortBreakpoints,
-  sortClasses
+  sortClasses,
+  sortKeys
 } from './sorters';
 
 import config from './testConfig';
 
-describe('generateBucketRegex', () => {
+describe('generateFeatureRegex', () => {
   it('generates key value pair of the bucket name and regex string', () => {
-    expect(generateBucketRegex(
-      'integers',
-      '(propNames(\\d+|-\\d+))',
-      config.props
-    )).toEqual({'integers': '((grow|order|z)(\\d+|-\\d+))'});
+    expect(generateFeatureRegex({
+      name: 'integers',
+      regexFn: (x) => `((${x.join('|')})(\\d+|-\\d+))`,
+      config: config.props
+    })).toEqual({'integers': '((grow|order|z)(\\d+|-\\d+))'});
   });
 });
 
@@ -84,5 +85,16 @@ describe('sortBreakpoints', () => {
           'text-center-sm': {'text-align': 'center'}
         }
       });
+  });
+});
+
+describe('sortKeys', () => {
+  it('should create an object which sorts the array items by length', () => {
+    expect(sortKeys('lengthUnits',['border','min-h','mt','t'])).toEqual({
+      6: { lengthUnits: ['border']},
+      5: { lengthUnits: ['min-h']},
+      2: { lengthUnits: ['mt']},
+      1: { lengthUnits: ['t']}
+    });
   });
 });

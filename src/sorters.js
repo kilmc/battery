@@ -1,8 +1,12 @@
-import _ from 'lodash';
 import {
   regexStringFromArray,
-  subtractArrays
+  subtractArrays,
 } from './helpers';
+
+import {
+  getConfigs,
+  getFeatureConfigs
+} from './features';
 
 import { formatPrefixOrSuffix } from './formatters';
 
@@ -10,21 +14,15 @@ import { formatPrefixOrSuffix } from './formatters';
 // ================  R E G E X  G E N E R A T O R S  ================
 // ------------------------------------------------------------------
 
-export const generateBucketRegex = (
-  bucketName,
-  bucketRegexTemplate,
-  propsConfig
-) => {
-  const enableBucket = _.camelCase(`enable ${bucketName}`);
-  const propNames = Object.keys(propsConfig)
-    .map(prop => propsConfig[prop])
-    .filter(prop => prop[enableBucket] === true)
+export const generateFeatureRegex = ({
+  name,
+  regexFn,
+  config
+}) => {
+  const propNames = getFeatureConfigs(name,config)
     .reduce((xs,x) => xs.concat(x.propName),[]);
 
-  const fullBucketRegex = bucketRegexTemplate
-    .replace('propNames',regexStringFromArray(propNames));
-
-  return { [bucketName]: fullBucketRegex };
+  return { [name]: regexFn(propNames) };
 };
 
 
@@ -32,7 +30,7 @@ export const generateBucketRegex = (
 // ------------------------------------------------------------------
 
 export const generateColorsRegex = (colorConfig) => (
-  { 'colors': regexStringFromArray(Object.keys(colorConfig)) }
+  { 'colors': `(${Object.keys(colorConfig).join('|')})` }
 );
 
 
@@ -40,21 +38,20 @@ export const generateColorsRegex = (colorConfig) => (
 // ------------------------------------------------------------------
 
 export const generateManualClassNameRegex = (propsConfig) => {
-  const generatedClassNames = Object.keys(propsConfig)
-    .map(prop => propsConfig[prop])
-    .filter(propConfig => typeof propConfig.manual === 'object' )
-    .reduce((accumClassNames, propConfig) => {
+  const generatedClassNames = getConfigs(
+    propConfig => typeof propConfig.manual === 'object',
+    propsConfig
+  ).reduce((accumClassNames, propConfig) => {
 
-      // For readability we desctructure the prop to get the
-      // component parts of the class names we want to generate
-      const { propName, manual: { separator = '', values } } = propConfig;
+    const { propName, manual: { separator = '', values } } = propConfig;
 
-      const classNames = Object.keys(values).reduce((accumValues,value) => (
+    const classNames = Object.keys(values)
+      .reduce((accumValues,value) => (
         accumValues.concat(`${propName}${separator}${value}`)
       ),[]);
 
-      return accumClassNames.concat(classNames);
-    },[]);
+    return accumClassNames.concat(classNames);
+  },[]);
 
   return { 'manualClasses': regexStringFromArray(generatedClassNames) };
 };
@@ -62,24 +59,24 @@ export const generateManualClassNameRegex = (propsConfig) => {
 
 // Length Units regex
 // ------------------------------------------------------------------
-export const generateLengthUnitRegex = (config) => (
-  generateBucketRegex(
-    'lengthUnits',
-    '(propNames(\\d+|-\\d+))',
-    config
-  )
+export const generateLengthUnitRegex = (propConfigs) => (
+  generateFeatureRegex({
+    name: 'lengthUnits',
+    regexFn: (x) => `((${x.join('|')})(\\d+|-\\d+))`,
+    config: propConfigs
+  })
 );
 
 
 // Integers regex
 // ------------------------------------------------------------------
 
-export const generateIntegerRegex = (config) => (
-  generateBucketRegex(
-    'integers',
-    '(propNames(\\d+|-\\d+))',
-    config
-  )
+export const generateIntegerRegex = (propConfigs) => (
+  generateFeatureRegex({
+    name: 'integers',
+    regexFn: (x) => `((${x.join('|')})(\\d+|-\\d+))`,
+    config: propConfigs
+  })
 );
 
 
@@ -196,3 +193,15 @@ export const sortBreakpoints = (classes,breakpointsConfig) => {
     ...breakpointClasses
   };
 };
+
+
+export const sortKeys = (groupName,arr) =>
+  arr.reduce((xs,x) => {
+    const charCount = x.length;
+    if (!xs[charCount]) {
+      xs[charCount] = { [groupName]: [x] };
+    } else {
+      xs[charCount][groupName].concat(x);
+    }
+    return xs;
+  },{});

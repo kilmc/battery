@@ -16,3 +16,9 @@ export const subtractArrays = (arr1,arr2) => {
   });
   return returnArr;
 };
+
+export const capitalize = (key) => key
+  .replace(
+    key.charAt(0),
+    key.charAt(0).toUpperCase()
+  );

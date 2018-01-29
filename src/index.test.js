@@ -2,6 +2,7 @@
 
 import { generateCSS } from './index';
 import config from './testConfig';
+import config2 from '../config';
 
 const textClasses = [
   'bg-cover',

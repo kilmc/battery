@@ -85,13 +85,59 @@ const backgroundSize = {
 
 // border
 // ------------------------------------------------------------------
-const borderColor = { prop: 'border-color', propName: 'border' };
-const borderWidth = { prop: 'border-width', propName: 'border' };
-const borderRadius = {};
+const borders = {
+  prop: 'border',
+  propName: 'border',
+  subProps: {
+    'top': 'top',
+    'right': 'right',
+    'bottom': 'bottom',
+    'left': 'left',
+    'x': 'left right',
+    'y': 'top bottom'
+  },
+  manual: {
+    separator: '-',
+    values: {
+      'default': '1px solid #DCDEDD',
+      'none': 'none'
+    }
+  }
+};
+const borderColor = {
+  prop: 'border-color',
+  propName: 'border',
+  enableColors: true
+};
+
+const borderWidth = {
+  prop: 'border-width',
+  propName: 'border',
+  enableLengthUnits: true
+};
+const borderRadius = {
+  prop: 'border-radius',
+  propName: '',
+  manual: {
+    values: {
+      'rounded': '0.2rem',
+      'circle': '100%'
+    }
+  }
+};
 
 // box-shadow
 // ------------------------------------------------------------------
-const boxShadow = {};
+const boxShadow = {
+  prop: 'box-shadow',
+  propName: 'shadow',
+  manual: {
+    separator: '-',
+    values: {
+      1: '0 2px rgba(0,0,0,0.12)'
+    }
+  }
+};
 
 // box-sizing
 // ------------------------------------------------------------------
@@ -163,11 +209,8 @@ const float = {
 // ------------------------------------------------------------------
 const fontSize = {
   prop: 'font-size',
-  propName: 'type',
-  allowedValues: [
-    '132','100','66','60','48','38','34','28',
-    '24','21','18','16','14','13','12','10'
-  ]
+  propName: 'fz',
+  enableLengthUnits: true
 };
 
 // font-family
@@ -188,7 +231,15 @@ const fontStyle = {};
 
 // font-weight
 // ------------------------------------------------------------------
-const fontWeight = {};
+const fontWeight = {
+  prop: 'font-weight',
+  propName: '',
+  manual: {
+    values: {
+      medium: '400'
+    }
+  }
+};
 
 // height
 // ------------------------------------------------------------------
@@ -233,15 +284,12 @@ const margin = {
     'x': 'left right',
     'y': 'top bottom'
   },
+  manual: {
+    separator: '-',
+    values: { auto: 'auto' }
+  },
   enableLengthUnits: true
 };
-
-const marginTop = { prop: 'margin-top', propName: 'mt' };
-const marginRight = { prop: 'margin-right', propName: 'mr' };
-const marginBottom = { prop: 'margin-bottom', propName: 'mb' };
-const marginLeft = { prop: 'margin-left', propName: 'ml' };
-const marginX = { prop: 'margin-left margin-right', propName: 'mx' };
-const marginY = { prop: 'margin-top margin-bottom', propName: 'my' };
 
 // opacity
 // ------------------------------------------------------------------
@@ -257,13 +305,19 @@ const overflow = {};
 
 // padding
 // ------------------------------------------------------------------
-const padding = { prop: 'padding', propName: 'p' };
-const paddingTop = { prop: 'padding-top', propName: 'pt' };
-const paddingRight = { prop: 'padding-right', propName: 'pr' };
-const paddingBottom = { prop: 'padding-bottom', propName: 'pb' };
-const paddingLeft = { prop: 'padding-left', propName: 'pl' };
-const paddingX = { prop: 'padding-left padding-right', propName: 'px' };
-const paddingY = { prop: 'padding-top padding-bottom', propName: 'py' };
+const padding = {
+  prop: 'padding',
+  propName: 'p',
+  subProps: {
+    't': 'top',
+    'r': 'right',
+    'b': 'bottom',
+    'l': 'left',
+    'x': 'left right',
+    'y': 'top bottom'
+  },
+  enableLengthUnits: true
+};
 
 // pointer-events
 // ------------------------------------------------------------------
@@ -281,6 +335,30 @@ const position = {
       'fixed': 'fixed'
     }
   }
+};
+
+const top = {
+  prop: 'top',
+  propName: 't',
+  enableLengthUnits: true
+};
+
+const right = {
+  prop: 'right',
+  propName: 'r',
+  enableLengthUnits: true
+};
+
+const bottom = {
+  prop: 'bottom',
+  propName: 'b',
+  enableLengthUnits: true
+};
+
+const left = {
+  prop: 'left',
+  propName: 'l',
+  enableLengthUnits: true
 };
 
 // resize
@@ -330,7 +408,11 @@ const whiteSpace = {};
 
 // width
 // ------------------------------------------------------------------
-const width = { prop: 'width', propName: 'w' };
+const width = {
+  prop: 'width',
+  propName: 'w',
+  enableLengthUnits: true
+};
 const minWidth = { prop: 'min-width', propName: 'min-w' };
 const maxWidth = { prop: 'max-width', propName: 'max-w' };
 
@@ -340,7 +422,11 @@ const wordBreak = {};
 
 // z-index
 // ------------------------------------------------------------------
-const zIndex = { propName: 'z', prop: 'z-index' };
+const zIndex = {
+  propName: 'z',
+  prop: 'z-index',
+  enableIntegers: true
+};
 
 const propsConfig = {
   color,
@@ -354,19 +440,7 @@ const propsConfig = {
   minHeight,
   maxHeight,
   margin,
-  marginTop,
-  marginRight,
-  marginBottom,
-  marginLeft,
-  marginX,
-  marginY,
   padding,
-  paddingTop,
-  paddingRight,
-  paddingBottom,
-  paddingLeft,
-  paddingX,
-  paddingY,
   width,
   minWidth,
   maxWidth,
@@ -377,6 +451,7 @@ const propsConfig = {
   backgroundPosition,
   backgroundRepeat,
   borderRadius,
+  borders,
   boxShadow,
   boxSizing,
   clear,
@@ -395,6 +470,10 @@ const propsConfig = {
   overflow,
   pointerEvents,
   position,
+  top,
+  right,
+  bottom,
+  left,
   resize,
   textAlign,
   textDecoration,
@@ -417,23 +496,10 @@ enablePropFeature('colors',propsConfig,[
 enablePropFeature('lengthUnits',propsConfig,[
   'height',
   'margin',
-  'marginBottom',
-  'marginLeft',
-  'marginRight',
-  'marginTop',
-  'marginX',
-  'marginY',
   'maxHeight',
   'maxWidth',
   'minHeight',
   'minWidth',
-  'padding',
-  'paddingBottom',
-  'paddingLeft',
-  'paddingRight',
-  'paddingTop',
-  'paddingX',
-  'paddingY',
   'width',
 ]);
 

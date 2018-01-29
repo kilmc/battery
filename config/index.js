@@ -11,7 +11,7 @@ const config = {
   units: unitsConfig,
   props: propsConfig,
   misc: {
-    baseFontSize: 10,
+    baseFontSize: 16,
     baselineUnit: 6,
     useRems: true,
   }
