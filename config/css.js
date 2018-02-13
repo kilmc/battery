@@ -11,6 +11,12 @@ const cssConfig = {
       pseudoName: 'focus',
       separator: '-',
       prefixOrSuffix: 'prefix'
+    },
+    lastChild: {
+      pseudo: 'last-child',
+      pseudoName: 'last-child',
+      separator: '-',
+      prefixOrSuffix: 'suffix'
     }
   }
 };

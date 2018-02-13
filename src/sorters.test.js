@@ -7,7 +7,7 @@ import {
   generateRegexes,
   sortBreakpoints,
   sortClasses,
-  sortKeys
+  generateRegexGroups
 } from './sorters';
 
 import config from './testConfig';
@@ -18,32 +18,48 @@ describe('generateFeatureRegex', () => {
       name: 'integers',
       regexFn: (x) => `((${x.join('|')})(\\d+|-\\d+))`,
       config: config.props
-    })).toEqual({'integers': '((grow|order|z)(\\d+|-\\d+))'});
+    })).toEqual({
+      '1': {'integers': '((z)(\\d+|-\\d+))'},
+      '4': {'integers': '((grow)(\\d+|-\\d+))'},
+      '5': {'integers': '((order)(\\d+|-\\d+))'}
+    });
   });
 });
 
 describe('generateColorsRegex', () => {
   it('generates a regex string of all color names', () => {
     expect(generateColorsRegex(config.colors))
-      .toEqual({'colors': '(green-800|green-700|green-500)'});
+      .toEqual({'9': {'colors': '(green-800|green-700|green-500)'}});
   });
 });
 
 describe('generateManualClassNameRegex', () => {
   it('', () => {
     expect(generateManualClassNameRegex(config.props))
-      .toEqual({'manualClasses': '(bg-cover|bg-contain|bg-full-height|bg-full-width)'});
+      .toEqual({
+        '10': {'manualClasses': '(bg-contain)'},
+        '13': {'manualClasses': '(bg-full-width)'},
+        '14': {'manualClasses': '(bg-full-height)'},
+        '8': {'manualClasses': '(bg-cover)'}
+      });
   });
 });
 
 describe('generateRegexes', () => {
   it('generates an object with regexes for each bucket', () => {
     expect(generateRegexes(config)).toEqual({
-      'colors': '(green-800|green-700|green-500)',
-      'integers': '((grow|order|z)(\\d+|-\\d+))',
-      'lengthUnits': '((bg|m|w|mt|mr|mb|ml|mx|my)(\\d+|-\\d+))',
-      'manualClasses': '(bg-cover|bg-contain|bg-full-height|bg-full-width)'
-    });
+      '1': {
+        'lengthUnits': '((m|w)(\\d+|-\\d+))',
+        'integers': '((z)(\\d+|-\\d+))'
+      },
+      '10': {'manualClasses': '(bg-contain)'},
+      '13': {'manualClasses': '(bg-full-width)'},
+      '14': {'manualClasses': '(bg-full-height)'},
+      '2': {'lengthUnits': '((bg|mt|mr|mb|ml|mx|my)(\\d+|-\\d+))'},
+      '4': {'integers': '((grow)(\\d+|-\\d+))'},
+      '5': {'integers': '((order)(\\d+|-\\d+))'},
+      '8': {'manualClasses': '(bg-cover)'},
+      '9': {'colors': '(green-800|green-700|green-500)'}});
   });
 });
 
@@ -88,13 +104,17 @@ describe('sortBreakpoints', () => {
   });
 });
 
-describe('sortKeys', () => {
+describe('generateRegexGroups', () => {
   it('should create an object which sorts the array items by length', () => {
-    expect(sortKeys('lengthUnits',['border','min-h','mt','t'])).toEqual({
-      6: { lengthUnits: ['border']},
-      5: { lengthUnits: ['min-h']},
-      2: { lengthUnits: ['mt']},
-      1: { lengthUnits: ['t']}
+    expect(generateRegexGroups(
+      'lengthUnits',
+      ['border','min-h','mt','t'],
+      (x) => `((${x.join('|')})(\\d+|-\\d+))`)
+    ).toEqual({
+      '1': {'lengthUnits': '((t)(\\d+|-\\d+))'},
+      '2': {'lengthUnits': '((mt)(\\d+|-\\d+))'},
+      '5': {'lengthUnits': '((min-h)(\\d+|-\\d+))'},
+      '6': {'lengthUnits': '((border)(\\d+|-\\d+))'}
     });
   });
 });

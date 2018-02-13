@@ -1,3 +1,5 @@
+import deepmerge from 'deepmerge';
+
 import {
   regexStringFromArray,
   subtractArrays,
@@ -14,6 +16,24 @@ import { formatPrefixOrSuffix } from './formatters';
 // ================  R E G E X  G E N E R A T O R S  ================
 // ------------------------------------------------------------------
 
+export const generateRegexGroups = (groupName,arr,regexFn) => {
+  const sorted = arr.reduce((xs,x) => {
+    const charCount = x.length;
+
+    if (!xs[charCount]) {
+      xs[charCount] = { [groupName]: [x] };
+    } else {
+      xs[charCount][groupName].push(x);
+    }
+    return xs;
+  },{});
+
+  Object.keys(sorted).forEach(x => {
+    sorted[x][groupName] = regexFn(sorted[x][groupName]);
+  });
+  return sorted;
+};
+
 export const generateFeatureRegex = ({
   name,
   regexFn,
@@ -22,16 +42,19 @@ export const generateFeatureRegex = ({
   const propNames = getFeatureConfigs(name,config)
     .reduce((xs,x) => xs.concat(x.propName),[]);
 
-  return { [name]: regexFn(propNames) };
+  return generateRegexGroups(name,propNames,regexFn);
 };
 
 
 // Colors regex
 // ------------------------------------------------------------------
 
-export const generateColorsRegex = (colorConfig) => (
-  { 'colors': `(${Object.keys(colorConfig).join('|')})` }
-);
+export const generateColorsRegex = (colorConfig) =>
+  generateRegexGroups(
+    'colors',
+    Object.keys(colorConfig),
+    (x) => `(${x.join('|')})`
+  );
 
 
 // Predefined Classes regex
@@ -53,7 +76,11 @@ export const generateManualClassNameRegex = (propsConfig) => {
     return accumClassNames.concat(classNames);
   },[]);
 
-  return { 'manualClasses': regexStringFromArray(generatedClassNames) };
+  return generateRegexGroups(
+    'manualClasses',
+    generatedClassNames,
+    (x) => `(${x.join('|')})`
+  );
 };
 
 
@@ -84,7 +111,7 @@ export const generateIntegerRegex = (propConfigs) => (
 // ------------------------------------------------------------------
 
 export const generateRegexes = (config) => {
-  let regexes;
+  let regexes = {};
   const { props, colors } = config;
   const propsKeys = Object.keys(props);
 
@@ -102,32 +129,33 @@ export const generateRegexes = (config) => {
     .map(prop => props[prop].manual)
     .some(x => typeof x === 'object');
 
+
   if (hasColors) {
-    regexes = {
-      ...regexes,
-      ...generateColorsRegex(colors)
-    };
+    regexes = deepmerge(
+      regexes,
+      generateColorsRegex(colors)
+    );
   }
 
   if (hasManualConfigs) {
-    regexes = {
-      ...regexes,
-      ...generateManualClassNameRegex(props)
-    };
+    regexes = deepmerge(
+      regexes,
+      generateManualClassNameRegex(props)
+    );
   }
 
   if (hasIntegers) {
-    regexes = {
-      ...regexes,
-      ...generateIntegerRegex(props)
-    };
+    regexes = deepmerge(
+      regexes,
+      generateIntegerRegex(props)
+    );
   }
 
   if (hasLengthUnits) {
-    regexes = {
-      ...regexes,
-      ...generateLengthUnitRegex(props)
-    };
+    regexes = deepmerge(
+      regexes,
+      generateLengthUnitRegex(props)
+    );
   }
 
   return regexes;
@@ -139,21 +167,48 @@ export const generateRegexes = (config) => {
 // ------------------------------------------------------------------
 
 export const sortClasses = (arr, config) => {
-  let sortingArr = arr;
+  let sortingArr = [...arr];
   const regexes = generateRegexes(config);
+  const orderedLengthGroups = Object.keys(regexes).sort((a,b) => b - a);
 
-  const sortedClasses = Object.keys(regexes)
-    .reduce((sortGroups, sortGroup) => {
+  // const sortedClasses =
+  //   orderedLengthGroups.reduce((xs,regexGroup) => {
+  //     return Object.keys(regexes[regexGroup])
+  //       .reduce((sortGroups, sortGroup) => {
+  //         const matchedClasses = sortingArr
+  //           .filter(cx => cx.match(regexes[regexGroup][sortGroup]));
+
+  //         sortGroups[sortGroup] = matchedClasses;
+
+  //         // Remove any sorted classes from the sortingArr
+  //         sortingArr = subtractArrays(sortingArr,matchedClasses);
+  //         console.log(sortGroups)
+  //         return sortGroups;
+  //       },{});
+  //   },{});
+  console.log(sortingArr);
+  const sortedClasses = orderedLengthGroups.reduce((xs,x) => {
+    const processed = Object.keys(regexes[x]).reduce((ys,y) => {
       const matchedClasses = sortingArr
-        .filter(cx => cx.match(regexes[sortGroup]));
+        .filter(cx => cx.match(regexes[x][y]));
 
-      sortGroups[sortGroup] = matchedClasses;
+      if(matchedClasses.length !== 0) {
+        console.log(!ys[y]);
+        if (!ys[y]) {
+          ys[y] = matchedClasses;
+          console.log('IF',!ys[y]);
+        } else {
+          console.log('ELSE',ys);
+          ys[y].push(matchedClasses);
+        }
+      }
 
-      // Remove any sorted classes from the sortingArr
       sortingArr = subtractArrays(sortingArr,matchedClasses);
-
-      return sortGroups;
+      return ys;
     },{});
+    xs = { ...xs, ...processed };
+    return xs;
+  },{});
 
   return {
     ...sortedClasses,
@@ -193,15 +248,3 @@ export const sortBreakpoints = (classes,breakpointsConfig) => {
     ...breakpointClasses
   };
 };
-
-
-export const sortKeys = (groupName,arr) =>
-  arr.reduce((xs,x) => {
-    const charCount = x.length;
-    if (!xs[charCount]) {
-      xs[charCount] = { [groupName]: [x] };
-    } else {
-      xs[charCount][groupName].concat(x);
-    }
-    return xs;
-  },{});
