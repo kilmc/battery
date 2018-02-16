@@ -1,12 +1,19 @@
-.green-800 { color: #098530; }
-.w90vw { width: 90vw; }
+.bg-white { background-color: #ffffff; }
+.p1 { padding: 0.375rem; }
 .max-w100p { max-width: 100%; }
+.w90p { width: 90%; }
+.fz20px { font-size: 1.25rem; }
 .mt10 { margin-top: 3.75rem; }
+.t20px { top: 1.25rem; }
+.r2 { right: 0.75rem; }
+.b1 { bottom: 0.375rem; }
+.l1 { left: 0.375rem; }
 .sans-serif { font-family: sans-serif; }
+.relative { position: relative; }
+.absolute { position: absolute; }
 .mx-auto { margin-left: auto; margin-right: auto; }
 .flex { display: flex; }
-li:last-child { color: #EF0707; }
+.hover-text-underline:hover { text-decoration: underline; }
 @media (min-width: 795px) {
-  .green-500-md { color: #25CB68; }
   .mb6-md { margin-bottom: 2.25rem; }
 }

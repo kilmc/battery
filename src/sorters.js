@@ -169,44 +169,23 @@ export const generateRegexes = (config) => {
 export const sortClasses = (arr, config) => {
   let sortingArr = [...arr];
   const regexes = generateRegexes(config);
+
   const orderedLengthGroups = Object.keys(regexes).sort((a,b) => b - a);
 
-  // const sortedClasses =
-  //   orderedLengthGroups.reduce((xs,regexGroup) => {
-  //     return Object.keys(regexes[regexGroup])
-  //       .reduce((sortGroups, sortGroup) => {
-  //         const matchedClasses = sortingArr
-  //           .filter(cx => cx.match(regexes[regexGroup][sortGroup]));
-
-  //         sortGroups[sortGroup] = matchedClasses;
-
-  //         // Remove any sorted classes from the sortingArr
-  //         sortingArr = subtractArrays(sortingArr,matchedClasses);
-  //         console.log(sortGroups)
-  //         return sortGroups;
-  //       },{});
-  //   },{});
-  console.log(sortingArr);
   const sortedClasses = orderedLengthGroups.reduce((xs,x) => {
-    const processed = Object.keys(regexes[x]).reduce((ys,y) => {
+    Object.keys(regexes[x]).forEach(y => {
       const matchedClasses = sortingArr
         .filter(cx => cx.match(regexes[x][y]));
 
       if(matchedClasses.length !== 0) {
-        console.log(!ys[y]);
-        if (!ys[y]) {
-          ys[y] = matchedClasses;
-          console.log('IF',!ys[y]);
+        if (!xs[y]) {
+          xs[y] = matchedClasses;
         } else {
-          console.log('ELSE',ys);
-          ys[y].push(matchedClasses);
+          xs[y] = [...xs[y], ...matchedClasses];
         }
       }
-
       sortingArr = subtractArrays(sortingArr,matchedClasses);
-      return ys;
-    },{});
-    xs = { ...xs, ...processed };
+    });
     return xs;
   },{});
 

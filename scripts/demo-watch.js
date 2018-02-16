@@ -5,14 +5,6 @@ const path = require('path');
 const Watchpack = require('watchpack');
 const fs = require('fs-extra');
 
-// Get absolute paths of all directories under packages/*
-function getFiles(dir) {
-  return fs
-    .readdirSync(dir)
-    .map(file => path.resolve(dir, file))
-    .filter(f => fs.lstatSync(path.resolve(f)).isFile());
-}
-
 function getDirectories(dir) {
   return fs
     .readdirSync(dir)

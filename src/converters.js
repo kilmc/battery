@@ -50,6 +50,7 @@ export const convertSubProps = (config) => {
 // ------------------------------------------------------------------
 
 export const colorsConverter = (arr, config) => {
+  if (!arr) return null;
   const { props, colors } = config;
   const colorKeys = Object.keys(colors);
   let sortingArr = arr;
@@ -65,7 +66,6 @@ export const colorsConverter = (arr, config) => {
     .some(x => x.propName === '');
 
 
-
   // Splits the colorProps in two to process the empty string propName
   // separately below
   if (hasEmptyStringPropName) {
@@ -79,6 +79,7 @@ export const colorsConverter = (arr, config) => {
   const colorClasses = colorProps
     .reduce((allClasses, propConfig) => {
       const { prop, propName, separator = '' } = propConfig;
+
       const matchedClasses = sortingArr
         .filter(cx => cx.match(propName+separator));
 
@@ -132,6 +133,7 @@ export const colorsConverter = (arr, config) => {
 // ------------------------------------------------------------------
 
 export const lengthUnitsConverter = (arr, config) => {
+  if (!arr) return null;
   const { units, props } = config;
 
   let matchNoSuffix;
@@ -189,6 +191,7 @@ export const lengthUnitsConverter = (arr, config) => {
 // ------------------------------------------------------------------
 
 export const integersConverter = (arr, config) => {
+  if (!arr) return null;
   const { props } = config;
 
   const integerProps = Object.keys(props)
@@ -259,6 +262,7 @@ export const generateManualAtoms = (props) => (
 );
 
 export const manualClassNameConverter = (arr, config) => {
+  if (!arr) return null;
   const { props } = config;
 
   const generatedAtoms = generateManualAtoms(props);

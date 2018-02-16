@@ -21,7 +21,8 @@ const backgroundColor = {
     values: {
       transparent: 'transparent'
     }
-  }
+  },
+  enableColors: true
 };
 
 // background-image
@@ -194,7 +195,6 @@ const order = { propName: 'order', prop: 'order' };
 // float
 // ------------------------------------------------------------------
 const float = {
-  prop: 'float',
   propName: '',
   manual: {
     values: {
@@ -332,7 +332,8 @@ const position = {
     values: {
       'absolute': 'absolute',
       'relative': 'relative',
-      'fixed': 'fixed'
+      'fixed': 'fixed',
+      'sticky': 'sticky'
     }
   }
 };
