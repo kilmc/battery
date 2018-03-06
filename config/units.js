@@ -6,4 +6,10 @@ const unitsConfig = {
   'vw': 'viewportWidth'
 };
 
+export const units = {
+  baseFontSize: 16,
+  baselineUnit: 6,
+  useRems: true,
+};
+
 export default unitsConfig;

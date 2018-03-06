@@ -7,6 +7,11 @@ import {
   formatLengthUnitValue
 } from './formatters';
 
+import {
+  getConfigs,
+  getFeatureConfigs
+} from './features';
+
 // ------------------------------------------------------------------
 // =====================  C O N V E R T E R S  ======================
 // ------------------------------------------------------------------
@@ -14,9 +19,10 @@ import {
 export const convertSubProps = (config) => {
   const { props: propsConfigs } = config;
 
-  const subPropConfigs = Object.keys(propsConfigs)
-    .map(x => propsConfigs[x])
-    .filter(x => typeof x.subProps === 'object');
+  const subPropConfigs = getConfigs(
+    x => typeof x.subProps === 'object',
+    propsConfigs
+  );
 
   const convertedPropConfigs = subPropConfigs
     .map(subPropConfig => {
@@ -49,84 +55,161 @@ export const convertSubProps = (config) => {
 // Colors
 // ------------------------------------------------------------------
 
-export const colorsConverter = (arr, config) => {
+export const classConverter = ({
+  featureName,
+  regexFn,
+}) => ({
+  arr,
+  propsConfig,
+  valuesConfig
+}) => {
   if (!arr) return null;
-  const { props, colors } = config;
-  const colorKeys = Object.keys(colors);
   let sortingArr = arr;
-  let emptyStringProp;
+  let defaultProp;
+  let featureProps = getFeatureConfigs(featureName,propsConfig);
 
-  // Filters out only propConfig objects with enableColors: true
-  let colorProps = Object.keys(props)
-    .map(prop => props[prop])
-    .filter(prop => prop.enableColors === true);
-
-  // Checks for a key of empty string as the propName for any prop
-  const hasEmptyStringPropName = colorProps
+  const requiresValueLookup = valuesConfig ? true : false;
+  const hasDefaultProp = featureProps
     .some(x => x.propName === '');
 
-
-  // Splits the colorProps in two to process the empty string propName
-  // separately below
-  if (hasEmptyStringPropName) {
-    emptyStringProp = colorProps
+  if (hasDefaultProp) {
+    defaultProp = featureProps
       .filter(x => x.propName === '')
       .map(x => `${x.prop}`)
       .toString();
-    colorProps = colorProps.filter(x => x.propName !== '');
+    featureProps = featureProps.filter(x => x.propName !== '');
   }
 
-  const colorClasses = colorProps
+  const generateClasses = (prop,arr,lookup = false) => {
+    return arr.reduce((accum,cx) => {
+      const value = cx.replace(new RegExp(`(.*?)${regexFn}(.*)`,'$2'));
+
+      accum = {
+        ...accum,
+        ...generateAtom({
+          className: cx,
+          cssProps: prop,
+          value: lookup ? valuesConfig[value] : value
+        })
+      };
+      return accum;
+    },{});
+  };
+
+  const classes = featureProps
     .reduce((allClasses, propConfig) => {
       const { prop, propName, separator = '' } = propConfig;
 
       const matchedClasses = sortingArr
         .filter(cx => cx.match(propName+separator));
 
-      const convertedClasses = matchedClasses
-        .reduce((accum,cx) => {
-          const valueName = cx.replace(
-            new RegExp(`(.*?)${regexStringFromArray(colorKeys)}(.*)`), '$2');
+      const convertedClasses = generateClasses(
+        prop,
+        matchedClasses,
+        requiresValueLookup
+      );
 
-          accum = {
-            ...accum,
-            ...generateAtom({
-              className: cx,
-              cssProps: prop,
-              value: colors[valueName]
-            })
-          };
-
-          return accum;
-        },{});
-
-      allClasses = { ...allClasses, ...convertedClasses };
       sortingArr = subtractArrays(sortingArr,matchedClasses);
+      allClasses = { ...allClasses, ...convertedClasses };
       return allClasses;
     },{});
 
-  if (hasEmptyStringPropName) {
-    const emptyStringPropNameColorClasses = sortingArr
-      .reduce((accum,cx) => {
-        const valueName = cx
-          .replace(new RegExp(`(.*?)(${regexStringFromArray(colorKeys)})(.*)`), '$2');
-
-        accum = {
-          ...accum,
-          ...generateAtom({
-            className: cx,
-            cssProps: emptyStringProp,
-            value: colors[valueName]
-          })
-        };
-
-        return accum;
-      },{});
-    return { ...emptyStringPropNameColorClasses, ...colorClasses };
+  if (hasDefaultProp) {
+    return {
+      ...generateClasses(
+        defaultProp,
+        sortingArr,
+        requiresValueLookup
+      ),
+      ...classes
+    };
   } else {
-    return colorClasses;
+    return classes;
   }
 };
+
+export const colorsConverter = classConverter({
+  featureName: 'colors',
+  regexFn: (x) => `(${x.join('|')})`,
+});
+
+// export const colorsConverter = (arr, config) => {
+//   if (!arr) return null;
+//   const { props, colors } = config;
+//   const colorKeys = Object.keys(colors);
+//   let sortingArr = arr;
+//   let emptyStringProp;
+
+//   // Filters out only propConfig objects with enableColors: true
+//   let colorProps = getFeatureConfigs('colors',props);
+
+//   // Checks for a key of empty string as the propName for any prop
+//   const hasEmptyStringPropName = colorProps
+//     .some(x => x.propName === '');
+
+
+//   // Splits the colorProps in two to process the empty string propName
+//   // separately below
+//   if (hasEmptyStringPropName) {
+//     emptyStringProp = colorProps
+//       .filter(x => x.propName === '')
+//       .map(x => `${x.prop}`)
+//       .toString();
+//     colorProps = colorProps.filter(x => x.propName !== '');
+//   }
+
+//   const colorClasses = colorProps
+//     .reduce((allClasses, propConfig) => {
+//       const { prop, propName, separator = '' } = propConfig;
+
+//       const matchedClasses = sortingArr
+//         .filter(cx => cx.match(propName+separator));
+
+//       const convertedClasses = matchedClasses
+//         .reduce((accum,cx) => {
+//           const valueName = cx.replace(
+//             new RegExp(`(.*?)${regexStringFromArray(colorKeys)}(.*)`), '$2');
+
+//           accum = {
+//             ...accum,
+//             ...generateAtom({
+//               className: cx,
+//               cssProps: prop,
+//               value: colors[valueName]
+//             })
+//           };
+
+//           return accum;
+//         },{});
+
+//       allClasses = { ...allClasses, ...convertedClasses };
+//       sortingArr = subtractArrays(sortingArr,matchedClasses);
+//       return allClasses;
+//     },{});
+
+//   if (hasEmptyStringPropName) {
+//     const emptyStringPropNameColorClasses = sortingArr
+//       .reduce((accum,cx) => {
+//         const valueName = cx
+//           .replace(new RegExp(`(.*?)(${regexStringFromArray(colorKeys)})(.*)`), '$2');
+
+//         accum = {
+//           ...accum,
+//           ...generateAtom({
+//             className: cx,
+//             cssProps: emptyStringProp,
+//             value: colors[valueName]
+//           })
+//         };
+
+//         return accum;
+//       },{});
+//     return { ...emptyStringPropNameColorClasses, ...colorClasses };
+//   } else {
+//     return colorClasses;
+//   }
+// };
+
 
 
 // Length Units
@@ -272,6 +355,7 @@ export const manualClassNameConverter = (arr, config) => {
     .reduce((accum, cx) => {
       const cleanClass = cx.replace(
         new RegExp(`(.*?)${regexStringFromArray(generatedAtomsKeys)}(.*)`), '$2');
+
       accum[cx] = generatedAtoms[cleanClass];
       return accum;
     },{});

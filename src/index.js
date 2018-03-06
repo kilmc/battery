@@ -1,72 +1,238 @@
-import {
-  sortBreakpoints,
-  sortClasses,
-} from './sorters';
-
-import {
-  atomsToCSS,
-  generateMediaQuery
-} from './printers';
-
-import {
-  colorsConverter,
-  convertSubProps,
-  lengthUnitsConverter,
-  manualClassNameConverter,
-  integersConverter,
-  addPseudoSelectors
-} from './converters';
-
-
-// ------------------------------------------------------------------
-// =======================  G E N E R A T E  ========================
+// Utils
 // ------------------------------------------------------------------
 
-export const generateCSS = (arr,config) => {
-  const processedConfig = convertSubProps(config);
-  const { css, breakpoints } = processedConfig;
+export const capitalize = (key) => key
+  .replace(
+    key.charAt(0),
+    key.charAt(0).toUpperCase()
+  );
 
-  const {
-    colors,
-    lengthUnits,
-    manualClasses,
-    integers
-  } = sortClasses(arr,processedConfig);
+export const filterObject = (filterFn, obj) => Object.keys(obj)
+  .map(x => obj[x])
+  .filter(filterFn);
 
-  const classNamesToAtoms = {
-    ...colorsConverter(colors,processedConfig),
-    ...lengthUnitsConverter(lengthUnits,processedConfig),
-    ...manualClassNameConverter(manualClasses,processedConfig),
-    ...integersConverter(integers,processedConfig)
-  };
+export const subtractArrays = (arr1,arr2) => {
+  let returnArr = arr1;
 
-  // TODO: Figure out why mutations are happening to classNamesToAtoms
+  arr2.map(remove => {
+    const index = arr1.indexOf(remove);
+    if (index !== -1) {
+      returnArr.splice(index, 1);
+    }
+  });
+  return returnArr;
+};
 
-  const processPseudoSelectors =
-    addPseudoSelectors(classNamesToAtoms,css.pseudoSelectors);
+// Helpers
+// ------------------------------------------------------------------
 
-  const sortedClasses =
-    sortBreakpoints(processPseudoSelectors,breakpoints);
+export const generateRegexGroups = (groupName,arr,regexFn) => {
+  const sorted = arr.reduce((xs,x) => {
+    const charCount = x.length;
 
-  const fourthPassAtoms = (classes) => {
-    let cssLibrary;
+    if (!xs[charCount]) {
+      xs[charCount] = { [groupName]: [x] };
+    } else {
+      xs[charCount][groupName].push(x);
+    }
+    return xs;
+  },{});
 
-    cssLibrary = atomsToCSS(classes.all);
-    Reflect.deleteProperty(classes,'all');
+  Object.keys(sorted).forEach(x => {
+    sorted[x][groupName] = regexFn(sorted[x][groupName]);
+  });
+  return sorted;
+};
 
-    const mediaQueries = Object.keys(classes)
-      .map(breakpoint =>
-        generateMediaQuery(
-          classes[breakpoint],
-          breakpoint,
-          breakpoints.breakpoints
-        ))
-      .join('\n');
+export const groupFilter = (arr,regexGroups) => {
+  Object.keys(regexGroups).reduce((accum, group) => {
+    const matches = arr.filter(regexGroups[group]);
+    return accum.concat(matches);
+  },[]);
+};
 
-    cssLibrary += mediaQueries;
+// Plugin Helpers
+// ------------------------------------------------------------------
+export const enablePluginKey = (key) => `enable${capitalize(key)}`;
 
-    return cssLibrary;
-  };
+export const getPluginConfigs = (featureName, propConfigs) => filterObject(
+  prop => prop[enablePluginKey(featureName)] === true,
+  propConfigs
+);
 
-  return fourthPassAtoms(sortedClasses);
+// Converters
+// ------------------------------------------------------------------
+
+export const generateAtom = ({
+  className,
+  cssProps,
+  value,
+}) => {
+  const eachProp = cssProps
+    .split(' ')
+    .reduce((props,prop) => {
+      props[prop] = value;
+      return props;
+    },{});
+  return ( { [className]: eachProp } );
+};
+
+// Pre compile
+// ------------------------------------------------------------------
+
+export const precompileClasses = (props) => (
+  Object.keys(props)
+    .map(prop => props[prop])
+    .filter(propConfig => typeof propConfig.keywordValues === 'object' )
+    .reduce((accumClassNames, propConfig) => {
+
+      const {
+        prop,
+        propName,
+        keywordValues: {
+          separator = '',
+          values
+        }
+      } = propConfig;
+
+      const classNames = Object.keys(values)
+        .reduce((accumAtoms,valueName) => {
+          accumAtoms = {
+            ...accumAtoms,
+            ...generateAtom({
+              className: `${propName}${separator}${valueName}`,
+              cssProps: prop,
+              value: values[valueName]
+            })
+          };
+
+          return accumAtoms;
+        },{});
+
+      accumClassNames = {
+        ...accumClassNames,
+        ...classNames
+      };
+      return accumClassNames;
+    },{})
+);
+
+// Build regexes
+// ------------------------------------------------------------------
+const generatePropNamesArr = (valuePlugins,props) => Object.keys(valuePlugins)
+  .reduce((accum,pluginName) => {
+    const pluginProps = getPluginConfigs(pluginName, props);
+    const pluginPropNames = pluginProps.map(x => x.propName);
+
+    if (pluginPropNames.length !== 0) {
+      accum[pluginName] = pluginProps.map(x => {
+        const { propName, separator = '' } = x;
+        return propName + separator;
+      });
+    }
+
+    return accum;
+  },{});
+
+const hasX = (obj,matchFn) => Object.keys(obj)
+  .map(x => obj[x])
+  .some(matchFn);
+
+const hasLookupValues = (valuePlugins) =>
+  hasX(valuePlugins,x => x.values);
+
+
+const sorterRegexGroups = (valuePlugins,pluginProps,lookupValueGroups) => {
+  return Object.keys(pluginProps)
+    .reduce((accum,plugin) => {
+      let pluginRegexFn;
+      const props = pluginProps[plugin];
+
+      if (lookupValueGroups[plugin]) {
+        pluginRegexFn =
+          (x) => `(.*?)((${x.join('|')})(${lookupValueGroups[plugin].join('|')}))(.*)`;
+      } else {
+        pluginRegexFn =
+          (x) => `(.*?)((${x.join('|')})(${valuePlugins[plugin].valueRegexString}))(.*)`;
+      }
+      accum = {
+        ...accum,
+        ...generateRegexGroups(plugin,props,pluginRegexFn)
+      };
+      return accum;
+    },{});
+};
+
+
+
+const sortClassNames = (classNames,valuePlugins,props) => {
+  let lookupValueGroups;
+
+  const pluginProps = generatePropNamesArr(valuePlugins,props);
+
+  if (hasLookupValues(valuePlugins)) {
+    lookupValueGroups = Object.keys(valuePlugins)
+      .filter(x => valuePlugins[x].values)
+      .reduce((accum,plugin) => {
+        const { name, values } = valuePlugins[plugin];
+
+        accum[name] = Object.keys(values);
+        return accum;
+      },{});
+  }
+
+  const sorterRegexes = sorterRegexGroups(valuePlugins,pluginProps,lookupValueGroups);
+  console.log(sorterRegexes);
+
+};
+
+export const convertKeywordClassNames = (classNames, precompiledAtoms) => {
+  if (!precompiledAtoms) return null;
+
+  const atomKeys = Object.keys(precompiledAtoms);
+  const keywordRegex = new RegExp(`(.*?)(${atomKeys.join('|')})(.*)`);
+
+  const matchedClassNames = classNames.filter(x => x.match(keywordRegex));
+
+  const returnedAtoms = matchedClassNames
+    .reduce((accum, cx) => {
+      const cleanClass = cx.replace(keywordRegex, '$2');
+
+      accum[cx] = precompiledAtoms[cleanClass];
+      return accum;
+    },{});
+
+  subtractArrays(classNames,matchedClassNames);
+  return returnedAtoms;
+};
+
+// ------------------------------------------------------------------
+// ====================  G E N E R A T E  C S S  ====================
+// ------------------------------------------------------------------
+
+export const generateCSS = (classNames,config) => {
+  let precompiledAtoms;
+  let keywordAtoms;
+  let atomObjects = {};
+
+  const { plugins, props, settings } = config;
+
+  if (settings.enableKeywordValues) {
+    precompiledAtoms = precompileClasses(props);
+    keywordAtoms = convertKeywordClassNames(classNames,precompiledAtoms);
+    atomObjects = { ...keywordAtoms };
+  }
+
+  const valuePlugins = plugins
+    .filter(x => x.type === 'value')
+    .reduce((accum,plugin) => {
+      accum[plugin.name] = plugin;
+      return accum;
+    },{});
+
+  console.log(valuePlugins);
+  const sortedClassNames = sortClassNames(classNames,valuePlugins,props);
+
+  // console.log(valuePlugins);
+
 };

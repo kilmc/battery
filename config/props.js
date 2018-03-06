@@ -1,4 +1,4 @@
-import { enablePropFeature } from '../src/configHelpers';
+import { enablePropFeature } from '../src_archive/configHelpers';
 
 // color
 // ------------------------------------------------------------------
@@ -89,6 +89,7 @@ const backgroundSize = {
 const borders = {
   prop: 'border',
   propName: 'border',
+  subPropSeparator: '-',
   subProps: {
     'top': 'top',
     'right': 'right',
@@ -195,6 +196,7 @@ const order = { propName: 'order', prop: 'order' };
 // float
 // ------------------------------------------------------------------
 const float = {
+  prop: 'float',
   propName: '',
   manual: {
     values: {

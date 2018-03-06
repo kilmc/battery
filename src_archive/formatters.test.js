@@ -28,9 +28,18 @@ describe('addLengthUnit', () => {
 });
 
 describe('formatPx', () => {
-  const [baseFontSize,baselineUnit] = [10,6];
-  const remFormatPx = unboundFormatPx(baseFontSize,true,baselineUnit);
-  const formatPx = unboundFormatPx(baseFontSize,false,baselineUnit);
+  const unitsConfig = {
+    baseFontSize: 10,
+    baselineUnit: 6,
+    useRems: false
+  };
+  const remUnitsConfig = {
+    baseFontSize: 10,
+    baselineUnit: 6,
+    useRems: true
+  };
+  const remFormatPx = unboundFormatPx(remUnitsConfig);
+  const formatPx = unboundFormatPx(unitsConfig);
 
   it('renders rems when the config is set useRems: true', () => {
     expect(remFormatPx(10)).toEqual('1rem');

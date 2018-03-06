@@ -31,21 +31,21 @@ export const addLengthUnit = (unit) => (num) => `${num}${unit}`;
 
 // Pre-configured length unit functions for converting numbers
 // into length units compatible with CSS standards
-const addPercent = addLengthUnit('%');
-const addRem = addLengthUnit('rem');
-const addPixel = addLengthUnit('px');
-const addViewportHeight = addLengthUnit('vh');
-const addViewportWidth = addLengthUnit('vw');
+export const addPercent = addLengthUnit('%');
+export const addRem = addLengthUnit('rem');
+export const addPixel = addLengthUnit('px');
+export const addViewportHeight = addLengthUnit('vh');
+export const addViewportWidth = addLengthUnit('vw');
 
 // Converters
 // ------------------------------------------------------------------
 const pxToRem = (x, baseFontSize = 16) => addRem(x/baseFontSize);
 
-export const unboundFormatPx = (
+export const unboundFormatPx = ({
   baseFontSize,
+  baselineUnit,
   useRems,
-  baselineUnit
-) => (x,baseline) => {
+}) => (x,baseline) => {
   const convertedUnit = baseline ? x*baselineUnit : x;
   return useRems
     ? pxToRem(convertedUnit,baseFontSize)
@@ -53,8 +53,7 @@ export const unboundFormatPx = (
 };
 
 export const formatLengthUnitValue = (length, lengthUnit, config) => {
-  const { baseFontSize, baselineUnit, useRems } = config.misc;
-  const formatPx = unboundFormatPx(baseFontSize,useRems,baselineUnit);
+  const formatPx = unboundFormatPx(config.misc);
 
   switch (config.units[lengthUnit]) {
     case 'baseline':
