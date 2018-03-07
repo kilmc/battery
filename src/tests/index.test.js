@@ -3,15 +3,21 @@ import {
   generateCSS
 } from '../index';
 
+// Plugin types
+// pattern: sets the value based on a regex
+// lookup: sets the value based on a predefined hash
+// className: modifies the className
+// atRule: nests atoms inside of an atRule
+
 const integerPlugin = {
   name: 'integers',
-  type: 'value',
+  type: 'pattern',
   valueRegexString: '(\\d+|-\\d+)'
 };
 
 const colorsPlugin = {
   name: 'colors',
-  type: 'value',
+  type: 'lookup',
   values: {
     'black': '#000000',
     'green-500': '#25CB68',
