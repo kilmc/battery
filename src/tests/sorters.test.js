@@ -25,7 +25,7 @@ const pluginRegexes = generateValuePluginRegexSequencer(testPlugins,props);
 describe('sortClassNamesByPlugin', () => {
   it('sort classnames into plugin groups', () => {
     expect(sortClassNamesByPlugin(testClasses,pluginRegexes)).toEqual({
-      'colors': ['bg-black', 'fill-pink', 'white', 'bg-white', 'pink'],
+      'colors': ['fill-pink','bg-black','bg-white','white','pink'],
       'integers': ['grow2', 'z100', 'z-1'],
       'lengthUnits': ['bg100p', 'm2']
     });
@@ -39,7 +39,7 @@ describe('sortClassNamesByPlugin', () => {
     const testClassesWithModifiers = mdIntegerClassNames.concat(lgLengthUnits,hoverColorClassNames);
 
     expect(sortClassNamesByPlugin(testClassesWithModifiers,pluginRegexes)).toEqual({
-      'colors': ['hover-bg-black', 'hover-fill-pink', 'hover-white', 'hover-bg-white', 'hover-pink'],
+      'colors': ['hover-fill-pink','hover-bg-black','hover-bg-white','hover-white','hover-pink'],
       'integers': ['grow2-md', 'z100-md', 'z-1-md'],
       'lengthUnits': ['bg100p-lg', 'm2-lg']
     });

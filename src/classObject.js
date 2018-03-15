@@ -1,8 +1,7 @@
 import { createPluginsObject } from './plugins/';
 import { generateValuePluginRegexSequencer } from './sequencers';
 import {
-  getPluginPropConfigs,
-  PLUGIN_TYPES
+  getPluginPropConfigs
 } from './plugins/';
 
 export const generateClassObject = ({
@@ -19,31 +18,42 @@ export const generateClassObject = ({
   return ( { [className]: eachProp } );
 };
 
-const getProps = (cxPropName,propConfigs) => propConfigs
-  .filter(x => {
-    const { propName, separator = '' } = x;
-    return cxPropName === propName+separator;
-  })
-  .map(x => x.prop)
-  .join('');
+const getProps = (cxPropName,propConfigs) => {
+  if (cxPropName === '') {
+    return propConfigs
+      .filter(x => x.pluginDefault === true)
+      .map(x => x.prop)
+      .join('');
+  } else {
+    return propConfigs
+      .filter(x => {
+        const { propName, separator = '' } = x;
+        return cxPropName === propName+separator;
+      })
+      .map(x => x.prop)
+      .join('');
+  }
+};
 
-const convertClassNameToClassObj = (className,sequencedRegexes,pluginName,propConfigs,lookupValues) =>
-  Object.keys(sequencedRegexes)
+const convertClassNameToClassObj = (className,sequencedRegexes,pluginName,propConfigs,lookupValues) => {
+  let previouslyMatched = 0;
+
+  return Object.keys(sequencedRegexes)
     .sort((a,b) => b - a)
     .reduce((zs,charLength) => {
+      if (previouslyMatched === 1) return zs;
       const regexString = sequencedRegexes[charLength][pluginName];
       if (regexString === undefined) return zs;
 
       const classNameArr = className.match(regexString);
       if (classNameArr === null) return zs;
+      previouslyMatched = 1;
 
       const propName = classNameArr[2];
+
       let value = classNameArr[3];
 
       if (lookupValues) { value = lookupValues[value]; }
-
-      console.log(className);
-      console.log(getProps(propName,propConfigs));
 
       const convertedClassObj = generateClassObject({
         className: className,
@@ -54,6 +64,8 @@ const convertClassNameToClassObj = (className,sequencedRegexes,pluginName,propCo
       zs = { ...zs, ...convertedClassObj };
       return zs;
     },{});
+}
+
 
 
 export const convertClassNamestoClassObjs = (sortedClassNames,plugins,props) => {
@@ -74,7 +86,7 @@ export const convertClassNamestoClassObjs = (sortedClassNames,plugins,props) => 
         if (values) {
           convertedClassName = convertClassNameToClassObj(cx,sequencedRegexes,name,propConfigs,values);
         } else {
-          convertedClassName =convertClassNameToClassObj(cx,sequencedRegexes,name,propConfigs);
+          convertedClassName = convertClassNameToClassObj(cx,sequencedRegexes,name,propConfigs);
         }
 
         xs = { ...xs, ...convertedClassName };

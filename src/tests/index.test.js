@@ -115,12 +115,15 @@ describe('generateLibrary', () => {
       ],
       config
     )).toEqual({
+      'bg100p': { 'background-size': '100%' },
       'bg-pink': { 'background-color': '#FF0099' },
-      'black': { 'background-color': '#000000' },
+      'black': { 'color': '#000000' },
       'fill-white': { 'fill': '#FFFFFF' },
       'grow2': { grow: '2' },
       'hover-bg-cover': { 'background-size': 'cover' },
+      'mt10': { margin: '6rem' },
       'order-1': { order: '-1' },
+      'w100vw': { width: '100vw' },
       'z100': { 'z-index': '100' }
     });
   });

@@ -58,8 +58,8 @@ export const buildClassNameRegex = (pluginConfig) => {
     if (hasDefaultModifierIndicator) valueModifiers = `${valueModifiers}?`;
   }
 
-  return (propNames,optional = false) =>
-    `(.*?)(${propNames.join('|')})${optional ? '?' : ''}${values}${hasValueModifiers ? valueModifiers : '()?'}(.*)`;
+  return (propNames) =>
+    `(.*?)(${propNames.join('|')})${values}${hasValueModifiers ? valueModifiers : '()?'}(.*)`;
 };
 
 export const generateValuePluginRegexSequencer = (plugins,propConfigs) => {

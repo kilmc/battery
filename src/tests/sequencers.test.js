@@ -55,9 +55,9 @@ describe('generatePluginRegexSequencer', () => {
       generateValuePluginRegexSequencer(plugins,propConfigs)
     ).toEqual({
       'lookup': {
-        '0': {'colors': '(.*?)()?(black|white|pink)(_\\d+)?(.*)'},
-        '3': {'colors': '(.*?)(bg-)?(black|white|pink)(_\\d+)?(.*)'},
-        '5': {'colors': '(.*?)(fill-)?(black|white|pink)(_\\d+)?(.*)'}
+        '0': {'colors': '(.*?)()(black|white|pink)(_\\d+)?(.*)'},
+        '3': {'colors': '(.*?)(bg-)(black|white|pink)(_\\d+)?(.*)'},
+        '5': {'colors': '(.*?)(fill-)(black|white|pink)(_\\d+)?(.*)'}
       },
       'pattern': {
         '1': {
