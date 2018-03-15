@@ -71,10 +71,10 @@ export const plugins = {
     }
   },
   lengthUnits: {
-    regexFn: (x) => `((${x.join('|')})(\\d+|-\\d+))`,
+    regexString: '\\d+|-\\d+',
     valueModifiers: {
       baseline: {
-        indicator: '',
+        default: true,
         modifierFn: x => formatPx(x,true)
       },
       percent: {

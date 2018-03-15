@@ -1,6 +1,6 @@
 /* eslint-env jest, node */
 import {
-  generateCSS
+  generateLibrary
 } from '../index';
 
 // Plugin types
@@ -12,7 +12,7 @@ import {
 const integerPlugin = {
   name: 'integers',
   type: 'pattern',
-  valueRegexString: '(\\d+|-\\d+)'
+  valueRegexString: '\\d+|-\\d+'
 };
 
 const colorsPlugin = {
@@ -20,9 +20,15 @@ const colorsPlugin = {
   type: 'lookup',
   values: {
     'black': '#000000',
-    'green-500': '#25CB68',
-    'grey-200': '#E8E8E8',
+    'pink': '#FF0099',
+    'white': '#FFFFFF',
   }
+};
+
+const lengthUnitsPlugin = {
+  name: 'lengthUnits',
+  type: 'pattern',
+  valueRegexString: '\\d+|-\\d+'
 };
 
 const config = {
@@ -42,6 +48,12 @@ const config = {
       propName: 'order',
       enableIntegers: true
     },
+    color: {
+      prop: 'color',
+      propName: '',
+      pluginDefault: true,
+      enableColors: true
+    },
     backgroundColor: {
       prop: 'background-color',
       propName: 'bg',
@@ -57,37 +69,59 @@ const config = {
           cover: 'cover',
           contain: 'contain'
         }
-      }
+      },
+      enableLengthUnits: true
+    },
+    fill: {
+      prop: 'fill',
+      propName: 'fill',
+      separator: '-',
+      enableColors: true
+    },
+    width: {
+      prop: 'width',
+      propName: 'w',
+      enableLengthUnits: true
+    },
+    margin: {
+      prop: 'margin',
+      propName: 'm',
+      enableLengthUnits: true
     }
   },
   settings: {
     enableKeywordValues: true,
   },
   plugins: [
+    lengthUnitsPlugin,
     integerPlugin,
-    colorsPlugin
+    colorsPlugin,
   ]
 };
 
+const lengthUnitClassnames = ['bg100p','w100vw','m10'];
 const integerClassnames = ['z100','grow2','order-1'];
-const colorClassnames = ['bg-green-500','black','fill-grey-200'];
+const colorClassnames = ['bg-pink','black','fill-white'];
 const keywordClasses = ['hover-bg-cover'];
 
-describe('generateCSS', () => {
+describe('generateLibrary', () => {
   it('processes integer classes', () => {
-    expect(generateCSS(
+    expect(generateLibrary(
       [
         ...integerClassnames,
         ...colorClassnames,
-        ...keywordClasses
+        ...keywordClasses,
+        ...lengthUnitClassnames
       ],
       config
-    )).toBe(`.z100 { z-index: 100 }
-.grow2 { grow: 2 }
-.order-1 { order: -1 }
-.bg-green-500 { background-color: #25CB68 }
-.black { color: #000000 }
-.fill-grey-200 { fill: #E8E8E8 }
-.bg-cover { background-size: cover }`);
+    )).toEqual({
+      'bg-pink': { 'background-color': '#FF0099' },
+      'black': { 'background-color': '#000000' },
+      'fill-white': { 'fill': '#FFFFFF' },
+      'grow2': { grow: '2' },
+      'hover-bg-cover': { 'background-size': 'cover' },
+      'order-1': { order: '-1' },
+      'z100': { 'z-index': '100' }
+    });
   });
 });

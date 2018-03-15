@@ -1,4 +1,4 @@
-import { capitalize, filterObject } from './utils';
+import { capitalize, filterObject } from '../utils';
 
 export const PLUGIN_TYPES = {
   PATTERN: 'pattern',
@@ -26,22 +26,31 @@ export const enablePluginKey = (key) => `enable${capitalize(key)}`;
 // ------------------------------------------------------------------
 // Filters propConfigs by enabled[pluginName]
 
-export const getPluginPropConfigs = (pluginName, propConfigs) => filterObject(
-  prop => prop[enablePluginKey(pluginName)] === true,
-  propConfigs
-);
+export const getPluginPropConfigs = (pluginName, propConfigs) => {
+  return filterObject(
+    prop => prop[enablePluginKey(pluginName)] === true,
+    propConfigs
+  );
+};
 
-//
+// createPluginsObject
 // ------------------------------------------------------------------
+export const createPluginsObject = (plugins) =>
+  plugins.reduce((accum,plugin) => {
+    accum[plugin.name] = plugin;
+    return accum;
+  },{});
 
-export const getPluginPropNames = (plugins,props) =>
-  Object.keys(plugins)
+// getPluginPropNames
+// ------------------------------------------------------------------
+export const createPropNamesObject = (pluginsObject,propConfigs) =>
+  Object.keys(pluginsObject)
     .reduce((accum,pluginName) => {
-      const propConfigs = getPluginPropConfigs(pluginName, props);
-      const pluginPropNames = propConfigs.map(x => x.propName);
+      const pluginPropConfigs = getPluginPropConfigs(pluginName,propConfigs);
+      const pluginPropNames = pluginPropConfigs.map(x => x.propName);
 
       if (pluginPropNames.length !== 0) {
-        accum[pluginName] = propConfigs.map(x => {
+        accum[pluginName] = pluginPropConfigs.map(x => {
           const { propName, separator = '' } = x;
           return propName + separator;
         });
@@ -49,3 +58,4 @@ export const getPluginPropNames = (plugins,props) =>
 
       return accum;
     },{});
+

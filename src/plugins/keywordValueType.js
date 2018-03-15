@@ -1,46 +1,48 @@
-import { filterObject, subtractArrays } from '../utils';
+import { subtractArrays } from '../utils';
 import { generateClassObject } from '../classObject';
 
-export const precompileClasses = (props) => (
-  filterObject(
-    props,
-    propConfig => typeof propConfig.keywordValues === 'object'
-  ).reduce((accum, propConfig) => {
-    const {
-      prop,
-      propName,
-      keywordValues: {
-        separator = '',
-        values
-      }
-    } = propConfig;
+export const generateKeywordValueObjs = (props) => {
+  const propConfigsWithKeywordValues =
+    Object.keys(props)
+      .map(prop => props[prop])
+      .filter(propConfig => typeof propConfig.keywordValues === 'object');
 
-    const classNames = Object.keys(values)
-      .reduce((classObjects,valueName) => {
-        classObjects = {
-          ...classObjects,
-          ...generateClassObject({
-            className: `${propName}${separator}${valueName}`,
-            cssProps: prop,
-            value: values[valueName]
-          })
-        };
+  return propConfigsWithKeywordValues
+    .reduce((accum, propConfig) => {
+      const {
+        prop, propName,
+        keywordValues: {
+          separator = '',
+          values
+        }
+      } = propConfig;
 
-        return classObjects;
-      },{});
+      const classNames = Object.keys(values)
+        .reduce((classObjects,valueName) => {
+          classObjects = {
+            ...classObjects,
+            ...generateClassObject({
+              className: `${propName}${separator}${valueName}`,
+              cssProps: prop,
+              value: values[valueName]
+            })
+          };
 
-    accum = {
-      ...accum,
-      ...classNames
-    };
-    return accum;
-  },{})
-);
+          return classObjects;
+        },{});
 
-export const convertKeywordClassNames = (classNames, precompiledAtoms) => {
-  if (!precompiledAtoms) return null;
+      accum = {
+        ...accum,
+        ...classNames
+      };
+      return accum;
+    },{});
+};
 
-  const atomKeys = Object.keys(precompiledAtoms);
+export const getKeywordClassObjs = (classNames, precompiledClassObjects) => {
+  if (!precompiledClassObjects) return null;
+
+  const atomKeys = Object.keys(precompiledClassObjects);
   const keywordRegex = new RegExp(`(.*?)(${atomKeys.join('|')})(.*)`);
 
   const matchedClassNames = classNames.filter(x => x.match(keywordRegex));
@@ -49,7 +51,7 @@ export const convertKeywordClassNames = (classNames, precompiledAtoms) => {
     .reduce((accum, cx) => {
       const cleanClass = cx.replace(keywordRegex, '$2');
 
-      accum[cx] = precompiledAtoms[cleanClass];
+      accum[cx] = precompiledClassObjects[cleanClass];
       return accum;
     },{});
 

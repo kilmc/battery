@@ -1,4 +1,13 @@
-export const generateRegexSequencer = (groupName,arr,regexFn) => {
+import deepmerge from 'deepmerge';
+
+import {
+  getPluginPropConfigs,
+  createPropNamesObject,
+  createPluginsObject,
+  PLUGIN_TYPES
+} from './plugins/';
+
+export const generateRegexSequencer = (groupName,arr,regexFn,hasDefaultPropName) => {
   const sorted = arr.reduce((xs,x) => {
     const charCount = x.length;
 
@@ -11,29 +20,70 @@ export const generateRegexSequencer = (groupName,arr,regexFn) => {
   },{});
 
   Object.keys(sorted).forEach(x => {
-    sorted[x][groupName] = regexFn(sorted[x][groupName]);
+    sorted[x][groupName] = regexFn(sorted[x][groupName],hasDefaultPropName);
   });
   return sorted;
 };
 
-export const generatePluginRegexSequencer = (plugins,propNames,lookupValueGroups) => {
-  return Object.keys(propNames)
-    .reduce((accum,plugin) => {
-      const props = propNames[propNames];
-      let pluginRegexFn;
+export const buildClassNameRegex = (pluginConfig) => {
+  const hasValueModifiers = typeof pluginConfig.valueModifiers === 'object';
+  let valueModifiers;
+  let hasDefaultModifierIndicator;
 
-      if (lookupValueGroups) {
-        pluginRegexFn =
-        (x) => `(.*?)(${x.join('|')})?(${lookupValueGroups[plugin].join('|')})(.*)`;
+  // Values
+  let values;
+
+  if (pluginConfig.type === PLUGIN_TYPES.LOOKUP) {
+    values = `(${Object.keys(pluginConfig.values).join('|')})`;
+  } else {
+    values = `(${pluginConfig.valueRegexString})`;
+  }
+
+  // Value Modifiers
+  if (hasValueModifiers) {
+    const modifiersConfigs = pluginConfig.valueModifiers;
+
+    hasDefaultModifierIndicator = Object.keys(modifiersConfigs)
+      .map(x => modifiersConfigs[x])
+      .some(x => x.default === true);
+
+    const modifiers = Object.keys(modifiersConfigs)
+      .reduce((accum,modifierName) => {
+        const { separator = '', indicator } = modifiersConfigs[modifierName];
+        return accum.concat(`${separator}${indicator}`);
+      },[]);
+
+    valueModifiers = `(${modifiers.join('|')})?`;
+
+    if (hasDefaultModifierIndicator) valueModifiers = `${valueModifiers}?`;
+  }
+
+  return (propNames,optional = false) =>
+    `(.*?)(${propNames.join('|')})${optional ? '?' : ''}${values}${hasValueModifiers ? valueModifiers : '()?'}(.*)`;
+};
+
+export const generateValuePluginRegexSequencer = (plugins,propConfigs) => {
+  const pluginsObject = createPluginsObject(plugins);
+  const propNamesObject = createPropNamesObject(pluginsObject,propConfigs);
+
+  return Object.keys(pluginsObject)
+    .reduce((accum,pluginName) => {
+      const props = propNamesObject[pluginName];
+      const pluginType = pluginsObject[pluginName].type;
+      const pluginRegexFn = buildClassNameRegex(pluginsObject[pluginName]);
+
+      const hasDefaultPropName = getPluginPropConfigs(pluginName,propConfigs)
+        .some(x => x.pluginDefault === true);
+
+      if (!accum[pluginType]) {
+        accum[pluginType] = generateRegexSequencer(pluginName,props,pluginRegexFn,hasDefaultPropName);
       } else {
-        pluginRegexFn =
-          (x) => `(.*?)(${x.join('|')})?(${plugins[plugin].valueRegexString})(.*)`;
+        accum[pluginType] = deepmerge(
+          accum[pluginType],
+          generateRegexSequencer(pluginName,props,pluginRegexFn,hasDefaultPropName)
+        );
       }
 
-      accum = {
-        ...accum,
-        ...generateRegexSequencer(plugin,props,pluginRegexFn)
-      };
       return accum;
     },{});
 };
