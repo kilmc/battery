@@ -35,14 +35,53 @@ const getProps = (cxPropName,propConfigs) => {
   }
 };
 
-const convertClassNameToClassObj = (className,sequencedRegexes,pluginName,propConfigs,lookupValues) => {
+const modifyValue = (value,modifier,pluginConfig) => {
+  // console.log('valueModifiers', pluginConfig);
+  const hasDefaultModifier = pluginConfig.valueModifiers
+    .some(x => x.default === true);
+  let modifierValue;
+
+  if (hasDefaultModifier && modifier === undefined) { modifier = ''; }
+
+  if (modifier !== undefined) {
+    const valueModifier = pluginConfig.valueModifiers
+      .filter(x => {
+        const { separator = '', indicator } = x;
+        const regex = new RegExp(`${separator+indicator}`);
+
+        if (indicator === '' && modifier !== '') { return false; }
+        else if (modifier === separator+indicator) { return true; }
+        else if (regex.test(modifier)) {
+          modifierValue = modifier.replace(separator,'');
+          return true;
+        }
+        else { return false; }
+      })[0];
+
+    return valueModifier.modifierFn(value,modifierValue);
+  } else {
+    return value;
+  }
+};
+
+const getValue = (value,modifier,pluginConfig,lookupValues) => {
+  if (lookupValues) { value = lookupValues[value]; }
+  if (pluginConfig.valueModifiers) {
+    value = modifyValue(value,modifier,pluginConfig);
+  }
+
+  return value;
+};
+
+const convertClassNameToClassObj = (className,sequencedRegexes,pluginConfig,propConfigs,lookupValues) => {
   let previouslyMatched = 0;
 
   return Object.keys(sequencedRegexes)
     .sort((a,b) => b - a)
     .reduce((zs,charLength) => {
       if (previouslyMatched === 1) return zs;
-      const regexString = sequencedRegexes[charLength][pluginName];
+
+      const regexString = sequencedRegexes[charLength][pluginConfig.name];
       if (regexString === undefined) return zs;
 
       const classNameArr = className.match(regexString);
@@ -52,19 +91,18 @@ const convertClassNameToClassObj = (className,sequencedRegexes,pluginName,propCo
       const propName = classNameArr[2];
 
       let value = classNameArr[3];
-
-      if (lookupValues) { value = lookupValues[value]; }
+      const valueModifier = classNameArr[4];
 
       const convertedClassObj = generateClassObject({
         className: className,
         cssProps: getProps(propName,propConfigs),
-        value
+        value: getValue(value,valueModifier,pluginConfig,lookupValues)
       });
 
       zs = { ...zs, ...convertedClassObj };
       return zs;
     },{});
-}
+};
 
 
 
@@ -75,7 +113,8 @@ export const convertClassNamestoClassObjs = (sortedClassNames,plugins,props) => 
 
   const convertedClassNames = pluginNames
     .reduce((xs,pluginName) => {
-      const { name, type, values } = pluginsObject[pluginName];
+      const pluginConfig = pluginsObject[pluginName];
+      const { name, type, values } = pluginConfig;
 
       const classNames = sortedClassNames[name];
       const propConfigs = getPluginPropConfigs(name,props);
@@ -84,9 +123,9 @@ export const convertClassNamestoClassObjs = (sortedClassNames,plugins,props) => 
       classNames.forEach(cx => {
         let convertedClassName;
         if (values) {
-          convertedClassName = convertClassNameToClassObj(cx,sequencedRegexes,name,propConfigs,values);
+          convertedClassName = convertClassNameToClassObj(cx,sequencedRegexes,pluginConfig,propConfigs,values);
         } else {
-          convertedClassName = convertClassNameToClassObj(cx,sequencedRegexes,name,propConfigs);
+          convertedClassName = convertClassNameToClassObj(cx,sequencedRegexes,pluginConfig,propConfigs);
         }
 
         xs = { ...xs, ...convertedClassName };

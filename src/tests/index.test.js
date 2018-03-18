@@ -3,33 +3,18 @@ import {
   generateLibrary
 } from '../index';
 
+import {
+  integersPlugin,
+  colorsPlugin,
+  lengthUnitsPlugin
+} from '../fixtures/plugins';
+
 // Plugin types
 // pattern: sets the value based on a regex
 // lookup: sets the value based on a predefined hash
 // className: modifies the className
 // atRule: nests atoms inside of an atRule
 
-const integerPlugin = {
-  name: 'integers',
-  type: 'pattern',
-  valueRegexString: '\\d+|-\\d+'
-};
-
-const colorsPlugin = {
-  name: 'colors',
-  type: 'lookup',
-  values: {
-    'black': '#000000',
-    'pink': '#FF0099',
-    'white': '#FFFFFF',
-  }
-};
-
-const lengthUnitsPlugin = {
-  name: 'lengthUnits',
-  type: 'pattern',
-  valueRegexString: '\\d+|-\\d+'
-};
 
 const config = {
   props: {
@@ -94,14 +79,14 @@ const config = {
   },
   plugins: [
     lengthUnitsPlugin,
-    integerPlugin,
+    integersPlugin,
     colorsPlugin,
   ]
 };
 
 const lengthUnitClassnames = ['bg100p','w100vw','m10'];
 const integerClassnames = ['z100','grow2','order-1'];
-const colorClassnames = ['bg-pink','black','fill-white'];
+const colorClassnames = ['bg-pink','black','fill-white','bg-black_20'];
 const keywordClasses = ['hover-bg-cover'];
 
 describe('generateLibrary', () => {
@@ -118,10 +103,11 @@ describe('generateLibrary', () => {
       'bg100p': { 'background-size': '100%' },
       'bg-pink': { 'background-color': '#FF0099' },
       'black': { 'color': '#000000' },
+      'bg-black_20': { 'background-color': 'rgba(0,0,0,0.2)'},
       'fill-white': { 'fill': '#FFFFFF' },
       'grow2': { grow: '2' },
       'hover-bg-cover': { 'background-size': 'cover' },
-      'mt10': { margin: '6rem' },
+      'm10': { margin: '6rem' },
       'order-1': { order: '-1' },
       'w100vw': { width: '100vw' },
       'z100': { 'z-index': '100' }

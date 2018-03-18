@@ -43,19 +43,17 @@ export const buildClassNameRegex = (pluginConfig) => {
   if (hasValueModifiers) {
     const modifiersConfigs = pluginConfig.valueModifiers;
 
-    hasDefaultModifierIndicator = Object.keys(modifiersConfigs)
-      .map(x => modifiersConfigs[x])
-      .some(x => x.default === true);
+    hasDefaultModifierIndicator = modifiersConfigs.some(x => x.default === true);
 
-    const modifiers = Object.keys(modifiersConfigs)
-      .reduce((accum,modifierName) => {
-        const { separator = '', indicator } = modifiersConfigs[modifierName];
+    const modifiers = modifiersConfigs
+      .reduce((accum,config) => {
+        const { separator = '', indicator } = config;
         return accum.concat(`${separator}${indicator}`);
       },[]);
 
     valueModifiers = `(${modifiers.join('|')})?`;
 
-    if (hasDefaultModifierIndicator) valueModifiers = `${valueModifiers}?`;
+    if (hasDefaultModifierIndicator) valueModifiers = `${valueModifiers}`;
   }
 
   return (propNames) =>

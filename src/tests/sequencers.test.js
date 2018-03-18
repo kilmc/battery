@@ -61,10 +61,10 @@ describe('generatePluginRegexSequencer', () => {
       },
       'pattern': {
         '1': {
-          'integers': '(.*?)(z)((\\d+|-\\d+))()?(.*)',
-          'lengthUnits': '(.*?)(m)((\\d+|-\\d+))()?(.*)'
+          'integers': '(.*?)(z)(\\d+|-\\d+)()?(.*)',
+          'lengthUnits': '(.*?)(m)(\\d+|-\\d+)(|p|px|vh|vw)?(.*)'
         },
-        '2': {'lengthUnits': '(.*?)(bg)((\\d+|-\\d+))()?(.*)'}
+        '2': {'lengthUnits': '(.*?)(bg)(\\d+|-\\d+)(|p|px|vh|vw)?(.*)'}
       }
     });
   });
