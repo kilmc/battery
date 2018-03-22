@@ -1,10 +1,15 @@
+import deepmerge from 'deepmerge';
+
 import {
   generateKeywordValueObjs,
-  getKeywordClassObjs
 } from './plugins/keywordValueType';
 
-import { generateValuePluginRegexSequencer } from './sequencers';
-import { sortClassNamesByPlugin } from './sorters';
+import {
+  generateValuePluginRegexSequencer,
+  generateKeywordValueRegexSequencer
+} from './sequencers';
+
+import { sortClassNames } from './sorters';
 import { convertClassNamestoClassObjs } from './classObject';
 
 // ------------------------------------------------------------------
@@ -15,22 +20,22 @@ export const generateLibrary = (classNames,config) => {
   const { props, settings, plugins } = config;
 
   let classObjs;
-  let keywordClassObjs;
+  let keywordValueRegexes;
 
   // KeywordValues
   if (settings.enableKeywordValues) {
     const keywordValueObjs = generateKeywordValueObjs(props);
-    keywordClassObjs = getKeywordClassObjs(classNames,keywordValueObjs);
+    keywordValueRegexes = generateKeywordValueRegexSequencer(keywordValueObjs,plugins);
   }
 
-  const pluginRegexes = generateValuePluginRegexSequencer(plugins,props);
-  const sortedClassNames = sortClassNamesByPlugin(classNames,pluginRegexes);
+  const valuePluginRegexes = generateValuePluginRegexSequencer(plugins,props);
+  const pluginRegexes = deepmerge(valuePluginRegexes,keywordValueRegexes);
+  const sortedClassNames = sortClassNames(classNames,pluginRegexes);
 
   const convertedClassNames =
     convertClassNamestoClassObjs(sortedClassNames,plugins,props);
 
   classObjs = {
-    ...keywordClassObjs,
     ...convertedClassNames
   };
 

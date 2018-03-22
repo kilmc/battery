@@ -3,7 +3,8 @@ import { capitalize, filterObject } from '../utils';
 export const PLUGIN_TYPES = {
   PATTERN: 'pattern',
   LOOKUP: 'lookup',
-  CLASSNAME: 'classname'
+  CLASSNAME: 'classname',
+  KEYWORD: 'keyword'
 };
 
 // getPlugins
@@ -43,8 +44,8 @@ export const createPluginsObject = (plugins) =>
 
 // getPluginPropNames
 // ------------------------------------------------------------------
-export const createPropNamesObject = (pluginsObject,propConfigs) =>
-  Object.keys(pluginsObject)
+export const createPropNamesObject = (pluginsObject,propConfigs) => {
+  return Object.keys(pluginsObject)
     .reduce((accum,pluginName) => {
       const pluginPropConfigs = getPluginPropConfigs(pluginName,propConfigs);
       const pluginPropNames = pluginPropConfigs.map(x => x.propName);
@@ -58,4 +59,4 @@ export const createPropNamesObject = (pluginsObject,propConfigs) =>
 
       return accum;
     },{});
-
+};

@@ -1,7 +1,6 @@
-import { PLUGIN_TYPES } from './plugins/';
 import { subtractArrays } from './utils';
 
-const sortClassNames = (classNames,sequencedRegexes) => Object
+export const sortClassNames = (classNames,sequencedRegexes) => Object
   .keys(sequencedRegexes)
   .sort((a,b) => b - a)
   .reduce((classNameGroups,charLength) => {
@@ -24,16 +23,3 @@ const sortClassNames = (classNames,sequencedRegexes) => Object
 
     return classNameGroups;
   },{});
-
-export const sortClassNamesByPlugin = (classNames,pluginRegexes) => {
-  const lookupRegexes = pluginRegexes[PLUGIN_TYPES.LOOKUP];
-  const patternRegexes = pluginRegexes[PLUGIN_TYPES.PATTERN];
-
-  const lookupClassNames = sortClassNames(classNames,lookupRegexes);
-  const patternClassNames = sortClassNames(classNames,patternRegexes);
-
-  return {
-    ...lookupClassNames,
-    ...patternClassNames
-  };
-};

@@ -71,7 +71,48 @@ export const lengthUnitsPlugin = {
 
 export const classNamePlugin = {
   name: 'pseudos',
+  type: 'classname'
+};
+
+export const pseudosPlugin = {
+  name: 'pseudos',
   type: 'classname',
+  prefixOrSuffix: 'prefix',
+  modifiers: [
+    {
+      name: 'hover',
+      separator: '-',
+      indicator: 'hover',
+    },
+    {
+      name: 'focus',
+      separator: '-',
+      indicator: 'focus',
+    }
+  ]
+};
+
+export const breakpointsPlugin = {
+  name: 'breakpoints',
+  type: 'atrule',
+  prefixOrSuffix: 'suffix',
+  modifiers: [
+    {
+      name: 'responsiveSmall',
+      indicator: 'sm',
+      separator: '-'
+    },
+    {
+      name: 'responsiveMedium',
+      indicator: 'md',
+      separator: '-'
+    },
+    {
+      name: 'responsiveLarge',
+      indicator: 'lg',
+      separator: '-'
+    }
+  ]
 };
 
 export const pluginSet = [

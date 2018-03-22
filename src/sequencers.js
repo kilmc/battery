@@ -25,8 +25,43 @@ export const generateRegexSequencer = (groupName,arr,regexFn,hasDefaultPropName)
   return sorted;
 };
 
-export const buildClassNameRegex = (pluginConfig) => {
+const formatPrefixOrSuffix = (x,y,prefixOrSuffix) => {
+  return prefixOrSuffix === 'prefix' ? `${x}${y}` : `${y}${x}`;
+};
+
+export const getPrefixAndSuffixes = (pluginsConfig) => {
+  return pluginsConfig
+    .filter(x => x.prefixOrSuffix)
+    .reduce((xs,x) => {
+      const { prefixOrSuffix: type, modifiers } = x;
+      modifiers.forEach(modifier => {
+        const { indicator, separator = '' } = modifier;
+        const item = formatPrefixOrSuffix(indicator,separator,type);
+        if (xs[type]) {
+          xs[type] = xs[type].concat(item);
+        } else {
+          xs[type] = [item];
+        }
+      });
+
+      return xs;
+    },{});
+};
+
+export const buildPrefixAndSuffixRegex = (pluginsConfig) => {
+  const prefixesAndSuffixes = getPrefixAndSuffixes(pluginsConfig);
+  let prefixes = prefixesAndSuffixes['prefix'];
+  let suffixes = prefixesAndSuffixes['suffix'];
+  let prefixSuffixRegexes = {};
+
+  if (prefixes) prefixSuffixRegexes['prefix'] = `(^|${prefixes.join('|')})`;
+  if (suffixes) prefixSuffixRegexes['suffix'] = `(${suffixes.join('|')}|$)`;
+  return prefixSuffixRegexes;
+};
+
+export const buildValuePluginRegex = (pluginConfig) => {
   const hasValueModifiers = typeof pluginConfig.valueModifiers === 'object';
+
   let valueModifiers;
   let hasDefaultModifierIndicator;
 
@@ -55,33 +90,57 @@ export const buildClassNameRegex = (pluginConfig) => {
 
     if (hasDefaultModifierIndicator) valueModifiers = `${valueModifiers}`;
   }
-
-  return (propNames) =>
-    `(.*?)(${propNames.join('|')})${values}${hasValueModifiers ? valueModifiers : '()?'}(.*)`;
+  return `${values}${hasValueModifiers ? valueModifiers : '()?'}`;
 };
 
+export const buildClassNameRegex = (pluginsConfig,body = '') => {
+  let prefixAndSuffixes = {};
+  const hasPrefixesOrSuffixes = pluginsConfig
+    .filter(x => x.prefixOrSuffix).length > 0;
+
+  if (hasPrefixesOrSuffixes) prefixAndSuffixes = buildPrefixAndSuffixRegex(pluginsConfig);
+
+  const start = prefixAndSuffixes['prefix']
+    ? prefixAndSuffixes['prefix']
+    : '(^)';
+
+  const end = prefixAndSuffixes['suffix']
+    ? prefixAndSuffixes['suffix']
+    :'($)';
+
+  return (propNames) =>
+    `${start}(${propNames.join('|')})${body}${end}`;
+};
+
+
 export const generateValuePluginRegexSequencer = (plugins,propConfigs) => {
+  const isValuePlugin = (x) => pluginsObject[x].type === PLUGIN_TYPES.PATTERN || pluginsObject[x].type === PLUGIN_TYPES.LOOKUP;
   const pluginsObject = createPluginsObject(plugins);
   const propNamesObject = createPropNamesObject(pluginsObject,propConfigs);
 
   return Object.keys(pluginsObject)
+    .filter(isValuePlugin)
     .reduce((accum,pluginName) => {
       const props = propNamesObject[pluginName];
-      const pluginType = pluginsObject[pluginName].type;
-      const pluginRegexFn = buildClassNameRegex(pluginsObject[pluginName]);
+      const pluginRegexFn = buildClassNameRegex(
+        plugins,
+        buildValuePluginRegex(pluginsObject[pluginName])
+      );
 
       const hasDefaultPropName = getPluginPropConfigs(pluginName,propConfigs)
         .some(x => x.pluginDefault === true);
 
-      if (!accum[pluginType]) {
-        accum[pluginType] = generateRegexSequencer(pluginName,props,pluginRegexFn,hasDefaultPropName);
-      } else {
-        accum[pluginType] = deepmerge(
-          accum[pluginType],
-          generateRegexSequencer(pluginName,props,pluginRegexFn,hasDefaultPropName)
-        );
-      }
+      accum = deepmerge(
+        accum,
+        generateRegexSequencer(pluginName,props,pluginRegexFn,hasDefaultPropName)
+      );
 
       return accum;
     },{});
+};
+
+export const generateKeywordValueRegexSequencer = (precompiledClassObjects,pluginsConfig) => {
+  const atomKeys = Object.keys(precompiledClassObjects);
+  const regexFn = buildClassNameRegex(pluginsConfig);
+  return generateRegexSequencer(PLUGIN_TYPES.KEYWORD,atomKeys,regexFn);
 };

@@ -4,6 +4,11 @@ import {
   getPluginPropConfigs
 } from './plugins/';
 
+import {
+  getKeywordClassObjs,
+  generateKeywordValueObjs
+} from './plugins/keywordValueType';
+
 export const generateClassObject = ({
   className,
   cssProps,
@@ -86,6 +91,7 @@ const convertClassNameToClassObj = (className,sequencedRegexes,pluginConfig,prop
 
       const classNameArr = className.match(regexString);
       if (classNameArr === null) return zs;
+
       previouslyMatched = 1;
 
       const propName = classNameArr[2];
@@ -113,23 +119,29 @@ export const convertClassNamestoClassObjs = (sortedClassNames,plugins,props) => 
 
   const convertedClassNames = pluginNames
     .reduce((xs,pluginName) => {
-      const pluginConfig = pluginsObject[pluginName];
-      const { name, type, values } = pluginConfig;
+      const classNames = sortedClassNames[pluginName];
 
-      const classNames = sortedClassNames[name];
-      const propConfigs = getPluginPropConfigs(name,props);
-      const sequencedRegexes = pluginRegexes[type];
+      if(pluginName === 'keyword') {
+        const preCompiledKeywordObjs = generateKeywordValueObjs(props);
+        xs = { ...xs, ...getKeywordClassObjs(classNames,preCompiledKeywordObjs) };
+      } else {
+        const pluginConfig = pluginsObject[pluginName];
+        const { name, values } = pluginConfig;
 
-      classNames.forEach(cx => {
-        let convertedClassName;
-        if (values) {
-          convertedClassName = convertClassNameToClassObj(cx,sequencedRegexes,pluginConfig,propConfigs,values);
-        } else {
-          convertedClassName = convertClassNameToClassObj(cx,sequencedRegexes,pluginConfig,propConfigs);
-        }
+        const propConfigs = getPluginPropConfigs(name,props);
 
-        xs = { ...xs, ...convertedClassName };
-      });
+        classNames.forEach(cx => {
+          let convertedClassName;
+          if (values) {
+            convertedClassName = convertClassNameToClassObj(cx,pluginRegexes,pluginConfig,propConfigs,values);
+          } else {
+            convertedClassName = convertClassNameToClassObj(cx,pluginRegexes,pluginConfig,propConfigs);
+          }
+
+          xs = { ...xs, ...convertedClassName };
+        });
+      }
+
       return xs;
     },{});
 

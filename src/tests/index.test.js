@@ -6,7 +6,9 @@ import {
 import {
   integersPlugin,
   colorsPlugin,
-  lengthUnitsPlugin
+  lengthUnitsPlugin,
+  pseudosPlugin,
+  breakpointsPlugin
 } from '../fixtures/plugins';
 
 // Plugin types
@@ -31,6 +33,11 @@ const config = {
     order: {
       prop: 'order',
       propName: 'order',
+      enableIntegers: true
+    },
+    flex: {
+      prop: 'flex',
+      propName: 'flex',
       enableIntegers: true
     },
     color: {
@@ -72,6 +79,17 @@ const config = {
       prop: 'margin',
       propName: 'm',
       enableLengthUnits: true
+    },
+    display: {
+      prop: 'display',
+      propName: '',
+      keywordValues: {
+        values: {
+          block: 'block',
+          'inline-block': 'inline-block',
+          flex: 'flex'
+        }
+      },
     }
   },
   settings: {
@@ -81,13 +99,15 @@ const config = {
     lengthUnitsPlugin,
     integersPlugin,
     colorsPlugin,
+    pseudosPlugin,
+    breakpointsPlugin
   ]
 };
 
 const lengthUnitClassnames = ['bg100p','w100vw','m10'];
-const integerClassnames = ['z100','grow2','order-1'];
+const integerClassnames = ['z100','grow2','order-1','flex2'];
 const colorClassnames = ['bg-pink','black','fill-white','bg-black_20'];
-const keywordClasses = ['hover-bg-cover'];
+const keywordClasses = ['hover-bg-cover','flex','inline-block','block'];
 
 describe('generateLibrary', () => {
   it('processes integer classes', () => {
@@ -104,6 +124,8 @@ describe('generateLibrary', () => {
       'bg-pink': { 'background-color': '#FF0099' },
       'black': { 'color': '#000000' },
       'bg-black_20': { 'background-color': 'rgba(0,0,0,0.2)'},
+      'flex': { display: 'flex' },
+      'flex2': { flex: '2' },
       'fill-white': { 'fill': '#FFFFFF' },
       'grow2': { grow: '2' },
       'hover-bg-cover': { 'background-size': 'cover' },

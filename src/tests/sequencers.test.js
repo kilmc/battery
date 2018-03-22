@@ -3,7 +3,9 @@
 import {
   colorsPlugin,
   integersPlugin,
-  lengthUnitsPlugin
+  lengthUnitsPlugin,
+  pseudosPlugin,
+  breakpointsPlugin
 } from '../fixtures/plugins';
 
 import {
@@ -19,12 +21,22 @@ import {
 import {
   buildClassNameRegex,
   generateValuePluginRegexSequencer,
-  generateRegexSequencer
+  generateRegexSequencer,
+  buildPrefixAndSuffixRegex
 } from '../sequencers';
+
+describe('buildPrefixAndSuffixRegex', () => {
+  it('builds a regex from the prefix and suffix modifiers in className and atrule plugins', () => {
+    expect(buildPrefixAndSuffixRegex([pseudosPlugin,breakpointsPlugin])).toEqual({
+      'prefix': '(^|hover-|focus-)',
+      'suffix': '(-sm|-md|-lg|$)'
+    });
+  });
+});
 
 describe('buildClassNameRegex', () => {
   it('builds a regex with propName and value capture groups', () => {
-    expect(buildClassNameRegex(integersPlugin)).toBeDefined();
+    expect(buildClassNameRegex([integersPlugin])).toBeDefined();
   });
 });
 
@@ -54,18 +66,14 @@ describe('generatePluginRegexSequencer', () => {
     expect(
       generateValuePluginRegexSequencer(plugins,propConfigs)
     ).toEqual({
-      'lookup': {
-        '0': {'colors': '(.*?)()(black|white|pink)(_\\d+)?(.*)'},
-        '3': {'colors': '(.*?)(bg-)(black|white|pink)(_\\d+)?(.*)'},
-        '5': {'colors': '(.*?)(fill-)(black|white|pink)(_\\d+)?(.*)'}
+      '0': {'colors': '(^)()(black|white|pink)(_\\d+)?($)'},
+      '2': {'lengthUnits': '(^)(bg)(\\d+|-\\d+)(|p|px|vh|vw)?($)'},
+      '1': {
+        'integers': '(^)(z)(\\d+|-\\d+)()?($)',
+        'lengthUnits': '(^)(m)(\\d+|-\\d+)(|p|px|vh|vw)?($)'
       },
-      'pattern': {
-        '1': {
-          'integers': '(.*?)(z)(\\d+|-\\d+)()?(.*)',
-          'lengthUnits': '(.*?)(m)(\\d+|-\\d+)(|p|px|vh|vw)?(.*)'
-        },
-        '2': {'lengthUnits': '(.*?)(bg)(\\d+|-\\d+)(|p|px|vh|vw)?(.*)'}
-      }
+      '3': {'colors': '(^)(bg-)(black|white|pink)(_\\d+)?($)'},
+      '5': {'colors': '(^)(fill-)(black|white|pink)(_\\d+)?($)'}
     });
   });
 });
