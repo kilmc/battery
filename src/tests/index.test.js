@@ -1,6 +1,7 @@
 /* eslint-env jest, node */
 import {
-  generateLibrary
+  generateLibrary,
+  generateCSS
 } from '../index';
 
 import {
@@ -78,6 +79,20 @@ const config = {
     margin: {
       prop: 'margin',
       propName: 'm',
+      subProps: {
+        't': 'top',
+        'r': 'right',
+        'b': 'bottom',
+        'l': 'left',
+        'x': 'left right',
+        'y': 'top bottom'
+      },
+      keywordValues: {
+        separator: '-',
+        values: {
+          auto: 'auto'
+        }
+      },
       enableLengthUnits: true
     },
     display: {
@@ -104,10 +119,15 @@ const config = {
   ]
 };
 
-const lengthUnitClassnames = ['bg100p','w100vw','m10'];
+const lengthUnitClassnames = ['bg100p','w100vw','m10','bg10px'];
 const integerClassnames = ['z100','grow2','order-1','flex2'];
 const colorClassnames = ['bg-pink','black','fill-white','bg-black_20'];
 const keywordClasses = ['hover-bg-cover','flex','inline-block','block'];
+
+const mdIntegerClassNames = integerClassnames.map(x => `${x}-md`);
+const lgLengthUnits = lengthUnitClassnames.map(x => `${x}-lg`);
+const hoverColorClassNames = colorClassnames.map(x => `hover-${x}`);
+const focusSmColorClassNames = colorClassnames.map(x => `hover-${x}-sm`);
 
 describe('generateLibrary', () => {
   it('processes integer classes', () => {
@@ -132,7 +152,27 @@ describe('generateLibrary', () => {
       'm10': { margin: '6rem' },
       'order-1': { order: '-1' },
       'w100vw': { width: '100vw' },
-      'z100': { 'z-index': '100' }
+      'z100': { 'z-index': '100' },
+      'bg10px': { 'background-size': '10px' },
     });
+  });
+});
+
+describe('generateCSS', () => {
+  it('should generate CSS', () => {
+    expect(generateCSS(
+      [
+        ...integerClassnames,
+        ...colorClassnames,
+        ...keywordClasses,
+        ...lengthUnitClassnames,
+        ...mdIntegerClassNames,
+        ...lgLengthUnits,
+        ...hoverColorClassNames,
+        ...focusSmColorClassNames,
+        ...['mt4','hover-mt100p']
+      ],
+      config
+    )).toEqual('HI');
   });
 });

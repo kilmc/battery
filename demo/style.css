@@ -40,6 +40,8 @@ abbr, acronym
 	cursor: help;
 }
 
+body { font-size: 62.25% }
+
 * { box-sizing: border-box }
 
 #css-mount {

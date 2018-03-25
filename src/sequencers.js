@@ -25,7 +25,7 @@ export const generateRegexSequencer = (groupName,arr,regexFn,hasDefaultPropName)
   return sorted;
 };
 
-const formatPrefixOrSuffix = (x,y,prefixOrSuffix) => {
+export const formatPrefixOrSuffix = (x,y,prefixOrSuffix) => {
   return prefixOrSuffix === 'prefix' ? `${x}${y}` : `${y}${x}`;
 };
 

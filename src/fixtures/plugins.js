@@ -11,6 +11,8 @@ const hexToRgba = (hex,opacity) => {
   return `rgba(${r},${g},${b},${opacity/100})`;
 };
 
+const formatPseudo = (cx,pseudo) => `${cx}:${pseudo}`;
+
 export const integersPlugin = {
   name: 'integers',
   type: 'pattern',
@@ -83,11 +85,13 @@ export const pseudosPlugin = {
       name: 'hover',
       separator: '-',
       indicator: 'hover',
+      modifierFn: formatPseudo
     },
     {
       name: 'focus',
       separator: '-',
       indicator: 'focus',
+      modifierFn: formatPseudo
     }
   ]
 };
@@ -95,22 +99,26 @@ export const pseudosPlugin = {
 export const breakpointsPlugin = {
   name: 'breakpoints',
   type: 'atrule',
+  atrule: 'media',
   prefixOrSuffix: 'suffix',
   modifiers: [
     {
       name: 'responsiveSmall',
       indicator: 'sm',
-      separator: '-'
+      separator: '-',
+      condition: '(min-width: 560px)'
     },
     {
       name: 'responsiveMedium',
       indicator: 'md',
-      separator: '-'
+      separator: '-',
+      condition: '(min-width: 940px)'
     },
     {
       name: 'responsiveLarge',
       indicator: 'lg',
-      separator: '-'
+      separator: '-',
+      condition: '(min-width: 1040px)'
     }
   ]
 };

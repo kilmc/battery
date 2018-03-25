@@ -29,7 +29,7 @@ export const unboundFormatPx = ({
 export const unboundFormat = (baseFontSize,baselineUnit,useRems,useBaseline) => ({
   percent: addPercent,
   rem: addRem,
-  pixel: addPixel,
+  pixel: unboundFormatPx({baseFontSize,baselineUnit,useRems,}),
   viewportHeight: addViewportHeight,
   viewportWidth: addViewportWidth,
   baseline: unboundFormatPx({

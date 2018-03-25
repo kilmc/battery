@@ -5,6 +5,7 @@ import { enablePropFeature } from '../src_archive/configHelpers';
 const color = {
   prop: 'color',
   propName: '',
+  pluginDefault: true,
   allowedValues: ['red-500', 'grey-900', 'green-800'],
   allowedPseudoValues: {
     hover: [],
@@ -16,7 +17,8 @@ const color = {
 const backgroundColor = {
   prop: 'background-color',
   propName: 'bg',
-  manual: {
+  separator: '-',
+  keywordValues: {
     separator: '-',
     values: {
       transparent: 'transparent'
@@ -30,7 +32,7 @@ const backgroundColor = {
 const backgroundImage = {
   prop: 'background-image',
   propName: 'bg',
-  manual: {
+  keywordValues: {
     separator: '-',
     values: {
       none: 'none'
@@ -43,7 +45,7 @@ const backgroundImage = {
 const backgroundPosition = {
   prop: 'background-position',
   propName: 'bg',
-  manual: {
+  keywordValues: {
     separator: '-',
     values: {
       center: 'center center',
@@ -60,7 +62,7 @@ const backgroundPosition = {
 const backgroundRepeat = {
   prop: 'background-repeat',
   propName: 'bg',
-  manual: {
+  keywordValues: {
     separator: '-',
     values: {
       'no-repeat': 'no-repeat',
@@ -73,7 +75,7 @@ const backgroundRepeat = {
 const backgroundSize = {
   prop: 'background-size',
   propName: 'bg',
-  manual: {
+  keywordValues: {
     separator: '-',
     values: {
       'cover': 'cover',
@@ -98,7 +100,7 @@ const borders = {
     'x': 'left right',
     'y': 'top bottom'
   },
-  manual: {
+  keywordValues: {
     separator: '-',
     values: {
       'default': '1px solid #DCDEDD',
@@ -120,7 +122,7 @@ const borderWidth = {
 const borderRadius = {
   prop: 'border-radius',
   propName: '',
-  manual: {
+  keywordValues: {
     values: {
       'rounded': '0.2rem',
       'circle': '100%'
@@ -133,7 +135,7 @@ const borderRadius = {
 const boxShadow = {
   prop: 'box-shadow',
   propName: 'shadow',
-  manual: {
+  keywordValues: {
     separator: '-',
     values: {
       1: '0 2px rgba(0,0,0,0.12)'
@@ -150,7 +152,7 @@ const boxSizing = {};
 const clear = {
   prop: 'clear',
   propName: 'clear',
-  manual: {
+  keywordValues: {
     separator: '-',
     values: {
       'left': 'left',
@@ -169,7 +171,7 @@ const cursor = {};
 const display = {
   prop: 'display',
   propName: '',
-  manual: {
+  keywordValues: {
     values: {
       'block': 'block',
       'inline': 'inline',
@@ -193,12 +195,42 @@ const flexGrow = { propName: 'grow', prop: 'flex-grow' };
 const flexShrink = { propName: 'shrink', prop: 'flex-shrink' };
 const order = { propName: 'order', prop: 'order' };
 
+const justifyContent = {
+  propName: 'justify',
+  prop: 'justify-content',
+  keywordValues: {
+    separator: '-',
+    values: {
+      'center': 'center',
+      'end': 'flex-end',
+      'start': 'flex-start',
+      'between': 'space-between',
+      'around': 'space-around'
+    }
+  }
+};
+
+const alignItems = {
+  propName: 'items',
+  prop: 'align-items',
+  keywordValues: {
+    separator: '-',
+    values: {
+      'center': 'center',
+      'end': 'flex-end',
+      'start': 'flex-start',
+      'baseline': 'baseline',
+      'stretch': 'stretch'
+    }
+  }
+};
+
 // float
 // ------------------------------------------------------------------
 const float = {
   prop: 'float',
   propName: '',
-  manual: {
+  keywordValues: {
     values: {
       'left': 'left',
       'right': 'right',
@@ -220,7 +252,7 @@ const fontSize = {
 const fontFamily = {
   prop: 'font-family',
   propName: '',
-  manual: {
+  keywordValues: {
     values: {
       'sans-serif': 'sans-serif'
     }
@@ -236,7 +268,7 @@ const fontStyle = {};
 const fontWeight = {
   prop: 'font-weight',
   propName: '',
-  manual: {
+  keywordValues: {
     values: {
       medium: '400'
     }
@@ -286,7 +318,7 @@ const margin = {
     'x': 'left right',
     'y': 'top bottom'
   },
-  manual: {
+  keywordValues: {
     separator: '-',
     values: { auto: 'auto' }
   },
@@ -330,7 +362,7 @@ const pointerEvents = {};
 const position = {
   prop: 'position',
   propName: '',
-  manual: {
+  keywordValues: {
     values: {
       'absolute': 'absolute',
       'relative': 'relative',
@@ -381,10 +413,11 @@ const textAlign = {};
 const textDecoration = {
   prop: 'text-decoration',
   propName: 'text',
-  manual: {
+  keywordValues: {
     separator: '-',
     values: {
-      'underline': 'underline'
+      'underline': 'underline',
+      'decoration-none': 'none'
     }
   }
 };
@@ -486,7 +519,9 @@ const propsConfig = {
   webkit,
   whiteSpace,
   wordBreak,
-  zIndex
+  zIndex,
+  justifyContent,
+  alignItems
 };
 
 enablePropFeature('colors',propsConfig,[

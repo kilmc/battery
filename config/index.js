@@ -1,19 +1,11 @@
-import breakpointsConfig from './breakpoints';
-import colorsConfig from './colors';
-import cssConfig from './css';
 import propsConfig from './props';
-import unitsConfig from './units';
+import pluginsConfig from './plugins';
 
 const config = {
-  breakpoints: breakpointsConfig,
-  css: cssConfig,
-  colors: colorsConfig,
-  units: unitsConfig,
   props: propsConfig,
-  misc: {
-    baseFontSize: 16,
-    baselineUnit: 6,
-    useRems: true,
+  plugins: pluginsConfig,
+  settings: {
+    enableKeywordValues: true,
   }
 };
 

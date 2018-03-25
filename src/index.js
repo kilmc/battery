@@ -1,8 +1,9 @@
 import deepmerge from 'deepmerge';
 
-import {
-  generateKeywordValueObjs,
-} from './plugins/keywordValueType';
+import { processClassNameTypes } from './plugins/classNameType';
+import { generateKeywordValueObjs } from './plugins/keywordValueType';
+import { generateAtRules, atomsToCSS } from './generators/generateCSS';
+import { processConfig } from './config/';
 
 import {
   generateValuePluginRegexSequencer,
@@ -16,8 +17,9 @@ import { convertClassNamestoClassObjs } from './classObject';
 // ====================  G E N E R A T E  C S S  ====================
 // ------------------------------------------------------------------
 
+
 export const generateLibrary = (classNames,config) => {
-  const { props, settings, plugins } = config;
+  const { props, settings, plugins } = processConfig(config);
 
   let classObjs;
   let keywordValueRegexes;
@@ -40,4 +42,18 @@ export const generateLibrary = (classNames,config) => {
   };
 
   return classObjs;
+};
+
+export const generateCSS = (classNames, config) => {
+  const { plugins } = config;
+
+  const library = generateLibrary(classNames,config);
+  let libraryCSS = '';
+
+  libraryCSS += generateAtRules(library,plugins);
+  processClassNameTypes(library,plugins);
+
+  libraryCSS = `${atomsToCSS(library)}\n${libraryCSS}`;
+
+  return libraryCSS;
 };

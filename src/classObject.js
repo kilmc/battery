@@ -1,5 +1,9 @@
 import { createPluginsObject } from './plugins/';
-import { generateValuePluginRegexSequencer } from './sequencers';
+import {
+  generateValuePluginRegexSequencer,
+  generateRegexSequencer
+} from './sequencers';
+
 import {
   getPluginPropConfigs
 } from './plugins/';
@@ -41,7 +45,6 @@ const getProps = (cxPropName,propConfigs) => {
 };
 
 const modifyValue = (value,modifier,pluginConfig) => {
-  // console.log('valueModifiers', pluginConfig);
   const hasDefaultModifier = pluginConfig.valueModifiers
     .some(x => x.default === true);
   let modifierValue;
@@ -50,6 +53,7 @@ const modifyValue = (value,modifier,pluginConfig) => {
 
   if (modifier !== undefined) {
     const valueModifier = pluginConfig.valueModifiers
+      .sort((a,b) => b.indicator.length - a.indicator.length)
       .filter(x => {
         const { separator = '', indicator } = x;
         const regex = new RegExp(`${separator+indicator}`);
@@ -62,12 +66,12 @@ const modifyValue = (value,modifier,pluginConfig) => {
         }
         else { return false; }
       })[0];
-
     return valueModifier.modifierFn(value,modifierValue);
   } else {
     return value;
   }
 };
+
 
 const getValue = (value,modifier,pluginConfig,lookupValues) => {
   if (lookupValues) { value = lookupValues[value]; }
