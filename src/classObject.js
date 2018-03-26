@@ -114,7 +114,13 @@ const convertClassNameToClassObj = (className,sequencedRegexes,pluginConfig,prop
     },{});
 };
 
-
+function sortObjKeysAlphabetically(obj) {
+  var ordered = {};
+  Object.keys(obj).sort().forEach(function(key) {
+    ordered[key] = obj[key];
+  });
+  return ordered;
+}
 
 export const convertClassNamestoClassObjs = (sortedClassNames,plugins,props) => {
   const pluginNames = Object.keys(sortedClassNames);
@@ -149,5 +155,5 @@ export const convertClassNamestoClassObjs = (sortedClassNames,plugins,props) => 
       return xs;
     },{});
 
-  return convertedClassNames;
+  return sortObjKeysAlphabetically(convertedClassNames);
 };

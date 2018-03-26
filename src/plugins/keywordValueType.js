@@ -43,9 +43,10 @@ export const getKeywordClassObjs = (classNames, precompiledClassObjects) => {
   if (!precompiledClassObjects) return null;
 
   const atomKeys = Object.keys(precompiledClassObjects);
-  const keywordRegex = new RegExp(`(.*?)(${atomKeys.join('|')})(.*)`);
+  const keywordRegex = new RegExp(`(.*?)(${atomKeys.sort((a,b) => b.length - a.length).join('|')})(.*)`);
 
-  const matchedClassNames = classNames.filter(x => x.match(keywordRegex));
+  const matchedClassNames = classNames
+    .filter(x => x.match(keywordRegex));
 
   const returnedAtoms = matchedClassNames
     .reduce((accum, cx) => {

@@ -138,7 +138,8 @@ const boxShadow = {
   keywordValues: {
     separator: '-',
     values: {
-      1: '0 2px rgba(0,0,0,0.12)'
+      1: '0 2px rgba(0,0,0,0.12)',
+      2: '0 3px 6px 1px rgba(0,0,0,0.17)'
     }
   }
 };
@@ -216,11 +217,23 @@ const alignItems = {
   keywordValues: {
     separator: '-',
     values: {
-      'center': 'center',
-      'end': 'flex-end',
-      'start': 'flex-start',
-      'baseline': 'baseline',
-      'stretch': 'stretch'
+      center: 'center',
+      end: 'flex-end',
+      start: 'flex-start',
+      baseline: 'baseline',
+      stretch: 'stretch'
+    }
+  }
+};
+
+const flexDirection = {
+  prop: 'flex-direction',
+  propName: 'flex',
+  keywordValues: {
+    separator: '-',
+    values: {
+      row: 'row',
+      column: 'column',
     }
   }
 };
@@ -299,7 +312,11 @@ const letterSpacing = {};
 
 // line-height
 // ------------------------------------------------------------------
-const lineHeight = {};
+const lineHeight = {
+  prop: 'line-height',
+  propName: 'lh',
+  enableLengthUnits: true
+};
 
 // list-style
 // ------------------------------------------------------------------
@@ -521,7 +538,8 @@ const propsConfig = {
   wordBreak,
   zIndex,
   justifyContent,
-  alignItems
+  alignItems,
+  flexDirection
 };
 
 enablePropFeature('colors',propsConfig,[

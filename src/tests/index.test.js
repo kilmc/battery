@@ -105,6 +105,17 @@ const config = {
           flex: 'flex'
         }
       },
+    },
+    flexDirection: {
+      prop: 'flex-direction',
+      propName: 'flex',
+      keywordValues: {
+        separator: '-',
+        values: {
+          row: 'row',
+          column: 'column',
+        }
+      }
     }
   },
   settings: {
@@ -122,7 +133,7 @@ const config = {
 const lengthUnitClassnames = ['bg100p','w100vw','m10','bg10px'];
 const integerClassnames = ['z100','grow2','order-1','flex2'];
 const colorClassnames = ['bg-pink','black','fill-white','bg-black_20'];
-const keywordClasses = ['hover-bg-cover','flex','inline-block','block'];
+const keywordClasses = ['hover-bg-cover','flex','inline-block','block','flex','flex-column'];
 
 const mdIntegerClassNames = integerClassnames.map(x => `${x}-md`);
 const lgLengthUnits = lengthUnitClassnames.map(x => `${x}-lg`);
