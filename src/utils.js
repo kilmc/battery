@@ -31,3 +31,11 @@ export const subtractArrays = (arr1,arr2) => {
 export const hasX = (obj,matchFn) => Object.keys(obj)
   .map(x => obj[x])
   .some(matchFn);
+
+
+// Formatters
+export const formatPrefixOrSuffix = (x,y,prefixOrSuffix) => {
+  return prefixOrSuffix === 'prefix' ? `${x}${y}` : `${y}${x}`;
+};
+
+export const sortAndJoin = (arr) => arr.sort((a,b) => b.length - a.length).join('|');

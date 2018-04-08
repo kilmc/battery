@@ -1,5 +1,5 @@
 import { PLUGIN_TYPES } from './index';
-import { formatPrefixOrSuffix } from '../sequencers';
+import { formatPrefixOrSuffix } from '../utils';
 
 const processClassNameType = (classes,pluginConfig) => {
   const { modifiers, prefixOrSuffix } = pluginConfig;

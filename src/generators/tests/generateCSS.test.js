@@ -48,7 +48,22 @@ const library = generateLibrary(
 describe('generateLibrary', () => {
   it('processes integer classes', () => {
     expect(generateAtRule(library,breakpointsPlugin)).toEqual({
-
+      'lg': {
+        'fill-white-lg': {'fill': '#FFFFFF'},
+        'flex-lg': {'display': 'flex'},
+        'grow2-lg': {'grow': '2'}
+      },
+      'md': {
+        'bg100p-md': {'background-size': '100%'},
+        'black-md': {'color': '#000000'},
+        'hover-bg-cover-md': {'background-size': 'cover'},
+        'z100-md': {'z-index': '100'}
+      },
+      'sm': {
+        'bg-black_20-sm': {'background-color': 'rgba(0,0,0,0.2)'},
+        'm10-sm': {'margin': '6rem'},
+        'order-1-sm': {'order': '-1'}
+      }
     });
   });
 });

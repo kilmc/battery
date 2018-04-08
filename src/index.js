@@ -31,7 +31,6 @@ export const generateLibrary = (classNames,config) => {
   }
 
   const valuePluginRegexes = generateValuePluginRegexSequencer(plugins,props);
-  console.log(valuePluginRegexes);
   const pluginRegexes = deepmerge(valuePluginRegexes,keywordValueRegexes);
   const sortedClassNames = sortClassNames(classNames,pluginRegexes);
 

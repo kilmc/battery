@@ -1,12 +1,6 @@
 import { createPluginsObject } from './plugins/';
-import {
-  generateValuePluginRegexSequencer,
-  generateRegexSequencer
-} from './sequencers';
-
-import {
-  getPluginPropConfigs
-} from './plugins/';
+import { generateValuePluginRegexSequencer } from './sequencers';
+import { getPluginPropConfigs } from './plugins/';
 
 import {
   getKeywordClassObjs,
@@ -86,11 +80,10 @@ const convertClassNameToClassObj = (className,sequencedRegexes,pluginConfig,prop
   let previouslyMatched = 0;
 
   return Object.keys(sequencedRegexes)
-    .sort((a,b) => b - a)
-    .reduce((zs,charLength) => {
+    .reduce((zs,pluginName) => {
       if (previouslyMatched === 1) return zs;
 
-      const regexString = sequencedRegexes[charLength][pluginConfig.name];
+      const regexString = sequencedRegexes[pluginConfig.name];
       if (regexString === undefined) return zs;
 
       const classNameArr = className.match(regexString);

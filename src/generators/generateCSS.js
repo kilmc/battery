@@ -1,4 +1,4 @@
-import { formatPrefixOrSuffix } from '../sequencers';
+import { formatPrefixOrSuffix } from '../utils';
 import { processClassNameTypes } from '../plugins/classNameType';
 import { PLUGIN_TYPES } from '../plugins/index';
 

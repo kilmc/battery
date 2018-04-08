@@ -18,3 +18,7 @@
 .sans-serif { font-family: sans-serif; }
 .shadow-2 { box-shadow: 0 3px 6px 1px rgba(0,0,0,0.17); }
 .w50p { width: 50%; }
+
+@media (min-width: 940px) {
+  .fz30px-md { font-size: 3rem; }
+}
