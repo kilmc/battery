@@ -1,5 +1,3 @@
-import { enablePropFeature } from '../src_archive/configHelpers';
-
 // color
 // ------------------------------------------------------------------
 const color = {
@@ -9,7 +7,8 @@ const color = {
   allowedValues: ['red-500', 'grey-900', 'green-800'],
   allowedPseudoValues: {
     hover: [],
-  }
+  },
+  enableColors: true
 };
 
 // background-color
@@ -106,7 +105,8 @@ const borders = {
       'default': '1px solid #DCDEDD',
       'none': 'none'
     }
-  }
+  },
+  enableIntegers: true
 };
 const borderColor = {
   prop: 'border-color',
@@ -188,12 +188,22 @@ const display = {
 const fill = {
   prop: 'fill',
   propName: 'fill',
+  enableColors: true
 };
 
 // flex
 // ------------------------------------------------------------------
-const flexGrow = { propName: 'grow', prop: 'flex-grow' };
-const flexShrink = { propName: 'shrink', prop: 'flex-shrink' };
+const flexGrow = {
+  propName: 'grow',
+  prop: 'flex-grow',
+  enableIntegers: true
+};
+
+const flexShrink = {
+  propName: 'shrink',
+  prop: 'flex-shrink',
+  enableIntegers: true
+};
 const order = { propName: 'order', prop: 'order' };
 
 const justifyContent = {
@@ -292,17 +302,20 @@ const fontWeight = {
 // ------------------------------------------------------------------
 const height = {
   prop: 'height',
-  propName: 'h'
+  propName: 'h',
+  enableLengthUnits: true
 };
 
 const minHeight = {
   prop: 'min-height',
-  propName: 'min-h'
+  propName: 'min-h',
+  enableLengthUnits: true
 };
 
 const maxHeight = {
   prop: 'max-height',
-  propName: 'max-h'
+  propName: 'max-h',
+  enableLengthUnits: true
 };
 
 
@@ -419,7 +432,11 @@ const resize = {};
 
 // stroke
 // ------------------------------------------------------------------
-const stroke = { prop: 'stroke', propName: 'stroke' };
+const stroke = {
+  prop: 'stroke',
+  propName: 'stroke',
+  enableColors: true
+};
 
 // text-align
 // ------------------------------------------------------------------
@@ -466,8 +483,18 @@ const width = {
   propName: 'w',
   enableLengthUnits: true
 };
-const minWidth = { prop: 'min-width', propName: 'min-w' };
-const maxWidth = { prop: 'max-width', propName: 'max-w' };
+
+const minWidth = {
+  prop: 'min-width',
+  propName: 'min-w',
+  enableLengthUnits: true
+};
+
+const maxWidth = {
+  prop: 'max-width',
+  propName: 'max-w',
+  enableLengthUnits: true
+};
 
 // word-break
 // ------------------------------------------------------------------
@@ -541,29 +568,5 @@ const propsConfig = {
   alignItems,
   flexDirection
 };
-
-enablePropFeature('colors',propsConfig,[
-  'color',
-  'backgroundColor',
-  'fill',
-  'stroke'
-]);
-
-enablePropFeature('lengthUnits',propsConfig,[
-  'height',
-  'margin',
-  'maxHeight',
-  'maxWidth',
-  'minHeight',
-  'minWidth',
-  'width',
-]);
-
-enablePropFeature('integers',propsConfig,[
-  'flexGrow',
-  'flexShrink',
-  'order',
-  'zIndex'
-]);
 
 export default propsConfig;

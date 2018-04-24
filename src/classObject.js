@@ -1,5 +1,5 @@
 import { createPluginsObject } from './plugins/';
-import { generateValuePluginRegexSequencer } from './sequencers';
+import { generateValuePluginRegexObj } from './sequencers';
 import { getPluginPropConfigs } from './plugins/';
 
 import {
@@ -117,7 +117,7 @@ function sortObjKeysAlphabetically(obj) {
 
 export const convertClassNamestoClassObjs = (sortedClassNames,plugins,props) => {
   const pluginNames = Object.keys(sortedClassNames);
-  const pluginRegexes = generateValuePluginRegexSequencer(plugins,props);
+  const pluginRegexes = generateValuePluginRegexObj(plugins,props);
   const pluginsObject = createPluginsObject(plugins);
 
   const convertedClassNames = pluginNames

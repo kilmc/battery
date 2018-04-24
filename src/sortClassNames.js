@@ -1,6 +1,6 @@
 import { subtractArrays } from './utils';
 
-export const sortClassNames = (classNames,sequencedRegexes) => Object
+const sortClassNames = (classNames,sequencedRegexes) => Object
   .keys(sequencedRegexes)
   .reduce((classNameGroups,pluginName) => {
     const matchedClassNames = classNames
@@ -20,3 +20,5 @@ export const sortClassNames = (classNames,sequencedRegexes) => Object
 
     return classNameGroups;
   },{});
+
+export default sortClassNames;

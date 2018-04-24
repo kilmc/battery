@@ -1,9 +1,4 @@
-function camelize(str) {
-  return str.replace(/(?:^\w|[A-Z]|\b\w|\s+)/g, function(match, index) {
-    if (+match === 0) return ''; // or if (/\s+/.test(match)) for white spaces
-    return index == 0 ? match.toLowerCase() : match.toUpperCase();
-  });
-}
+import { camelize } from '../utils';
 
 export const formatBorderProp = (rootProp,subProp) => {
   const [start, end] = rootProp.split('-');
@@ -11,10 +6,10 @@ export const formatBorderProp = (rootProp,subProp) => {
 };
 
 export const convertSubProps = (config) => {
-  const { props: propsConfigs } = config;
+  const { props: propConfigs } = config;
 
-  const subPropConfigs = Object.keys(propsConfigs)
-    .map(x => propsConfigs[x])
+  const subPropConfigs = Object.keys(propConfigs)
+    .map(x => propConfigs[x])
     .filter(x => typeof x.subProps === 'object');
 
   const convertedPropConfigs = subPropConfigs

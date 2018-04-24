@@ -18,8 +18,9 @@ import {
   getPluginPropConfigs,
   createPropNamesObject,
   getPluginType,
-  PLUGIN_TYPES,
 } from '../';
+
+import { PLUGIN_TYPES } from '../constants';
 
 describe('getPluginType', () => {
   it('returns a patternType plugin object', () => {

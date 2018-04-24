@@ -1,18 +1,7 @@
-import { formatPrefixOrSuffix } from '../utils';
-import { processClassNameTypes } from '../plugins/classNameType';
-import { PLUGIN_TYPES } from '../plugins/index';
-
-export const printClass = (className,declarations) => {
-  const classBody = Object.keys(declarations)
-    .map(prop => `${prop}: ${declarations[prop]};`)
-    .join(' ');
-
-  return `.${className} { ${classBody} }`;
-};
-
-export const atomsToCSS = (obj, indent = false) => Object.keys(obj)
-  .map(cx => printClass(cx,obj[cx]))
-  .join(indent ? '\n  ' : '\n');
+import { formatPrefixOrSuffix } from '../../utils';
+import { processClassNameTypes } from '../../plugins/classNameType';
+import { PLUGIN_TYPES } from '../../plugins/constants';
+import generateClasses from './generateClasses';
 
 export const generateAtRule = (classes,pluginConfig) => {
   const { modifiers, prefixOrSuffix } = pluginConfig;
@@ -44,7 +33,7 @@ export const generateAtRule = (classes,pluginConfig) => {
     },{});
 };
 
-export const generateAtRules = (library,plugins) => {
+const generateAtRules = (library,plugins) => {
   const atrulePlugins = plugins
     .filter(x => x.type === PLUGIN_TYPES.ATRULE);
 
@@ -59,7 +48,7 @@ export const generateAtRules = (library,plugins) => {
 
         processClassNameTypes(atruleGroups[indicator],plugins);
 
-        const renderedClasses = atomsToCSS(atruleGroups[indicator],true);
+        const renderedClasses = generateClasses(atruleGroups[indicator],true);
         if (!renderedClasses) return atRuleCSS;
         const renderedAtrule = `\n@${atrule} ${condition} {\n  ${renderedClasses}\n}\n`;
         atRuleCSS += renderedAtrule;
@@ -68,3 +57,5 @@ export const generateAtRules = (library,plugins) => {
   }
   return atRuleCSS;
 };
+
+export default generateAtRules;

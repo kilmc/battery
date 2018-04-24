@@ -16,6 +16,5 @@ export const buildClassNameRegex = (pluginsConfig,body = '') => {
     ? prefixAndSuffixes['suffix']
     :'($)';
 
-  return (propNames) =>
-    `${start}(${sortAndJoin(propNames)})${body}${end}`;
+  return (propNames) => `${start}(${sortAndJoin(propNames)})${body}${end}`;
 };

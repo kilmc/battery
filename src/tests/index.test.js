@@ -1,8 +1,6 @@
 /* eslint-env jest, node */
-import {
-  generateLibrary,
-  generateCSS
-} from '../index';
+import generateLibrary from '../generators/generateLibrary';
+import { generateCSS } from '../index';
 
 import {
   integersPlugin,

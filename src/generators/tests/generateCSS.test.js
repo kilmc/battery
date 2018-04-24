@@ -1,9 +1,7 @@
 /* eslint-env jest, node */
-import {
-  generateLibrary
-} from '../../index';
+import generateLibrary from '../generateLibrary';
 
-import { generateAtRule } from '../generateCSS';
+import { generateAtRule } from '../generateCSS/generateAtRules';
 
 import {
   integersPlugin,

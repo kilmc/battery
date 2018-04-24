@@ -1,13 +1,8 @@
 import { sortAndJoin } from '../utils';
-import { PLUGIN_TYPES } from '../plugins/';
+import { PLUGIN_TYPES } from '../plugins/constants';
 
 export const buildValuePluginRegex = (pluginConfig) => {
   const hasValueModifiers = typeof pluginConfig.valueModifiers === 'object';
-
-  let valueModifiers;
-  let hasDefaultModifierIndicator;
-
-  // Values
   let values;
 
   if (pluginConfig.type === PLUGIN_TYPES.LOOKUP) {
@@ -16,7 +11,9 @@ export const buildValuePluginRegex = (pluginConfig) => {
     values = `(${pluginConfig.valueRegexString})`;
   }
 
-  // Value Modifiers
+  let valueModifiers;
+  let hasDefaultModifierIndicator;
+
   if (hasValueModifiers) {
     const modifiersConfigs = pluginConfig.valueModifiers;
 
@@ -30,6 +27,7 @@ export const buildValuePluginRegex = (pluginConfig) => {
 
     valueModifiers = `(${sortAndJoin(modifiers)})?`;
 
+    // TODO: This line seems redundant
     if (hasDefaultModifierIndicator) valueModifiers = `${valueModifiers}`;
   }
   return `${values}${hasValueModifiers ? valueModifiers : '()?'}`;

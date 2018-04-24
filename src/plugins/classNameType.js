@@ -1,4 +1,4 @@
-import { PLUGIN_TYPES } from './index';
+import { PLUGIN_TYPES } from './constants';
 import { formatPrefixOrSuffix } from '../utils';
 
 const processClassNameType = (classes,pluginConfig) => {

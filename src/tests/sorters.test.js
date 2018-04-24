@@ -1,7 +1,7 @@
 /* eslint-env jest, node */
 
-import { sortClassNames } from '../sorters';
-import { generateValuePluginRegexSequencer } from '../sequencers';
+import sortClassNames from '../sortClassNames';
+import { generateValuePluginRegexObj } from '../sequencers';
 
 import {
   integersPlugin,
@@ -28,7 +28,7 @@ const testPlugins = [
 ];
 
 const testClasses = integerClassNames.concat(colorClassNames,lengthUnits);
-const pluginRegexes = generateValuePluginRegexSequencer(testPlugins,props);
+const pluginRegexes = generateValuePluginRegexObj(testPlugins,props);
 
 const checkObjectKey = (key,obj) => {
   return expect(Object.keys(obj)).toContain(key);

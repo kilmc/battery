@@ -19,8 +19,8 @@ import {
 import { buildClassNameRegex } from '../regexes';
 
 import {
-  generateValuePluginRegexSequencer,
-  generateRegexSequencer,
+  generateValuePluginRegexObj,
+  generateRegexObj,
 } from '../sequencers';
 
 describe('buildClassNameRegex', () => {
@@ -29,11 +29,11 @@ describe('buildClassNameRegex', () => {
   });
 });
 
-describe('generateRegexSequencer', () => {
+describe('generateRegexObj', () => {
   const lengthUnitPropNames = ['w','h','mt','px','min-h'];
 
   it('creates a regex for propNames grouped by length', () => {
-    expect(generateRegexSequencer(
+    expect(generateRegexObj(
       'lengthUnits',
       lengthUnitPropNames,
       x => `(${x.join('|')})`
@@ -51,7 +51,7 @@ describe('generatePluginRegexSequencer', () => {
     };
 
     expect(
-      generateValuePluginRegexSequencer(plugins,propConfigs)
+      generateValuePluginRegexObj(plugins,propConfigs)
     ).toEqual( {
       'colors': '(^)(fill-|bg-|)(black|white|pink)(_\\d+)?($)',
       'integers': '(^)(z)(\\d+|-\\d+)()?($)',

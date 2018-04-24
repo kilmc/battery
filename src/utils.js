@@ -6,11 +6,12 @@ export const capitalize = (key) => key
     key.charAt(0).toUpperCase()
   );
 
-// Objects
-// ------------------------------------------------------------------
-export const filterObject = (filterFn, obj) => Object.keys(obj)
-  .map(x => obj[x])
-  .filter(filterFn);
+export const camelize = (str) => {
+  return str.replace(/(?:^\w|[A-Z]|\b\w|\s+)/g, function(match, index) {
+    if (+match === 0) return ''; // or if (/\s+/.test(match)) for white spaces
+    return index == 0 ? match.toLowerCase() : match.toUpperCase();
+  });
+};
 
 // Arrays
 // ------------------------------------------------------------------
@@ -25,13 +26,6 @@ export const subtractArrays = (arr1,arr2) => {
   });
   return returnArr;
 };
-
-// Matching
-// ------------------------------------------------------------------
-export const hasX = (obj,matchFn) => Object.keys(obj)
-  .map(x => obj[x])
-  .some(matchFn);
-
 
 // Formatters
 export const formatPrefixOrSuffix = (x,y,prefixOrSuffix) => {

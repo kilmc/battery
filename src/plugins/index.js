@@ -1,12 +1,4 @@
-import { capitalize, filterObject } from '../utils';
-
-export const PLUGIN_TYPES = {
-  PATTERN: 'pattern',
-  LOOKUP: 'lookup',
-  CLASSNAME: 'classname',
-  KEYWORD: 'keyword',
-  ATRULE: 'atrule'
-};
+import { capitalize } from '../utils';
 
 // getPlugins
 // ------------------------------------------------------------------
@@ -29,10 +21,9 @@ export const enablePluginKey = (key) => `enable${capitalize(key)}`;
 // Filters propConfigs by enabled[pluginName]
 
 export const getPluginPropConfigs = (pluginName, propConfigs) => {
-  return filterObject(
-    prop => prop[enablePluginKey(pluginName)] === true,
-    propConfigs
-  );
+  return Object.keys(propConfigs)
+    .map(x => propConfigs[x])
+    .filter(prop => prop[enablePluginKey(pluginName)] === true);
 };
 
 // createPluginsObject
