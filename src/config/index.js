@@ -8,8 +8,7 @@ export const formatBorderProp = (rootProp,subProp) => {
 export const convertSubProps = (config) => {
   const { props: propConfigs } = config;
 
-  const subPropConfigs = Object.keys(propConfigs)
-    .map(x => propConfigs[x])
+  const subPropConfigs = propConfigs
     .filter(x => typeof x.subProps === 'object');
 
   const convertedPropConfigs = subPropConfigs
@@ -18,25 +17,24 @@ export const convertSubProps = (config) => {
 
       return Object.keys(subProps)
         .reduce((accumPropConfigs, x) => {
-          const propConfigName = camelize(`${prop} ${subProps[x]}`);
           const subProp = subProps[x].split(' ');
           const processedSubProp = prop.match('border')
             ? subProp.map(y => formatBorderProp(prop,y)).join(' ')
             : subProp.map(y => `${prop}-${y}`).join(' ');
 
-          accumPropConfigs[propConfigName] = {
+          const newPropConfig = {
             prop: processedSubProp,
             propName: `${propName}${subPropSeparator}${x}`,
             ...rest
           };
 
-          return accumPropConfigs;
-        },{});
-    }).reduce((accum,x) => accum = { ...accum, ...x },{});
+          return accumPropConfigs.concat(newPropConfig);
+        },[]);
+    }).reduce((accum,x) => accum.concat(x),[]);
 
   return {
     ...config,
-    props: { ...config.props, ...convertedPropConfigs }
+    props: [ ...config.props, ...convertedPropConfigs ]
   };
 };
 

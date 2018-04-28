@@ -18,40 +18,40 @@ import {
 
 
 const config = {
-  props: {
-    zIndex: {
+  props: [
+    {
       prop: 'z-index',
       propName: 'z',
-      enableIntegers: true
+      enablePlugin: 'integers'
     },
-    grow: {
+    {
       prop: 'grow',
       propName: 'grow',
-      enableIntegers: true
+      enablePlugin: 'integers'
     },
-    order: {
+    {
       prop: 'order',
       propName: 'order',
-      enableIntegers: true
+      enablePlugin: 'integers'
     },
-    flex: {
+    {
       prop: 'flex',
       propName: 'flex',
-      enableIntegers: true
+      enablePlugin: 'integers'
     },
-    color: {
+    {
       prop: 'color',
       propName: '',
       pluginDefault: true,
-      enableColors: true
+      enablePlugin: 'colors'
     },
-    backgroundColor: {
+    {
       prop: 'background-color',
       propName: 'bg',
       separator: '-',
-      enableColors: true
+      enablePlugin: 'colors'
     },
-    backgroundSize: {
+    {
       prop: 'background-size',
       propName: 'bg',
       keywordValues: {
@@ -61,20 +61,20 @@ const config = {
           contain: 'contain'
         }
       },
-      enableLengthUnits: true
+      enablePlugin: 'lengthUnits'
     },
-    fill: {
+    {
       prop: 'fill',
       propName: 'fill',
       separator: '-',
-      enableColors: true
+      enablePlugin: 'colors'
     },
-    width: {
+    {
       prop: 'width',
       propName: 'w',
-      enableLengthUnits: true
+      enablePlugin: 'lengthUnits'
     },
-    margin: {
+    {
       prop: 'margin',
       propName: 'm',
       subProps: {
@@ -91,9 +91,9 @@ const config = {
           auto: 'auto'
         }
       },
-      enableLengthUnits: true
+      enablePlugin: 'lengthUnits'
     },
-    display: {
+    {
       prop: 'display',
       propName: '',
       keywordValues: {
@@ -104,7 +104,7 @@ const config = {
         }
       },
     },
-    flexDirection: {
+    {
       prop: 'flex-direction',
       propName: 'flex',
       keywordValues: {
@@ -115,7 +115,7 @@ const config = {
         }
       }
     }
-  },
+  ],
   settings: {
     enableKeywordValues: true,
   },

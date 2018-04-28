@@ -14,7 +14,6 @@ import {
 
 import {
   createPluginsObject,
-  enablePluginKey,
   getPluginPropConfigs,
   createPropNamesObject,
   getPluginType,
@@ -45,15 +44,9 @@ describe('getPluginType', () => {
   });
 });
 
-describe('enablePluginKey', () => {
-  it('formats a plugin name as an enablePlugin key', () => {
-    expect(enablePluginKey('colors')).toBe('enableColors');
-  });
-});
-
 describe('getPluginPropConfigs', () => {
   it('returns propConfig objects with the given plugin enabled', () => {
-    const props = { backgroundColor, order, zIndex };
+    const props = [ backgroundColor, order, zIndex ];
     const integerPropConfigs = getPluginPropConfigs('integers',props)
       .map(x => x.prop);
 
@@ -61,7 +54,7 @@ describe('getPluginPropConfigs', () => {
   });
 
   it('returns empty array if no propConfig enables the given plugin', () => {
-    const props = { backgroundColor, order, zIndex };
+    const props = [ backgroundColor, order, zIndex ];
     const noPropConfigs = getPluginPropConfigs('other',props)
       .map(x => x.prop);
 
@@ -80,7 +73,7 @@ describe('createPluginsObject', () => {
 
 describe('createPropNamesObject', () => {
   it('gets all propNames (combined with their separators) for each plugin', () => {
-    const propConfigs = { backgroundColor, order, zIndex };
+    const propConfigs = [ backgroundColor, order, zIndex ];
     const pluginsObject = createPluginsObject([colorsPlugin,integersPlugin]);
     const pluginPropNames = createPropNamesObject(pluginsObject,propConfigs);
 

@@ -2,7 +2,7 @@ export const backgroundColor = {
   prop: 'background-color',
   propName: 'bg',
   separator: '-',
-  enableColors: true
+  enablePlugin: 'colors'
 };
 
 export const backgroundSize = {
@@ -15,14 +15,14 @@ export const backgroundSize = {
       contain: 'contain'
     }
   },
-  enableLengthUnits: true
+  enablePlugin: 'lengthUnits'
 };
 
 export const color = {
   prop: 'color',
   propName: '',
   pluginDefault: true,
-  enableColors: true
+  enablePlugin: 'colors'
 };
 
 export const display = {
@@ -54,35 +54,35 @@ export const margin = {
       auto: 'auto'
     }
   },
-  enableLengthUnits: true
+  enablePlugin: 'lengthUnits'
 };
 
 export const fill = {
   prop: 'fill',
   propName: 'fill',
   separator: '-',
-  enableColors: true
+  enablePlugin: 'colors'
 };
 
 export const grow = {
   prop: 'grow',
   propName: 'grow',
-  enableIntegers: true
+  enablePlugin: 'integers'
 };
 
 export const order = {
   prop: 'order',
   propName: 'order',
-  enableIntegers: true
+  enablePlugin: 'integers'
 };
 
 export const zIndex = {
   prop: 'z-index',
   propName: 'z',
-  enableIntegers: true
+  enablePlugin: 'integers'
 };
 
-export const props = {
+export const props = [
   backgroundColor,
   backgroundSize,
   color,
@@ -92,4 +92,4 @@ export const props = {
   grow,
   order,
   zIndex
-};
+];

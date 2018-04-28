@@ -23,6 +23,7 @@ const generateLibrary = (classNames,config) => {
     keywordValueRegexes = generateKeywordValueRegexObj(keywordValueObjs,plugins);
   }
 
+
   const valuePluginRegexes = generateValuePluginRegexObj(plugins,props);
   const pluginRegexes = deepmerge(valuePluginRegexes,keywordValueRegexes);
   const sortedClassNames = sortClassNames(classNames,pluginRegexes);

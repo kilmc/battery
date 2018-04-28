@@ -1,10 +1,5 @@
 // Strings
 // ------------------------------------------------------------------
-export const capitalize = (key) => key
-  .replace(
-    key.charAt(0),
-    key.charAt(0).toUpperCase()
-  );
 
 export const camelize = (str) => {
   return str.replace(/(?:^\w|[A-Z]|\b\w|\s+)/g, function(match, index) {

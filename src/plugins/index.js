@@ -1,5 +1,3 @@
-import { capitalize } from '../utils';
-
 // getPlugins
 // ------------------------------------------------------------------
 export const getPluginType = (pluginType,plugins) => plugins
@@ -9,21 +7,14 @@ export const getPluginType = (pluginType,plugins) => plugins
     return accum;
   },{});
 
-// enablePluginKey
-// ------------------------------------------------------------------
-// Formats a plugin.name to match the key found propConfig objects
-// used to enable that plugin for a given prop
-
-export const enablePluginKey = (key) => `enable${capitalize(key)}`;
 
 // getPluginConfigs
 // ------------------------------------------------------------------
 // Filters propConfigs by enabled[pluginName]
 
 export const getPluginPropConfigs = (pluginName, propConfigs) => {
-  return Object.keys(propConfigs)
-    .map(x => propConfigs[x])
-    .filter(prop => prop[enablePluginKey(pluginName)] === true);
+  return propConfigs
+    .filter(prop => prop.enablePlugin === pluginName);
 };
 
 // createPluginsObject

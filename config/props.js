@@ -8,7 +8,7 @@ const color = {
   allowedPseudoValues: {
     hover: [],
   },
-  enableColors: true
+  enablePlugin: 'colors'
 };
 
 // background-color
@@ -23,7 +23,7 @@ const backgroundColor = {
       transparent: 'transparent'
     }
   },
-  enableColors: true
+  enablePlugin: 'colors'
 };
 
 // background-image
@@ -106,18 +106,18 @@ const borders = {
       'none': 'none'
     }
   },
-  enableIntegers: true
+  enablePlugin: 'integers'
 };
 const borderColor = {
   prop: 'border-color',
   propName: 'border',
-  enableColors: true
+  enablePlugin: 'colors'
 };
 
 const borderWidth = {
   prop: 'border-width',
   propName: 'border',
-  enableLengthUnits: true
+  enablePlugin: 'lengthUnits'
 };
 const borderRadius = {
   prop: 'border-radius',
@@ -188,7 +188,7 @@ const display = {
 const fill = {
   prop: 'fill',
   propName: 'fill',
-  enableColors: true
+  enablePlugin: 'colors'
 };
 
 // flex
@@ -196,13 +196,13 @@ const fill = {
 const flexGrow = {
   propName: 'grow',
   prop: 'flex-grow',
-  enableIntegers: true
+  enablePlugin: 'integers'
 };
 
 const flexShrink = {
   propName: 'shrink',
   prop: 'flex-shrink',
-  enableIntegers: true
+  enablePlugin: 'integers'
 };
 const order = { propName: 'order', prop: 'order' };
 
@@ -267,7 +267,7 @@ const float = {
 const fontSize = {
   prop: 'font-size',
   propName: 'fz',
-  enableLengthUnits: true
+  enablePlugin: 'lengthUnits'
 };
 
 // font-family
@@ -303,19 +303,19 @@ const fontWeight = {
 const height = {
   prop: 'height',
   propName: 'h',
-  enableLengthUnits: true
+  enablePlugin: 'lengthUnits'
 };
 
 const minHeight = {
   prop: 'min-height',
   propName: 'min-h',
-  enableLengthUnits: true
+  enablePlugin: 'lengthUnits'
 };
 
 const maxHeight = {
   prop: 'max-height',
   propName: 'max-h',
-  enableLengthUnits: true
+  enablePlugin: 'lengthUnits'
 };
 
 
@@ -328,7 +328,7 @@ const letterSpacing = {};
 const lineHeight = {
   prop: 'line-height',
   propName: 'lh',
-  enableLengthUnits: true
+  enablePlugin: 'lengthUnits'
 };
 
 // list-style
@@ -352,7 +352,7 @@ const margin = {
     separator: '-',
     values: { auto: 'auto' }
   },
-  enableLengthUnits: true
+  enablePlugin: 'lengthUnits'
 };
 
 // opacity
@@ -380,7 +380,7 @@ const padding = {
     'x': 'left right',
     'y': 'top bottom'
   },
-  enableLengthUnits: true
+  enablePlugin: 'lengthUnits'
 };
 
 // pointer-events
@@ -405,25 +405,25 @@ const position = {
 const top = {
   prop: 'top',
   propName: 't',
-  enableLengthUnits: true
+  enablePlugin: 'lengthUnits'
 };
 
 const right = {
   prop: 'right',
   propName: 'r',
-  enableLengthUnits: true
+  enablePlugin: 'lengthUnits'
 };
 
 const bottom = {
   prop: 'bottom',
   propName: 'b',
-  enableLengthUnits: true
+  enablePlugin: 'lengthUnits'
 };
 
 const left = {
   prop: 'left',
   propName: 'l',
-  enableLengthUnits: true
+  enablePlugin: 'lengthUnits'
 };
 
 // resize
@@ -435,7 +435,7 @@ const resize = {};
 const stroke = {
   prop: 'stroke',
   propName: 'stroke',
-  enableColors: true
+  enablePlugin: 'colors'
 };
 
 // text-align
@@ -481,19 +481,19 @@ const whiteSpace = {};
 const width = {
   prop: 'width',
   propName: 'w',
-  enableLengthUnits: true
+  enablePlugin: 'lengthUnits'
 };
 
 const minWidth = {
   prop: 'min-width',
   propName: 'min-w',
-  enableLengthUnits: true
+  enablePlugin: 'lengthUnits'
 };
 
 const maxWidth = {
   prop: 'max-width',
   propName: 'max-w',
-  enableLengthUnits: true
+  enablePlugin: 'lengthUnits'
 };
 
 // word-break
@@ -505,10 +505,10 @@ const wordBreak = {};
 const zIndex = {
   propName: 'z',
   prop: 'z-index',
-  enableIntegers: true
+  enablePlugin: 'integers'
 };
 
-const propsConfig = {
+const propsConfig = [
   color,
   backgroundColor,
   borderColor,
@@ -567,6 +567,6 @@ const propsConfig = {
   justifyContent,
   alignItems,
   flexDirection
-};
+];
 
 export default propsConfig;

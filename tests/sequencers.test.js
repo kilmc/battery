@@ -46,9 +46,9 @@ describe('generateRegexObj', () => {
 describe('generatePluginRegexSequencer', () => {
   it('sorts propNames grouped by length by pluginName', () => {
     const plugins = [colorsPlugin,integersPlugin,lengthUnitsPlugin];
-    const propConfigs = {
+    const propConfigs = [
       backgroundColor, backgroundSize, color, display, margin, fill, zIndex
-    };
+    ];
 
     expect(
       generateValuePluginRegexObj(plugins,propConfigs)

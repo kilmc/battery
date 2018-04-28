@@ -31,6 +31,7 @@ export const generateRegexObj = (groupName,arr,regexFn) => {
 };
 
 export const generateValuePluginRegexObj = (plugins,propConfigs) => {
+  // console.log(propConfigs)
   const pluginsObject = createPluginsObject(plugins);
 
   const isValuePlugin = (x) =>
