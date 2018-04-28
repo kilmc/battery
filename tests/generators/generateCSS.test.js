@@ -1,7 +1,6 @@
 /* eslint-env jest, node */
-import generateLibrary from '../generateLibrary';
-
-import { generateAtRule } from '../generateCSS/generateAtRules';
+import { generateLibrary } from '../../src/generators/';
+import { generateAtRule } from '../../src/generators/generateAtRules';
 
 import {
   integersPlugin,
@@ -9,9 +8,9 @@ import {
   lengthUnitsPlugin,
   pseudosPlugin,
   breakpointsPlugin
-} from '../../fixtures/plugins';
+} from '../fixtures/plugins';
 
-import { props } from '../../fixtures/props';
+import { props } from '../fixtures/props';
 
 const config = {
   props,

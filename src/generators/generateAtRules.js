@@ -1,7 +1,7 @@
-import { formatPrefixOrSuffix } from '../../utils';
-import { processClassNameTypes } from '../../plugins/classNameType';
-import { PLUGIN_TYPES } from '../../plugins/constants';
-import generateClasses from './generateClasses';
+import { formatPrefixOrSuffix } from '../utils';
+import { processClassNameTypes } from '../plugins/classNameType';
+import { PLUGIN_TYPES } from '../plugins/constants';
+import generateAtRuleCSS from './generateCSS/generateAtRuleCSS';
 
 export const generateAtRule = (classes,pluginConfig) => {
   const { modifiers, prefixOrSuffix } = pluginConfig;
@@ -33,7 +33,7 @@ export const generateAtRule = (classes,pluginConfig) => {
     },{});
 };
 
-const generateAtRules = (library,plugins) => {
+const generateAtRules = (library,plugins,renderAs) => {
   const atrulePlugins = plugins
     .filter(x => x.type === PLUGIN_TYPES.ATRULE);
 
@@ -48,10 +48,14 @@ const generateAtRules = (library,plugins) => {
 
         processClassNameTypes(atruleGroups[indicator],plugins);
 
-        const renderedClasses = generateClasses(atruleGroups[indicator],true);
-        if (!renderedClasses) return atRuleCSS;
-        const renderedAtrule = `\n@${atrule} ${condition} {\n  ${renderedClasses}\n}\n`;
-        atRuleCSS += renderedAtrule;
+        if (renderAs === 'css') {
+          atRuleCSS = generateAtRuleCSS({
+            atrule,
+            condition,
+            library: atruleGroups[indicator],
+            output: atRuleCSS
+          });
+        }
       });
     });
   }

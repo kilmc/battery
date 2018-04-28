@@ -1,13 +1,13 @@
 import { processClassNameTypes } from '../../plugins/classNameType';
 import generateLibrary from '../generateLibrary';
 import generateClasses from './generateClasses';
-import generateAtRules from './generateAtRules';
+import generateAtRules from '../generateAtRules';
 
 const generateCSS = (classNames, config) => {
   const library = generateLibrary(classNames,config);
   let libraryCSS = '';
 
-  libraryCSS += generateAtRules(library,config.plugins);
+  libraryCSS += generateAtRules(library,config.plugins,'css');
   processClassNameTypes(library,config.plugins);
 
   libraryCSS = `${generateClasses(library)}\n${libraryCSS}`;

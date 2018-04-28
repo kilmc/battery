@@ -9,6 +9,7 @@
   "devDependencies": {
     "babel-core": "^6.26.0",
     "babel-jest": "^21.2.0",
+    "babel-plugin-jsx-classnames": "^1.0.1",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.6.1",
     "babel-preset-es2017": "^6.24.1",
@@ -31,7 +32,6 @@
   },
   "dependencies": {
     "babel-cli": "^6.26.0",
-    "fs-extra": "^5.0.0",
-    "lodash": "^4.17.4"
+    "fs-extra": "^5.0.0"
   }
 }

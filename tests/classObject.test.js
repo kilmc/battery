@@ -1,6 +1,6 @@
 /* eslint-env jest, node */
 
-import { generateClassObject } from '../classObject';
+import { generateClassObject } from '../src/classObject';
 
 describe('generateClassObject', () => {
   it('formats a set of inputs into a classObject structure', () => {

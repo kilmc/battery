@@ -1,7 +1,7 @@
 /* eslint-env jest, node */
 
-import sortClassNames from '../sortClassNames';
-import { generateValuePluginRegexObj } from '../sequencers';
+import sortClassNames from '../src/sortClassNames';
+import { generateValuePluginRegexObj } from '../src/sequencers';
 
 import {
   integersPlugin,
@@ -9,15 +9,15 @@ import {
   lengthUnitsPlugin,
   pseudosPlugin,
   breakpointsPlugin
-} from '../fixtures/plugins';
+} from './fixtures/plugins';
 
 import {
   integerClassNames,
   colorClassNames,
   lengthUnits
-} from '../fixtures/classNames';
+} from './fixtures/classNames';
 
-import { props } from '../fixtures/props';
+import { props } from './fixtures/props';
 
 const testPlugins = [
   integersPlugin,

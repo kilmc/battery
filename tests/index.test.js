@@ -1,6 +1,6 @@
 /* eslint-env jest, node */
-import generateLibrary from '../generators/generateLibrary';
-import { generateCSS } from '../index';
+import { generateCSS } from '../src/';
+import generateLibrary from '../src/generators/generateLibrary';
 
 import {
   integersPlugin,
@@ -8,7 +8,7 @@ import {
   lengthUnitsPlugin,
   pseudosPlugin,
   breakpointsPlugin
-} from '../fixtures/plugins';
+} from './fixtures/plugins';
 
 // Plugin types
 // pattern: sets the value based on a regex

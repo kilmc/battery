@@ -3,9 +3,9 @@
 import {
   generateKeywordValueObjs,
   getKeywordClassObjs
-} from '../keywordValueType';
+} from '../../src/plugins/keywordValueType';
 
-import { backgroundSize, display, margin, fill } from '../../fixtures/props';
+import { backgroundSize, display, margin, fill } from '../fixtures/props';
 
 const propConfigs = {
   backgroundSize,

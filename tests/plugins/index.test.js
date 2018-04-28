@@ -4,13 +4,13 @@ import {
   colorsPlugin,
   integersPlugin,
   pluginSet
-} from '../../fixtures/plugins';
+} from '../fixtures/plugins';
 
 import {
   backgroundColor,
   order,
   zIndex
-} from '../../fixtures/props';
+} from '../fixtures/props';
 
 import {
   createPluginsObject,
@@ -18,9 +18,9 @@ import {
   getPluginPropConfigs,
   createPropNamesObject,
   getPluginType,
-} from '../';
+} from '../../src/plugins/';
 
-import { PLUGIN_TYPES } from '../constants';
+import { PLUGIN_TYPES } from '../../src/plugins/constants';
 
 describe('getPluginType', () => {
   it('returns a patternType plugin object', () => {

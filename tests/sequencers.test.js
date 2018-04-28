@@ -4,7 +4,7 @@ import {
   colorsPlugin,
   integersPlugin,
   lengthUnitsPlugin,
-} from '../fixtures/plugins';
+} from './fixtures/plugins';
 
 import {
   backgroundColor,
@@ -14,14 +14,14 @@ import {
   margin,
   fill,
   zIndex
-} from '../fixtures/props';
+} from './fixtures/props';
 
-import { buildClassNameRegex } from '../regexes';
+import { buildClassNameRegex } from '../src/regexes';
 
 import {
   generateValuePluginRegexObj,
   generateRegexObj,
-} from '../sequencers';
+} from '../src/sequencers';
 
 describe('buildClassNameRegex', () => {
   it('builds a regex with propName and value capture groups', () => {
