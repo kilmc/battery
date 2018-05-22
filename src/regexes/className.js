@@ -1,7 +1,7 @@
 import { sortAndJoin } from '../utils';
 import { buildPrefixAndSuffixRegex } from './';
 
-export const buildClassNameRegex = (pluginsConfig,body = '') => {
+export const buildClassNameRegexFn = (pluginsConfig,body = '') => {
   let prefixAndSuffixes = {};
   const hasPrefixesOrSuffixes = pluginsConfig
     .filter(x => x.prefixOrSuffix).length > 0;

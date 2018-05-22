@@ -40,7 +40,7 @@ export const colorsPlugin = {
 export const lengthUnitsPlugin = {
   name: 'lengthUnits',
   type: 'pattern',
-  valueRegexString: '\\d+|-\\d+',
+  valueRegexString: '-?[0-9]{1,4}',
   valueModifiers: [
     {
       name: 'baseline',

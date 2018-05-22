@@ -16,16 +16,16 @@ import {
   zIndex
 } from './fixtures/props';
 
-import { buildClassNameRegex } from '../src/regexes';
+import { buildClassNameRegexFn } from '../src/regexes';
 
 import {
   generateValuePluginRegexObj,
   generateRegexObj,
 } from '../src/sequencers';
 
-describe('buildClassNameRegex', () => {
+describe('buildClassNameRegexFn', () => {
   it('builds a regex with propName and value capture groups', () => {
-    expect(buildClassNameRegex([integersPlugin])).toBeDefined();
+    expect(buildClassNameRegexFn([integersPlugin])).toBeDefined();
   });
 });
 
@@ -55,7 +55,7 @@ describe('generatePluginRegexSequencer', () => {
     ).toEqual( {
       'colors': '(^)(fill-|bg-|)(black|white|pink)(_\\d+)?($)',
       'integers': '(^)(z)(\\d+|-\\d+)()?($)',
-      'lengthUnits': '(^)(bg|m)(\\d+|-\\d+)(px|vh|vw|p|)?($)'
+      'lengthUnits': '(^)(bg|m)(-?[0-9]{1,4})(px|vh|vw|p|)?($)'
     });
   });
 });

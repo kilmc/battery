@@ -1,9 +1,9 @@
 import { buildPrefixAndSuffixRegex } from './prefixAndSuffixes';
 import { buildValuePluginRegex } from './values';
-import { buildClassNameRegex } from './className';
+import { buildClassNameRegexFn } from './className';
 
 export {
   buildPrefixAndSuffixRegex,
   buildValuePluginRegex,
-  buildClassNameRegex
+  buildClassNameRegexFn
 };

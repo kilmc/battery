@@ -21,22 +21,24 @@ export const generateClassObject = ({
   return ( { [className]: eachProp } );
 };
 
-const getProps = (cxPropName,propConfigs) => {
+const getPropConfigValue = (key) => (cxPropName,propConfigs) => {
   if (cxPropName === '') {
     return propConfigs
       .filter(x => x.pluginDefault === true)
-      .map(x => x.prop)
-      .join('');
+      .map(x => x[key])
+      .reduce((xs,x) => xs.concat(x),[]);
   } else {
     return propConfigs
       .filter(x => {
         const { propName, separator = '' } = x;
         return cxPropName === propName+separator;
       })
-      .map(x => x.prop)
-      .join('');
+      .map(x => x[key])
+      .reduce((xs,x) => xs.concat(x),[]);
   }
 };
+
+const getProps = getPropConfigValue('prop');
 
 const modifyValue = (value,modifier,pluginConfig) => {
   const hasDefaultModifier = pluginConfig.valueModifiers
@@ -60,6 +62,7 @@ const modifyValue = (value,modifier,pluginConfig) => {
         }
         else { return false; }
       })[0];
+
     return valueModifier.modifierFn(value,modifierValue);
   } else {
     return value;
@@ -74,6 +77,40 @@ const getValue = (value,modifier,pluginConfig,lookupValues) => {
   }
 
   return value;
+};
+
+const getAllowedValues = getPropConfigValue('allowedValues');
+const getDisallowedValues = getPropConfigValue('disallowedValues');
+
+const isRestrictedValue = (value,propName,propConfigs) => {
+  if (getDisallowedValues(propName,propConfigs)){
+    console.log('GOT TO DISALLOWED');
+    if (getDisallowedValues(propName,propConfigs).includes(value)) {
+      console.log('VALUE IS ON DISALLOWED LIST');
+      return true;
+    }
+    if (getAllowedValues(propName,propConfigs)) {
+      if (getAllowedValues(propName,propConfigs).includes(value)) {
+        console.log('VALUE IS ON ALLOWED LIST');
+        return false;
+      } else if (!getAllowedValues(propName,propConfigs).includes(value)) {
+        console.log('VALUE IS NOT NOT ON ALLOWED LIST');
+        return true;
+      }
+    }
+  } else if (getAllowedValues(propName,propConfigs)) {
+    if (getAllowedValues(propName,propConfigs).includes(value)) {
+      console.log('VALUE IS ON ALLOWED LIST');
+      return false;
+    } else if (!getAllowedValues(propName,propConfigs).includes(value)) {
+      console.log('VALUE IS NOT NOT ON ALLOWED LIST');
+      return true;
+    }
+  }
+  else {
+    console.log('GOT TO THE ELSE');
+    return false;
+  }
 };
 
 const convertClassNameToClassObj = (className,sequencedRegexes,pluginConfig,propConfigs,lookupValues) => {
@@ -94,11 +131,14 @@ const convertClassNameToClassObj = (className,sequencedRegexes,pluginConfig,prop
       const propName = classNameArr[2];
 
       let value = classNameArr[3];
+      console.log(propName === '' ? 'color' : propName,value);
+      if (isRestrictedValue(value,propName,propConfigs)) return zs;
+      console.log('NEXT');
       const valueModifier = classNameArr[4];
 
       const convertedClassObj = generateClassObject({
         className: className,
-        cssProps: getProps(propName,propConfigs),
+        cssProps: getProps(propName,propConfigs).join(''),
         value: getValue(value,valueModifier,pluginConfig,lookupValues)
       });
 

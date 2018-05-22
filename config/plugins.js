@@ -1,4 +1,4 @@
-import { unboundFormat } from '../src/fixtures/modifierFns';
+import { unboundFormat } from '../tests/fixtures/modifierFns';
 
 const format = unboundFormat(10,6,true,true);
 

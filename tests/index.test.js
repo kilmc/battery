@@ -46,6 +46,29 @@ const config = {
       enablePlugin: 'colors'
     },
     {
+      prop: 'position',
+      propName: '',
+      keywordValues: {
+        values: {
+          relative: 'relative',
+        }
+      }
+    },
+    {
+      prop: 'border-radius',
+      propName: '',
+      keywordValues: {
+        values: {
+          rounded: '0.2rem',
+        }
+      }
+    },
+    {
+      prop: 'height',
+      propName: 'h',
+      enablePlugin: 'lengthUnits'
+    },
+    {
       prop: 'background-color',
       propName: 'bg',
       separator: '-',
@@ -68,6 +91,16 @@ const config = {
       propName: 'fill',
       separator: '-',
       enablePlugin: 'colors'
+    },
+    {
+      prop: 'font-size',
+      propName: 'fz',
+      enablePlugin: 'lengthUnits'
+    },
+    {
+      prop: 'line-height',
+      propName: 'lh',
+      enablePlugin: 'lengthUnits'
     },
     {
       prop: 'width',
@@ -139,7 +172,7 @@ const hoverColorClassNames = colorClassnames.map(x => `hover-${x}`);
 const focusSmColorClassNames = colorClassnames.map(x => `hover-${x}-sm`);
 
 describe('generateLibrary', () => {
-  it('processes integer classes', () => {
+  it('process a whole mess of classes', () => {
     expect(generateLibrary(
       [
         ...integerClassnames,
@@ -166,6 +199,76 @@ describe('generateLibrary', () => {
       'inline-block': { display: 'inline-block' },
       'flex-column': { 'flex-direction': 'column' },
       'block': { display: 'block' }
+    });
+  });
+
+  it('generates molecules', () => {
+    const moleculeConfig =  {
+      expand: {
+        'headline-500': 'type-14 type-16-sm type-21-lg',
+        card: 'white rounded shadow-1'
+      },
+      merge: {
+        'type-14': 'fz14px lh3',
+        'type-16': 'fz16px lh4',
+        'type-21': 'fz21px lh5',
+        bttn: 'relative rounded h7'
+      }
+    };
+    const testConfig = { ...config, molecules: moleculeConfig };
+    expect(generateLibrary(['headline-500','bttn','fz14px','card'],testConfig)).toEqual({
+      'type-14': {
+        'font-size': '1.4rem',
+        'line-height': '1.8rem'
+      },
+      'type-16-sm': {
+        'font-size': '1.6rem',
+        'line-height': '2.4rem'
+      },
+      'type-21-lg': {
+        'font-size': '2.1rem',
+        'line-height': '3rem'
+      },
+      'bttn': {
+        position: 'relative',
+        'border-radius': '0.2rem',
+        height: '4.2rem'
+      },
+      'fz14px': {
+        'font-size': '1.4rem'
+      }
+    });
+  });
+
+  describe('allowed/disaalowed values', () => {
+    const disallowedConfig = {
+      props: [
+        {
+          prop: 'background-color',
+          propName: 'bg',
+          separator: '-',
+          enablePlugin: 'colors',
+          allowedValues: ['black']
+        },
+        {
+          prop: 'color',
+          propName: '',
+          pluginDefault: true,
+          enablePlugin: 'colors',
+          disallowedValues: ['pink']
+        },
+      ],
+      plugins: [colorsPlugin],
+      settings: {
+        enableKeywordValues: true,
+      }
+    };
+
+    fit('only renders allowed classes', () => {
+      expect(generateLibrary(['black','pink','bg-pink','bg-black'],disallowedConfig)).toEqual({
+        black: { color: '#000000' },
+        'bg-black': { 'background-color': '#000000'}
+      });
     });
   });
 });

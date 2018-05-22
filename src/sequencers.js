@@ -1,7 +1,7 @@
 import deepmerge from 'deepmerge';
 
 import {
-  buildClassNameRegex,
+  buildClassNameRegexFn,
   buildValuePluginRegex
 } from './regexes';
 
@@ -31,7 +31,6 @@ export const generateRegexObj = (groupName,arr,regexFn) => {
 };
 
 export const generateValuePluginRegexObj = (plugins,propConfigs) => {
-  // console.log(propConfigs)
   const pluginsObject = createPluginsObject(plugins);
 
   const isValuePlugin = (x) =>
@@ -44,7 +43,7 @@ export const generateValuePluginRegexObj = (plugins,propConfigs) => {
     .filter(isValuePlugin)
     .reduce((accum,pluginName) => {
       const props = propNamesObject[pluginName];
-      const pluginRegexFn = buildClassNameRegex(
+      const pluginRegexFn = buildClassNameRegexFn(
         plugins,
         buildValuePluginRegex(pluginsObject[pluginName])
       );
@@ -60,7 +59,7 @@ export const generateValuePluginRegexObj = (plugins,propConfigs) => {
 
 export const generateKeywordValueRegexObj = (precompiledClassObjects,pluginsConfig) => {
   const atomKeys = Object.keys(precompiledClassObjects);
-  const regexFn = buildClassNameRegex(pluginsConfig);
+  const regexFn = buildClassNameRegexFn(pluginsConfig);
 
   return generateRegexObj(PLUGIN_TYPES.KEYWORD,atomKeys,regexFn);
 };
