@@ -17,41 +17,6 @@ import {
 import sortClassNames from '../sortClassNames';
 import { convertClassNamestoClassObjs } from '../classObject';
 
-const mergePluginRestrictions = (propConfigs) => {
-  return propConfigs.reduce((xs,x) => {
-    const { allowedValues = [], disallowedValues = [], enablePlugin } = x;
-
-    if (!xs[enablePlugin]) {
-      xs[enablePlugin] = { allowedValues, disallowedValues };
-    } else {
-      xs[enablePlugin].allowedValues = xs[enablePlugin].allowedValues.concat(allowedValues);
-      xs[enablePlugin].disallowedValues = xs[enablePlugin].disallowedValues.concat(disallowedValues);
-    }
-    return xs;
-  },{});
-};
-
-const filterAllowedClassNames = (classNames, config) => {
-  let filteredClasses = {...classNames};
-  const { props } = config;
-
-  const propsWithRestrictions = props.filter(prop => prop.allowedValues || prop.disallowedValues);
-  if (propsWithRestrictions.length < 1) return classNames;
-
-  const gathered = mergePluginRestrictions(propsWithRestrictions);
-
-  Object.keys(gathered).forEach(x => {
-    console.log(gathered);
-    console.log('STEP 1: ',filteredClasses)
-    filteredClasses[x] = filteredClasses[x].filter(y => gathered[x].allowedValues.includes(y));
-    console.log('STEP 2: ',filteredClasses)
-    filteredClasses[x] = filteredClasses[x].filter(y => !gathered[x].disallowedValues.includes(y));
-    console.log('STEP 3: ',filteredClasses)
-  });
-  console.log('FUCKERS',filteredClasses);
-  return filteredClasses;
-};
-
 const generateLibrary = (classNames,config) => {
   const { props, settings, plugins } = processConfig(config);
 

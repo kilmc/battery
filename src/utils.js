@@ -28,3 +28,12 @@ export const formatPrefixOrSuffix = (x,y,prefixOrSuffix) => {
 };
 
 export const sortAndJoin = (arr) => arr.sort((a,b) => b.length - a.length).join('|');
+
+export const renameKeys = (obj,filterFn,modifierFn) => {
+  Object.keys(obj)
+    .filter(filterFn)
+    .forEach(key => {
+      obj[`${modifierFn(key)}`] = obj[key];
+      Reflect.deleteProperty(obj,key);
+    });
+};

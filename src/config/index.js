@@ -18,7 +18,7 @@ export const convertSubProps = (config) => {
       return Object.keys(subProps)
         .reduce((accumPropConfigs, x) => {
           const subProp = subProps[x].split(' ');
-          const processedSubProp = prop.match('border')
+          const processedSubProp = prop.match('border-')
             ? subProp.map(y => formatBorderProp(prop,y)).join(' ')
             : subProp.map(y => `${prop}-${y}`).join(' ');
 

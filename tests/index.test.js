@@ -46,6 +46,22 @@ const config = {
       enablePlugin: 'colors'
     },
     {
+      prop: 'border',
+      propName: 'border',
+      subPropSeparator: '-',
+      subProps: {
+        top: 'top',
+        right: 'right',
+        bottom: 'bottom',
+        left: 'left'
+      },
+      keywordValues: {
+        values: {
+          default: '0.2rem solid #000'
+        }
+      }
+    },
+    {
       prop: 'position',
       propName: '',
       keywordValues: {
@@ -60,6 +76,7 @@ const config = {
       keywordValues: {
         values: {
           rounded: '0.2rem',
+          'rounded-50%': '50%'
         }
       }
     },
@@ -164,7 +181,7 @@ const config = {
 const lengthUnitClassnames = ['bg100p','w100vw','m10','bg10px'];
 const integerClassnames = ['z100','grow2','order-1','flex2'];
 const colorClassnames = ['bg-pink','black','fill-white','bg-black_20'];
-const keywordClasses = ['hover-bg-cover','flex','inline-block','block','flex','flex-column'];
+const keywordClasses = ['hover-bg-cover','flex','inline-block','block','flex','flex-column','rounded-50%','border','border-bottom'];
 
 const mdIntegerClassNames = integerClassnames.map(x => `${x}-md`);
 const lgLengthUnits = lengthUnitClassnames.map(x => `${x}-lg`);
@@ -186,6 +203,8 @@ describe('generateLibrary', () => {
       'bg-pink': { 'background-color': '#FF0099' },
       'black': { 'color': '#000000' },
       'bg-black_20': { 'background-color': 'rgba(0,0,0,0.2)'},
+      border: { border: '0.2rem solid #000' },
+      'border-bottom': { 'border-bottom': '0.2rem solid #000' },
       'flex': { display: 'flex' },
       'flex2': { flex: '2' },
       'fill-white': { 'fill': '#FFFFFF' },
@@ -193,6 +212,7 @@ describe('generateLibrary', () => {
       'hover-bg-cover': { 'background-size': 'cover' },
       'm10': { margin: '6rem' },
       'order-1': { order: '-1' },
+      'rounded-50%': { 'border-radius': '50%'},
       'w100vw': { width: '100vw' },
       'z100': { 'z-index': '100' },
       'bg10px': { 'background-size': '1rem' },
@@ -264,7 +284,7 @@ describe('generateLibrary', () => {
       }
     };
 
-    fit('only renders allowed classes', () => {
+    it('only renders allowed classes', () => {
       expect(generateLibrary(['black','pink','bg-pink','bg-black'],disallowedConfig)).toEqual({
         black: { color: '#000000' },
         'bg-black': { 'background-color': '#000000'}
@@ -294,6 +314,8 @@ describe('generateCSS', () => {
 .bg10px { background-size: 1rem; }
 .black { color: #000000; }
 .block { display: block; }
+.border { border: 0.2rem solid #000; }
+.border-bottom { border-bottom: 0.2rem solid #000; }
 .fill-white { fill: #FFFFFF; }
 .flex { display: flex; }
 .flex-column { flex-direction: column; }
@@ -305,6 +327,7 @@ describe('generateCSS', () => {
 .order-1 { order: -1; }
 .w100vw { width: 100vw; }
 .z100 { z-index: 100; }
+.rounded-50\\% { border-radius: 50%; }
 .hover-bg-black_20:hover { background-color: rgba(0,0,0,0.2); }
 .hover-bg-cover:hover { background-size: cover; }
 .hover-bg-pink:hover { background-color: #FF0099; }

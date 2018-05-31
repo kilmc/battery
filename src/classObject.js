@@ -26,7 +26,8 @@ const getPropConfigValue = (key) => (cxPropName,propConfigs) => {
     return propConfigs
       .filter(x => x.pluginDefault === true)
       .map(x => x[key])
-      .reduce((xs,x) => xs.concat(x),[]);
+      .reduce((xs,x) => xs.concat(x),[])
+      .filter(x => x !== undefined);
   } else {
     return propConfigs
       .filter(x => {
@@ -34,7 +35,8 @@ const getPropConfigValue = (key) => (cxPropName,propConfigs) => {
         return cxPropName === propName+separator;
       })
       .map(x => x[key])
-      .reduce((xs,x) => xs.concat(x),[]);
+      .reduce((xs,x) => xs.concat(x),[])
+      .filter(x => x !== undefined);
   }
 };
 
@@ -83,34 +85,12 @@ const getAllowedValues = getPropConfigValue('allowedValues');
 const getDisallowedValues = getPropConfigValue('disallowedValues');
 
 const isRestrictedValue = (value,propName,propConfigs) => {
-  if (getDisallowedValues(propName,propConfigs)){
-    console.log('GOT TO DISALLOWED');
-    if (getDisallowedValues(propName,propConfigs).includes(value)) {
-      console.log('VALUE IS ON DISALLOWED LIST');
-      return true;
-    }
-    if (getAllowedValues(propName,propConfigs)) {
-      if (getAllowedValues(propName,propConfigs).includes(value)) {
-        console.log('VALUE IS ON ALLOWED LIST');
-        return false;
-      } else if (!getAllowedValues(propName,propConfigs).includes(value)) {
-        console.log('VALUE IS NOT NOT ON ALLOWED LIST');
-        return true;
-      }
-    }
-  } else if (getAllowedValues(propName,propConfigs)) {
-    if (getAllowedValues(propName,propConfigs).includes(value)) {
-      console.log('VALUE IS ON ALLOWED LIST');
-      return false;
-    } else if (!getAllowedValues(propName,propConfigs).includes(value)) {
-      console.log('VALUE IS NOT NOT ON ALLOWED LIST');
-      return true;
-    }
-  }
-  else {
-    console.log('GOT TO THE ELSE');
-    return false;
-  }
+  const allowedValues = getAllowedValues(propName,propConfigs);
+  const disallowedValues = getDisallowedValues(propName,propConfigs);
+
+  if (allowedValues.length) return !allowedValues.includes(value);
+  if (disallowedValues.length) return disallowedValues.includes(value);
+  return false;
 };
 
 const convertClassNameToClassObj = (className,sequencedRegexes,pluginConfig,propConfigs,lookupValues) => {
