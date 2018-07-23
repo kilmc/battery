@@ -111,9 +111,7 @@ const convertClassNameToClassObj = (className,sequencedRegexes,pluginConfig,prop
       const propName = classNameArr[2];
 
       let value = classNameArr[3];
-      console.log(propName === '' ? 'color' : propName,value);
       if (isRestrictedValue(value,propName,propConfigs)) return zs;
-      console.log('NEXT');
       const valueModifier = classNameArr[4];
 
       const convertedClassObj = generateClassObject({

@@ -22,7 +22,7 @@ export const generateKeywordValueObjs = (props) => {
           classObjects = {
             ...classObjects,
             ...generateClassObject({
-              className: `${propName}${separator}${valueName === 'default' ? '' : valueName}`,
+              className: `${propName}${valueName === 'default' ? '' : separator+valueName}`,
               cssProps: prop,
               value: values[valueName]
             })

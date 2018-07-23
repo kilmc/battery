@@ -56,6 +56,7 @@ const config = {
         left: 'left'
       },
       keywordValues: {
+        separator: '-',
         values: {
           default: '0.2rem solid #000'
         }
@@ -203,7 +204,7 @@ describe('generateLibrary', () => {
       'bg-pink': { 'background-color': '#FF0099' },
       'black': { 'color': '#000000' },
       'bg-black_20': { 'background-color': 'rgba(0,0,0,0.2)'},
-      border: { border: '0.2rem solid #000' },
+      'border': { border: '0.2rem solid #000' },
       'border-bottom': { 'border-bottom': '0.2rem solid #000' },
       'flex': { display: 'flex' },
       'flex2': { flex: '2' },
