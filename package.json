@@ -1,7 +1,7 @@
 {
-  "name": "battery",
+  "name": "@battery/core",
   "version": "0.0.1",
-  "main": "dist/index.js",
+  "main": "dist/main.js",
   "repository": "git@github.com:kilmc/battery",
   "author": "Kilian McMahon, Robert Wiegmann",
   "license": "MIT",

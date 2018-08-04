@@ -4,7 +4,9 @@ module.exports = {
   mode: 'development',
   output: {
     path: __dirname+'/dist',
-    filename: '[name].js'
+    filename: '[name].js',
+    library: 'config',
+    libraryTarget: 'commonjs2'
   },
   target: 'node',
   module: {
