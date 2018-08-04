@@ -1,11 +1,18 @@
 {
   "presets": [
-    [
-      "env",
-      {
-        "modules": false
-      }
-    ]
+    ["env"]
   ],
-  "plugins": ["transform-object-rest-spread", "external-helpers"]
+  "plugins": ["transform-object-rest-spread"],
+  "env": {
+    "test": {
+      "presets": [
+        ["env", {
+          "targets": {
+            "node": "9.4.0"
+          },
+          "debug": true
+        }]
+      ]
+    }
+  }
 }

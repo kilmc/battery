@@ -9,39 +9,21 @@
   "devDependencies": {
     "babel-core": "^6.26.0",
     "babel-jest": "^21.2.0",
-    "babel-plugin-external-helpers": "^6.22.0",
-    "babel-plugin-jsx-classnames": "^1.0.1",
+    "babel-loader": "^7.1.5",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.6.1",
-    "babel-preset-es2017": "^6.24.1",
-    "child_process": "^1.0.2",
+    "cssesc": "^2.0.0",
     "deepmerge": "^2.0.1",
     "eslint": "^4.15.0",
-    "eslint-plugin-react": "^7.5.1",
     "jest": "^21.2.1",
     "path": "^0.12.7",
-    "regenerator-runtime": "^0.11.0",
-    "rollup-plugin-babel": "^3.0.7",
-    "rollup-plugin-node-resolve": "^3.3.0",
-    "watchpack": "^1.4.0"
+    "webpack": "^4.16.4",
+    "webpack-command": "^0.4.1"
   },
   "scripts": {
-    "test": "jest --watch",
-    "build": "NODE_ENV=development babel-node scripts/build.js",
-    "dist": "rollup -c",
-    "watch": "NODE_ENV=development babel-node scripts/watch.js",
-    "demo-build": "NODE_ENV=development babel-node scripts/demo-build.js",
-    "demo-watch": "NODE_ENV=development babel-node scripts/demo-watch.js",
-    "demo-serve": "live-server ./demo/ --no-css-inject"
-  },
-  "dependencies": {
-    "babel-cli": "^6.26.0",
-    "cssesc": "^2.0.0",
-    "fs-extra": "^5.0.0",
-    "global": "^4.3.2",
-    "rollup": "^0.63.4"
-  },
-  "engines": {
-    "node": ">=6.0.0 <7.0.0"
+    "build": "webpack --config ./webpack.config.js",
+    "watch": "webpack --watch --config ./webpack.config.js",
+    "test": "jest --watch"
   }
 }

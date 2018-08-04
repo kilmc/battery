@@ -1,5 +1,5 @@
 import cssesc from 'cssesc';
-import { renameKeys } from '../../utils/';
+import { renameKeys } from '../../utils';
 import { processClassNameTypes } from '../../plugins/classNameType';
 import generateLibrary from '../generateLibrary';
 import generateClasses from './generateClasses';

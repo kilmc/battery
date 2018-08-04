@@ -4,7 +4,7 @@ import {
   expandMolecules
 } from '../../src/molecules/';
 
-import config from '../../config/';
+import config from '../fixtures/config/';
 
 describe('expandMolecules', () => {
   it('expands molecules', () => {
