@@ -14,16 +14,16 @@ const unboundCleanMolecule = (config) => (cx) => {
 
 const getAtoms = (moleculesArr,config) => {
   const cleanMolecule = unboundCleanMolecule(config);
-  const { expand, merge } = config.molecules;
+  const { expand = {}, merge = {} } = config.molecules;
 
   return moleculesArr.reduce((xs,x) => {
     const cx = cleanMolecule(x);
     let gathered = [];
 
     if (expand[cx]) {
-      gathered = gathered.concat(expand[cx].split(' '));
+      gathered = gathered.concat(expand[cx]);
     } else if (merge[cx]) {
-      gathered = gathered.concat(merge[cx].split(' '));
+      gathered = gathered.concat(merge[cx]);
     } else {
       gathered = gathered.concat(x);
     }
@@ -47,11 +47,11 @@ export const mergeMolecules = (classNames,classObjs,config) => {
   return classNames.reduce((xs,x) => {
     const cx = cleanMolecule(x);
     if (merge[cx]) {
-      xs[x] = Object.assign({},...merge[cx].split(' ').map(x => classObjs[x]));
+      xs[x] = Object.assign({},...merge[cx].map(x => classObjs[x]));
     } else if (expand[cx]) {
       xs = {
         ...xs,
-        ...mergeMolecules(expand[cx].split(' '),classObjs,config)
+        ...mergeMolecules(expand[cx],classObjs,config)
       };
     }
 

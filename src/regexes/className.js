@@ -3,10 +3,12 @@ import { buildPrefixAndSuffixRegex } from './';
 
 export const buildClassNameRegexFn = (pluginsConfig,body = '') => {
   let prefixAndSuffixes = {};
-  const hasPrefixesOrSuffixes = pluginsConfig
-    .filter(x => x.prefixOrSuffix).length > 0;
+  if (pluginsConfig) {
+    const hasPrefixesOrSuffixes = pluginsConfig
+      .filter(x => x.prefixOrSuffix).length > 0;
 
-  if (hasPrefixesOrSuffixes) prefixAndSuffixes = buildPrefixAndSuffixRegex(pluginsConfig);
+    if (hasPrefixesOrSuffixes) prefixAndSuffixes = buildPrefixAndSuffixRegex(pluginsConfig);
+  }
 
   const start = prefixAndSuffixes['prefix']
     ? prefixAndSuffixes['prefix']

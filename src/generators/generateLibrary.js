@@ -18,7 +18,7 @@ import sortClassNames from '../sortClassNames';
 import { convertClassNamestoClassObjs } from '../classObject';
 
 const generateLibrary = (classNames,config) => {
-  const { props, settings, plugins } = processConfig(config);
+  const { props, settings, plugins = [] } = processConfig(config);
 
   let expandedMoluecules = [];
   let toProcessClasses = [...classNames];
