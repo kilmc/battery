@@ -11,6 +11,7 @@
     "babel-jest": "^21.2.0",
     "babel-loader": "^7.1.5",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
+    "babel-plugin-transform-es2017-object-entries": "^0.0.4",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.6.1",
     "cssesc": "^2.0.0",

@@ -2,7 +2,10 @@
   "presets": [
     ["env"]
   ],
-  "plugins": ["transform-object-rest-spread"],
+  "plugins": [
+    "transform-object-rest-spread",
+    "transform-es2017-object-entries"
+  ],
   "env": {
     "test": {
       "presets": [
