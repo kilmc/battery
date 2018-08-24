@@ -1,6 +1,6 @@
 export const parseStyleBlock = (string) => {
   const [selectors, body] = string
-    .match(/(.*)\{([^)]+)\}/)
+    .match(/(.*)\{([^}]+)\}/)
     .splice(1);
 
   const parsedBody = body
@@ -15,6 +15,12 @@ export const parseStyleBlock = (string) => {
     },{});
 
   return { [selectors.trim()]: parsedBody };
+};
+
+export const parseStyleBlocks = (string) => {
+  const parsedBlocks = string.match(/.*\{[^}]+\}/g);
+
+  return parsedBlocks.map(parseStyleBlock);
 };
 
 export const formatKeywordValue = (srcValue,keywordValuesConfig) => {
@@ -103,33 +109,3 @@ export const styleBlockToClassNames = (string,config) => {
     return acc;
   },{});
 };
-
-// Resolver structure
-const config = {
-  props: [{
-    prop: 'border',
-    propName: 'border',
-    keywordValues: {
-      values: { default: '0.1rem solid #282828' },
-      separator: '-'
-    },
-    conversionResolvers: {
-      default: ['1px solid color(grey-500)']
-    }
-  },{
-    prop: 'border-radius',
-    propName: 'border',
-    keywordValues: {
-      values: { rounded: '0.2rem' },
-      separator: '-'
-    },
-    conversionResolvers: {
-      rounded: [
-        '$tiny-border-radius',
-        '6px',
-        '$border-radius'
-      ]
-    }
-  }]
-};
-

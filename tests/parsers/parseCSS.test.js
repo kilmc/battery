@@ -7,7 +7,8 @@ import {
   determineValue,
   determineValueType,
   formatKeywordValue,
-  formatPluginValue
+  formatPluginValue,
+  parseStyleBlocks
 } from '../../src/parsers/parseCSS';
 
 const zIndexConfig = {
@@ -89,6 +90,43 @@ describe('parseStyleBlock', () => {
         'text-decoration': 'none'
       }
     });
+  });
+});
+
+describe('parseStyleBlocks', () => {
+  it('parses multiple Sytle Blocks', () => {
+    const testStyleBlock = `
+.project-card {
+  display: block;
+  border-radius: 0.2rem;
+  background-color: #fff;
+  padding: 1.8rem;
+}
+
+.project-info {
+  display: flex;
+  justify-content: flex-end;
+  z-index: 10;
+  background-color: #000000;
+  color: #FFFFFF;
+}
+`;
+    expect(parseStyleBlocks(testStyleBlock)).toEqual([{
+      '.project-card': {
+        display: 'block',
+        'border-radius': '0.2rem',
+        'background-color': '#fff',
+        padding: '1.8rem'
+      }
+    },{
+      '.project-info': {
+        display: 'flex',
+        'justify-content': 'flex-end',
+        'z-index': '10',
+        'background-color': '#000000',
+        color: '#FFFFFF'
+      }
+    }]);
   });
 });
 
