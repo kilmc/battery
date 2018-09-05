@@ -1,13 +1,26 @@
-export const generateClass = (className,declarations) => {
-  const classBody = Object.keys(declarations)
-    .map(prop => `${prop}: ${declarations[prop]};`)
-    .join(' ');
+const singleLineClass = (className,classBody) =>
+  `.${className} { ${classBody} }`;
 
-  return `.${className} { ${classBody} }`;
+const multiLineClass = (className,classBody,indent) =>
+  `.${className} {
+  ${classBody}
+${indent ? '  ' : ''}}`;
+
+export const generateClass = (className,declarations, multiple, indent) => {
+  const classBody = Object.keys(declarations)
+    .map(prop => `${indent && multiple ? '  ' : ''}${prop}: ${declarations[prop]};`)
+    .join(multiple ? '\n  ' :' ');
+
+  return multiple
+    ? multiLineClass(className,classBody,indent)
+    : singleLineClass(className,classBody);
 };
 
 const generateClasses = (obj, indent = false) => Object.keys(obj)
-  .map(cx => generateClass(cx,obj[cx]))
+  .map(cx => {
+    const multiple = Object.keys(obj[cx]).length > 1;
+    return generateClass(cx,obj[cx],multiple,indent);
+  })
   .join(indent ? '\n  ' : '\n');
 
 export default generateClasses;

@@ -1,5 +1,5 @@
 /* eslint-env jest, node */
-// import { generateCSS } from '../src/';
+import { generateCSS } from '../src/';
 import generateLibrary from '../src/generators/generateLibrary';
 
 // describe('generateLibrary', () => {
@@ -471,7 +471,7 @@ describe('generateLibrary', () => {
     };
 
     const config = {
-      plugin: [integersPlugin],
+      plugins: [integersPlugin],
       props: [{
         prop: 'display',
         propName: '',
@@ -548,6 +548,73 @@ describe('generateLibrary', () => {
 
 
 describe('generateCSS', () => {
-  it('renders at rules');
+  it('renders multiple declarations', () => {
+    const lengthUnits = {
+      name: 'lengthUnits',
+      type: 'pattern',
+      valueRegexString: '\\d+|-\\d+',
+      valueModifiers: [{
+        indicator: 'px',
+        modifierFn: (x) => `${x}px`
+      }]
+    };
+
+    const config = {
+      plugins: [lengthUnits,{
+        name: 'breakpoints',
+        type: 'atrule',
+        atrule: 'media',
+        prefixOrSuffix: 'suffix',
+        modifiers: [
+          {
+            name: 'responsiveSmall',
+            indicator: 'sm',
+            separator: '-',
+            condition: '(min-width: 560px)'
+          },
+        ]
+      }],
+      props: [{
+        prop: 'font-size',
+        propName: 'fz',
+        enablePlugin: 'lengthUnits'
+      },{
+        prop: 'line-height',
+        propName: 'lh',
+        enablePlugin: 'lengthUnits'
+      }],
+      settings: {
+        enableKeywordValues: true,
+      },
+      molecules: {
+        merge: { 'type-14': ['fz14px','lh18px']},
+        expand: {}
+      }
+    };
+
+    expect(generateCSS(['type-14'],config)).toEqual(`.type-14 {
+  font-size: 14px;
+  line-height: 18px;
+}
+`);
+
+    expect(generateCSS(['fz14px-sm'],config)).toEqual(`
+@media (min-width: 560px) {
+  .fz14px-sm { font-size: 14px; }
+}`);
+
+    expect(generateCSS(['type-14-sm'],config)).toEqual(`
+@media (min-width: 560px) {
+  .type-14-sm {
+    font-size: 14px;
+    line-height: 18px;
+  }
+}`);
+  });
+
+  it('renders at rules', () => {
+
+
+  });
   it('transforms classnames when a classname plugin is present');
 });
