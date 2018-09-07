@@ -37,3 +37,8 @@ export const renameKeys = (obj,filterFn,modifierFn) => {
       Reflect.deleteProperty(obj,key);
     });
 };
+
+export const escapeCharacters = (str) => {
+  const escapeRegex = new RegExp(/([^a-zA-Z\d-_])/,'g');
+  return str.replace(escapeRegex,'\\$1');
+};

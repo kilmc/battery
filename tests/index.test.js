@@ -341,6 +341,42 @@ describe('generateLibrary', () => {
         'black': { 'color': '#000000' },
       });
     });
+
+    it('handles escaping non standard character', () => {
+      const colorsPlugin = {
+        name: 'colors',
+        type: 'lookup',
+        values: { 'black': '#000000' }
+      };
+
+      const breakpointsPlugin = {
+        name: 'breakpoints',
+        type: 'atrule',
+        atrule: 'media',
+        prefixOrSuffix: 'prefix',
+        modifiers: [{
+          indicator: 's',
+          separator: ':',
+          condition: '(min-width: 560px)'
+        }]
+      };
+
+      const config = {
+        plugins: [breakpointsPlugin,colorsPlugin],
+        props: [{
+          prop: 'color',
+          propName: '',
+          pluginDefault: true,
+          enablePlugin: 'colors'
+        }],
+        settings: { enableKeywordValues: true }
+      };
+
+      const testClasses = ['s:black'];
+      expect(generateLibrary(testClasses,config)).toEqual({
+        's\:black': { color: '#000000' }
+      });
+    });
   });
 
   describe('config', () => {
@@ -598,13 +634,11 @@ describe('generateCSS', () => {
 }
 `);
 
-    expect(generateCSS(['fz14px-sm'],config)).toEqual(`
-@media (min-width: 560px) {
+    expect(generateCSS(['fz14px-sm'],config)).toEqual(`@media (min-width: 560px) {
   .fz14px-sm { font-size: 14px; }
 }`);
 
-    expect(generateCSS(['type-14-sm'],config)).toEqual(`
-@media (min-width: 560px) {
+    expect(generateCSS(['type-14-sm'],config)).toEqual(`@media (min-width: 560px) {
   .type-14-sm {
     font-size: 14px;
     line-height: 18px;
@@ -612,9 +646,47 @@ describe('generateCSS', () => {
 }`);
   });
 
-  it('renders at rules', () => {
+  it('correctly escapes non-standard characters', () => {
+    const breakpointsPlugin = {
+      name: 'breakpoints',
+      type: 'atrule',
+      atrule: 'media',
+      prefixOrSuffix: 'prefix',
+      modifiers: [
+        {
+          name: 'responsiveSmall',
+          indicator: 's',
+          separator: ':',
+          condition: '(min-width: 560px)'
+        },
+      ]
+    };
 
+    const lengthUnits = {
+      name: 'lengthUnits',
+      type: 'pattern',
+      valueRegexString: '\\d+|-\\d+',
+      valueModifiers: [{
+        indicator: '%',
+        modifierFn: (x) => `${x}%`
+      }]
+    };
 
+    const config = {
+      plugins: [lengthUnits,breakpointsPlugin],
+      props: [{
+        prop: 'width',
+        propName: 'w',
+        enablePlugin: 'lengthUnits'
+      }],
+      settings: {
+        enableKeywordValues: true,
+      }
+    };
+
+    expect(generateCSS(['w100%'],config)).toEqual('.w100\\% { width: 100%; }\n');
+    expect(generateCSS(['s:w100%'],config)).toEqual(`@media (min-width: 560px) {
+  .s\\:w100\\% { width: 100%; }
+}`);
   });
-  it('transforms classnames when a classname plugin is present');
 });
