@@ -1,14 +1,17 @@
 import { formatPrefixOrSuffix, sortAndJoin } from '../utils';
+import { PluginConfig } from '../types/index';
 
-const getPrefixAndSuffixes = (pluginsConfig) => {
-  return pluginsConfig
+const getPrefixAndSuffixes = (
+  pluginConfigs: PluginConfig[]
+): { [key: string]: string[] } => {
+  return pluginConfigs
     .filter(x => x.prefixOrSuffix)
-    .reduce((xs,x) => {
+    .reduce((xs: { [key: string]: string[] }, x) => {
       const { prefixOrSuffix: type, modifiers } = x;
 
       modifiers.forEach(modifier => {
         const { indicator, separator = '' } = modifier;
-        const item = formatPrefixOrSuffix(indicator,separator,type);
+        const item = formatPrefixOrSuffix(indicator, separator, type);
 
         if (xs[type]) {
           xs[type] = xs[type].concat(item);
@@ -18,14 +21,14 @@ const getPrefixAndSuffixes = (pluginsConfig) => {
       });
 
       return xs;
-    },{});
+    }, {});
 };
 
-export const buildPrefixAndSuffixRegex = (pluginsConfig) => {
-  const prefixesAndSuffixes = getPrefixAndSuffixes(pluginsConfig);
+export const buildPrefixAndSuffixRegex = (pluginConfigs: PluginConfig[]) => {
+  const prefixesAndSuffixes = getPrefixAndSuffixes(pluginConfigs);
   let prefixes = prefixesAndSuffixes['prefix'];
   let suffixes = prefixesAndSuffixes['suffix'];
-  let prefixSuffixRegexes = {};
+  let prefixSuffixRegexes: { [key: string]: string } = {};
 
   if (prefixes) prefixSuffixRegexes['prefix'] = `(^|${sortAndJoin(prefixes)})`;
   if (suffixes) prefixSuffixRegexes['suffix'] = `(${sortAndJoin(suffixes)}|$)`;

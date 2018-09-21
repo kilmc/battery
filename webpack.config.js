@@ -2,11 +2,15 @@
 
 module.exports = {
   mode: 'development',
+  entry: './src/index.ts',
   output: {
-    path: __dirname+'/dist',
+    path: __dirname + '/dist',
     filename: '[name].js',
     library: 'config',
     libraryTarget: 'commonjs2'
+  },
+  resolve: {
+    extensions: ['.tsx', '.ts', '.js']
   },
   target: 'node',
   module: {
@@ -15,8 +19,13 @@ module.exports = {
         test: /\.js$/,
         exclude: /node_modules/,
         use: {
-          loader: 'babel-loader',
+          loader: 'babel-loader'
         }
+      },
+      {
+        test: /\.tsx?$/,
+        use: 'ts-loader',
+        exclude: /node_modules/
       }
     ]
   }
