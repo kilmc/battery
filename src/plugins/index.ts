@@ -3,7 +3,7 @@ import {
   PluginTypes,
   PropConfig,
   PluginsObject
-} from '../types/index';
+} from '../types/';
 
 // getPlugins
 // ------------------------------------------------------------------

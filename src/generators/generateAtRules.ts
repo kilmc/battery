@@ -2,7 +2,7 @@ import { formatPrefixOrSuffix } from '../utils';
 import { processClassNameTypes } from '../plugins/classNameType';
 import { PLUGIN_TYPES } from '../plugins/constants';
 import generateAtRuleCSS from './generateCSS/generateAtRuleCSS';
-import { PluginConfig, PluginModifier } from '../types/index';
+import { PluginConfig, PluginModifier } from '../types/';
 
 export const generateAtRule = (
   classes: { [key: string]: { [key: string]: string } },

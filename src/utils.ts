@@ -1,4 +1,4 @@
-import { PrefixOrSuffix } from './types/index';
+import { PrefixOrSuffix } from './types/';
 
 // Strings
 // ------------------------------------------------------------------

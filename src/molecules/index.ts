@@ -1,5 +1,5 @@
-import { buildClassNameRegexFn } from '../regexes/index';
-import { BatteryConfig } from '../types/index';
+import { buildClassNameRegexFn } from '../regexes/';
+import { BatteryConfig } from '../types/';
 
 const hasMolecules = (arr: string[], config: BatteryConfig) =>
   arr.filter(x => config.molecules.expand[x]).length > 0 ||

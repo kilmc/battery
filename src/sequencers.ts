@@ -1,8 +1,8 @@
 import deepmerge from 'deepmerge';
-import { buildClassNameRegexFn, buildValuePluginRegex } from './regexes/index';
-import { createPropNamesObject, createPluginsObject } from './plugins/index';
+import { buildClassNameRegexFn, buildValuePluginRegex } from './regexes/';
+import { createPropNamesObject, createPluginsObject } from './plugins/';
 import { PLUGIN_TYPES } from './plugins/constants';
-import { PropConfig, PluginConfig, PluginsObject } from './types/index';
+import { PropConfig, PluginConfig, PluginsObject } from './types/';
 
 export const generateRegexObj = (
   groupName: string,

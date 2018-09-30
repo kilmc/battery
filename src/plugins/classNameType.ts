@@ -1,6 +1,6 @@
 import { PLUGIN_TYPES } from './constants';
 import { formatPrefixOrSuffix } from '../utils';
-import { PluginConfig } from '../types/index';
+import { PluginConfig } from '../types/';
 
 const processClassNameType = (
   classes: { [key: string]: { [key: string]: string } },

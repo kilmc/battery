@@ -1,4 +1,4 @@
-import { BatteryConfig } from '../types/index';
+import { BatteryConfig } from '../types/';
 
 export const formatBorderProp = (rootProp: string, subProp: string): string => {
   const [start, end] = rootProp.split('-');

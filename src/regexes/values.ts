@@ -1,6 +1,6 @@
 import { sortAndJoin } from '../utils';
 import { PLUGIN_TYPES } from '../plugins/constants';
-import { PluginConfig } from '../types/index';
+import { PluginConfig } from '../types/';
 
 export const buildValuePluginRegex = (pluginConfig: PluginConfig) => {
   const hasValueModifiers = typeof pluginConfig.valueModifiers === 'object';

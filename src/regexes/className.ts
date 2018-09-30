@@ -1,6 +1,6 @@
 import { sortAndJoin } from '../utils';
-import { buildPrefixAndSuffixRegex } from './index';
-import { PluginConfig } from '../types/index';
+import { buildPrefixAndSuffixRegex } from './';
+import { PluginConfig } from '../types/';
 
 export const buildClassNameRegexFn = (
   pluginConfigs: PluginConfig[],

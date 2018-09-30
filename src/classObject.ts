@@ -1,6 +1,6 @@
-import { createPluginsObject } from './plugins/index';
+import { createPluginsObject } from './plugins/';
 import { generateValuePluginRegexObj } from './sequencers';
-import { getPluginPropConfigs } from './plugins/index';
+import { getPluginPropConfigs } from './plugins/';
 
 import {
   getKeywordClassObjs,
@@ -12,7 +12,7 @@ import {
   PropConfig,
   PluginConfig,
   ConcattablePropConfigKeys
-} from './types/index';
+} from './types/';
 
 export const generateClassObject = ({
   className,

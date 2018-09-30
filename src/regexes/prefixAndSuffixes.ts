@@ -1,5 +1,5 @@
 import { formatPrefixOrSuffix, sortAndJoin } from '../utils';
-import { PluginConfig } from '../types/index';
+import { PluginConfig } from '../types/';
 
 const getPrefixAndSuffixes = (
   pluginConfigs: PluginConfig[]

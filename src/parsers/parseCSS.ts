@@ -3,7 +3,7 @@ import {
   PropConfig,
   BatteryConfig,
   PluginConfig
-} from '../types/index';
+} from '../types/';
 
 export const parseStyleBlock = (
   string: string

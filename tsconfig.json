@@ -1,8 +1,10 @@
 {
   "compilerOptions": {
     "outDir": "./dist/",
+    "baseUrl": ".",
     "noImplicitAny": true,
     "module": "es6",
+    "moduleResolution": "node",
     "target": "es6",
     "jsx": "react",
     "allowJs": true,

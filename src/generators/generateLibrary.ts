@@ -2,9 +2,9 @@ import deepmerge from 'deepmerge';
 
 import { subtractArrays } from '../utils';
 import { generateKeywordValueObjs } from '../plugins/keywordValueType';
-import { processConfig } from '../config/index';
+import { processConfig } from '../config/';
 
-import { expandMolecules, mergeMolecules } from '../molecules/index';
+import { expandMolecules, mergeMolecules } from '../molecules/';
 
 import {
   generateValuePluginRegexObj,
@@ -13,7 +13,7 @@ import {
 
 import sortClassNames from '../sortClassNames';
 import { convertClassNamestoClassObjs } from '../classObject';
-import { BatteryConfig } from '../types/index';
+import { BatteryConfig } from '../types/';
 
 const generateLibrary = (classNames: string[], config: BatteryConfig) => {
   const { props, settings, plugins = [] } = processConfig(config);

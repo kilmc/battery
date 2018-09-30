@@ -2,7 +2,7 @@ import { processClassNameTypes } from '../../plugins/classNameType';
 import generateLibrary from '../generateLibrary';
 import generateClasses from './generateClasses';
 import generateAtRules from '../generateAtRules';
-import { BatteryConfig } from '../../types/index';
+import { BatteryConfig } from '../../types/';
 
 const generateCSS = (classNames: string[], config: BatteryConfig): string => {
   const library = generateLibrary(classNames, config);

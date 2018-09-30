@@ -1,13 +1,13 @@
 import { subtractArrays } from '../utils';
 import { generateClassObject } from '../classObject';
-import { PropConfig } from '../types/index';
+import { PropConfig } from '../types/';
 
 export const generateKeywordValueObjs = (
   props: PropConfig[]
 ): { [key: string]: { [key: string]: string } } => {
-  const propConfigsWithKeywordValues = Object.keys(props)
-    .map((prop: string) => props[prop])
-    .filter(propConfig => typeof propConfig.keywordValues === 'object');
+  const propConfigsWithKeywordValues = props.filter(
+    propConfig => typeof propConfig.keywordValues === 'object'
+  );
 
   return propConfigsWithKeywordValues.reduce((accum, propConfig) => {
     const {
