@@ -6,7 +6,7 @@ const color = {
   pluginDefault: true,
   allowedValues: ['red-500', 'grey-900', 'green-800'],
   allowedPseudoValues: {
-    hover: [],
+    hover: []
   },
   enablePlugin: 'colors'
 };
@@ -64,7 +64,7 @@ const backgroundRepeat = {
   keywordValues: {
     separator: '-',
     values: {
-      'no-repeat': 'no-repeat',
+      'no-repeat': 'no-repeat'
     }
   }
 };
@@ -77,8 +77,8 @@ const backgroundSize = {
   keywordValues: {
     separator: '-',
     values: {
-      'cover': 'cover',
-      'contain': 'contain',
+      cover: 'cover',
+      contain: 'contain',
       'full-height': 'auto 100%',
       'full-width': '100% auto'
     }
@@ -92,18 +92,18 @@ const borders = {
   propName: 'border',
   subPropSeparator: '-',
   subProps: {
-    'top': 'top',
-    'right': 'right',
-    'bottom': 'bottom',
-    'left': 'left',
-    'x': 'left right',
-    'y': 'top bottom'
+    top: 'top',
+    right: 'right',
+    bottom: 'bottom',
+    left: 'left',
+    x: 'left right',
+    y: 'top bottom'
   },
   keywordValues: {
     separator: '-',
     values: {
-      'default': '1px solid #DCDEDD',
-      'none': 'none'
+      default: '1px solid #DCDEDD',
+      none: 'none'
     }
   },
   enablePlugin: 'integers'
@@ -124,8 +124,8 @@ const borderRadius = {
   propName: '',
   keywordValues: {
     values: {
-      'rounded': '0.2rem',
-      'circle': '100%'
+      rounded: '0.2rem',
+      circle: '100%'
     }
   }
 };
@@ -156,9 +156,9 @@ const clear = {
   keywordValues: {
     separator: '-',
     values: {
-      'left': 'left',
-      'right': 'right',
-      'both': 'both'
+      left: 'left',
+      right: 'right',
+      both: 'both'
     }
   }
 };
@@ -174,10 +174,10 @@ const display = {
   propName: '',
   keywordValues: {
     values: {
-      'block': 'block',
-      'inline': 'inline',
+      block: 'block',
+      inline: 'inline',
       'inline-block': 'inline-block',
-      'flex': 'flex',
+      flex: 'flex',
       'inline-flex': 'inline-flex'
     }
   }
@@ -212,11 +212,11 @@ const justifyContent = {
   keywordValues: {
     separator: '-',
     values: {
-      'center': 'center',
-      'end': 'flex-end',
-      'start': 'flex-start',
-      'between': 'space-between',
-      'around': 'space-around'
+      center: 'center',
+      end: 'flex-end',
+      start: 'flex-start',
+      between: 'space-between',
+      around: 'space-around'
     }
   }
 };
@@ -243,7 +243,7 @@ const flexDirection = {
     separator: '-',
     values: {
       row: 'row',
-      column: 'column',
+      column: 'column'
     }
   }
 };
@@ -255,8 +255,8 @@ const float = {
   propName: '',
   keywordValues: {
     values: {
-      'left': 'left',
-      'right': 'right',
+      left: 'left',
+      right: 'right',
       'float-none': 'none'
     }
   }
@@ -318,7 +318,6 @@ const maxHeight = {
   enablePlugin: 'lengthUnits'
 };
 
-
 // letter-spacing
 // ------------------------------------------------------------------
 const letterSpacing = {};
@@ -341,12 +340,12 @@ const margin = {
   prop: 'margin',
   propName: 'm',
   subProps: {
-    't': 'top',
-    'r': 'right',
-    'b': 'bottom',
-    'l': 'left',
-    'x': 'left right',
-    'y': 'top bottom'
+    t: 'top',
+    r: 'right',
+    b: 'bottom',
+    l: 'left',
+    x: 'left right',
+    y: 'top bottom'
   },
   keywordValues: {
     separator: '-',
@@ -373,12 +372,12 @@ const padding = {
   prop: 'padding',
   propName: 'p',
   subProps: {
-    't': 'top',
-    'r': 'right',
-    'b': 'bottom',
-    'l': 'left',
-    'x': 'left right',
-    'y': 'top bottom'
+    t: 'top',
+    r: 'right',
+    b: 'bottom',
+    l: 'left',
+    x: 'left right',
+    y: 'top bottom'
   },
   enablePlugin: 'lengthUnits'
 };
@@ -394,10 +393,10 @@ const position = {
   propName: '',
   keywordValues: {
     values: {
-      'absolute': 'absolute',
-      'relative': 'relative',
-      'fixed': 'fixed',
-      'sticky': 'sticky'
+      absolute: 'absolute',
+      relative: 'relative',
+      fixed: 'fixed',
+      sticky: 'sticky'
     }
   }
 };
@@ -450,7 +449,7 @@ const textDecoration = {
   keywordValues: {
     separator: '-',
     values: {
-      'underline': 'underline',
+      underline: 'underline',
       'decoration-none': 'none'
     }
   }

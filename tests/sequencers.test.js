@@ -3,7 +3,7 @@
 import {
   colorsPlugin,
   integersPlugin,
-  lengthUnitsPlugin,
+  lengthUnitsPlugin
 } from './fixtures/plugins';
 
 import {
@@ -20,7 +20,7 @@ import { buildClassNameRegexFn } from '../src/regexes';
 
 import {
   generateValuePluginRegexObj,
-  generateRegexObj,
+  generateRegexObj
 } from '../src/sequencers';
 
 describe('buildClassNameRegexFn', () => {
@@ -30,32 +30,38 @@ describe('buildClassNameRegexFn', () => {
 });
 
 describe('generateRegexObj', () => {
-  const lengthUnitPropNames = ['w','h','mt','px','min-h'];
+  const lengthUnitPropNames = ['w', 'h', 'mt', 'px', 'min-h'];
 
   it('creates a regex for propNames grouped by length', () => {
-    expect(generateRegexObj(
-      'lengthUnits',
-      lengthUnitPropNames,
-      x => `(${x.join('|')})`
-    )).toEqual({
-      'lengthUnits': '(min-h|mt|px|w|h)'
+    expect(
+      generateRegexObj(
+        'lengthUnits',
+        lengthUnitPropNames,
+        x => `(${x.join('|')})`
+      )
+    ).toEqual({
+      lengthUnits: '(min-h|mt|px|w|h)'
     });
   });
 });
 
 describe('generatePluginRegexSequencer', () => {
   it('sorts propNames grouped by length by pluginName', () => {
-    const plugins = [colorsPlugin,integersPlugin,lengthUnitsPlugin];
+    const plugins = [colorsPlugin, integersPlugin, lengthUnitsPlugin];
     const propConfigs = [
-      backgroundColor, backgroundSize, color, display, margin, fill, zIndex
+      backgroundColor,
+      backgroundSize,
+      color,
+      display,
+      margin,
+      fill,
+      zIndex
     ];
 
-    expect(
-      generateValuePluginRegexObj(plugins,propConfigs)
-    ).toEqual( {
-      'colors': '(^)(fill-|bg-|)(black|white|pink)(_\\d+)?($)',
-      'integers': '(^)(z)(\\d+|-\\d+)()?($)',
-      'lengthUnits': '(^)(bg|m)(-?[0-9]{1,4})(px|vh|vw|p|)?($)'
+    expect(generateValuePluginRegexObj(plugins, propConfigs)).toEqual({
+      colors: '(^)(fill-|bg-|)(black|white|pink)(_\\d+)?($)',
+      integers: '(^)(z)(\\d+|-\\d+)()?($)',
+      lengthUnits: '(^)(bg|m)(-?[0-9]{1,4})(px|vh|vw|p|)?($)'
     });
   });
 });

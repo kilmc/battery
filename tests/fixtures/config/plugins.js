@@ -1,17 +1,17 @@
 import { unboundFormat } from '../modifierFns';
 
-const format = unboundFormat(10,6,true,true);
+const format = unboundFormat(10, 6, true, true);
 
-const hexToRgba = (hex,opacity) => {
-  hex = hex.replace('#','');
-  const r = parseInt(hex.substring(0,2), 16);
-  const g = parseInt(hex.substring(2,4), 16);
-  const b = parseInt(hex.substring(4,6), 16);
+const hexToRgba = (hex, opacity) => {
+  hex = hex.replace('#', '');
+  const r = parseInt(hex.substring(0, 2), 16);
+  const g = parseInt(hex.substring(2, 4), 16);
+  const b = parseInt(hex.substring(4, 6), 16);
 
-  return `rgba(${r},${g},${b},${opacity/100})`;
+  return `rgba(${r},${g},${b},${opacity / 100})`;
 };
 
-const formatPseudo = (cx,pseudo) => `${cx}:${pseudo}`;
+const formatPseudo = (cx, pseudo) => `${cx}:${pseudo}`;
 
 export const integersPlugin = {
   name: 'integers',
@@ -23,9 +23,9 @@ export const colorsPlugin = {
   name: 'colors',
   type: 'lookup',
   values: {
-    'black': '#000000',
-    'white': '#ffffff',
-    'pink': '#ff0099',
+    black: '#000000',
+    white: '#ffffff',
+    pink: '#ff0099',
     'green-800': '#098530',
     'green-700': '#05AF3C',
     'green-500': '#25CB68',
@@ -39,7 +39,7 @@ export const colorsPlugin = {
     'grey-200': '#E8E8E8',
     'grey-100': '#FBFBFA',
     'red-500': '#EF0707',
-    'red-400': '#FF5151',
+    'red-400': '#FF5151'
   },
   valueModifiers: [
     {
@@ -81,7 +81,7 @@ export const lengthUnitsPlugin = {
       name: 'viewport width',
       indicator: 'vw',
       modifierFn: format.viewportWidth
-    },
+    }
   ]
 };
 

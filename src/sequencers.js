@@ -1,27 +1,17 @@
 import deepmerge from 'deepmerge';
 
-import {
-  buildClassNameRegexFn,
-  buildValuePluginRegex
-} from './regexes';
+import { buildClassNameRegexFn, buildValuePluginRegex } from './regexes';
 
-import {
-  createPropNamesObject,
-  createPluginsObject
-} from './plugins/';
+import { createPropNamesObject, createPluginsObject } from './plugins/';
 
 import { PLUGIN_TYPES } from './plugins/constants';
 
-export const generateRegexObj = (groupName,arr,regexFn) => {
-  const sorted = arr
-    .sort((a,b) => b.length - a.length)
-    .reduce((xs,x) => {
-      !xs[groupName]
-        ? xs[groupName] = [x]
-        : xs[groupName].push(x);
+export const generateRegexObj = (groupName, arr, regexFn) => {
+  const sorted = arr.sort((a, b) => b.length - a.length).reduce((xs, x) => {
+    !xs[groupName] ? (xs[groupName] = [x]) : xs[groupName].push(x);
 
-      return xs;
-    },{});
+    return xs;
+  }, {});
 
   Object.keys(sorted).forEach(x => {
     sorted[x] = regexFn(sorted[x]);
@@ -30,18 +20,18 @@ export const generateRegexObj = (groupName,arr,regexFn) => {
   return sorted;
 };
 
-export const generateValuePluginRegexObj = (plugins,propConfigs) => {
+export const generateValuePluginRegexObj = (plugins, propConfigs) => {
   const pluginsObject = createPluginsObject(plugins);
 
-  const isValuePlugin = (x) =>
+  const isValuePlugin = x =>
     pluginsObject[x].type === PLUGIN_TYPES.PATTERN ||
     pluginsObject[x].type === PLUGIN_TYPES.LOOKUP;
 
-  const propNamesObject = createPropNamesObject(pluginsObject,propConfigs);
+  const propNamesObject = createPropNamesObject(pluginsObject, propConfigs);
 
   return Object.keys(pluginsObject)
     .filter(isValuePlugin)
-    .reduce((accum,pluginName) => {
+    .reduce((accum, pluginName) => {
       const props = propNamesObject[pluginName];
       const pluginRegexFn = buildClassNameRegexFn(
         plugins,
@@ -50,16 +40,19 @@ export const generateValuePluginRegexObj = (plugins,propConfigs) => {
 
       accum = deepmerge(
         accum,
-        generateRegexObj(pluginName,props,pluginRegexFn)
+        generateRegexObj(pluginName, props, pluginRegexFn)
       );
 
       return accum;
-    },{});
+    }, {});
 };
 
-export const generateKeywordValueRegexObj = (precompiledClassObjects,pluginsConfig) => {
+export const generateKeywordValueRegexObj = (
+  precompiledClassObjects,
+  pluginsConfig
+) => {
   const atomKeys = Object.keys(precompiledClassObjects);
   const regexFn = buildClassNameRegexFn(pluginsConfig);
 
-  return generateRegexObj(PLUGIN_TYPES.KEYWORD,atomKeys,regexFn);
+  return generateRegexObj(PLUGIN_TYPES.KEYWORD, atomKeys, regexFn);
 };

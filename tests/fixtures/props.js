@@ -41,12 +41,12 @@ export const margin = {
   prop: 'margin',
   propName: 'm',
   subProps: {
-    't': 'top',
-    'r': 'right',
-    'b': 'bottom',
-    'l': 'left',
-    'x': 'left right',
-    'y': 'top bottom'
+    t: 'top',
+    r: 'right',
+    b: 'bottom',
+    l: 'left',
+    x: 'left right',
+    y: 'top bottom'
   },
   keywordValues: {
     separator: '-',

@@ -1,5 +1,3 @@
 import { generateCSS } from './generators/';
 
-export {
-  generateCSS
-};
+export { generateCSS };

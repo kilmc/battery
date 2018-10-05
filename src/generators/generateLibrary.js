@@ -4,10 +4,7 @@ import { subtractArrays } from '../utils';
 import { generateKeywordValueObjs } from '../plugins/keywordValueType';
 import { processConfig } from '../config/';
 
-import {
-  expandMolecules,
-  mergeMolecules
-} from '../molecules/';
+import { expandMolecules, mergeMolecules } from '../molecules/';
 
 import {
   generateValuePluginRegexObj,
@@ -17,14 +14,14 @@ import {
 import sortClassNames from '../sortClassNames';
 import { convertClassNamestoClassObjs } from '../classObject';
 
-const generateLibrary = (classNames,config) => {
+const generateLibrary = (classNames, config) => {
   const { props, settings, plugins = [] } = processConfig(config);
 
   let expandedMoluecules = [];
   let toProcessClasses = [...classNames];
 
   if (config.molecules) {
-    expandedMoluecules = expandMolecules(classNames,config);
+    expandedMoluecules = expandMolecules(classNames, config);
     toProcessClasses = toProcessClasses.concat(expandedMoluecules);
   }
 
@@ -34,31 +31,36 @@ const generateLibrary = (classNames,config) => {
   // KeywordValues
   if (settings.enableKeywordValues) {
     const keywordValueObjs = generateKeywordValueObjs(props);
-    keywordValueRegexes = generateKeywordValueRegexObj(keywordValueObjs,plugins);
+    keywordValueRegexes = generateKeywordValueRegexObj(
+      keywordValueObjs,
+      plugins
+    );
   }
 
-
-  const valuePluginRegexes = generateValuePluginRegexObj(plugins,props);
-  const pluginRegexes = deepmerge(valuePluginRegexes,keywordValueRegexes);
+  const valuePluginRegexes = generateValuePluginRegexObj(plugins, props);
+  const pluginRegexes = deepmerge(valuePluginRegexes, keywordValueRegexes);
   // Sort classnames
-  const sortedClassNames = sortClassNames(toProcessClasses,pluginRegexes);
+  const sortedClassNames = sortClassNames(toProcessClasses, pluginRegexes);
 
   // Convert sorted classnames into classObjs
-  const convertedClassNames =
-    convertClassNamestoClassObjs(sortedClassNames,plugins,props);
+  const convertedClassNames = convertClassNamestoClassObjs(
+    sortedClassNames,
+    plugins,
+    props
+  );
 
   classObjs = {
     ...convertedClassNames
   };
 
-  if(expandedMoluecules.length > 0) {
+  if (expandedMoluecules.length > 0) {
     classObjs = {
       ...classObjs,
-      ...mergeMolecules(classNames,classObjs,config)
+      ...mergeMolecules(classNames, classObjs, config)
     };
 
-    subtractArrays([...expandedMoluecules],[...classNames]).forEach(cx => {
-      Reflect.deleteProperty(classObjs,cx);
+    subtractArrays([...expandedMoluecules], [...classNames]).forEach(cx => {
+      Reflect.deleteProperty(classObjs, cx);
     });
   }
 

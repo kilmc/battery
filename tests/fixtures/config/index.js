@@ -7,7 +7,7 @@ const config = {
   plugins: pluginsConfig,
   molecules: moleculesConfig,
   settings: {
-    enableKeywordValues: true,
+    enableKeywordValues: true
   }
 };
 

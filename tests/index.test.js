@@ -36,7 +36,6 @@ import generateLibrary from '../src/generators/generateLibrary';
 //     });
 //   });
 
-
 // describe('generateCSS', () => {
 //   it('should generate CSS', () => {
 //     expect(generateCSS(
@@ -106,20 +105,22 @@ import generateLibrary from '../src/generators/generateLibrary';
 describe('generateLibrary', () => {
   it('generates mutliple classObjects', () => {
     const config = {
-      props: [{
-        prop: 'background-size',
-        propName: 'bg',
-        keywordValues: {
-          separator: '-',
-          values: { cover: 'cover', contain: 'contain' }
+      props: [
+        {
+          prop: 'background-size',
+          propName: 'bg',
+          keywordValues: {
+            separator: '-',
+            values: { cover: 'cover', contain: 'contain' }
+          }
         }
-      }],
+      ],
       settings: { enableKeywordValues: true }
     };
 
-    const testClasses = ['bg-contain','bg-cover'];
+    const testClasses = ['bg-contain', 'bg-cover'];
 
-    expect(generateLibrary(testClasses,config)).toEqual({
+    expect(generateLibrary(testClasses, config)).toEqual({
       'bg-contain': { 'background-size': 'contain' },
       'bg-cover': { 'background-size': 'cover' }
     });
@@ -128,41 +129,45 @@ describe('generateLibrary', () => {
   describe('keywordValues', () => {
     it('handles keywordValues', () => {
       const config = {
-        props: [{
-          prop: 'background-size',
-          propName: 'bg',
-          keywordValues: {
-            separator: '-',
-            values: { cover: 'cover', contain: 'contain' }
+        props: [
+          {
+            prop: 'background-size',
+            propName: 'bg',
+            keywordValues: {
+              separator: '-',
+              values: { cover: 'cover', contain: 'contain' }
+            }
           }
-        }],
+        ],
         settings: { enableKeywordValues: true }
       };
 
       const testClasses = ['bg-contain'];
 
-      expect(generateLibrary(testClasses,config)).toEqual({
+      expect(generateLibrary(testClasses, config)).toEqual({
         'bg-contain': { 'background-size': 'contain' }
       });
     });
 
     it('strips "default" value string from final className', () => {
       const config = {
-        props: [{
-          prop: 'border',
-          propName: 'border',
-          keywordValues: {
-            separator: '-',
-            values: { default: '1px solid #000' }
+        props: [
+          {
+            prop: 'border',
+            propName: 'border',
+            keywordValues: {
+              separator: '-',
+              values: { default: '1px solid #000' }
+            }
           }
-        }],
+        ],
         settings: { enableKeywordValues: true }
       };
 
       const testClasses = ['border'];
 
-      expect(generateLibrary(testClasses,config)).toEqual({
-        'border': { 'border': '1px solid #000' }
+      expect(generateLibrary(testClasses, config)).toEqual({
+        border: { border: '1px solid #000' }
       });
     });
   });
@@ -177,19 +182,21 @@ describe('generateLibrary', () => {
 
       const config = {
         plugins: [integersPlugin],
-        props: [{
-          prop: 'z-index',
-          propName: 'z',
-          enablePlugin: 'integers'
-        }],
+        props: [
+          {
+            prop: 'z-index',
+            propName: 'z',
+            enablePlugin: 'integers'
+          }
+        ],
         settings: { enableKeywordValues: true }
       };
 
-      const testClasses = ['z9','z-1'];
+      const testClasses = ['z9', 'z-1'];
 
-      expect(generateLibrary(testClasses,config)).toEqual({
+      expect(generateLibrary(testClasses, config)).toEqual({
         z9: { 'z-index': '9' },
-        'z-1': { 'z-index': '-1' },
+        'z-1': { 'z-index': '-1' }
       });
     });
 
@@ -197,24 +204,26 @@ describe('generateLibrary', () => {
       const colorsPlugin = {
         name: 'colors',
         type: 'lookup',
-        values: { 'black': '#000000' }
+        values: { black: '#000000' }
       };
 
       const config = {
         plugins: [colorsPlugin],
-        props: [{
-          prop: 'background-color',
-          propName: 'bg',
-          separator: '-',
-          enablePlugin: 'colors'
-        }],
+        props: [
+          {
+            prop: 'background-color',
+            propName: 'bg',
+            separator: '-',
+            enablePlugin: 'colors'
+          }
+        ],
         settings: { enableKeywordValues: true }
       };
 
       const testClasses = ['bg-black'];
 
-      expect(generateLibrary(testClasses,config)).toEqual({
-        'bg-black': { 'background-color': '#000000' },
+      expect(generateLibrary(testClasses, config)).toEqual({
+        'bg-black': { 'background-color': '#000000' }
       });
     });
 
@@ -223,26 +232,30 @@ describe('generateLibrary', () => {
         name: 'lengthUnits',
         type: 'pattern',
         valueRegexString: '\\d+|-\\d+',
-        valueModifiers: [{
-          indicator: 'p',
-          modifierFn: (x) => `${x}%`
-        }]
+        valueModifiers: [
+          {
+            indicator: 'p',
+            modifierFn: x => `${x}%`
+          }
+        ]
       };
 
       const config = {
         plugins: [lengthUnitsPlugin],
-        props: [{
-          prop: 'width',
-          propName: 'w',
-          enablePlugin: 'lengthUnits'
-        }],
+        props: [
+          {
+            prop: 'width',
+            propName: 'w',
+            enablePlugin: 'lengthUnits'
+          }
+        ],
         settings: { enableKeywordValues: true }
       };
 
       const testClasses = ['w100p'];
 
-      expect(generateLibrary(testClasses,config)).toEqual({
-        'w100p': { 'width': '100%' },
+      expect(generateLibrary(testClasses, config)).toEqual({
+        w100p: { width: '100%' }
       });
     });
 
@@ -251,27 +264,31 @@ describe('generateLibrary', () => {
         name: 'lengthUnits',
         type: 'pattern',
         valueRegexString: '\\d+|-\\d+',
-        valueModifiers: [{
-          indicator: '',
-          default: true,
-          modifierFn: (x) => `${x*6}px`
-        }]
+        valueModifiers: [
+          {
+            indicator: '',
+            default: true,
+            modifierFn: x => `${x * 6}px`
+          }
+        ]
       };
 
       const config = {
         plugins: [lengthUnitsPlugin],
-        props: [{
-          prop: 'width',
-          propName: 'w',
-          enablePlugin: 'lengthUnits'
-        }],
+        props: [
+          {
+            prop: 'width',
+            propName: 'w',
+            enablePlugin: 'lengthUnits'
+          }
+        ],
         settings: { enableKeywordValues: true }
       };
 
       const testClasses = ['w4'];
 
-      expect(generateLibrary(testClasses,config)).toEqual({
-        w4: { 'width': '24px' }
+      expect(generateLibrary(testClasses, config)).toEqual({
+        w4: { width: '24px' }
       });
     });
 
@@ -281,11 +298,13 @@ describe('generateLibrary', () => {
         type: 'atrule',
         atrule: 'media',
         prefixOrSuffix: 'suffix',
-        modifiers: [{
-          indicator: 'sm',
-          separator: '-',
-          condition: '(min-width: 560px)'
-        }]
+        modifiers: [
+          {
+            indicator: 'sm',
+            separator: '-',
+            condition: '(min-width: 560px)'
+          }
+        ]
       };
 
       const pseudosPlugin = {
@@ -297,20 +316,26 @@ describe('generateLibrary', () => {
 
       const config = {
         plugins: [breakpointsPlugin, pseudosPlugin],
-        props: [{
-          prop: 'background-size',
-          propName: 'bg',
-          keywordValues: {
-            separator: '-',
-            values: { cover: 'cover', contain: 'contain' }
+        props: [
+          {
+            prop: 'background-size',
+            propName: 'bg',
+            keywordValues: {
+              separator: '-',
+              values: { cover: 'cover', contain: 'contain' }
+            }
           }
-        }],
+        ],
         settings: { enableKeywordValues: true }
       };
 
-      const testClasses = ['bg-contain-sm','hover-bg-cover','hover-bg-contain-sm'];
+      const testClasses = [
+        'bg-contain-sm',
+        'hover-bg-cover',
+        'hover-bg-contain-sm'
+      ];
 
-      expect(generateLibrary(testClasses,config)).toEqual({
+      expect(generateLibrary(testClasses, config)).toEqual({
         'bg-contain-sm': { 'background-size': 'contain' },
         'hover-bg-cover': { 'background-size': 'cover' },
         'hover-bg-contain-sm': { 'background-size': 'contain' }
@@ -321,24 +346,26 @@ describe('generateLibrary', () => {
       const colorsPlugin = {
         name: 'colors',
         type: 'lookup',
-        values: { 'black': '#000000' }
+        values: { black: '#000000' }
       };
 
       const config = {
         plugins: [colorsPlugin],
-        props: [{
-          prop: 'color',
-          propName: '',
-          pluginDefault: true,
-          enablePlugin: 'colors'
-        }],
+        props: [
+          {
+            prop: 'color',
+            propName: '',
+            pluginDefault: true,
+            enablePlugin: 'colors'
+          }
+        ],
         settings: { enableKeywordValues: true }
       };
 
       const testClasses = ['black'];
 
-      expect(generateLibrary(testClasses,config)).toEqual({
-        'black': { 'color': '#000000' },
+      expect(generateLibrary(testClasses, config)).toEqual({
+        black: { color: '#000000' }
       });
     });
 
@@ -346,7 +373,7 @@ describe('generateLibrary', () => {
       const colorsPlugin = {
         name: 'colors',
         type: 'lookup',
-        values: { 'black': '#000000' }
+        values: { black: '#000000' }
       };
 
       const breakpointsPlugin = {
@@ -354,27 +381,31 @@ describe('generateLibrary', () => {
         type: 'atrule',
         atrule: 'media',
         prefixOrSuffix: 'prefix',
-        modifiers: [{
-          indicator: 's',
-          separator: ':',
-          condition: '(min-width: 560px)'
-        }]
+        modifiers: [
+          {
+            indicator: 's',
+            separator: ':',
+            condition: '(min-width: 560px)'
+          }
+        ]
       };
 
       const config = {
-        plugins: [breakpointsPlugin,colorsPlugin],
-        props: [{
-          prop: 'color',
-          propName: '',
-          pluginDefault: true,
-          enablePlugin: 'colors'
-        }],
+        plugins: [breakpointsPlugin, colorsPlugin],
+        props: [
+          {
+            prop: 'color',
+            propName: '',
+            pluginDefault: true,
+            enablePlugin: 'colors'
+          }
+        ],
         settings: { enableKeywordValues: true }
       };
 
       const testClasses = ['s:black'];
-      expect(generateLibrary(testClasses,config)).toEqual({
-        's\:black': { color: '#000000' }
+      expect(generateLibrary(testClasses, config)).toEqual({
+        's:black': { color: '#000000' }
       });
     });
   });
@@ -386,25 +417,27 @@ describe('generateLibrary', () => {
 
   describe('subProps', () => {
     const config = {
-      props: [{
-        prop: 'margin',
-        propName: 'm',
-        subProps: {
-          't': 'top',
-          'r': 'right',
-          'b': 'bottom',
-          'l': 'left',
-          'x': 'left right',
-          'y': 'top bottom'
-        },
-        keywordValues: { separator: '-', values: { auto: 'auto' } }
-      }],
+      props: [
+        {
+          prop: 'margin',
+          propName: 'm',
+          subProps: {
+            t: 'top',
+            r: 'right',
+            b: 'bottom',
+            l: 'left',
+            x: 'left right',
+            y: 'top bottom'
+          },
+          keywordValues: { separator: '-', values: { auto: 'auto' } }
+        }
+      ],
       settings: { enableKeywordValues: true }
     };
 
     it('handles subProps', () => {
-      const testClasses = ['mt-auto','ml-auto'];
-      expect(generateLibrary(testClasses,config)).toEqual({
+      const testClasses = ['mt-auto', 'ml-auto'];
+      expect(generateLibrary(testClasses, config)).toEqual({
         'mt-auto': { 'margin-top': 'auto' },
         'ml-auto': { 'margin-left': 'auto' }
       });
@@ -412,7 +445,7 @@ describe('generateLibrary', () => {
 
     it('handles subProps with multiple properties', () => {
       const testClasses = ['mx-auto'];
-      expect(generateLibrary(testClasses,config)).toEqual({
+      expect(generateLibrary(testClasses, config)).toEqual({
         'mx-auto': {
           'margin-left': 'auto',
           'margin-right': 'auto'
@@ -427,25 +460,30 @@ describe('generateLibrary', () => {
         name: 'lengthUnits',
         type: 'pattern',
         valueRegexString: '\\d+|-\\d+',
-        valueModifiers: [{
-          indicator: 'px',
-          modifierFn: (x) => `${x}px`
-        }]
+        valueModifiers: [
+          {
+            indicator: 'px',
+            modifierFn: x => `${x}px`
+          }
+        ]
       };
 
       const config = {
         plugins: [lengthUnitsPlugin],
-        props: [{
-          prop: 'font-size',
-          propName: 'fz',
-          enablePlugin: 'lengthUnits'
-        },{
-          prop: 'line-height',
-          propName: 'lh',
-          enablePlugin: 'lengthUnits'
-        }],
+        props: [
+          {
+            prop: 'font-size',
+            propName: 'fz',
+            enablePlugin: 'lengthUnits'
+          },
+          {
+            prop: 'line-height',
+            propName: 'lh',
+            enablePlugin: 'lengthUnits'
+          }
+        ],
         molecules: {
-          merge: { 'type-12': ['fz12px','lh18px'] },
+          merge: { 'type-12': ['fz12px', 'lh18px'] },
           expand: {}
         },
         settings: { enableKeywordValues: true }
@@ -453,7 +491,7 @@ describe('generateLibrary', () => {
 
       const testClasses = ['type-12'];
 
-      expect(generateLibrary(testClasses,config)).toEqual({
+      expect(generateLibrary(testClasses, config)).toEqual({
         'type-12': {
           'font-size': '12px',
           'line-height': '18px'
@@ -467,34 +505,37 @@ describe('generateLibrary', () => {
       const colorsPlugin = {
         name: 'colors',
         type: 'lookup',
-        values: { 'black': '#000000' }
+        values: { black: '#000000' }
       };
 
       const config = {
-        props: [{
-          prop: 'background-color',
-          propName: 'bg',
-          separator: '-',
-          enablePlugin: 'colors',
-          allowedValues: ['black']
-        },{
-          prop: 'color',
-          propName: '',
-          pluginDefault: true,
-          enablePlugin: 'colors',
-          disallowedValues: ['pink']
-        }],
+        props: [
+          {
+            prop: 'background-color',
+            propName: 'bg',
+            separator: '-',
+            enablePlugin: 'colors',
+            allowedValues: ['black']
+          },
+          {
+            prop: 'color',
+            propName: '',
+            pluginDefault: true,
+            enablePlugin: 'colors',
+            disallowedValues: ['pink']
+          }
+        ],
         plugins: [colorsPlugin],
         settings: {
-          enableKeywordValues: true,
+          enableKeywordValues: true
         }
       };
 
-      const testClasses = ['black','pink','bg-pink','bg-black'];
+      const testClasses = ['black', 'pink', 'bg-pink', 'bg-black'];
 
-      expect(generateLibrary(testClasses,config)).toEqual({
+      expect(generateLibrary(testClasses, config)).toEqual({
         black: { color: '#000000' },
-        'bg-black': { 'background-color': '#000000'}
+        'bg-black': { 'background-color': '#000000' }
       });
     });
   });
@@ -508,41 +549,44 @@ describe('generateLibrary', () => {
 
     const config = {
       plugins: [integersPlugin],
-      props: [{
-        prop: 'display',
-        propName: '',
-        keywordValues: {
-          values: {
-            flex: 'flex'
+      props: [
+        {
+          prop: 'display',
+          propName: '',
+          keywordValues: {
+            values: {
+              flex: 'flex'
+            }
           }
+        },
+        {
+          prop: 'flex-direction',
+          propName: 'flex',
+          keywordValues: {
+            separator: '-',
+            values: { column: 'column' }
+          }
+        },
+        {
+          prop: 'flex',
+          propName: 'flex',
+          enablePlugin: 'integers'
         }
-      },{
-        prop: 'flex-direction',
-        propName: 'flex',
-        keywordValues: {
-          separator: '-',
-          values: { column: 'column' }
-        }
-      },{
-        prop: 'flex',
-        propName: 'flex',
-        enablePlugin: 'integers'
-      }],
+      ],
       settings: {
-        enableKeywordValues: true,
+        enableKeywordValues: true
       }
     };
 
-    const testClasses = ['flex','flex1','flex-column'];
+    const testClasses = ['flex', 'flex1', 'flex-column'];
 
-    expect(generateLibrary(testClasses,config)).toEqual({
+    expect(generateLibrary(testClasses, config)).toEqual({
       flex: { display: 'flex' },
-      'flex1': { 'flex': '1' },
+      flex1: { flex: '1' },
       'flex-column': { 'flex-direction': 'column' }
     });
   });
 });
-
 
 // const moleculeConfig =  {
 //   expand: {
@@ -581,64 +625,72 @@ describe('generateLibrary', () => {
 // });
 // });
 
-
-
 describe('generateCSS', () => {
   it('renders multiple declarations', () => {
     const lengthUnits = {
       name: 'lengthUnits',
       type: 'pattern',
       valueRegexString: '\\d+|-\\d+',
-      valueModifiers: [{
-        indicator: 'px',
-        modifierFn: (x) => `${x}px`
-      }]
+      valueModifiers: [
+        {
+          indicator: 'px',
+          modifierFn: x => `${x}px`
+        }
+      ]
     };
 
     const config = {
-      plugins: [lengthUnits,{
-        name: 'breakpoints',
-        type: 'atrule',
-        atrule: 'media',
-        prefixOrSuffix: 'suffix',
-        modifiers: [
-          {
-            name: 'responsiveSmall',
-            indicator: 'sm',
-            separator: '-',
-            condition: '(min-width: 560px)'
-          },
-        ]
-      }],
-      props: [{
-        prop: 'font-size',
-        propName: 'fz',
-        enablePlugin: 'lengthUnits'
-      },{
-        prop: 'line-height',
-        propName: 'lh',
-        enablePlugin: 'lengthUnits'
-      }],
+      plugins: [
+        lengthUnits,
+        {
+          name: 'breakpoints',
+          type: 'atrule',
+          atrule: 'media',
+          prefixOrSuffix: 'suffix',
+          modifiers: [
+            {
+              name: 'responsiveSmall',
+              indicator: 'sm',
+              separator: '-',
+              condition: '(min-width: 560px)'
+            }
+          ]
+        }
+      ],
+      props: [
+        {
+          prop: 'font-size',
+          propName: 'fz',
+          enablePlugin: 'lengthUnits'
+        },
+        {
+          prop: 'line-height',
+          propName: 'lh',
+          enablePlugin: 'lengthUnits'
+        }
+      ],
       settings: {
-        enableKeywordValues: true,
+        enableKeywordValues: true
       },
       molecules: {
-        merge: { 'type-14': ['fz14px','lh18px']},
+        merge: { 'type-14': ['fz14px', 'lh18px'] },
         expand: {}
       }
     };
 
-    expect(generateCSS(['type-14'],config)).toEqual(`.type-14 {
+    expect(generateCSS(['type-14'], config)).toEqual(`.type-14 {
   font-size: 14px;
   line-height: 18px;
 }
 `);
 
-    expect(generateCSS(['fz14px-sm'],config)).toEqual(`@media (min-width: 560px) {
+    expect(generateCSS(['fz14px-sm'], config))
+      .toEqual(`@media (min-width: 560px) {
   .fz14px-sm { font-size: 14px; }
 }`);
 
-    expect(generateCSS(['type-14-sm'],config)).toEqual(`@media (min-width: 560px) {
+    expect(generateCSS(['type-14-sm'], config))
+      .toEqual(`@media (min-width: 560px) {
   .type-14-sm {
     font-size: 14px;
     line-height: 18px;
@@ -658,7 +710,7 @@ describe('generateCSS', () => {
           indicator: 's',
           separator: ':',
           condition: '(min-width: 560px)'
-        },
+        }
       ]
     };
 
@@ -666,26 +718,33 @@ describe('generateCSS', () => {
       name: 'lengthUnits',
       type: 'pattern',
       valueRegexString: '\\d+|-\\d+',
-      valueModifiers: [{
-        indicator: '%',
-        modifierFn: (x) => `${x}%`
-      }]
+      valueModifiers: [
+        {
+          indicator: '%',
+          modifierFn: x => `${x}%`
+        }
+      ]
     };
 
     const config = {
-      plugins: [lengthUnits,breakpointsPlugin],
-      props: [{
-        prop: 'width',
-        propName: 'w',
-        enablePlugin: 'lengthUnits'
-      }],
+      plugins: [lengthUnits, breakpointsPlugin],
+      props: [
+        {
+          prop: 'width',
+          propName: 'w',
+          enablePlugin: 'lengthUnits'
+        }
+      ],
       settings: {
-        enableKeywordValues: true,
+        enableKeywordValues: true
       }
     };
 
-    expect(generateCSS(['w100%'],config)).toEqual('.w100\\% { width: 100%; }\n');
-    expect(generateCSS(['s:w100%'],config)).toEqual(`@media (min-width: 560px) {
+    expect(generateCSS(['w100%'], config)).toEqual(
+      '.w100\\% { width: 100%; }\n'
+    );
+    expect(generateCSS(['s:w100%'], config))
+      .toEqual(`@media (min-width: 560px) {
   .s\\:w100\\% { width: 100%; }
 }`);
   });
