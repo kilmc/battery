@@ -2,9 +2,9 @@ import { subtractArrays } from './utils';
 
 const sortClassNames = (classNames, sequencedRegexes) =>
   Object.keys(sequencedRegexes).reduce((classNameGroups, pluginName) => {
-    const matchedClassNames = classNames.filter(cx =>
-      cx.match(sequencedRegexes[pluginName])
-    );
+    const matchedClassNames = classNames.filter(cx => {
+      return cx.match(sequencedRegexes[pluginName]);
+    });
 
     if (matchedClassNames.length !== 0) {
       if (!classNameGroups[pluginName]) {
