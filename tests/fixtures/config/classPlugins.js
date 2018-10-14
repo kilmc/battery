@@ -10,6 +10,7 @@ export const gridCol = {
     },
     {
       regex: '\\d+',
+      regexSeparator: '-',
       separator: '-',
       modifierFn: size => ({ 'margin-left': `calc(${size}/12 * 100%)` }),
       className: ['offset']

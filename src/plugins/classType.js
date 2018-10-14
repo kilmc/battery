@@ -11,10 +11,15 @@ export const classTypeToClassObj = (pluginName, classNames, config) => {
   let modifierRegexes = [];
   if (plugin.modifiers) {
     modifierRegexes = plugin.modifiers.reduce((accum, modifier) => {
-      const { regex, separator = '', className } = modifier;
+      const {
+        regex,
+        separator = '',
+        regexSeparator = '',
+        className
+      } = modifier;
       let suffix;
       if (regex && className) {
-        suffix = `${className[0]}${regex}`;
+        suffix = `${className[0]}${regexSeparator}${regex}`;
       } else if (regex) {
         suffix = regex;
       } else {
@@ -29,24 +34,32 @@ export const classTypeToClassObj = (pluginName, classNames, config) => {
   }
 
   const classTypeRegex = new RegExp(
-    `${rootClassName}(${modifierRegexes.join('|')})`
+    `${rootClassName}(${modifierRegexes
+      .sort((a, b) => b.length - a.length)
+      .join('|')})`
   );
 
   return classNames.reduce((accum, cx) => {
-    const cxModifier = cx.match(classTypeRegex)[1];
+    if (!cx.match(classTypeRegex)) return accum;
     let pluginModifier;
     if (plugin.modifiers) {
       pluginModifier = plugin.modifiers.filter(modifier => {
-        const { regex, separator = '', className } = modifier;
+        const {
+          regex,
+          separator = '',
+          regexSeparator = '',
+          className
+        } = modifier;
         let suffix;
         if (regex && className) {
-          suffix = `${className[0]}${regex}`;
+          suffix = `${className[0]}${regexSeparator}${regex}`;
         } else if (regex) {
           suffix = regex;
         } else {
           suffix = className[0];
         }
-        return new RegExp(`${separator}${suffix}`).test(cxModifier);
+
+        return new RegExp(`${rootClassName}${separator}${suffix}`).test(cx);
       })[0];
     }
 

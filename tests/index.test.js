@@ -545,9 +545,9 @@ describe('generate utility classes', () => {
       plugins: [lengthUnitsPlugin, gridCol]
     };
 
-    expect(generateCSS(['col-10', 'col-offset10'], config)).toEqual(
+    expect(generateCSS(['col-10', 'col-offset-10'], config)).toEqual(
       `.col-10 { width: calc(10/12 * 100%); }
-.col-offset10 { margin-left: calc(10/12 * 100%); }
+.col-offset-10 { margin-left: calc(10/12 * 100%); }
 `
     );
   });
