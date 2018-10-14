@@ -1,10 +1,6 @@
 import deepmerge from 'deepmerge';
-
-import { subtractArrays } from '../utils';
 import { generateKeywordValueObjs } from '../plugins/keywordValueType';
 import { processConfig } from '../config/';
-
-import { expandMolecules, mergeMolecules } from '../molecules/';
 
 import {
   generateValuePluginRegexObj,
@@ -13,29 +9,18 @@ import {
 
 import sortClassNames from '../sortClassNames';
 import { convertClassNamestoClassObjs } from '../classObject';
+import { processClassType } from '../plugins/classType';
 
 const generateLibrary = (classNames, config) => {
-  const { props, settings, plugins = [] } = processConfig(config);
-
-  let expandedMoluecules = [];
+  const { props, plugins = [] } = processConfig(config);
   let toProcessClasses = [...classNames];
-
-  if (config.molecules) {
-    expandedMoluecules = expandMolecules(classNames, config);
-    toProcessClasses = toProcessClasses.concat(expandedMoluecules);
-  }
 
   let classObjs;
   let keywordValueRegexes;
 
   // KeywordValues
-  if (settings.enableKeywordValues) {
-    const keywordValueObjs = generateKeywordValueObjs(props);
-    keywordValueRegexes = generateKeywordValueRegexObj(
-      keywordValueObjs,
-      plugins
-    );
-  }
+  const keywordValueObjs = generateKeywordValueObjs(props);
+  keywordValueRegexes = generateKeywordValueRegexObj(keywordValueObjs, plugins);
 
   const valuePluginRegexes = generateValuePluginRegexObj(plugins, props);
   const pluginRegexes = deepmerge(valuePluginRegexes, keywordValueRegexes);
@@ -49,20 +34,16 @@ const generateLibrary = (classNames, config) => {
     props
   );
 
+  if (plugins.length > 1) {
+    classObjs = {
+      ...processClassType(toProcessClasses, config)
+    };
+  }
+
   classObjs = {
+    ...classObjs,
     ...convertedClassNames
   };
-
-  if (expandedMoluecules.length > 0) {
-    classObjs = {
-      ...classObjs,
-      ...mergeMolecules(classNames, classObjs, config)
-    };
-
-    subtractArrays([...expandedMoluecules], [...classNames]).forEach(cx => {
-      Reflect.deleteProperty(classObjs, cx);
-    });
-  }
 
   return classObjs;
 };

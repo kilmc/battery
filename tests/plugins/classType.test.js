@@ -64,12 +64,19 @@ describe('classType', () => {
   });
   describe('processClassType', () => {
     it('converts multiple classes to classObjs', () => {
-      const classNames = ['aspect-ratio', 'aspect-ratio__object'];
+      const classNames = [
+        'aspect-ratio',
+        'aspect-ratio__object',
+        'aspect-ratio--4x3'
+      ];
       expect(processClassType(classNames, config)).toEqual({
         'aspect-ratio': { position: 'relative', height: '0' },
         'aspect-ratio__object': {
           position: 'absolute',
           height: '100%'
+        },
+        'aspect-ratio--4x3': {
+          'padding-bottom': '75%'
         }
       });
     });

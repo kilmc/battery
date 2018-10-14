@@ -1,19 +1,16 @@
 // color
 // ------------------------------------------------------------------
-const color = {
+export const color = {
   prop: 'color',
   propName: '',
   pluginDefault: true,
   allowedValues: ['red-500', 'grey-900', 'green-800'],
-  allowedPseudoValues: {
-    hover: []
-  },
   enablePlugin: 'colors'
 };
 
 // background-color
 // ------------------------------------------------------------------
-const backgroundColor = {
+export const backgroundColor = {
   prop: 'background-color',
   propName: 'bg',
   separator: '-',
@@ -28,7 +25,7 @@ const backgroundColor = {
 
 // background-image
 // ------------------------------------------------------------------
-const backgroundImage = {
+export const backgroundImage = {
   prop: 'background-image',
   propName: 'bg',
   keywordValues: {
@@ -41,7 +38,7 @@ const backgroundImage = {
 
 // background-position
 // ------------------------------------------------------------------
-const backgroundPosition = {
+export const backgroundPosition = {
   prop: 'background-position',
   propName: 'bg',
   keywordValues: {
@@ -58,7 +55,7 @@ const backgroundPosition = {
 
 // background-repeat
 // ------------------------------------------------------------------
-const backgroundRepeat = {
+export const backgroundRepeat = {
   prop: 'background-repeat',
   propName: 'bg',
   keywordValues: {
@@ -71,7 +68,7 @@ const backgroundRepeat = {
 
 // background-size
 // ------------------------------------------------------------------
-const backgroundSize = {
+export const backgroundSize = {
   prop: 'background-size',
   propName: 'bg',
   keywordValues: {
@@ -87,7 +84,7 @@ const backgroundSize = {
 
 // border
 // ------------------------------------------------------------------
-const borders = {
+export const borders = {
   prop: 'border',
   propName: 'border',
   subPropSeparator: '-',
@@ -108,18 +105,18 @@ const borders = {
   },
   enablePlugin: 'integers'
 };
-const borderColor = {
+export const borderColor = {
   prop: 'border-color',
   propName: 'border',
   enablePlugin: 'colors'
 };
 
-const borderWidth = {
+export const borderWidth = {
   prop: 'border-width',
   propName: 'border',
   enablePlugin: 'lengthUnits'
 };
-const borderRadius = {
+export const borderRadius = {
   prop: 'border-radius',
   propName: '',
   keywordValues: {
@@ -132,7 +129,7 @@ const borderRadius = {
 
 // box-shadow
 // ------------------------------------------------------------------
-const boxShadow = {
+export const boxShadow = {
   prop: 'box-shadow',
   propName: 'shadow',
   keywordValues: {
@@ -146,11 +143,11 @@ const boxShadow = {
 
 // box-sizing
 // ------------------------------------------------------------------
-const boxSizing = {};
+export const boxSizing = {};
 
 // clear
 // ------------------------------------------------------------------
-const clear = {
+export const clear = {
   prop: 'clear',
   propName: 'clear',
   keywordValues: {
@@ -165,11 +162,11 @@ const clear = {
 
 // cursor
 // ------------------------------------------------------------------
-const cursor = {};
+export const cursor = {};
 
 // display
 // ------------------------------------------------------------------
-const display = {
+export const display = {
   prop: 'display',
   propName: '',
   keywordValues: {
@@ -185,7 +182,7 @@ const display = {
 
 // fill
 // ------------------------------------------------------------------
-const fill = {
+export const fill = {
   prop: 'fill',
   propName: 'fill',
   enablePlugin: 'colors'
@@ -193,20 +190,20 @@ const fill = {
 
 // flex
 // ------------------------------------------------------------------
-const flexGrow = {
+export const flexGrow = {
   propName: 'grow',
   prop: 'flex-grow',
   enablePlugin: 'integers'
 };
 
-const flexShrink = {
+export const flexShrink = {
   propName: 'shrink',
   prop: 'flex-shrink',
   enablePlugin: 'integers'
 };
-const order = { propName: 'order', prop: 'order' };
+export const order = { propName: 'order', prop: 'order' };
 
-const justifyContent = {
+export const justifyContent = {
   propName: 'justify',
   prop: 'justify-content',
   keywordValues: {
@@ -221,7 +218,7 @@ const justifyContent = {
   }
 };
 
-const alignItems = {
+export const alignItems = {
   propName: 'items',
   prop: 'align-items',
   keywordValues: {
@@ -236,7 +233,7 @@ const alignItems = {
   }
 };
 
-const flexDirection = {
+export const flexDirection = {
   prop: 'flex-direction',
   propName: 'flex',
   keywordValues: {
@@ -250,7 +247,7 @@ const flexDirection = {
 
 // float
 // ------------------------------------------------------------------
-const float = {
+export const float = {
   prop: 'float',
   propName: '',
   keywordValues: {
@@ -264,7 +261,7 @@ const float = {
 
 // font-size
 // ------------------------------------------------------------------
-const fontSize = {
+export const fontSize = {
   prop: 'font-size',
   propName: 'fz',
   enablePlugin: 'lengthUnits'
@@ -272,7 +269,7 @@ const fontSize = {
 
 // font-family
 // ------------------------------------------------------------------
-const fontFamily = {
+export const fontFamily = {
   prop: 'font-family',
   propName: '',
   keywordValues: {
@@ -284,11 +281,11 @@ const fontFamily = {
 
 // font-style
 // ------------------------------------------------------------------
-const fontStyle = {};
+export const fontStyle = {};
 
 // font-weight
 // ------------------------------------------------------------------
-const fontWeight = {
+export const fontWeight = {
   prop: 'font-weight',
   propName: '',
   keywordValues: {
@@ -300,19 +297,19 @@ const fontWeight = {
 
 // height
 // ------------------------------------------------------------------
-const height = {
+export const height = {
   prop: 'height',
   propName: 'h',
   enablePlugin: 'lengthUnits'
 };
 
-const minHeight = {
+export const minHeight = {
   prop: 'min-height',
   propName: 'min-h',
   enablePlugin: 'lengthUnits'
 };
 
-const maxHeight = {
+export const maxHeight = {
   prop: 'max-height',
   propName: 'max-h',
   enablePlugin: 'lengthUnits'
@@ -320,11 +317,11 @@ const maxHeight = {
 
 // letter-spacing
 // ------------------------------------------------------------------
-const letterSpacing = {};
+export const letterSpacing = {};
 
 // line-height
 // ------------------------------------------------------------------
-const lineHeight = {
+export const lineHeight = {
   prop: 'line-height',
   propName: 'lh',
   enablePlugin: 'lengthUnits'
@@ -332,11 +329,11 @@ const lineHeight = {
 
 // list-style
 // ------------------------------------------------------------------
-const listStyle = {};
+export const listStyle = {};
 
 // margin
 // ------------------------------------------------------------------
-const margin = {
+export const margin = {
   prop: 'margin',
   propName: 'm',
   subProps: {
@@ -356,19 +353,27 @@ const margin = {
 
 // opacity
 // ------------------------------------------------------------------
-const opacity = {};
+export const opacity = {};
 
 // outline
 // ------------------------------------------------------------------
-const outline = {};
+export const outline = {};
 
 // overflow
 // ------------------------------------------------------------------
-const overflow = {};
+export const overflow = {
+  prop: 'overflow',
+  propName: '',
+  keywordValues: {
+    values: {
+      clip: 'hidden'
+    }
+  }
+};
 
 // padding
 // ------------------------------------------------------------------
-const padding = {
+export const padding = {
   prop: 'padding',
   propName: 'p',
   subProps: {
@@ -384,11 +389,11 @@ const padding = {
 
 // pointer-events
 // ------------------------------------------------------------------
-const pointerEvents = {};
+export const pointerEvents = {};
 
 // position
 // ------------------------------------------------------------------
-const position = {
+export const position = {
   prop: 'position',
   propName: '',
   keywordValues: {
@@ -401,25 +406,25 @@ const position = {
   }
 };
 
-const top = {
+export const top = {
   prop: 'top',
   propName: 't',
   enablePlugin: 'lengthUnits'
 };
 
-const right = {
+export const right = {
   prop: 'right',
   propName: 'r',
   enablePlugin: 'lengthUnits'
 };
 
-const bottom = {
+export const bottom = {
   prop: 'bottom',
   propName: 'b',
   enablePlugin: 'lengthUnits'
 };
 
-const left = {
+export const left = {
   prop: 'left',
   propName: 'l',
   enablePlugin: 'lengthUnits'
@@ -427,11 +432,11 @@ const left = {
 
 // resize
 // ------------------------------------------------------------------
-const resize = {};
+export const resize = {};
 
 // stroke
 // ------------------------------------------------------------------
-const stroke = {
+export const stroke = {
   prop: 'stroke',
   propName: 'stroke',
   enablePlugin: 'colors'
@@ -439,11 +444,11 @@ const stroke = {
 
 // text-align
 // ------------------------------------------------------------------
-const textAlign = {};
+export const textAlign = {};
 
 // text-decoration
 // ------------------------------------------------------------------
-const textDecoration = {
+export const textDecoration = {
   prop: 'text-decoration',
   propName: 'text',
   keywordValues: {
@@ -457,39 +462,39 @@ const textDecoration = {
 
 // text-overflow
 // ------------------------------------------------------------------
-const textOverflow = {};
+export const textOverflow = {};
 
 // text-transform
 // ------------------------------------------------------------------
-const textTransform = {};
+export const textTransform = {};
 
 // vertical-align
 // ------------------------------------------------------------------
-const verticalAlign = {};
+export const verticalAlign = {};
 
 // webkit
 // ------------------------------------------------------------------
-const webkit = {};
+export const webkit = {};
 
 // white-space
 // ------------------------------------------------------------------
-const whiteSpace = {};
+export const whiteSpace = {};
 
 // width
 // ------------------------------------------------------------------
-const width = {
+export const width = {
   prop: 'width',
   propName: 'w',
   enablePlugin: 'lengthUnits'
 };
 
-const minWidth = {
+export const minWidth = {
   prop: 'min-width',
   propName: 'min-w',
   enablePlugin: 'lengthUnits'
 };
 
-const maxWidth = {
+export const maxWidth = {
   prop: 'max-width',
   propName: 'max-w',
   enablePlugin: 'lengthUnits'
@@ -497,17 +502,17 @@ const maxWidth = {
 
 // word-break
 // ------------------------------------------------------------------
-const wordBreak = {};
+export const wordBreak = {};
 
 // z-index
 // ------------------------------------------------------------------
-const zIndex = {
+export const zIndex = {
   propName: 'z',
   prop: 'z-index',
   enablePlugin: 'integers'
 };
 
-const propsConfig = [
+export const propsConfig = [
   color,
   backgroundColor,
   borderColor,
