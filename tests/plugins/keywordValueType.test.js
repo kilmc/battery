@@ -1,10 +1,7 @@
 /* eslint-env jest, node */
 
-import {
-  generateKeywordValueObjs,
-  getKeywordClassObjs
-} from '../../src/plugins/keywordValueType';
-
+import { getKeywordClassObjs } from '../../src/plugins/keywordValueType';
+import { generateKeywordValueObjs } from '../../src/classObject';
 import { backgroundSize, display, margin, fill } from '../fixtures/props';
 
 const propConfigs = {

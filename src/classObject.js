@@ -2,10 +2,7 @@ import { createPluginsObject } from './plugins/';
 import { generateValuePluginRegexObj } from './sequencers';
 import { getPluginPropConfigs } from './plugins/';
 
-import {
-  getKeywordClassObjs,
-  generateKeywordValueObjs
-} from './plugins/keywordValueType';
+import { getKeywordClassObjs } from './plugins/keywordValueType';
 
 export const generateClassObject = ({ className, cssProps, value }) => {
   const eachProp = cssProps.split(' ').reduce((props, prop) => {
@@ -13,6 +10,41 @@ export const generateClassObject = ({ className, cssProps, value }) => {
     return props;
   }, {});
   return { [className]: eachProp };
+};
+
+export const generateKeywordValueObjs = props => {
+  const propConfigsWithKeywordValues = Object.keys(props)
+    .map(prop => props[prop])
+    .filter(propConfig => typeof propConfig.keywordValues === 'object');
+
+  return propConfigsWithKeywordValues.reduce((accum, propConfig) => {
+    const {
+      prop,
+      propName,
+      keywordValues: { separator = '', values }
+    } = propConfig;
+
+    const classNames = Object.keys(values).reduce((classObjects, valueName) => {
+      classObjects = {
+        ...classObjects,
+        ...generateClassObject({
+          className: `${propName}${
+            valueName === 'default' ? '' : separator + valueName
+          }`,
+          cssProps: prop,
+          value: values[valueName]
+        })
+      };
+
+      return classObjects;
+    }, {});
+
+    accum = {
+      ...accum,
+      ...classNames
+    };
+    return accum;
+  }, {});
 };
 
 const getPropConfigValue = key => (cxPropName, propConfigs) => {

@@ -16,7 +16,7 @@ import {
   zIndex
 } from './fixtures/props';
 
-import { buildClassNameRegexFn } from '../src/regexes';
+import { buildClassNameRegexFn } from '../src/regexes/className';
 
 import {
   generateValuePluginRegexObj,

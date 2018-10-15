@@ -1,6 +1,7 @@
 import deepmerge from 'deepmerge';
 
-import { buildClassNameRegexFn, buildValuePluginRegex } from './regexes';
+import { buildClassNameRegexFn } from './regexes/className';
+import { buildValuePluginRegex } from './regexes/values';
 
 import { createPropNamesObject, createPluginsObject } from './plugins/';
 

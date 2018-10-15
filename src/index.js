@@ -1,3 +1,3 @@
-import { generateCSS } from './generators/';
+import { generateCSS } from './generators/index';
 
 export { generateCSS };

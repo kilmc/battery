@@ -1,4 +1,4 @@
-import { buildClassNameRegexFn } from '../regexes/';
+import { buildClassNameRegexFn } from '../regexes/className';
 
 const hasMolecules = (arr, config) =>
   arr.filter(x => config.molecules.expand[x]).length > 0 ||

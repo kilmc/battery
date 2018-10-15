@@ -1,21 +1,3 @@
 {
-  "presets": [
-    ["env"]
-  ],
-  "plugins": [
-    "transform-object-rest-spread",
-    "transform-es2017-object-entries"
-  ],
-  "env": {
-    "test": {
-      "presets": [
-        ["env", {
-          "targets": {
-            "node": "9.4.0"
-          },
-          "debug": true
-        }]
-      ]
-    }
-  }
+  "presets": ["@babel/preset-env"]
 }

@@ -1,40 +1,4 @@
 import { subtractArrays } from '../utils';
-import { generateClassObject } from '../classObject';
-
-export const generateKeywordValueObjs = props => {
-  const propConfigsWithKeywordValues = Object.keys(props)
-    .map(prop => props[prop])
-    .filter(propConfig => typeof propConfig.keywordValues === 'object');
-
-  return propConfigsWithKeywordValues.reduce((accum, propConfig) => {
-    const {
-      prop,
-      propName,
-      keywordValues: { separator = '', values }
-    } = propConfig;
-
-    const classNames = Object.keys(values).reduce((classObjects, valueName) => {
-      classObjects = {
-        ...classObjects,
-        ...generateClassObject({
-          className: `${propName}${
-            valueName === 'default' ? '' : separator + valueName
-          }`,
-          cssProps: prop,
-          value: values[valueName]
-        })
-      };
-
-      return classObjects;
-    }, {});
-
-    accum = {
-      ...accum,
-      ...classNames
-    };
-    return accum;
-  }, {});
-};
 
 export const getKeywordClassObjs = (classNames, precompiledClassObjects) => {
   if (!precompiledClassObjects) return null;

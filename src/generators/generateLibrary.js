@@ -1,5 +1,5 @@
 import deepmerge from 'deepmerge';
-import { generateKeywordValueObjs } from '../plugins/keywordValueType';
+import { generateKeywordValueObjs } from '../classObject';
 import { processConfig } from '../config/';
 
 import {

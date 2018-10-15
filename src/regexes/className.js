@@ -1,5 +1,5 @@
 import { sortAndJoin } from '../utils';
-import { buildPrefixAndSuffixRegex } from './';
+import { buildPrefixAndSuffixRegex } from './prefixAndSuffixes';
 
 export const buildClassNameRegexFn = (pluginsConfig, body = '') => {
   let prefixAndSuffixes = {};

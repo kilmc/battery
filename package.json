@@ -7,24 +7,22 @@
   "license": "MIT",
   "description": "Battery is a system to generate infinite, composable, atomic styles that eliminates code bloat and automatically documents itself.",
   "devDependencies": {
-    "babel-core": "^6.26.0",
-    "babel-jest": "^21.2.0",
-    "babel-loader": "^7.1.5",
-    "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
-    "babel-plugin-transform-es2017-object-entries": "^0.0.4",
-    "babel-plugin-transform-object-rest-spread": "^6.26.0",
-    "babel-preset-env": "^1.6.1",
+    "@babel/core": "^7.1.2",
+    "@babel/preset-env": "^7.1.0",
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-jest": "^23.6.0",
     "cssesc": "^2.0.0",
     "deepmerge": "^2.0.1",
     "eslint": "^4.15.0",
     "jest": "^21.2.1",
     "path": "^0.12.7",
-    "webpack": "^4.16.4",
-    "webpack-command": "^0.4.1"
+    "regenerator-runtime": "^0.12.1",
+    "rollup-plugin-babel": "^4.0.3",
+    "rollup-plugin-node-resolve": "^3.4.0"
   },
   "scripts": {
-    "build": "webpack --config ./webpack.config.js",
-    "watch": "webpack --watch --config ./webpack.config.js",
+    "build": "rollup -c",
+    "watch": "rollup -c -w",
     "test": "jest --watch"
   }
 }
