@@ -517,9 +517,9 @@ describe('generate utility classes', () => {
       `.for-screenreader {
   width: 1px;
   top: -100px;
-  height: 1px;
-  overflow: hidden;
   position: absolute;
+  overflow: hidden;
+  height: 1px;
 }\n`
     );
   });

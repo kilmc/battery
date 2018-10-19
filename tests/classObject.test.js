@@ -1,6 +1,19 @@
 /* eslint-env jest, node */
 
-import { generateClassObject } from '../src/classObject';
+import {
+  generateClassObject,
+  convertClassNamestoClassObjs
+} from '../src/classObject';
+
+import {
+  color,
+  backgroundColor,
+  border,
+  borderColor
+} from './fixtures/config/props';
+
+import { gridCol, squarePlugin } from './fixtures/config/classPlugins';
+import { colorsPlugin } from './fixtures/config/plugins';
 
 describe('generateClassObject', () => {
   it('formats a set of inputs into a classObject structure', () => {

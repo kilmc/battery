@@ -4,7 +4,7 @@ export const color = {
   prop: 'color',
   propName: '',
   pluginDefault: true,
-  allowedValues: ['red-500', 'grey-900', 'green-800'],
+  allowedValues: ['black', 'red-500', 'grey-900', 'green-800'],
   enablePlugin: 'colors'
 };
 
@@ -102,11 +102,11 @@ export const borders = {
       default: '1px solid #DCDEDD',
       none: 'none'
     }
-  },
-  enablePlugin: 'integers'
+  }
 };
 export const borderColor = {
   prop: 'border-color',
+  separator: '-',
   propName: 'border',
   enablePlugin: 'colors'
 };
@@ -114,7 +114,13 @@ export const borderColor = {
 export const borderWidth = {
   prop: 'border-width',
   propName: 'border',
-  enablePlugin: 'lengthUnits'
+  enablePlugin: 'lengthUnits',
+  keywordValues: {
+    separator: '-',
+    values: {
+      thin: '2px'
+    }
+  }
 };
 export const borderRadius = {
   prop: 'border-radius',

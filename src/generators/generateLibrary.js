@@ -10,8 +10,10 @@ import {
 import sortClassNames from '../sortClassNames';
 import { convertClassNamestoClassObjs } from '../classObject';
 import { processClassType } from '../plugins/classType';
+import { orderClasses } from './generateCSS/generateClasses';
 
 const generateLibrary = (classNames, config) => {
+  // console.log(config);
   const { props, plugins = [] } = processConfig(config);
   let toProcessClasses = [...classNames];
 
@@ -45,7 +47,7 @@ const generateLibrary = (classNames, config) => {
     ...convertedClassNames
   };
 
-  return classObjs;
+  return orderClasses(classObjs, config);
 };
 
 export default generateLibrary;

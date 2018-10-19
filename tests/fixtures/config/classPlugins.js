@@ -17,3 +17,15 @@ export const gridCol = {
     }
   ]
 };
+
+export const squarePlugin = {
+  name: 'square',
+  type: 'class',
+  className: ['square'],
+  modifiers: [
+    {
+      regex: '\\d+',
+      modifierFn: size => [`h${size}`, `w${size}`]
+    }
+  ]
+};
