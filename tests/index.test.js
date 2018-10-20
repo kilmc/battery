@@ -85,6 +85,13 @@ const marginProp = {
   keywordValues: { separator: '-', values: { auto: 'auto' } }
 };
 
+export const translateX = {
+  prop: 'transform',
+  propName: 'translate-x',
+  cssFunction: 'translateX',
+  enablePlugin: 'lengthUnits'
+};
+
 const widthProp = {
   prop: 'width',
   propName: 'w',
@@ -236,8 +243,7 @@ describe('generateLibrary', () => {
     it('handles default valueModifiers', () => {
       const config = {
         plugins: [lengthUnitsPlugin],
-        props: [widthProp],
-        settings: { enableKeywordValues: true }
+        props: [widthProp]
       };
 
       const testClasses = ['w4'];
@@ -296,13 +302,31 @@ describe('generateLibrary', () => {
 
       const config = {
         plugins: [breakpointsPlugin, colorsPlugin],
-        props: [colorProp],
-        settings: { enableKeywordValues: true }
+        props: [colorProp]
       };
 
       const testClasses = ['s:black'];
       expect(generateLibrary(testClasses, config)).toEqual({
         's:black': { color: '#000000' }
+      });
+    });
+
+    fit('handles css functions in values', () => {
+      const translateX = {
+        prop: 'transform',
+        propName: 'translate-x',
+        cssFunction: 'translateX',
+        enablePlugin: 'lengthUnits'
+      };
+
+      const config = {
+        plugins: [lengthUnitsPlugin],
+        props: [translateX]
+      };
+
+      const testClasses = ['translate-x100p'];
+      expect(generateLibrary(testClasses, config)).toEqual({
+        'translate-x100p': { transform: 'translateX(100%)' }
       });
     });
   });

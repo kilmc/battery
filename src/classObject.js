@@ -1,7 +1,6 @@
 import { createPluginsObject } from './plugins/';
 import { generateValuePluginRegexObj } from './sequencers';
 import { getPluginPropConfigs } from './plugins/';
-
 import { getKeywordClassObjs } from './plugins/keywordValueType';
 
 export const generateClassObject = ({ className, cssProps, value }) => {
@@ -103,12 +102,16 @@ const modifyValue = (value, modifier, pluginConfig) => {
   }
 };
 
-const getValue = (value, modifier, pluginConfig, lookupValues) => {
+const getValue = (value, modifier, pluginConfig, lookupValues, propConfig) => {
   if (lookupValues) {
     value = lookupValues[value];
   }
   if (pluginConfig.valueModifiers) {
     value = modifyValue(value, modifier, pluginConfig);
+  }
+
+  if (propConfig && propConfig.cssFunction) {
+    value = `${propConfig.cssFunction}(${value})`;
   }
 
   return value;
@@ -121,8 +124,12 @@ const isRestrictedValue = (value, propName, propConfigs) => {
   const allowedValues = getAllowedValues(propName, propConfigs);
   const disallowedValues = getDisallowedValues(propName, propConfigs);
 
-  if (allowedValues.length) return !allowedValues.includes(value);
-  if (disallowedValues.length) return disallowedValues.includes(value);
+  if (allowedValues.length) {
+    return !allowedValues.includes(value);
+  }
+  if (disallowedValues.length) {
+    return disallowedValues.includes(value);
+  }
   return false;
 };
 
@@ -147,6 +154,9 @@ const convertClassNameToClassObj = (
     previouslyMatched = 1;
 
     const propName = classNameArr[2];
+    const propConfig = propConfigs.filter(
+      propConfig => propConfig.propName === propName
+    )[0];
 
     let value = classNameArr[3];
     if (isRestrictedValue(value, propName, propConfigs)) return zs;
@@ -155,7 +165,13 @@ const convertClassNameToClassObj = (
     const convertedClassObj = generateClassObject({
       className: className,
       cssProps: getProps(propName, propConfigs).join(''),
-      value: getValue(value, valueModifier, pluginConfig, lookupValues)
+      value: getValue(
+        value,
+        valueModifier,
+        pluginConfig,
+        lookupValues,
+        propConfig
+      )
     });
 
     zs = { ...zs, ...convertedClassObj };

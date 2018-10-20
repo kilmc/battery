@@ -13,7 +13,6 @@ import { processClassType } from '../plugins/classType';
 import { orderClasses } from './generateCSS/generateClasses';
 
 const generateLibrary = (classNames, config) => {
-  // console.log(config);
   const { props, plugins = [] } = processConfig(config);
   let toProcessClasses = [...classNames];
 

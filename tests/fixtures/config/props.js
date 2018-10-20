@@ -466,6 +466,13 @@ export const textDecoration = {
   }
 };
 
+export const translateX = {
+  prop: 'transform',
+  propName: 'translate-x',
+  cssFunction: 'translateX',
+  enablePlugin: 'lengthUnits'
+};
+
 // text-overflow
 // ------------------------------------------------------------------
 export const textOverflow = {};
