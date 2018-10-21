@@ -543,13 +543,17 @@ var modifyValue = function modifyValue(value, modifier, pluginConfig) {
   }
 };
 
-var getValue = function getValue(value, modifier, pluginConfig, lookupValues) {
+var getValue = function getValue(value, modifier, pluginConfig, lookupValues, propConfig) {
   if (lookupValues) {
     value = lookupValues[value];
   }
 
   if (pluginConfig.valueModifiers) {
     value = modifyValue(value, modifier, pluginConfig);
+  }
+
+  if (propConfig && propConfig.cssFunction) {
+    value = "".concat(propConfig.cssFunction, "(").concat(value, ")");
   }
 
   return value;
@@ -561,8 +565,15 @@ var getDisallowedValues = getPropConfigValue('disallowedValues');
 var isRestrictedValue = function isRestrictedValue(value, propName, propConfigs) {
   var allowedValues = getAllowedValues(propName, propConfigs);
   var disallowedValues = getDisallowedValues(propName, propConfigs);
-  if (allowedValues.length) return !allowedValues.includes(value);
-  if (disallowedValues.length) return disallowedValues.includes(value);
+
+  if (allowedValues.length) {
+    return !allowedValues.includes(value);
+  }
+
+  if (disallowedValues.length) {
+    return disallowedValues.includes(value);
+  }
+
   return false;
 };
 
@@ -576,13 +587,16 @@ var convertClassNameToClassObj = function convertClassNameToClassObj(className, 
     if (classNameArr === null) return zs;
     previouslyMatched = 1;
     var propName = classNameArr[2];
+    var propConfig = propConfigs.filter(function (propConfig) {
+      return propConfig.propName === propName;
+    })[0];
     var value = classNameArr[3];
     if (isRestrictedValue(value, propName, propConfigs)) return zs;
     var valueModifier = classNameArr[4];
     var convertedClassObj = generateClassObject({
       className: className,
       cssProps: getProps(propName, propConfigs).join(''),
-      value: getValue(value, valueModifier, pluginConfig, lookupValues)
+      value: getValue(value, valueModifier, pluginConfig, lookupValues, propConfig)
     });
     zs = _objectSpread({}, zs, convertedClassObj);
     return zs;
@@ -819,6 +833,108 @@ var processClassType = function processClassType(classNames, config) {
   return classTypeClassObjs;
 };
 
+var singleLineClass = function singleLineClass(className, classBody) {
+  return ".".concat(className, " { ").concat(classBody, " }");
+};
+
+var multiLineClass = function multiLineClass(className, classBody, indent) {
+  return ".".concat(className, " {\n  ").concat(classBody, "\n").concat(indent ? '  ' : '', "}");
+};
+
+var generateClass = function generateClass(className, declarations, multiple, indent) {
+  var escapedClassName = escapeCharacters(className);
+  var classBody = Object.keys(declarations).map(function (prop) {
+    return "".concat(indent && multiple ? '  ' : '').concat(prop, ": ").concat(declarations[prop], ";");
+  }).join(multiple ? '\n  ' : ' ');
+  return multiple ? multiLineClass(escapedClassName, classBody, indent) : singleLineClass(escapedClassName, classBody);
+};
+var shorthandProps = ['border', 'border-top', 'border-bottom', 'border-left', 'border-right', 'border-radius', 'border-top-left-radius', 'border-top-right-radius', 'border-bottom-left-radius', 'border-bottom-right-radius', 'margin', 'margin-top', 'margin-bottom', 'margin-left', 'margin-right', 'padding', 'padding-top', 'padding-bottom', 'padding-left', 'padding-right'];
+var filterUtilityClasses = function filterUtilityClasses(obj, classPlugins) {
+  var regex = classPlugins.reduce(function (pluginRegex, plugin) {
+    var modifiers = plugin.modifiers;
+    var root = plugin.className[0];
+    var includeRoot = plugin.className[1] ? [plugin.className[0]] : [];
+    var modifierStrings = [];
+
+    if (modifiers) {
+      modifierStrings = modifiers.reduce(function (accum, modifier) {
+        var _modifier$regex = modifier.regex,
+            regex = _modifier$regex === void 0 ? '' : _modifier$regex,
+            _modifier$regexSepara = modifier.regexSeparator,
+            regexSeparator = _modifier$regexSepara === void 0 ? '' : _modifier$regexSepara,
+            _modifier$separator = modifier.separator,
+            separator = _modifier$separator === void 0 ? '' : _modifier$separator,
+            className = modifier.className;
+        var modifierClassName = className && className[0] ? className[0] : '';
+        var item = "".concat(root).concat(separator).concat(modifierClassName).concat(regexSeparator).concat(regex);
+        return accum.concat(item);
+      }, []);
+    }
+
+    var pluginRegexSet = includeRoot.concat(modifierStrings);
+    return pluginRegex.concat(pluginRegexSet);
+  }, []).join('|');
+  var utilityClassNames = Object.keys(obj).filter(function (className) {
+    return className.match(regex);
+  });
+  return utilityClassNames.reduce(function (accum, cx) {
+    accum[cx] = obj[cx];
+    Reflect.deleteProperty(obj, cx);
+    return accum;
+  }, {});
+};
+
+var orderShorthandProps = function orderShorthandProps(obj) {
+  var shorthandClasses = Object.keys(obj).filter(function (className) {
+    var props = Object.keys(obj[className]);
+    return props.some(function (prop) {
+      return shorthandProps.includes(prop);
+    });
+  }).sort();
+  return shorthandClasses.reduce(function (accum, cx) {
+    accum[cx] = obj[cx];
+    Reflect.deleteProperty(obj, cx);
+    return accum;
+  }, {});
+};
+
+var orderClassesByProperty = function orderClassesByProperty(obj) {
+  var orderedClassNames = Object.keys(obj).sort(function (a, b) {
+    var propA = Object.keys(obj[a])[0];
+    var propB = Object.keys(obj[b])[0];
+    return propA.localeCompare(propB);
+  });
+  return orderedClassNames.reduce(function (accum, cx) {
+    accum[cx] = obj[cx];
+    Reflect.deleteProperty(obj, cx);
+    return accum;
+  }, {});
+};
+
+var orderClasses = function orderClasses(obj, config) {
+  var utilityClasses = {};
+
+  if (config.plugins) {
+    var classTypePlugins = config.plugins.filter(function (plugin) {
+      return plugin.type === 'class';
+    });
+    utilityClasses = filterUtilityClasses(obj, classTypePlugins);
+  }
+
+  var shorthandClasses = orderShorthandProps(obj);
+  var remainingClasses = orderClassesByProperty(obj);
+  return _objectSpread({}, utilityClasses, shorthandClasses, remainingClasses);
+};
+
+var generateClasses = function generateClasses(obj) {
+  var indent = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+  if (Object.keys(obj).length < 1) return;
+  return Object.keys(obj).map(function (cx) {
+    var multiple = Object.keys(obj[cx]).length > 1;
+    return generateClass(cx, obj[cx], multiple, indent);
+  }).join(indent ? '\n  ' : '\n');
+};
+
 var generateLibrary = function generateLibrary(classNames, config) {
   var _processConfig = processConfig(config),
       props = _processConfig.props,
@@ -844,7 +960,7 @@ var generateLibrary = function generateLibrary(classNames, config) {
   }
 
   classObjs = _objectSpread({}, classObjs, convertedClassNames);
-  return classObjs;
+  return orderClasses(classObjs, config);
 };
 
 var processClassNameType = function processClassNameType(classes, pluginConfig) {
@@ -875,31 +991,6 @@ var processClassNameTypes = function processClassNameTypes(library, plugins) {
       processClassNameType(library, pluginConfig);
     });
   }
-};
-
-var singleLineClass = function singleLineClass(className, classBody) {
-  return ".".concat(className, " { ").concat(classBody, " }");
-};
-
-var multiLineClass = function multiLineClass(className, classBody, indent) {
-  return ".".concat(className, " {\n  ").concat(classBody, "\n").concat(indent ? '  ' : '', "}");
-};
-
-var generateClass = function generateClass(className, declarations, multiple, indent) {
-  var escapedClassName = escapeCharacters(className);
-  var classBody = Object.keys(declarations).map(function (prop) {
-    return "".concat(indent && multiple ? '  ' : '').concat(prop, ": ").concat(declarations[prop], ";");
-  }).join(multiple ? '\n  ' : ' ');
-  return multiple ? multiLineClass(escapedClassName, classBody, indent) : singleLineClass(escapedClassName, classBody);
-};
-
-var generateClasses = function generateClasses(obj) {
-  var indent = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-  if (Object.keys(obj).length < 1) return;
-  return Object.keys(obj).map(function (cx) {
-    var multiple = Object.keys(obj[cx]).length > 1;
-    return generateClass(cx, obj[cx], multiple, indent);
-  }).join(indent ? '\n  ' : '\n');
 };
 
 var generateAtRuleCSS = function generateAtRuleCSS(_ref) {
