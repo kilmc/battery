@@ -295,8 +295,10 @@ var sortAndJoin = function sortAndJoin(arr) {
   }).join('|');
 };
 var escapeCharacters = function escapeCharacters(str) {
-  var escapeRegex = new RegExp(/([^a-zA-Z\d-_])/, 'g');
-  return str.replace(escapeRegex, '\\$1');
+  // const escapeRegex = new RegExp(/([^a-zA-Z\d-_])/, 'g');
+  // return str.replace(escapeRegex, '\\$1');
+  // Temporarily removed because it escapes legitimate characters
+  return str;
 };
 
 var getPrefixAndSuffixes = function getPrefixAndSuffixes(pluginsConfig) {

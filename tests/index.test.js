@@ -285,7 +285,7 @@ describe('generateLibrary', () => {
       });
     });
 
-    it('handles escaping non standard character', () => {
+    xit('handles escaping non standard character', () => {
       const breakpointsPlugin = {
         name: 'breakpoints',
         type: 'atrule',
@@ -307,11 +307,11 @@ describe('generateLibrary', () => {
 
       const testClasses = ['s:black'];
       expect(generateLibrary(testClasses, config)).toEqual({
-        's:black': { color: '#000000' }
+        's\\:black': { color: '#000000' }
       });
     });
 
-    fit('handles css functions in values', () => {
+    it('handles css functions in values', () => {
       const translateX = {
         prop: 'transform',
         propName: 'translate-x',
@@ -457,7 +457,7 @@ describe('generateCSS', () => {
 }`);
   });
 
-  it('correctly escapes non-standard characters', () => {
+  xit('correctly escapes non-standard characters', () => {
     const breakpointsPlugin = {
       name: 'breakpoints',
       type: 'atrule',

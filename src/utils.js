@@ -40,6 +40,10 @@ export const renameKeys = (obj, filterFn, modifierFn) => {
 };
 
 export const escapeCharacters = str => {
-  const escapeRegex = new RegExp(/([^a-zA-Z\d-_])/, 'g');
-  return str.replace(escapeRegex, '\\$1');
+  // const escapeRegex = new RegExp(/([^a-zA-Z\d-_])/, 'g');
+  // return str.replace(escapeRegex, '\\$1');
+
+  // Temporarily removed because it escapes legitimate characters
+
+  return str;
 };
