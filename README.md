@@ -125,7 +125,7 @@ This sets which CSS property being configured by the object. This will be the `p
 
 **Example**
 
-```javscript
+```
 {
   prop: 'background-color',
   ...
@@ -138,7 +138,7 @@ This sets which CSS property being configured by the object. This will be the `p
 
 This sets the identifier in the classname to tell Battery which property the class is targeting.
 
-```JSON
+```
 {
   propName: 'bg',
   ...
@@ -151,7 +151,7 @@ This sets the identifier in the classname to tell Battery which property the cla
 
 This sets the separator between the `propName` and the `value` identifiers in the class.
 
-```JSON
+```
 {
   propSeparator: '-',
   ...
@@ -166,7 +166,7 @@ This object allows you to manually set up values for your `property`. This can b
 
 **Example**
 
-```JSON
+```
 {
 	prop: 'align-items',
 	propName: 'items',
