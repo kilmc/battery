@@ -4,6 +4,10 @@ An Atomic CSS Generator
 
 (Documentation is in progress)
 
+## Makeup of an Atomic Class
+
+[prefix][propname][value][valuemodifier][suffix]
+
 ## Prop Configs
 
 These are one of the two core aspects of Battery's configuration. Your `propConfig`'s will house the vast majority of your naming convention.
@@ -233,3 +237,122 @@ Battery is intented to be used for more than generation. Your configs can also c
 #### `propGroup` : _string_
 
 This groups certain properties under one heading so they can be found together in the Docs UI.
+
+## Plugin Configs
+
+Plugins allow you to interpret various kinds of patterns in your classnames and output the desired CSS from matching with those patterns.
+
+### Value Plugins
+
+Value plugins are used to convert parts of a classname into the value of a CSS declaration.
+
+### Type: `pattern`
+
+This type of value plugin is designed to take a regex and will search the value section of the classname for a match. The matching value can the be outputted directly or processed before being set as the value in the atomic class.
+
+**Examples**
+
+```javascript
+const integersPlugin = {
+  name: 'integers',
+  type: 'pattern',
+  valueRegexString: '-?[0-9]{1,4}'
+};
+
+const flexShrink = {
+  prop: 'flex-shrink',
+  propName: 'shrink',
+  enablePlugin: 'integers'
+};
+
+const input = ['shrink2', 'shrink-1'];
+
+const output = `
+.shrink2 { flex-shrink: 2; }
+.shrink-1 { flex-shrink: -1; }
+`;
+```
+
+```javascript
+const lengthUnitsPlugin = {
+  name: 'lengthUnits',
+  type: 'pattern',
+  valueRegexString: '-?[0-9]{1,4}',
+  valueModifiers: [
+    {
+      name: 'percent',
+      indicator: 'p',
+      modifierFn: (value) => `${value}%`,
+      sampleValues: ['20', '50', '100', '-10', '66']
+    },
+    {
+      name: 'pixel',
+      indicator: 'px',
+      modifierFn: modifierFn: (value) => `${value/16}rem`,
+      sampleValues: ['1', '2', '3', '-2', '-5']
+    }
+  ]
+}
+
+const width = {
+  prop: 'width',
+  propName: 'w',
+  enablePlugin: 'lengthUnits'
+}
+
+const positionTop = {
+  prop: 'top',
+  propName: 't',
+  enablePlugin: 'lengthUnits'
+}
+
+const fontSize = {
+  prop: 'font-size',
+  propName: 'f-size',
+  propSeparator: '-'
+  enablePlugin: 'lengthUnits'
+}
+
+const input = ['t10px','w50p','f-size-16px','t-25p']
+
+const output = `
+.t10px { top: 0.625rem }
+.w50p { width: 50% }
+.f-size-16px { font-size: 1rem}
+.t-25p' { top: -25% }
+`
+```
+
+### Configuration Options
+
+**Note:** There are certain configuration options that are only available or necessary for specific plugin `type`'s
+
+#### `name` : _string_
+
+This sets a unique name so that you can enable a specific plugin inside of a `propConfig`
+
+#### `type` : _string_
+
+This give Battery an indication of how and when it needs to process a given part of a classname. The following are the accepted strings for plugin types.
+
+- `pattern`
+- `lookup`
+- `classname`
+- `atrule`
+- `class`
+
+#### `valueRegexString` : _string_
+
+This is a regex in the form of a string which is used to find valid matches in a classname's value portion. This matched value can be passed to a value modifier to process the value before it finally gets set as part of the declaration
+
+#### `valueModifiers` : _object[]_
+
+The value modifier array can contain a set of what are essentially sub plugins. These are used to transform a value based on a modifier on the end of that value.
+
+### Selector Plugins
+
+These plugins allow you to modify the selector of a given atomic class. This can be used for everything from adding psuedo selectors like `:focus` and `:hover`, to creating a hover target pattern or something more complex.
+
+### Atrule Plugins
+
+### Class Plugins
