@@ -1,12 +1,30 @@
-# battery
+# Battery
 
-An Atomic CSS Generator
-
+A configurable machine that turns classnames into CSS.
 (Documentation is in progress)
 
-## Makeup of an Atomic Class
+## Purpose
 
-[prefix][propname][value][valuemodifier][suffix]
+I started working on Battery in an effort to have a way of auto-generating documentation for a custom Atomic CSS library. That eventually grew into a much more interesting tool which had the potential for so much more than auto-generating docs.
+
+There's some distance between what Battery is capable of now and what I want it to be capable of in the future, but I'm hoping to narrow that gap sooner rather than later. Here's a list of things it can currently do, followed by a list of features that I'd love to add or extend out of this project.
+
+Current features:
+- Customizable Atomic CSS library
+- Generate a CSS file with only the classes you use (currently only available as a Webpack plugin but I would love to extend this to as many languages as possible)
+- Auto generate docs (done via a React App that's in beta)
+- CLI to parse static HTML and JSX files for classnames and output a CSS file
+
+Dream features:
+- Linter powered by Battery config to guide and enforce your conventions
+
+
+## Ecosystem
+This repo is the brain of Battery, but it's meant to be used in conjunction with other tools. The most fleshed out of those tools are
+
+- [Battery Webpack Plugin](https://github.com/kilmc/battery-webpack-plugin): Parse your JSX for classnames to be sent to be processed by Battery and only generate the CSS you use in your App
+- Battery Docs App
+
 
 ## Prop Configs
 
@@ -20,8 +38,8 @@ The following are some examples of `propConfig`'s and what Battery will output g
 
 #### text-align
 
-```
-{
+```javascript
+const textAlign = {
   prop: 'text-align',
   propName: 'text',
   keywordValues: {
@@ -34,10 +52,10 @@ The following are some examples of `propConfig`'s and what Battery will output g
   }
 }
 
-// Input
-['text-left','text-center','text-right']
+const input = ['text-left','text-center','text-right']
 
-// Output
+```
+```css
 .text-left { text-align: left; }
 .text-center { text-align: center; }
 .text-right { text-align: right; }
@@ -45,8 +63,8 @@ The following are some examples of `propConfig`'s and what Battery will output g
 
 #### position
 
-```
-{
+```javascript
+const position = {
   prop: 'position',
   propName: '',
   keywordValues: {
@@ -60,10 +78,9 @@ The following are some examples of `propConfig`'s and what Battery will output g
   }
 }
 
-// Input
-['static', 'relative', 'absolute', 'fixed', 'sticky']
-
-// Output
+const input = ['static', 'relative', 'absolute', 'fixed', 'sticky']
+```
+```css
 .static { position: static; }
 .relative { position: relative; }
 .absolute { position: absolute; }
@@ -73,17 +90,16 @@ The following are some examples of `propConfig`'s and what Battery will output g
 
 #### z-index
 
-```
-{
+```javascript
+const zIndex = {
   propName: 'z',
   prop: 'z-index',
   enablePlugin: 'integers'
 }
 
-// Input
-['z1', 'z20', 'z-10', 'z-999']
-
-// Output
+const input = ['z1', 'z20', 'z-10', 'z-999']
+```
+```css
 .z1 { z-index: 1; }
 .z20 { z-index: 20; }
 .z-10 { z-index: -10; }
@@ -92,8 +108,8 @@ The following are some examples of `propConfig`'s and what Battery will output g
 
 #### background-color
 
-```
-{
+```javascript
+const backgroundColor = {
   prop: 'background-color',
   propName: 'bg',
   separator: '-',
@@ -106,15 +122,13 @@ The following are some examples of `propConfig`'s and what Battery will output g
   enablePlugin: 'colors'
 }
 
-// Input
-['bg-red', 'bg-green', 'bg-blue', 'bg-transparent']
-
-// Output
+const input = ['bg-red', 'bg-green', 'bg-blue', 'bg-transparent']
+```
+```css
 .bg-red { background-color: #FF0000; }
 .bg-green { background-color: #00FF00; }
 .bg-blue { background-color: #0000FF; }
 .bg-transparent { background-color: transparent; }
-
 ```
 
 ### Configuration Options
@@ -123,42 +137,13 @@ The following are some examples of `propConfig`'s and what Battery will output g
 
 This sets which CSS property being configured by the object. This will be the `property` part of the CSS declaration in the final atomic class.
 
-**Example**
-
-```
-{
-  prop: 'background-color',
-  ...
-}
-```
-
-.bg-black { **background-color**: #000; }
-
 #### `propName` : _string_
 
 This sets the identifier in the classname to tell Battery which property the class is targeting.
 
-```
-{
-  propName: 'bg',
-  ...
-}
-```
-
-.**bg**-black
-
 #### `propSeparator` : _string_
 
 This sets the separator between the `propName` and the `value` identifiers in the class.
-
-```
-{
-  propSeparator: '-',
-  ...
-}
-```
-
-.bg**-**black
 
 #### `keywordValues` : _object_
 
@@ -166,23 +151,30 @@ This object allows you to manually set up values for your `property`. This can b
 
 **Example**
 
-```
-{
-	prop: 'align-items',
-	propName: 'items',
-	keywordValues: {
-		separator: '-',
-		values: {
-		'start': 'flex-start',
-		'center': 'center',
-		'end': 'flex-end'
-	}
+```javascript
+const alignItems = {
+  prop: 'align-items',
+  propName: 'items',
+  keywordValues: {
+    separator: '-',
+    values: {
+    'start': 'flex-start',
+    'center': 'center',
+    'end': 'flex-end'
+  }
 }
-```
 
+const input = [
+  'items-start',
+  'items-center',
+  'items-end'
+]
+```
+```CSS
 .items-start { align-items: flex-start }
 .items-center { align-items: center }
 .items-end { align-items: flex-end }
+```
 
 ##### `values` : _object_
 
@@ -200,8 +192,8 @@ This allows your classnames to take a predefined set of values based on a plugin
 
 A `propConfig` can to be set as the `pluginDefault`. This allows Battery to determine which `property` to set when it can't find a `propName`. As the example below shows, this can be useful in the case of something like `text-color` if you prefer not to have an indicator like `text` to denote what the color is being applied to.
 
-```
-{
+```javascript
+const color = {
   prop: 'color',
   propName: '',
   keywordValues: {
@@ -211,15 +203,13 @@ A `propConfig` can to be set as the `pluginDefault`. This allows Battery to dete
   enablePlugin: 'colors'
 }
 
-// Input
-['red', 'green', 'blue', 'transparent']
-
-// Output
+const input = ['red', 'green', 'blue', 'transparent']
+```
+```css
 .red { color: #FF0000; }
 .green { color: #00FF00; }
 .blue { color: #0000FF; }
 .transparent { color: transparent; }
-
 ```
 
 #### `allowedValues` | `disallowedValues :`string[]`
@@ -229,14 +219,6 @@ These two options let you put constraints on a `propConfig` to disallow some or 
 An example of where this can be useful is with a color plugin. This plugin could contain a lot of different colors, but not all of them should be used for all properties that accept a color value. If there are colors that you have determined should not be used for text due to legibility issues, you can add an array of `disallowedValues` to your `propConfig` so that Battery will filter those out before it generates the final list of classes
 
 The `allowedValues` option could be leveraged in the case where you only want to allow a small number of values from a plugin. A good example of this is plugin that outputs hard pixel values. These values are often used to _magically_ position or size something. Using the following, you could limit the possible values to just a tiny subset for a property: `allowedValues: [1px, 2px, 3px]`
-
-### Documentation Config Options
-
-Battery is intented to be used for more than generation. Your configs can also contain documentation. The following are all options that are used in the Battery Docs App.
-
-#### `propGroup` : _string_
-
-This groups certain properties under one heading so they can be found together in the Docs UI.
 
 ## Plugin Configs
 
@@ -250,7 +232,7 @@ Value plugins are used to convert parts of a classname into the value of a CSS d
 
 This type of value plugin is designed to take a regex and will search the value section of the classname for a match. The matching value can the be outputted directly or processed before being set as the value in the atomic class.
 
-**Examples**
+**Example plugin: Integers**
 
 ```javascript
 const integersPlugin = {
@@ -266,13 +248,13 @@ const flexShrink = {
 };
 
 const input = ['shrink2', 'shrink-1'];
-
-const output = `
+```
+```css
 .shrink2 { flex-shrink: 2; }
 .shrink-1 { flex-shrink: -1; }
-`;
 ```
 
+**Example plugin: Length Units**
 ```javascript
 const lengthUnitsPlugin = {
   name: 'lengthUnits',
@@ -313,14 +295,14 @@ const fontSize = {
   enablePlugin: 'lengthUnits'
 }
 
-const input = ['t10px','w50p','f-size-16px','t-25p']
+const input = ['t10px','t-25p','w50p','f-size-16px']
+```
 
-const output = `
+```css
 .t10px { top: 0.625rem }
+.t-25p { top: -25% }
 .w50p { width: 50% }
-.f-size-16px { font-size: 1rem}
-.t-25p' { top: -25% }
-`
+.f-size-16px { font-size: 1rem; }
 ```
 
 ### Configuration Options
@@ -356,3 +338,12 @@ These plugins allow you to modify the selector of a given atomic class. This can
 ### Atrule Plugins
 
 ### Class Plugins
+
+
+### Documentation Config Options
+
+Battery is intented to be used for more than generation. Your configs can also contain documentation. The following are all options that are used in the Battery Docs App.
+
+#### `propGroup` : _string_
+
+This groups certain properties under one heading so they can be found together in the Docs UI.
