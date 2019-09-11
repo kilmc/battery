@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "baseUrl": "src",
     "declaration": true,
     "declarationDir": "./dist",
     "module": "es6",
@@ -8,6 +9,6 @@
     "target": "es5",
     "esModuleInterop": true
   },
-  "include": ["src/**/*", "test/index.test.ts"],
+  "include": ["src/**/*", "test/**/*"],
   "exclude": ["node_modules"]
 }
