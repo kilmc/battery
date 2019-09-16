@@ -7,4 +7,5 @@ export const backgroundSize: UserPropConfig = {
   keywordValues: {
     contain: 'contain',
   },
+  plugin: 'lengthUnits',
 };

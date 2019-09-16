@@ -1,4 +1,5 @@
 export type ClassObject = { [key in CSSProps]?: string };
+export type ClassObjectGroup = { [k: string]: ClassObject };
 
 export type ExplodedClassSource = {
   prefix?: string;

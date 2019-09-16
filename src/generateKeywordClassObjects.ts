@@ -1,12 +1,31 @@
 import { BatteryConfig } from 'types/battery-config';
-import { ClassObject } from 'types/classname';
+import { ClassObjectGroup } from 'types/classname';
 
 export const generateKeywordClassObjects = (
   config: BatteryConfig,
-): { [k: string]: ClassObject } => {
+): ClassObjectGroup => {
   const keywordProps = config.props.filter(
     prop => prop.keywordValues !== undefined,
   );
 
-  return {};
+  const classObjects: ClassObjectGroup = keywordProps.reduce(
+    (accum: ClassObjectGroup, propConfig) => {
+      const {
+        prop,
+        propIdentifier = '',
+        keywordSeparator = '',
+        keywordValues,
+      } = propConfig;
+
+      Object.entries(keywordValues).map(([valueIdentifier, value]) => {
+        const className = `${propIdentifier}${keywordSeparator}${valueIdentifier}`;
+        accum[className] = { [prop]: value };
+      });
+
+      return accum;
+    },
+    {},
+  );
+
+  return classObjects;
 };

@@ -5,7 +5,7 @@ import { textAlign } from 'fixtures/props/text-align';
 import { display } from 'fixtures/props/display';
 import { position } from 'fixtures/props/position';
 
-describe('battery.generateCSS', () => {
+describe('generateCSS', () => {
   describe('Given a keyword class', () => {
     describe('when the class has a propIndicator', () => {
       const input = ['bg-contain', 'text-center'];

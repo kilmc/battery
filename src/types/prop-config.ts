@@ -11,21 +11,14 @@ enum SubPropKeys {
 type SubProp = { [key in SubPropKeys]?: string };
 type ModifierSubset = { name: string; modifiers: string[] };
 
-interface BasePropConfig {
+export type UserPropConfig = {
   prop: CSSProps;
   propIdentifier?: RegExp | string;
+  pluginDefault?: boolean;
   subProps?: SubProp;
   subPropSeparator?: string;
-  valueSeparator?: string;
-}
-
-interface KeywordPropConfig extends BasePropConfig {
+  pluginSeparator?: string;
   keywordSeparator?: string;
-  keywordValues: { [k: string]: string };
-}
-
-interface PluginPropConfig extends BasePropConfig {
-  plugin: string | ModifierSubset[];
-}
-
-export type UserPropConfig = KeywordPropConfig | PluginPropConfig;
+  keywordValues?: { [k: string]: string };
+  plugin?: string | ModifierSubset[];
+};

@@ -1,10 +1,7 @@
 import { UserPropConfig } from './prop-config';
-import { LookupPlugin, PatternPlugin } from './plugin-config';
+import { ValuePlugin } from './plugin-config';
 
 export interface BatteryConfig {
   props: UserPropConfig[];
-  plugins?: {
-    lookup: LookupPlugin[];
-    pattern: PatternPlugin[];
-  };
+  plugins?: ValuePlugin[];
 }

@@ -14,16 +14,11 @@ interface DefaultValueModifier extends ValueModifierBase {
   defaultModifier: boolean;
 }
 
-interface ValuePlugin {
+export interface ValuePlugin {
+  type: 'pattern' | 'lookup';
   name: string;
+  identifier?: RegExp | string;
   modifiers?: [DefaultValueModifier, ...ValueModifier[]] | ValueModifier[];
   sampleValues?: string[];
-}
-
-export interface PatternPlugin extends ValuePlugin {
-  identifier: RegExp | string;
-}
-
-export interface LookupPlugin extends ValuePlugin {
-  values: { [k: string]: string };
+  values?: { [k: string]: string };
 }

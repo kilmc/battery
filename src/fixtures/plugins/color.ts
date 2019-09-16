@@ -1,4 +1,4 @@
-import { LookupPlugin, ModifierFn } from 'types/plugin-config';
+import { ValuePlugin, ModifierFn } from 'types/plugin-config';
 
 const hexToRgba: ModifierFn = (hex, opacity) => {
   const hexValue = hex.replace('#', '');
@@ -9,8 +9,9 @@ const hexToRgba: ModifierFn = (hex, opacity) => {
   return `rgba(${r},${g},${b},${parseInt(opacity) / 100})`;
 };
 
-export const colorPlugin: LookupPlugin = {
-  name: 'colors',
+export const colorPlugin: ValuePlugin = {
+  type: 'lookup',
+  name: 'color',
   values: {
     black: '#000000',
     white: '#ffffff',

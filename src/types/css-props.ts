@@ -28,11 +28,14 @@ type TextProps = 'text-align' | 'text-decoration' | 'text-transform';
 
 type CSSProps =
   | BackgroundProps
+  | 'color'
   | 'display'
+  | 'fill'
   | HeightProps
   | MarginProps
   | PaddingProps
   | PositionProps
+  | 'stroke'
   | TextProps
   | WidthProps
   | 'z-index';
