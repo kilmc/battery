@@ -38,11 +38,11 @@ describe('generateMatchers', () => {
         };
 
         const config: BatteryConfig = {
-          props: [fillColor, backgroundColor],
+          props: [fillColor, backgroundColor, textColor],
           plugins: [colorPlugin],
         };
         expect(generateMatchers(config, {}).color).toEqual(
-          /.*?((bg-|fill-)?(black|white|pink)).*?/,
+          /.*?((fill-|bg-)?(black|white|pink)).*?/,
         );
       });
     });
