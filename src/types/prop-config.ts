@@ -13,7 +13,7 @@ type ModifierSubset = { name: string; modifiers: string[] };
 
 export type UserPropConfig = {
   prop: CSSProps;
-  propIdentifier?: RegExp | string;
+  propIdentifier?: string;
   pluginDefault?: boolean;
   subProps?: SubProp;
   subPropSeparator?: string;

@@ -1,18 +1,18 @@
-import { ClassNameMeta } from 'types/classname';
+import { ClassMetaData } from 'types/classname';
 
 export const sum = (x: number, y: number) => x + y;
 
 const input = ['bg-black_30', 'bg-contain', 'hover-bg-white', 'mb2', 'h100vh'];
 
-const processedClassNames: ClassNameMeta[] = [
+const processedClassNames: ClassMetaData[] = [
   {
     source: 'bg-black_30',
     explodedSource: {
-      propIndicator: 'bg',
+      propIdentifier: 'bg',
       valueSeparator: '-',
-      valueIndicator: 'black',
+      valueIdentifier: 'black',
       modifierSeparator: '_',
-      modifierIndicator: '30',
+      modifierIdentifier: '30',
     },
     property: 'background-color',
     valuePlugin: 'color:opacity',
@@ -24,9 +24,9 @@ const processedClassNames: ClassNameMeta[] = [
   {
     source: 'bg-contain',
     explodedSource: {
-      propIndicator: 'bg',
+      propIdentifier: 'bg',
       valueSeparator: '-',
-      valueIndicator: 'contain',
+      valueIdentifier: 'contain',
     },
     property: 'background-size',
     keyword: true,
@@ -39,9 +39,9 @@ const processedClassNames: ClassNameMeta[] = [
     explodedSource: {
       prefix: 'hover',
       prefixSeparator: '-',
-      propIndicator: 'bg',
+      propIdentifier: 'bg',
       valueSeparator: '-',
-      valueIndicator: 'white',
+      valueIdentifier: 'white',
     },
     property: 'background-color',
     selectorPlugin: 'psuedo:hover',
@@ -53,8 +53,8 @@ const processedClassNames: ClassNameMeta[] = [
   {
     source: 'mb2',
     explodedSource: {
-      propIndicator: 'mb',
-      valueIndicator: '2',
+      propIdentifier: 'mb',
+      valueIdentifier: '2',
     },
     property: 'margin-bottom',
     valuePlugin: 'lengthUnit:baseline',
@@ -66,9 +66,9 @@ const processedClassNames: ClassNameMeta[] = [
   {
     source: 'h100vh',
     explodedSource: {
-      propIndicator: 'h',
-      valueIndicator: '100',
-      modifierIndicator: 'vh',
+      propIdentifier: 'h',
+      valueIdentifier: '100',
+      modifierIdentifier: 'vh',
     },
     property: 'height',
     keyword: false,

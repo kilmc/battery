@@ -6,6 +6,7 @@ export const backgroundSize: UserPropConfig = {
   keywordSeparator: '-',
   keywordValues: {
     contain: 'contain',
+    cover: 'cover',
   },
   plugin: 'lengthUnits',
 };

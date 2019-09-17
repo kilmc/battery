@@ -17,10 +17,7 @@ const generatePropRegex = (pluginPropConfigs: UserPropConfig[]) => {
   return toCapture(propIdentifiers, hasDefaultProp);
 };
 
-const generateValueRegex = (
-  plugin: ValuePlugin,
-  pluginPropConfigs: UserPropConfig[],
-) => {
+const generateValueRegex = (plugin: ValuePlugin) => {
   switch (plugin.type) {
     case 'lookup':
       return toCapture(Object.keys(plugin.values));
@@ -29,7 +26,6 @@ const generateValueRegex = (
         typeof plugin.identifier === 'string'
           ? plugin.identifier
           : plugin.identifier.source;
-      console.log('AHOY-HOY', identifier);
       return toCapture([identifier]);
     default:
       console.log(`The plugin "${plugin.name}" must have a type.`);
@@ -51,7 +47,7 @@ export const generateValuePluginMatcher = (
     }
 
     const propRegex = generatePropRegex(pluginProps);
-    const valueIdentifiers = generateValueRegex(plugin, pluginProps);
+    const valueIdentifiers = generateValueRegex(plugin);
 
     const regex = new RegExp(`.*?(${propRegex}${valueIdentifiers}).*?`);
 

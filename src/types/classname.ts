@@ -6,17 +6,17 @@ export type ExplodedClassSource = {
   prefixSeparator?: string;
   suffix?: string;
   suffixSeparator?: string;
-  propIndicator?: string;
+  propIdentifier?: string;
   valueSeparator?: string;
-  valueIndicator: string;
+  valueIdentifier: string;
   modifierSeparator?: string;
-  modifierIndicator?: string;
+  modifierIdentifier?: string;
 };
 
-export type ClassNameMeta = {
-  property: CSSProps;
+export type ClassMetaData = {
+  property?: CSSProps;
   source: string;
-  explodedSource: ExplodedClassSource;
+  explodedSource?: ExplodedClassSource;
   keyword: boolean;
   valuePlugin?: string;
   selectorPlugin?: string;

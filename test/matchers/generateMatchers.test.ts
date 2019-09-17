@@ -2,8 +2,7 @@ import { generateMatchers } from 'matchers/generateMatchers';
 import { BatteryConfig } from 'types/battery-config';
 import { display } from 'fixtures/props/display';
 import { position } from 'fixtures/props/position';
-import { generateKeywordClassObjects } from 'generateKeywordClassObjects';
-import { colorPlugin } from 'fixtures/plugins/color';
+import { keywordToMetaData } from 'classMetaData/keywordToMetaData';
 import { textColor } from 'fixtures/props/color';
 import { backgroundColor } from 'fixtures/props/background-color';
 import { ValuePlugin } from 'types/plugin-config';
@@ -16,10 +15,10 @@ describe('generateMatchers', () => {
         props: [display, position],
       };
 
-      const classObjects = generateKeywordClassObjects(config);
+      const classMetaData = keywordToMetaData(config);
 
       it('generates a regex to match those keyword classes', () => {
-        expect(generateMatchers(config, classObjects).keyword).toEqual(
+        expect(generateMatchers(config, classMetaData).keyword).toEqual(
           /.*?(absolute|block).*?/,
         );
       });
@@ -41,7 +40,7 @@ describe('generateMatchers', () => {
           props: [fillColor, backgroundColor, textColor],
           plugins: [colorPlugin],
         };
-        expect(generateMatchers(config, {}).color).toEqual(
+        expect(generateMatchers(config, []).color).toEqual(
           /.*?((fill-|bg-)?(black|white|pink)).*?/,
         );
       });

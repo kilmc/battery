@@ -1,5 +1,5 @@
 import { BatteryConfig } from 'types/battery-config';
-import { ClassObjectGroup } from 'types/classname';
+import { ClassMetaData } from 'types/classname';
 import { generateKeywordMatcher } from 'matchers/generateKeywordMatcher';
 import { Matchers } from 'types/matchers';
 import { generateValuePluginMatcher } from './generateValuePluginMatcher';
@@ -7,7 +7,7 @@ import { ValuePlugin } from 'types/plugin-config';
 
 export const generateMatchers = (
   config: BatteryConfig,
-  keywordClassObjects: ClassObjectGroup,
+  keywordClassMetaData: ClassMetaData[],
 ): Matchers => {
   let valuePlugins: ValuePlugin[] = [];
 
@@ -18,7 +18,7 @@ export const generateMatchers = (
   }
 
   return {
-    keyword: generateKeywordMatcher(keywordClassObjects),
+    keyword: generateKeywordMatcher(keywordClassMetaData),
     ...generateValuePluginMatcher(valuePlugins, config.props),
   };
 };

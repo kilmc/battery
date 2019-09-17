@@ -13,7 +13,7 @@ describe('generateCSS', () => {
         props: [backgroundSize, textAlign],
       };
 
-      it('should render the correct CSS', () => {
+      test('Then it renders the correct CSS', () => {
         expect(generateCSS(input, config).trim()).toEqual(
           '.bg-contain { background-size: contain } .text-center { text-align: center }'.trim(),
         );
@@ -26,7 +26,7 @@ describe('generateCSS', () => {
         props: [display, position],
       };
 
-      it('should render the correct CSS', () => {
+      test('Then it renders the correct CSS', () => {
         expect(generateCSS(input, config).trim()).toEqual(
           '.block { display: block } .absolute { position: absolute }'.trim(),
         );
