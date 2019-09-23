@@ -24,7 +24,7 @@ describe('generateValuePluginMatcher', () => {
         const props: UserPropConfig[] = [backgroundColor, fillColor];
 
         expect(generateValuePluginMatcher(valuePlugins, props)).toEqual({
-          color: /.*?((fill-|bg-)(black|white|pink)).*?/,
+          color: /(^)(fill-|bg-)(black|white|pink)($)/,
         });
       });
     });
@@ -34,7 +34,7 @@ describe('generateValuePluginMatcher', () => {
       const props: UserPropConfig[] = [textColor];
       test('Then it generates a regex to match classes using the plugin', () => {
         expect(generateValuePluginMatcher(valuePlugins, props)).toEqual({
-          color: /.*?((black|white|pink)).*?/,
+          color: /(^)(black|white|pink)($)/,
         });
       });
     });
@@ -45,7 +45,7 @@ describe('generateValuePluginMatcher', () => {
 
       test('Then it generates a regex to match classes using the plugin', () => {
         expect(generateValuePluginMatcher(valuePlugins, props)).toEqual({
-          color: /.*?((bg-)?(black|white|pink)).*?/,
+          color: /(^)(bg-)?(black|white|pink)($)/,
         });
       });
     });
@@ -94,7 +94,7 @@ describe('generateValuePluginMatcher', () => {
           const props: UserPropConfig[] = [zIndex];
 
           expect(generateValuePluginMatcher(valuePlugins, props)).toEqual({
-            integer: /.*?((z)(-?\d{1,4})).*?/,
+            integer: /(^)(z)(-?\d{1,4})($)/,
           });
         });
       });

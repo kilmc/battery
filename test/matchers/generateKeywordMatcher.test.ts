@@ -17,8 +17,8 @@ describe('generateKeywordMatchers', () => {
             keyword: true,
           },
         ];
-        expect(generateKeywordMatcher(classMetaData)).toEqual(
-          /.*?(absolute|block).*?/,
+        expect(generateKeywordMatcher(classMetaData).keyword).toEqual(
+          /(^)(absolute|block)($)/,
         );
       });
 
@@ -40,8 +40,8 @@ describe('generateKeywordMatchers', () => {
             keyword: true,
           },
         ];
-        expect(generateKeywordMatcher(classMetaData)).toEqual(
-          /.*?(bg-contain|absolute|block).*?/,
+        expect(generateKeywordMatcher(classMetaData).keyword).toEqual(
+          /(^)(bg-contain|absolute|block)($)/,
         );
       });
     });

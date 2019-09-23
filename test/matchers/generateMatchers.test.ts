@@ -19,7 +19,7 @@ describe('generateMatchers', () => {
 
       it('generates a regex to match those keyword classes', () => {
         expect(generateMatchers(config, classMetaData).keyword).toEqual(
-          /.*?(absolute|block).*?/,
+          /(^)(absolute|block)($)/,
         );
       });
     });
@@ -41,7 +41,7 @@ describe('generateMatchers', () => {
           plugins: [colorPlugin],
         };
         expect(generateMatchers(config, []).color).toEqual(
-          /.*?((fill-|bg-)?(black|white|pink)).*?/,
+          /(^)(fill-|bg-)?(black|white|pink)($)/,
         );
       });
     });

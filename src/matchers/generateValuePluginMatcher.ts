@@ -1,9 +1,56 @@
 import { ValuePlugin } from 'types/plugin-config';
 import { UserPropConfig } from 'types/prop-config';
 import { Matcher, Matchers } from 'types/matchers';
-import { toCapture } from 'utils/array';
+import { toCapture, toGroup } from 'utils/array';
 
-const generatePropRegex = (pluginPropConfigs: UserPropConfig[]) => {
+const generateValueRegex = (
+  valueArr: string[],
+  plugin: ValuePlugin,
+  captureSubGroups = false,
+) => {
+  const captureOrGroup = captureSubGroups ? toCapture : toGroup;
+  let modifierArr: string[] = [];
+
+  if (plugin.modifiers) {
+    modifierArr = !plugin.modifiers
+      ? []
+      : plugin.modifiers.map(modifier => {
+          const { identifier, separator = '' } = modifier;
+          const processedIdentifier =
+            typeof identifier === 'string' ? identifier : identifier.source;
+          return `${separator}${processedIdentifier}`;
+        });
+  }
+
+  return modifierArr.length > 0
+    ? `(${captureOrGroup(valueArr)}${captureOrGroup(modifierArr, true)})`
+    : toCapture(valueArr);
+};
+
+export const generateValueMatcher = (
+  plugin: ValuePlugin,
+  captureSubGroups = false,
+) => {
+  switch (plugin.type) {
+    case 'lookup':
+      return generateValueRegex(
+        Object.keys(plugin.values),
+        plugin,
+        captureSubGroups,
+      );
+    case 'pattern':
+      const identifier =
+        typeof plugin.identifier === 'string'
+          ? plugin.identifier
+          : plugin.identifier.source;
+
+      return generateValueRegex([identifier], plugin, captureSubGroups);
+    default:
+      console.log(`The plugin "${plugin.name}" must have a type.`);
+  }
+};
+
+const generatePropMatcher = (pluginPropConfigs: UserPropConfig[]) => {
   const defaultProp = pluginPropConfigs.filter(c => c.pluginDefault);
   const hasDefaultProp = defaultProp.length > 0;
 
@@ -15,21 +62,6 @@ const generatePropRegex = (pluginPropConfigs: UserPropConfig[]) => {
     });
 
   return toCapture(propIdentifiers, hasDefaultProp);
-};
-
-const generateValueRegex = (plugin: ValuePlugin) => {
-  switch (plugin.type) {
-    case 'lookup':
-      return toCapture(Object.keys(plugin.values));
-    case 'pattern':
-      const identifier =
-        typeof plugin.identifier === 'string'
-          ? plugin.identifier
-          : plugin.identifier.source;
-      return toCapture([identifier]);
-    default:
-      console.log(`The plugin "${plugin.name}" must have a type.`);
-  }
 };
 
 export const generateValuePluginMatcher = (
@@ -46,10 +78,10 @@ export const generateValuePluginMatcher = (
       return accum;
     }
 
-    const propRegex = generatePropRegex(pluginProps);
-    const valueIdentifiers = generateValueRegex(plugin);
+    const propMatcher = generatePropMatcher(pluginProps);
+    const valueMatcher = generateValueMatcher(plugin);
 
-    const regex = new RegExp(`.*?(${propRegex}${valueIdentifiers}).*?`);
+    const regex = new RegExp(`(^)${propMatcher}${valueMatcher}($)`);
 
     accum[pluginName] = regex;
     return accum;

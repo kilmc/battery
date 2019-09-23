@@ -5,5 +5,5 @@ export const generateKeywordMatcher = (metaDataArr: ClassMetaData[]) => {
   const sortedClassNames = toCapture(
     metaDataArr.map(metaData => `${metaData.source}`),
   );
-  return new RegExp(`.*?${sortedClassNames}.*?`);
+  return { keyword: new RegExp(`(^)${sortedClassNames}($)`) };
 };

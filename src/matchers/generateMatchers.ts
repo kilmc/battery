@@ -7,9 +7,14 @@ import { ValuePlugin } from 'types/plugin-config';
 
 export const generateMatchers = (
   config: BatteryConfig,
-  keywordClassMetaData: ClassMetaData[],
+  keywordClassMetaData?: ClassMetaData[],
 ): Matchers => {
   let valuePlugins: ValuePlugin[] = [];
+  let keywordMatcher = {};
+
+  if (keywordClassMetaData && keywordClassMetaData.length > 0) {
+    keywordMatcher = generateKeywordMatcher(keywordClassMetaData);
+  }
 
   if (config.plugins) {
     valuePlugins = config.plugins.filter(
@@ -18,7 +23,7 @@ export const generateMatchers = (
   }
 
   return {
-    keyword: generateKeywordMatcher(keywordClassMetaData),
+    ...keywordMatcher,
     ...generateValuePluginMatcher(valuePlugins, config.props),
   };
 };

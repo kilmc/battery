@@ -14,14 +14,14 @@ export const colorPlugin: ValuePlugin = {
   name: 'color',
   values: {
     black: '#000000',
-    white: '#ffffff',
-    pink: '#ff9dd8',
+    white: '#FFFFFF',
+    pink: '#FF9DD8',
   },
   modifiers: [
     {
       name: 'opacity',
       separator: '_',
-      indentifier: /\d+/,
+      identifier: /\d+/,
       modifierFn: hexToRgba,
     },
   ],

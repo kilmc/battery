@@ -1,24 +1,13 @@
 import { BatteryConfig } from 'types/battery-config';
-import { keywordToMetaData } from 'classMetaData/keywordToMetaData';
-import { generateMatchers } from 'matchers/generateMatchers';
 import { classMetaToCSS } from 'css/classMetaToCSS';
+import { addMetaData } from 'classMetaData/addMetaData';
 
 export const generateCSS = (
   classNames: string[],
   config: BatteryConfig,
 ): string => {
-  const keywords = keywordToMetaData(config);
-  const matchers = generateMatchers(config, keywords);
+  const classMeta = addMetaData(classNames, config);
+  const processedClasses = classMeta.map(classMetaToCSS);
 
-  const inputKeywordClasses = classNames.filter(className =>
-    className.match(matchers.keyword),
-  );
-
-  const toProcessKeywords = inputKeywordClasses.reduce((accum, className) => {
-    const classNameMeta = keywords.find(obj => obj.source === className);
-
-    return accum.concat(classMetaToCSS(classNameMeta));
-  }, []);
-
-  return toProcessKeywords.join(' ');
+  return processedClasses.join(' ');
 };

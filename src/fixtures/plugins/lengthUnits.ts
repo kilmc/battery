@@ -19,22 +19,22 @@ export const lengthUnitsPlugin: PatternPlugin = {
     },
     {
       name: 'pixels',
-      indentifier: 'px',
+      identifier: 'px',
       modifierFn: pxToRem,
     },
     {
       name: 'percent',
-      indentifier: 'p',
+      identifier: 'p',
       modifierFn: value => `${value}%`,
     },
     {
       name: 'viewportHeight',
-      indentifier: 'vh',
+      identifier: 'vh',
       modifierFn: value => `${value}vh`,
     },
     {
       name: 'viewportWidth',
-      indentifier: 'vw',
+      identifier: 'vw',
       modifierFn: value => `${value}vw`,
     },
   ],

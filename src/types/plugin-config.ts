@@ -1,24 +1,18 @@
 export type ModifierFn = (value: string, modifierValue?: string) => string;
 
-interface ValueModifierBase {
+interface ValueModifier {
   modifierFn: ModifierFn;
   name: string;
   separator?: string;
-}
-
-interface ValueModifier extends ValueModifierBase {
-  indentifier: RegExp | string;
-}
-
-interface DefaultValueModifier extends ValueModifierBase {
-  defaultModifier: boolean;
+  identifier?: RegExp | string;
+  defaultModifier?: boolean;
 }
 
 export interface ValuePlugin {
   type: 'pattern' | 'lookup';
   name: string;
   identifier?: RegExp | string;
-  modifiers?: [DefaultValueModifier, ...ValueModifier[]] | ValueModifier[];
+  modifiers?: ValueModifier[];
   sampleValues?: string[];
   values?: { [k: string]: string };
 }
