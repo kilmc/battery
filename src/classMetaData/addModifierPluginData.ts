@@ -11,18 +11,26 @@ export const addModifierPluginData = (
     if (!plugins || plugins.length < 1) return classMeta;
 
     const { modifierIdentifier } = classMeta.explodedSource;
-    const hasModifier = modifierIdentifier.length > 0;
+    const hasNonDefaultModifier = modifierIdentifier.length > 0;
     const plugin = plugins.find(plugin => {
       return plugin.name === classMeta.valuePlugin;
     });
 
-    if (hasModifier) {
+    if (!plugin || !plugin.modifiers) return classMeta;
+
+    const defaultModifier = plugin.modifiers.find(
+      modifier => modifier.defaultModifier,
+    );
+
+    if (hasNonDefaultModifier) {
       const modifierName = getMatcherName(
         generateModifierMatchers(plugin),
         classMeta.source,
       )[0];
 
       classMeta.modifierPlugin = modifierName;
+    } else if (defaultModifier) {
+      classMeta.modifierPlugin = defaultModifier.name;
     }
 
     return classMeta;

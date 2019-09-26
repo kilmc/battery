@@ -8,5 +8,5 @@ export const backgroundSize: UserPropConfig = {
     contain: 'contain',
     cover: 'cover',
   },
-  plugin: 'lengthUnits',
+  plugin: 'lengthUnit',
 };

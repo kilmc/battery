@@ -2,42 +2,46 @@ import { ClassMetaData } from 'types/classname';
 import { BatteryConfig } from 'types/battery-config';
 
 export const addClassObjectData = (
-  classNameMeta: ClassMetaData[],
+  classMetaArr: ClassMetaData[],
   config: BatteryConfig,
 ) => {
-  return classNameMeta.map(obj => {
+  return classMetaArr.map(classMeta => {
     const propConfig = config.props.find(
-      propConfig => propConfig.prop === obj.property,
+      propConfig => propConfig.prop === classMeta.property,
     );
     let value = '';
 
-    if (obj.keyword) {
-      value = propConfig.keywordValues[obj.explodedSource.valueIdentifier];
-      obj.classObject = { [obj.property]: value };
-      return obj;
+    if (classMeta.keyword) {
+      value =
+        propConfig.keywordValues[classMeta.explodedSource.valueIdentifier];
+      classMeta.classObject = { [classMeta.property]: value };
+      return classMeta;
     }
 
     const plugin = config.plugins.find(
-      pluginConfig => pluginConfig.name === obj.valuePlugin,
+      pluginConfig => pluginConfig.name === classMeta.valuePlugin,
     );
 
-    if (obj.valuePluginType === 'lookup') {
-      value = plugin.values[obj.explodedSource.valueIdentifier];
+    if (classMeta.valuePluginType === 'lookup') {
+      value = plugin.values[classMeta.explodedSource.valueIdentifier];
     }
 
-    if (obj.valuePluginType === 'pattern') {
-      value = obj.explodedSource.valueIdentifier;
+    if (classMeta.valuePluginType === 'pattern') {
+      value = classMeta.explodedSource.valueIdentifier;
     }
 
-    if (obj.modifierPlugin) {
-      const modifierFn = plugin.modifiers.find(
-        modifier => modifier.name === obj.modifierPlugin,
+    let modifierFn = (x: string, y: string) => `${x}${y}`;
+
+    if (classMeta.modifierPlugin) {
+      modifierFn = plugin.modifiers.find(
+        modifier => modifier.name === classMeta.modifierPlugin,
       ).modifierFn;
-      value = modifierFn(value, obj.explodedSource.modifierIdentifier);
+      value = modifierFn(value, classMeta.explodedSource.modifierIdentifier);
+    } else {
     }
 
-    obj.classObject = { [obj.property]: value };
+    classMeta.classObject = { [classMeta.property]: value };
 
-    return obj;
+    return classMeta;
   });
 };

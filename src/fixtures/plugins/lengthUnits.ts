@@ -1,15 +1,15 @@
-import { PatternPlugin, ModifierFn } from 'types/plugin-config';
+import { ModifierFn, ValuePlugin } from 'types/plugin-config';
 
 const pxToRem: ModifierFn = value => `${parseInt(value) / 16}rem`;
 const ratio: ModifierFn = value => {
-  const baseRatio = 1.61803398875;
-  const convertedValue = `${parseInt(value) * baseRatio}`;
+  const convertedValue = `${parseInt(value) * 6}`;
 
   return pxToRem(convertedValue);
 };
 
-export const lengthUnitsPlugin: PatternPlugin = {
-  name: 'lengthUnits',
+export const lengthUnitsPlugin: ValuePlugin = {
+  type: 'pattern',
+  name: 'lengthUnit',
   identifier: /-?\d+/,
   modifiers: [
     {

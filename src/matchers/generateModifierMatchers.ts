@@ -5,10 +5,16 @@ export const generateModifierMatchers = (plugin: ValuePlugin) => {
   return plugin.modifiers.reduce(
     (accum, modifier) => {
       const { name, separator = '', identifier } = modifier;
-      const processedIdentifier =
-        typeof identifier === 'string' ? identifier : identifier.source;
-      accum[name] = new RegExp(`${separator}${processedIdentifier}`);
-      return accum;
+      if (modifier.defaultModifier) {
+        accum[name] = new RegExp('__DEFAULT__');
+        return accum;
+      } else {
+        const processedIdentifier =
+          typeof identifier === 'string' ? identifier : identifier.source;
+
+        accum[name] = new RegExp(`${separator}${processedIdentifier}`);
+        return accum;
+      }
     },
     {} as Matchers,
   );

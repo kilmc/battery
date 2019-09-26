@@ -7,6 +7,8 @@ import { zIndex } from 'fixtures/props/z-index';
 import { colorPlugin } from 'fixtures/plugins/color';
 import { backgroundColor } from 'fixtures/props/background-color';
 import { integerPlugin } from 'fixtures/plugins/integer';
+import { lengthUnitsPlugin } from 'fixtures/plugins/lengthUnits';
+import { width } from 'fixtures/props/width';
 
 describe('addMetaData', () => {
   describe('Handles keyword classNames', () => {
@@ -80,10 +82,10 @@ describe('addMetaData', () => {
 
   describe('Handles value plugin classNames', () => {
     const config: BatteryConfig = {
-      props: [zIndex, backgroundColor],
-      plugins: [integerPlugin, colorPlugin],
+      props: [zIndex, backgroundColor, backgroundSize, width],
+      plugins: [integerPlugin, colorPlugin, lengthUnitsPlugin],
     };
-    const inputClassNames = ['bg-white', 'bg-white_10', 'z100'];
+    const inputClassNames = ['bg-white', 'bg-white_10', 'z100', 'w3'];
 
     test('All meta data is added to the classMetaData object', () => {
       expect(addMetaData(inputClassNames, config)).toEqual([
@@ -149,6 +151,28 @@ describe('addMetaData', () => {
           },
           classObject: {
             'z-index': '100',
+          },
+        },
+        {
+          source: 'w3',
+          keyword: false,
+          property: 'width',
+          valuePlugin: 'lengthUnit',
+          valuePluginType: 'pattern',
+          explodedSource: {
+            prefix: '',
+            prefixSeparator: '',
+            propIdentifier: 'w',
+            valueSeparator: '',
+            valueIdentifier: '3',
+            modifierSeparator: '',
+            modifierIdentifier: '',
+            suffix: '',
+            suffixSeparator: '',
+          },
+          modifierPlugin: 'ratio',
+          classObject: {
+            width: '1.125rem',
           },
         },
       ]);

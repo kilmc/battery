@@ -15,6 +15,8 @@ const generateValueRegex = (
     modifierArr = !plugin.modifiers
       ? []
       : plugin.modifiers.map(modifier => {
+          if (modifier.defaultModifier) return '';
+
           const { identifier, separator = '' } = modifier;
           const processedIdentifier =
             typeof identifier === 'string' ? identifier : identifier.source;

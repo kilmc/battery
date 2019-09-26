@@ -7,6 +7,11 @@ import { position } from 'fixtures/props/position';
 import { zIndex } from 'fixtures/props/z-index';
 import { flex } from 'fixtures/props/flex';
 import { integerPlugin } from 'fixtures/plugins/integer';
+import { colorPlugin } from 'fixtures/plugins/color';
+import { backgroundColor } from 'fixtures/props/background-color';
+import { textColor } from 'fixtures/props/color';
+import { lengthUnitsPlugin } from 'fixtures/plugins/lengthUnits';
+import { width } from 'fixtures/props/width';
 
 describe('generateCSS', () => {
   describe('Given a keyword class', () => {
@@ -41,8 +46,15 @@ describe('generateCSS', () => {
     describe('When the className has no modifier', () => {
       const input = ['z100', 'flex1'];
       const config: BatteryConfig = {
-        props: [zIndex, flex],
-        plugins: [integerPlugin],
+        props: [
+          zIndex,
+          flex,
+          backgroundColor,
+          textColor,
+          backgroundSize,
+          width,
+        ],
+        plugins: [integerPlugin, colorPlugin, lengthUnitsPlugin],
       };
 
       test('Then it renders the correct CSS', () => {
