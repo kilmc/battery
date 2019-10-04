@@ -95,7 +95,6 @@ export const addMetaData = (
   const withModifierPlugin = addModifierPluginData(
     withExplodedSourceData,
     config.plugins,
-    config.props,
   );
 
   const withClassObject = addClassObjectData(withModifierPlugin, config);

@@ -1,4 +1,4 @@
-import { classMetaToCSS } from 'css/classMetaToCSS';
+import { classMetaToCSS } from './classMetaToCSS';
 import { ClassMetaData } from 'types/classname';
 
 describe('classMetaToCSS', () => {

@@ -1,4 +1,4 @@
-import { keywordToMetaData } from 'classMetaData/keywordToMetaData';
+import { keywordToMetaData } from './keywordToMetaData';
 import { BatteryConfig } from 'types/battery-config';
 import { ClassMetaData } from 'types/classname';
 

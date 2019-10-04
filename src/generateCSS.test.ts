@@ -1,4 +1,4 @@
-import { generateCSS } from '../src/generateCSS';
+import { generateCSS } from './generateCSS';
 import { BatteryConfig } from 'types/battery-config';
 import { backgroundSize } from 'fixtures/props/background-size';
 import { textAlign } from 'fixtures/props/text-align';

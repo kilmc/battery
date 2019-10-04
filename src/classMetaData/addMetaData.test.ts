@@ -1,7 +1,7 @@
 import { BatteryConfig } from 'types/battery-config';
 import { position } from 'fixtures/props/position';
 import { display } from 'fixtures/props/display';
-import { addMetaData } from 'classMetaData/addMetaData';
+import { addMetaData } from './addMetaData';
 import { backgroundSize } from 'fixtures/props/background-size';
 import { zIndex } from 'fixtures/props/z-index';
 import { colorPlugin } from 'fixtures/plugins/color';
