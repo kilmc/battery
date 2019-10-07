@@ -1,11 +1,11 @@
-import { ValuePlugin } from 'types/plugin-config';
+import { Plugin } from 'types/plugin-config';
 import { UserPropConfig } from 'types/prop-config';
 import { Matcher, Matchers } from 'types/matchers';
 import { toCapture, toGroup } from 'utils/array';
 
 const generateValueRegex = (
   valueArr: string[],
-  plugin: ValuePlugin,
+  plugin: Plugin,
   captureSubGroups = false,
 ) => {
   const captureOrGroup = captureSubGroups ? toCapture : toGroup;
@@ -30,7 +30,7 @@ const generateValueRegex = (
 };
 
 export const generateValueMatcher = (
-  plugin: ValuePlugin,
+  plugin: Plugin,
   captureSubGroups = false,
 ) => {
   switch (plugin.type) {
@@ -67,7 +67,7 @@ const generatePropMatcher = (pluginPropConfigs: UserPropConfig[]) => {
 };
 
 export const generateValuePluginMatcher = (
-  valuePlugins: ValuePlugin[],
+  valuePlugins: Plugin[],
   propConfigs: UserPropConfig[],
 ): { [k: string]: Matcher } => {
   const matchers: Matchers = valuePlugins.reduce((accum: Matchers, plugin) => {

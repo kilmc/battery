@@ -1,11 +1,11 @@
 import { ClassMetaData } from 'types/classname';
-import { ValuePlugin } from 'types/plugin-config';
+import { Plugin } from 'types/plugin-config';
 import { getMatcherName } from 'matchers/utils';
 import { generateModifierMatchers } from 'matchers/generateModifierMatchers';
 
 export const addModifierPluginData = (
   classMetaArr: ClassMetaData[],
-  plugins: ValuePlugin[],
+  plugins: Plugin[],
 ) => {
   return classMetaArr.map(classMeta => {
     if (!plugins || plugins.length < 1) return classMeta;

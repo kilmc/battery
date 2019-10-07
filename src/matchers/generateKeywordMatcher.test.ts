@@ -1,5 +1,5 @@
 import { generateKeywordMatcher } from 'matchers/generateKeywordMatcher';
-import { ClassObject, ClassMetaData } from 'types/classname';
+import { ClassMetaData } from 'types/classname';
 
 describe('generateKeywordMatchers', () => {
   describe('Given a valid batteryConfig', () => {

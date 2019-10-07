@@ -1,7 +1,7 @@
 import { ClassMetaData, ExplodedClassSource } from 'types/classname';
 import { BatteryConfig } from 'types/battery-config';
 import { Matchers, Matcher } from 'types/matchers';
-import { ValuePlugin } from 'types/plugin-config';
+import { Plugin } from 'types/plugin-config';
 import { generateValueMatcher } from 'matchers/generateValuePluginMatcher';
 import { UserPropConfig } from 'types/prop-config';
 import { generateModifierMatchers } from 'matchers/generateModifierMatchers';
@@ -33,7 +33,7 @@ const setModifierData = (
   explodedSource: ExplodedClassSource,
   classMeta: ClassMetaData,
   matchers: Matchers,
-  plugins: ValuePlugin[],
+  plugins: Plugin[],
 ): ExplodedClassSource => {
   const value = classMeta.source.match(matchers[classMeta.valuePlugin])[3];
   const plugin = plugins.find(
@@ -112,7 +112,7 @@ export const addExplodedSourceData = (
   classMetaArr: ClassMetaData[],
   config: BatteryConfig,
   matchers: Matchers,
-  plugins: ValuePlugin[],
+  plugins: Plugin[],
 ) => {
   const { props } = config;
 

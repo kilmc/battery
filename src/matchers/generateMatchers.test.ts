@@ -5,7 +5,7 @@ import { position } from 'fixtures/props/position';
 import { keywordToMetaData } from 'classMetaData/keywordToMetaData';
 import { textColor } from 'fixtures/props/color';
 import { backgroundColor } from 'fixtures/props/background-color';
-import { ValuePlugin } from 'types/plugin-config';
+import { Plugin } from 'types/plugin-config';
 import { fillColor } from 'fixtures/props/fill';
 
 describe('generateMatchers', () => {
@@ -26,7 +26,7 @@ describe('generateMatchers', () => {
 
     describe('when the config contains a lookup plugin', () => {
       it('generates a regex to match classes associated with a specific plugin', () => {
-        const colorPlugin: ValuePlugin = {
+        const colorPlugin: Plugin = {
           type: 'lookup',
           name: 'color',
           values: {
@@ -41,7 +41,7 @@ describe('generateMatchers', () => {
           plugins: [colorPlugin],
         };
         expect(generateMatchers(config, []).color).toEqual(
-          /(^)(fill-|bg-)?(black|white|pink)($)/,
+          /(^)(fill-|bg-|)(black|white|pink)($)/,
         );
       });
     });

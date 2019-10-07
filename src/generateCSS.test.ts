@@ -1,40 +1,60 @@
 import { generateCSS } from './generateCSS';
 import { BatteryConfig } from 'types/battery-config';
-import { backgroundSize } from 'fixtures/props/background-size';
-import { textAlign } from 'fixtures/props/text-align';
-import { display } from 'fixtures/props/display';
-import { position } from 'fixtures/props/position';
-import { zIndex } from 'fixtures/props/z-index';
-import { flex } from 'fixtures/props/flex';
-import { integerPlugin } from 'fixtures/plugins/integer';
-import { colorPlugin } from 'fixtures/plugins/color';
-import { backgroundColor } from 'fixtures/props/background-color';
-import { textColor } from 'fixtures/props/color';
-import { lengthUnitsPlugin } from 'fixtures/plugins/lengthUnits';
-import { width } from 'fixtures/props/width';
+import { ModifierFn } from 'types/plugin-config';
 
 describe('generateCSS', () => {
-  describe('Given a keyword class', () => {
-    describe('When the class has a propIndicator', () => {
+  describe('Handles keywords', () => {
+    describe('with propIndicator', () => {
       const input = ['bg-contain', 'text-center'];
       const config: BatteryConfig = {
-        props: [backgroundSize, textAlign],
+        props: [
+          {
+            prop: 'background-size',
+            propIdentifier: 'bg',
+            keywordSeparator: '-',
+            keywordValues: {
+              contain: 'contain',
+              cover: 'cover',
+            },
+          },
+          {
+            prop: 'text-align',
+            propIdentifier: 'text',
+            keywordSeparator: '-',
+            keywordValues: {
+              center: 'center',
+            },
+          },
+        ],
       };
 
-      test('Then it renders the correct CSS', () => {
+      it('renders valid CSS', () => {
         expect(generateCSS(input, config).trim()).toEqual(
           '.bg-contain { background-size: contain } .text-center { text-align: center }'.trim(),
         );
       });
     });
 
-    describe('When the class DOES NOT have a propIndicator', () => {
+    describe('with NO propIndicator', () => {
       const input = ['block', 'absolute'];
       const config: BatteryConfig = {
-        props: [display, position],
+        props: [
+          {
+            prop: 'display',
+            keywordValues: {
+              block: 'block',
+            },
+          },
+          {
+            prop: 'position',
+            keywordValues: {
+              absolute: 'absolute',
+            },
+          },
+        ],
       };
 
-      test('Then it renders the correct CSS', () => {
+      test('renders valid CSS', () => {
         expect(generateCSS(input, config).trim()).toEqual(
           '.block { display: block } .absolute { position: absolute }'.trim(),
         );
@@ -42,40 +62,220 @@ describe('generateCSS', () => {
     });
   });
 
-  describe('Given a pattern plugin className', () => {
-    describe('When the className has no modifier', () => {
+  describe('Handles pattern plugins', () => {
+    describe('with NO modifiers', () => {
       const input = ['z100', 'flex1'];
       const config: BatteryConfig = {
         props: [
-          zIndex,
-          flex,
-          backgroundColor,
-          textColor,
-          backgroundSize,
-          width,
+          {
+            prop: 'z-index',
+            propIdentifier: 'z',
+            plugin: 'integer',
+          },
+          {
+            prop: 'flex',
+            propIdentifier: 'flex',
+            plugin: 'integer',
+          },
         ],
-        plugins: [integerPlugin, colorPlugin, lengthUnitsPlugin],
+        plugins: [
+          { type: 'pattern', name: 'integer', identifier: /-?\d{1,4}/ },
+        ],
       };
 
-      test('Then it renders the correct CSS', () => {
+      it('renders valid CSS', () => {
         expect(generateCSS(input, config).trim()).toEqual(
           '.z100 { z-index: 100 } .flex1 { flex: 1 }'.trim(),
         );
       });
     });
+
+    describe('with modifiers', () => {
+      const input = ['w100p', 'h50p'];
+      const config: BatteryConfig = {
+        props: [
+          {
+            prop: 'width',
+            propIdentifier: 'w',
+            plugin: 'lengthUnit',
+          },
+          {
+            prop: 'height',
+            propIdentifier: 'h',
+            plugin: 'lengthUnit',
+          },
+        ],
+        plugins: [
+          {
+            type: 'pattern',
+            name: 'lengthUnit',
+            identifier: /-?\d{1,4}/,
+            modifiers: [
+              {
+                name: 'percent',
+                identifier: 'p',
+                modifierFn: value => `${value}%`,
+              },
+            ],
+          },
+        ],
+      };
+
+      it('renders valid CSS', () => {
+        expect(generateCSS(input, config).trim()).toEqual(
+          '.w100p { width: 100% } .h50p { height: 50% }'.trim(),
+        );
+      });
+    });
+
+    describe('with default modifier', () => {
+      const input = ['m3'];
+      const config: BatteryConfig = {
+        props: [
+          {
+            prop: 'margin',
+            propIdentifier: 'm',
+            plugin: 'lengthUnit',
+          },
+        ],
+        plugins: [
+          {
+            type: 'pattern',
+            name: 'lengthUnit',
+            identifier: /-?\d{1,4}/,
+            modifiers: [
+              {
+                name: 'baseline',
+                defaultModifier: true,
+                modifierFn: value => {
+                  const number = (parseInt(value) * 6) / 10;
+                  return `${number}rem`;
+                },
+              },
+            ],
+          },
+        ],
+      };
+
+      it('renders valid CSS', () => {
+        expect(generateCSS(input, config).trim()).toEqual(
+          '.m3 { margin: 1.8rem }'.trim(),
+        );
+      });
+    });
   });
 
-  describe('Given a config with no keyword classNames', () => {
-    const input = ['z100', 'flex1'];
+  describe('Handles lookup plugins', () => {
+    describe('with NO modifiers', () => {
+      const input = ['bg-black', 'white'];
+      const config: BatteryConfig = {
+        props: [
+          {
+            prop: 'color',
+            pluginDefault: true,
+            plugin: 'color',
+          },
+          {
+            prop: 'background-color',
+            propIdentifier: 'bg',
+            pluginSeparator: '-',
+            plugin: 'color',
+          },
+        ],
+        plugins: [
+          {
+            type: 'lookup',
+            name: 'color',
+            values: { black: '#000000', white: '#FFFFFF' },
+          },
+        ],
+      };
+
+      it('renders valid CSS', () => {
+        expect(generateCSS(input, config).trim()).toEqual(
+          '.bg-black { background-color: #000000 } .white { color: #FFFFFF }'.trim(),
+        );
+      });
+    });
+
+    describe('with modifiers', () => {
+      const hexToRgba: ModifierFn = (hex, opacity) => {
+        const hexValue = hex.replace('#', '');
+        const r = parseInt(hexValue.substring(0, 2), 16);
+        const g = parseInt(hexValue.substring(2, 4), 16);
+        const b = parseInt(hexValue.substring(4, 6), 16);
+
+        return `rgba(${r},${g},${b},${parseInt(opacity) / 100})`;
+      };
+
+      const input = ['bg-black_50', 'white_01'];
+      const config: BatteryConfig = {
+        props: [
+          {
+            prop: 'color',
+            pluginDefault: true,
+            plugin: 'color',
+          },
+          {
+            prop: 'background-color',
+            propIdentifier: 'bg',
+            pluginSeparator: '-',
+            plugin: 'color',
+          },
+        ],
+        plugins: [
+          {
+            type: 'lookup',
+            name: 'color',
+            values: { black: '#000000', white: '#FFFFFF' },
+            modifiers: [
+              {
+                name: 'opacity',
+                modifierFn: hexToRgba,
+                separator: '_',
+                identifier: /\d+/,
+              },
+            ],
+          },
+        ],
+      };
+
+      it('renders valid CSS', () => {
+        expect(generateCSS(input, config).trim()).toEqual(
+          '.bg-black_50 { background-color: rgba(0,0,0,0.5) } .white_01 { color: rgba(255,255,255,0.01) }'.trim(),
+        );
+      });
+    });
+  });
+
+  describe('Handles selector plugins', () => {
+    const input = ['hover-bg-contain', 'hover-item-text-center'];
     const config: BatteryConfig = {
-      props: [zIndex, flex],
-      plugins: [integerPlugin],
+      props: [
+        {
+          prop: 'background-size',
+          propIdentifier: 'bg',
+          keywordSeparator: '-',
+          keywordValues: {
+            contain: 'contain',
+            cover: 'cover',
+          },
+        },
+        {
+          prop: 'text-align',
+          propIdentifier: 'text',
+          keywordSeparator: '-',
+          keywordValues: {
+            center: 'center',
+          },
+        },
+      ],
     };
 
-    describe('When the function is called', () => {
-      test('it should not error', () => {
-        expect(generateCSS(input, config)).toEqual(
-          '.z100 { z-index: 100 } .flex1 { flex: 1 }',
+    describe('', () => {
+      it('renders valid CSS', () => {
+        expect(generateCSS(input, config).trim()).toEqual(
+          '.hover-bg-contain:hover { background-size: contain } .hover-text-center:hover { text-center: center }'.trim(),
         );
       });
     });

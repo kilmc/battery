@@ -1,5 +1,5 @@
 import { generateValuePluginMatcher } from 'matchers/generateValuePluginMatcher';
-import { ValuePlugin } from 'types/plugin-config';
+import { Plugin } from 'types/plugin-config';
 import { UserPropConfig } from 'types/prop-config';
 import { backgroundColor } from 'fixtures/props/background-color';
 import { fillColor } from 'fixtures/props/fill';
@@ -8,7 +8,7 @@ import { zIndex } from 'fixtures/props/z-index';
 
 describe('generateValuePluginMatcher', () => {
   describe('Given a config that contains a value plugin', () => {
-    const colorPlugin: ValuePlugin = {
+    const colorPlugin: Plugin = {
       type: 'lookup',
       name: 'color',
       values: {
@@ -20,7 +20,7 @@ describe('generateValuePluginMatcher', () => {
 
     describe('When none of the props using the plugin are set as the default', () => {
       test('Then it generates a regex to match classes using the plugin', () => {
-        const valuePlugins: ValuePlugin[] = [colorPlugin];
+        const valuePlugins: Plugin[] = [colorPlugin];
         const props: UserPropConfig[] = [backgroundColor, fillColor];
 
         expect(generateValuePluginMatcher(valuePlugins, props)).toEqual({
@@ -30,7 +30,7 @@ describe('generateValuePluginMatcher', () => {
     });
 
     describe('When the only prop using the plugin is set as the default', () => {
-      const valuePlugins: ValuePlugin[] = [colorPlugin];
+      const valuePlugins: Plugin[] = [colorPlugin];
       const props: UserPropConfig[] = [textColor];
       test('Then it generates a regex to match classes using the plugin', () => {
         expect(generateValuePluginMatcher(valuePlugins, props)).toEqual({
@@ -40,18 +40,18 @@ describe('generateValuePluginMatcher', () => {
     });
 
     describe('When one of the props using the plugin is set as the default', () => {
-      const valuePlugins: ValuePlugin[] = [colorPlugin];
+      const valuePlugins: Plugin[] = [colorPlugin];
       const props: UserPropConfig[] = [textColor, backgroundColor];
 
       test('Then it generates a regex to match classes using the plugin', () => {
         expect(generateValuePluginMatcher(valuePlugins, props)).toEqual({
-          color: /(^)(bg-)?(black|white|pink)($)/,
+          color: /(^)(bg-|)(black|white|pink)($)/,
         });
       });
     });
 
     describe('When no props use the plugin', () => {
-      const valuePlugins: ValuePlugin[] = [colorPlugin];
+      const valuePlugins: Plugin[] = [colorPlugin];
       const props: UserPropConfig[] = [];
 
       test('Then it does NOT generate a matcher', () => {
@@ -60,7 +60,7 @@ describe('generateValuePluginMatcher', () => {
     });
 
     describe('When the plugin is of type "lookup"', () => {
-      const lookupPlugin: ValuePlugin = {
+      const lookupPlugin: Plugin = {
         type: 'lookup',
         name: 'color',
         values: {
@@ -70,7 +70,7 @@ describe('generateValuePluginMatcher', () => {
         },
       };
 
-      const valuePlugins: ValuePlugin[] = [lookupPlugin];
+      const valuePlugins: Plugin[] = [lookupPlugin];
       const props: UserPropConfig[] = [backgroundColor];
 
       test('Then it generates a regex that contains each value from the pluginConfig', () => {
@@ -82,7 +82,7 @@ describe('generateValuePluginMatcher', () => {
     });
 
     describe('When the plugin is of type "pattern"', () => {
-      const integerPlugin: ValuePlugin = {
+      const integerPlugin: Plugin = {
         type: 'pattern',
         name: 'integer',
         identifier: /-?\d{1,4}/,
@@ -90,7 +90,7 @@ describe('generateValuePluginMatcher', () => {
 
       describe('And none of the props using the plugin are set as the default', () => {
         test('Then it generates a regex to match classes using the plugin', () => {
-          const valuePlugins: ValuePlugin[] = [integerPlugin];
+          const valuePlugins: Plugin[] = [integerPlugin];
           const props: UserPropConfig[] = [zIndex];
 
           expect(generateValuePluginMatcher(valuePlugins, props)).toEqual({

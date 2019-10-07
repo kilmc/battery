@@ -16,3 +16,5 @@ export interface ValuePlugin {
   sampleValues?: string[];
   values?: { [k: string]: string };
 }
+
+export type Plugin = ValuePlugin;

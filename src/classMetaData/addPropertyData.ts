@@ -29,12 +29,23 @@ export const addPropertyData = (
       return obj;
     }
 
-    const propIdentifier = obj.source.match(regex)[2];
+    const pluginSeparatorsRegex = new RegExp(
+      `[${props.map(prop => prop.pluginSeparator).join('')}]`,
+    );
+
+    const propIdentifier = obj.source
+      .match(regex)[2]
+      .replace(pluginSeparatorsRegex, '');
+
     const property = props.find(prop => {
-      return (
-        prop.plugin === matcherName &&
-        new RegExp(prop.propIdentifier).test(propIdentifier)
-      );
+      if (propIdentifier.length > 0 && prop.propIdentifier) {
+        const matched = propIdentifier.match(new RegExp(prop.propIdentifier));
+        return prop.plugin === matcherName && matched && matched.length > 0;
+      } else if (propIdentifier.length === 0 && prop.pluginDefault) {
+        return prop.plugin === matcherName && prop.pluginDefault;
+      } else {
+        return false;
+      }
     }).prop;
 
     obj.property = property;

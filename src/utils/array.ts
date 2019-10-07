@@ -5,10 +5,10 @@ export const baseToCapture = (nonCapture: boolean) => (
   if (arr.length < 1) {
     return '';
   }
-  const optionalRegex = optional ? '?' : '';
+  const optionalRegex = optional ? '|' : '';
   const nonCaptureRegex = nonCapture ? '?:' : '';
   const sortedJoined = arr.sort((a, b) => b.length - a.length).join('|');
-  return `(${nonCaptureRegex}${sortedJoined})${optionalRegex}`;
+  return `(${nonCaptureRegex}${sortedJoined}${optionalRegex})`;
 };
 
 export const toCapture = baseToCapture(false);

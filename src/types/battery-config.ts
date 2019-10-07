@@ -1,7 +1,7 @@
 import { UserPropConfig } from './prop-config';
-import { ValuePlugin } from './plugin-config';
+import { Plugin } from './plugin-config';
 
 export interface BatteryConfig {
   props: UserPropConfig[];
-  plugins?: ValuePlugin[];
+  plugins?: Plugin[];
 }
