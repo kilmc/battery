@@ -1,5 +1,6 @@
 import { generateKeywordMatcher } from 'matchers/generateKeywordMatcher';
 import { ClassMetaData } from 'types/classname';
+import { ModifierFn, Plugin } from 'types/plugin-config';
 
 describe('generateKeywordMatchers', () => {
   describe('Given a valid batteryConfig', () => {
@@ -17,7 +18,7 @@ describe('generateKeywordMatchers', () => {
             keyword: true,
           },
         ];
-        expect(generateKeywordMatcher(classMetaData).keyword).toEqual(
+        expect(generateKeywordMatcher(classMetaData, []).keyword).toEqual(
           /(^)(absolute|block)($)/,
         );
       });
@@ -40,9 +41,55 @@ describe('generateKeywordMatchers', () => {
             keyword: true,
           },
         ];
-        expect(generateKeywordMatcher(classMetaData).keyword).toEqual(
+        expect(generateKeywordMatcher(classMetaData, []).keyword).toEqual(
           /(^)(bg-contain|absolute|block)($)/,
         );
+      });
+    });
+  });
+
+  describe('Class plugins', () => {
+    describe('Handle prefixes', () => {
+      const formatPseudo: ModifierFn = (cx, pseudo) => `${cx}:${pseudo}`;
+      const classPlugins: Plugin[] = [
+        {
+          name: 'pseudos',
+          type: 'selector',
+          identifierType: 'prefix',
+          modifiers: [
+            {
+              name: 'hover',
+              separator: '-',
+              identifier: 'hover',
+              modifierFn: formatPseudo,
+            },
+            {
+              name: 'focus',
+              separator: '-',
+              identifier: 'focus',
+              modifierFn: formatPseudo,
+            },
+          ],
+        },
+      ];
+
+      const classMetaData: ClassMetaData[] = [
+        {
+          source: 'absolute',
+          property: 'position',
+          keyword: true,
+        },
+        {
+          source: 'block',
+          property: 'display',
+          keyword: true,
+        },
+      ];
+
+      it('generates a matcher', () => {
+        expect(generateKeywordMatcher(classMetaData, classPlugins)).toEqual({
+          keyword: /(hover-|focus-|^)(absolute|block)($)/,
+        });
       });
     });
   });

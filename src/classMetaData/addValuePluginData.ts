@@ -3,24 +3,28 @@ import { Matchers } from 'types/matchers';
 import { Plugin } from 'types/plugin-config';
 
 export const addValuePluginData = (
-  classNameData: ClassMetaData[],
+  classMetaArr: ClassMetaData[],
   valuePluginMatchers: Matchers,
   plugins: Plugin[],
 ): ClassMetaData[] => {
-  return classNameData.map(obj => {
-    if (obj.keyword) return obj;
+  return classMetaArr.map(classMeta => {
+    if (classMeta.keyword) return classMeta;
     const pluginName = Object.entries(valuePluginMatchers).find(
       ([_, regex]) => {
-        return regex.test(obj.source);
+        return regex.test(classMeta.source);
       },
     );
 
-    const plugin = plugins.find(
+    const plugin: Plugin = plugins.find(
       pluginConfig => pluginConfig.name === pluginName[0],
     );
 
-    obj.valuePlugin = plugin.name;
-    obj.valuePluginType = plugin.type;
-    return obj;
+    classMeta.valuePlugin = plugin.name;
+
+    if (plugin.type === 'lookup' || plugin.type === 'pattern') {
+      classMeta.valuePluginType = plugin.type;
+    }
+
+    return classMeta;
   });
 };

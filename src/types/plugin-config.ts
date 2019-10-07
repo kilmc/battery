@@ -1,6 +1,6 @@
 export type ModifierFn = (value: string, modifierValue?: string) => string;
 
-interface ValueModifier {
+interface Modifier {
   modifierFn: ModifierFn;
   name: string;
   separator?: string;
@@ -8,13 +8,12 @@ interface ValueModifier {
   defaultModifier?: boolean;
 }
 
-export interface ValuePlugin {
-  type: 'pattern' | 'lookup';
+export interface Plugin {
+  type: 'pattern' | 'lookup' | 'selector' | 'atRule';
   name: string;
+  identifierType?: 'prefix' | 'suffix';
   identifier?: RegExp | string;
-  modifiers?: ValueModifier[];
+  modifiers?: Modifier[];
   sampleValues?: string[];
   values?: { [k: string]: string };
 }
-
-export type Plugin = ValuePlugin;

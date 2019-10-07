@@ -2,6 +2,7 @@ import { Plugin } from 'types/plugin-config';
 import { UserPropConfig } from 'types/prop-config';
 import { Matcher, Matchers } from 'types/matchers';
 import { toCapture, toGroup } from 'utils/array';
+import { generatePrefixSuffixdMatchers } from './generatePrefixSuffixMatchers';
 
 const generateValueRegex = (
   valueArr: string[],
@@ -67,10 +68,15 @@ const generatePropMatcher = (pluginPropConfigs: UserPropConfig[]) => {
 };
 
 export const generateValuePluginMatcher = (
-  valuePlugins: Plugin[],
+  plugins: Plugin[],
   propConfigs: UserPropConfig[],
 ): { [k: string]: Matcher } => {
-  const matchers: Matchers = valuePlugins.reduce((accum: Matchers, plugin) => {
+  if (!plugins || plugins.length < 1) {
+    return {};
+  }
+
+  const { prefixes, suffixes } = generatePrefixSuffixdMatchers(plugins);
+  const matchers: Matchers = plugins.reduce((accum: Matchers, plugin) => {
     const { name: pluginName } = plugin;
     const pluginProps = propConfigs.filter(
       propConfig => propConfig.plugin === pluginName,
@@ -83,7 +89,9 @@ export const generateValuePluginMatcher = (
     const propMatcher = generatePropMatcher(pluginProps);
     const valueMatcher = generateValueMatcher(plugin);
 
-    const regex = new RegExp(`(^)${propMatcher}${valueMatcher}($)`);
+    const regex = new RegExp(
+      `(${prefixes})${propMatcher}${valueMatcher}(${suffixes})`,
+    );
 
     accum[pluginName] = regex;
     return accum;

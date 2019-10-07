@@ -78,6 +78,7 @@ export const addMetaData = (
     valuePluginMatchers,
     config.plugins,
   );
+
   const withPropertyData = addPropertyData(
     withValuePluginData,
     matchers,
