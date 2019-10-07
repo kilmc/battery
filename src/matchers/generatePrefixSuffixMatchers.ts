@@ -34,7 +34,7 @@ export const generatePrefixSuffixdMatchers = (plugins: Plugin[]) => {
   }
 
   if (suffixedPlugins.length > 0) {
-    suffixes = prefixedPlugins
+    suffixes = suffixedPlugins
       .map(plugin =>
         plugin.modifiers.reduce((accum, modifier) => {
           const { identifier, separator = '' } = modifier;
@@ -42,7 +42,7 @@ export const generatePrefixSuffixdMatchers = (plugins: Plugin[]) => {
         }, []),
       )
       .reduce((xs, x) => xs.concat(x), [])
-      .concat('^')
+      .concat('$')
       .join('|');
   }
 

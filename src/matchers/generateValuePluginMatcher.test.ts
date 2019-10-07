@@ -132,5 +132,44 @@ describe('generateValuePluginMatcher', () => {
         });
       });
     });
+
+    describe('Handle suffixes', () => {
+      const breakpointsPlugin: Plugin = {
+        name: 'breakpoints',
+        type: 'at-rule',
+        atrule: 'media',
+        identifierType: 'suffix',
+        modifiers: [
+          {
+            name: 'responsiveSmall',
+            identifier: 'sm',
+            separator: '-',
+            condition: '(min-width: 560px)',
+          },
+          {
+            name: 'responsiveSmall',
+            identifier: 'md',
+            separator: '-',
+            condition: '(min-width: 940px)',
+          },
+          {
+            name: 'responsiveLarge',
+            identifier: 'lg',
+            separator: '-',
+            condition: '(min-width: 1040px)',
+          },
+        ],
+      };
+
+      const plugins: Plugin[] = [colorPlugin, breakpointsPlugin];
+
+      const props: UserPropConfig[] = [textColor, backgroundColor];
+
+      it('generates a matcher', () => {
+        expect(generateValuePluginMatcher(plugins, props)).toEqual({
+          color: /(^)(bg-|)(black|white|pink)(-sm|-md|-lg|$)/,
+        });
+      });
+    });
   });
 });
