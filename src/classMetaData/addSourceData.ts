@@ -10,11 +10,11 @@ export const addSourceData = (
       return regex.test(className);
     });
 
-    const obj: ClassMetaData = { source: className };
+    const classMeta: ClassMetaData = { source: className, selector: className };
 
     if (!matcher) {
-      obj.invalid = true;
-      return obj;
+      classMeta.invalid = true;
+      return classMeta;
     }
-    return obj;
+    return classMeta;
   });

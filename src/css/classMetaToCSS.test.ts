@@ -6,6 +6,7 @@ describe('classMetaToCSS', () => {
     test('Then it generates CSS', () => {
       const classMetaData: ClassMetaData = {
         source: 'bg-contain',
+        selector: 'bg-contain',
         keyword: true,
         classObject: {
           'background-size': 'contain',

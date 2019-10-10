@@ -55,7 +55,7 @@ describe('generateKeywordMatchers', () => {
         {
           name: 'pseudos',
           type: 'selector',
-          identifierType: 'prefix',
+          affixType: 'prefix',
           modifiers: [
             {
               name: 'hover',

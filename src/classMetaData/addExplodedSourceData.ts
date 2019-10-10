@@ -108,6 +108,78 @@ const setValueIdentifier = (
   return { ...explodedSource, valueIdentifier };
 };
 
+const setClassModifierData = (
+  affixType: 'prefix' | 'suffix',
+  match: string,
+  plugins: Plugin[],
+) => {
+  const prefixModifiers = plugins
+    .filter(plugin => plugin.affixType === affixType)
+    .map(plugin => plugin.modifiers)
+    .reduce((xs, x) => xs.concat(x));
+
+  const { separator = '' } = prefixModifiers.find(m =>
+    new RegExp(m.identifier).test(match),
+  );
+
+  const replacerRegex =
+    affixType === 'prefix'
+      ? new RegExp(`${separator}$`)
+      : new RegExp(`^${separator}`);
+  const affixIdentifier = match.replace(replacerRegex, '');
+  const affixSeparator = separator;
+
+  return {
+    [affixType]: affixIdentifier ? affixIdentifier : '',
+    [`${affixType}Separator`]: affixSeparator ? affixSeparator : '',
+  };
+};
+
+const setPrefixSuffixData = (
+  explodedSource: ExplodedClassSource,
+  classMeta: ClassMetaData,
+  matchers: Matchers,
+  plugins: Plugin[],
+) => {
+  const matcherArr = Object.entries(matchers).find(([matcherName, _]) => {
+    return (
+      matcherName === classMeta.valuePlugin ||
+      (classMeta.keyword && matcherName === 'keyword')
+    );
+  });
+
+  if (!matcherArr) {
+    return explodedSource;
+  }
+
+  const matcher = matcherArr[1];
+
+  let matchedPrefix: string;
+  let matchedSuffix: string;
+  let prefixData: {};
+  let suffixData: {};
+
+  if (classMeta.keyword) {
+    const groups = classMeta.source.match(matcher);
+    matchedPrefix = groups[1];
+    matchedSuffix = groups[3];
+  } else {
+    const groups = classMeta.source.match(matcher);
+    matchedPrefix = groups[1];
+    matchedSuffix = groups[4];
+  }
+
+  if (matchedPrefix) {
+    prefixData = setClassModifierData('prefix', matchedPrefix, plugins);
+  }
+
+  if (matchedSuffix) {
+    suffixData = setClassModifierData('suffix', matchedSuffix, plugins);
+  }
+
+  return { ...explodedSource, ...prefixData, ...suffixData };
+};
+
 export const addExplodedSourceData = (
   classMetaArr: ClassMetaData[],
   config: BatteryConfig,
@@ -158,7 +230,14 @@ export const addExplodedSourceData = (
       matchers,
     );
 
-    classMeta.explodedSource = withValueIdentifier;
+    const withPrefixSuffixData = setPrefixSuffixData(
+      withValueIdentifier,
+      classMeta,
+      matchers,
+      plugins,
+    );
+
+    classMeta.explodedSource = withPrefixSuffixData;
     return classMeta;
   });
 };

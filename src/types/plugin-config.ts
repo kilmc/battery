@@ -13,7 +13,7 @@ export interface Plugin {
   type: 'pattern' | 'lookup' | 'selector' | 'at-rule';
   name: string;
   atrule?: 'media' | 'font-face';
-  identifierType?: 'prefix' | 'suffix';
+  affixType?: 'prefix' | 'suffix';
   identifier?: RegExp | string;
   modifiers?: Modifier[];
   sampleValues?: string[];

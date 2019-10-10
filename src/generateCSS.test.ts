@@ -1,6 +1,8 @@
 import { generateCSS } from './generateCSS';
 import { BatteryConfig } from 'types/battery-config';
 import { ModifierFn } from 'types/plugin-config';
+import { pseudoPlugin } from 'fixtures/plugins/pseudo';
+import { hoverTargetPlugin } from 'fixtures/plugins/hoverTarget';
 
 describe('generateCSS', () => {
   describe('Handles keywords', () => {
@@ -270,12 +272,13 @@ describe('generateCSS', () => {
           },
         },
       ],
+      plugins: [pseudoPlugin, hoverTargetPlugin],
     };
 
     describe('', () => {
       it('renders valid CSS', () => {
         expect(generateCSS(input, config).trim()).toEqual(
-          '.hover-bg-contain:hover { background-size: contain } .hover-text-center:hover { text-center: center }'.trim(),
+          '.hover-bg-contain:hover { background-size: contain } .hover-target:hover .hover-item-text-center { text-align: center }'.trim(),
         );
       });
     });

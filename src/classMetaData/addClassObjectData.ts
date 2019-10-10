@@ -32,9 +32,9 @@ export const addClassObjectData = (
 
     let modifierFn = (x: string, y: string) => `${x}${y}`;
 
-    if (classMeta.modifierPlugin) {
+    if (classMeta.valueModifier) {
       modifierFn = plugin.modifiers.find(
-        modifier => modifier.name === classMeta.modifierPlugin,
+        modifier => modifier.name === classMeta.valueModifier,
       ).modifierFn;
       value = modifierFn(value, classMeta.explodedSource.modifierIdentifier);
     } else {

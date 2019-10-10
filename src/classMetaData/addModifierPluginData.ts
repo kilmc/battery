@@ -28,9 +28,9 @@ export const addModifierPluginData = (
         classMeta.source,
       )[0];
 
-      classMeta.modifierPlugin = modifierName;
+      classMeta.valueModifier = modifierName;
     } else if (defaultModifier) {
-      classMeta.modifierPlugin = defaultModifier.name;
+      classMeta.valueModifier = defaultModifier.name;
     }
 
     return classMeta;

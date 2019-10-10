@@ -106,7 +106,7 @@ describe('generateValuePluginMatcher', () => {
       const pseudoPlugin: Plugin = {
         name: 'pseudos',
         type: 'selector',
-        identifierType: 'prefix',
+        affixType: 'prefix',
         modifiers: [
           {
             name: 'hover',
@@ -138,7 +138,7 @@ describe('generateValuePluginMatcher', () => {
         name: 'breakpoints',
         type: 'at-rule',
         atrule: 'media',
-        identifierType: 'suffix',
+        affixType: 'suffix',
         modifiers: [
           {
             name: 'responsiveSmall',

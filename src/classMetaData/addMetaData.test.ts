@@ -9,6 +9,9 @@ import { backgroundColor } from 'fixtures/props/background-color';
 import { integerPlugin } from 'fixtures/plugins/integer';
 import { lengthUnitsPlugin } from 'fixtures/plugins/lengthUnits';
 import { width } from 'fixtures/props/width';
+import { breakpointPlugin } from 'fixtures/plugins/breakpoint';
+import { pseudoPlugin } from 'fixtures/plugins/pseudo';
+import { hoverTargetPlugin } from 'fixtures/plugins/hoverTarget';
 
 describe('addMetaData', () => {
   describe('Handles keyword classNames', () => {
@@ -21,6 +24,7 @@ describe('addMetaData', () => {
       expect(addMetaData(inputClassNames, config)).toEqual([
         {
           source: 'block',
+          selector: 'block',
           keyword: true,
           property: 'display',
           explodedSource: {
@@ -40,6 +44,7 @@ describe('addMetaData', () => {
         },
         {
           source: 'absolute',
+          selector: 'absolute',
           keyword: true,
           property: 'position',
           explodedSource: {
@@ -59,6 +64,7 @@ describe('addMetaData', () => {
         },
         {
           source: 'bg-contain',
+          selector: 'bg-contain',
           keyword: true,
           property: 'background-size',
           explodedSource: {
@@ -91,6 +97,7 @@ describe('addMetaData', () => {
       expect(addMetaData(inputClassNames, config)).toEqual([
         {
           source: 'bg-white',
+          selector: 'bg-white',
           keyword: false,
           property: 'background-color',
           valuePlugin: 'color',
@@ -112,6 +119,7 @@ describe('addMetaData', () => {
         },
         {
           source: 'bg-white_10',
+          selector: 'bg-white_10',
           keyword: false,
           property: 'background-color',
           valuePlugin: 'color',
@@ -127,13 +135,14 @@ describe('addMetaData', () => {
             suffix: '',
             suffixSeparator: '',
           },
-          modifierPlugin: 'opacity',
+          valueModifier: 'opacity',
           classObject: {
             'background-color': 'rgba(255,255,255,0.1)',
           },
         },
         {
           source: 'z100',
+          selector: 'z100',
           keyword: false,
           property: 'z-index',
           valuePlugin: 'integer',
@@ -155,6 +164,7 @@ describe('addMetaData', () => {
         },
         {
           source: 'w3',
+          selector: 'w3',
           keyword: false,
           property: 'width',
           valuePlugin: 'lengthUnit',
@@ -170,9 +180,129 @@ describe('addMetaData', () => {
             suffix: '',
             suffixSeparator: '',
           },
-          modifierPlugin: 'ratio',
+          valueModifier: 'ratio',
           classObject: {
             width: '1.125rem',
+          },
+        },
+      ]);
+    });
+  });
+
+  describe('Handles class plugin classNames', () => {
+    const config: BatteryConfig = {
+      props: [zIndex, backgroundColor, backgroundSize, width],
+      plugins: [
+        integerPlugin,
+        colorPlugin,
+        lengthUnitsPlugin,
+        breakpointPlugin,
+        pseudoPlugin,
+        hoverTargetPlugin,
+      ],
+    };
+    const inputClassNames = [
+      'bg-white-md',
+      'hover-bg-white_10',
+      'z100-lg',
+      'hover-item-bg-contain',
+    ];
+
+    test('All meta data is added to the classMetaData object', () => {
+      expect(addMetaData(inputClassNames, config)).toEqual([
+        {
+          source: 'bg-white-md',
+          selector: 'bg-white-md',
+          keyword: false,
+          property: 'background-color',
+          valuePlugin: 'color',
+          valuePluginType: 'lookup',
+          atrulePlugin: 'breakpoint',
+          atruleModifier: 'responsiveMedium',
+          explodedSource: {
+            prefix: '',
+            prefixSeparator: '',
+            propIdentifier: 'bg',
+            valueSeparator: '-',
+            valueIdentifier: 'white',
+            modifierSeparator: '',
+            modifierIdentifier: '',
+            suffixSeparator: '-',
+            suffix: 'md',
+          },
+          classObject: {
+            'background-color': '#FFFFFF',
+          },
+        },
+        {
+          source: 'hover-bg-white_10',
+          selector: 'hover-bg-white_10',
+          keyword: false,
+          property: 'background-color',
+          valuePlugin: 'color',
+          valuePluginType: 'lookup',
+          selectorPlugin: 'pseudo',
+          selectorModifier: 'hover',
+          explodedSource: {
+            prefix: 'hover',
+            prefixSeparator: '-',
+            propIdentifier: 'bg',
+            valueSeparator: '-',
+            valueIdentifier: 'white',
+            modifierSeparator: '_',
+            modifierIdentifier: '10',
+            suffix: '',
+            suffixSeparator: '',
+          },
+          valueModifier: 'opacity',
+          classObject: {
+            'background-color': 'rgba(255,255,255,0.1)',
+          },
+        },
+        {
+          source: 'z100-lg',
+          selector: 'z100-lg',
+          keyword: false,
+          property: 'z-index',
+          valuePlugin: 'integer',
+          valuePluginType: 'pattern',
+          atrulePlugin: 'breakpoint',
+          atruleModifier: 'responsiveLarge',
+          explodedSource: {
+            prefix: '',
+            prefixSeparator: '',
+            propIdentifier: 'z',
+            valueSeparator: '',
+            valueIdentifier: '100',
+            modifierSeparator: '',
+            modifierIdentifier: '',
+            suffixSeparator: '-',
+            suffix: 'lg',
+          },
+          classObject: {
+            'z-index': '100',
+          },
+        },
+        {
+          source: 'hover-item-bg-contain',
+          selector: 'hover-item-bg-contain',
+          keyword: true,
+          property: 'background-size',
+          selectorPlugin: 'hoverTarget',
+          selectorModifier: 'hoverItem',
+          explodedSource: {
+            prefix: 'hover-item',
+            prefixSeparator: '-',
+            propIdentifier: 'bg',
+            valueSeparator: '-',
+            valueIdentifier: 'contain',
+            modifierSeparator: '',
+            modifierIdentifier: '',
+            suffixSeparator: '',
+            suffix: '',
+          },
+          classObject: {
+            'background-size': 'contain',
           },
         },
       ]);

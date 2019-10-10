@@ -2,15 +2,15 @@ import { ClassMetaData } from 'types/classname';
 import { Matchers } from 'types/matchers';
 
 export const addKeywordData = (
-  classNameData: ClassMetaData[],
+  classMetaArr: ClassMetaData[],
   matchers: Matchers,
 ): ClassMetaData[] => {
-  return classNameData.map(obj => {
+  return classMetaArr.map(classMeta => {
     if (!matchers.keyword) {
-      obj.keyword = false;
+      classMeta.keyword = false;
     } else {
-      obj.keyword = matchers.keyword.test(obj.source);
+      classMeta.keyword = matchers.keyword.test(classMeta.source);
     }
-    return obj;
+    return classMeta;
   });
 };

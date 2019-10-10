@@ -3,37 +3,37 @@ import { Matchers } from 'types/matchers';
 import { UserPropConfig } from 'types/prop-config';
 
 export const addPropertyData = (
-  classNameData: ClassMetaData[],
+  classMetaArr: ClassMetaData[],
   matchers: Matchers,
   props: UserPropConfig[],
   generatedKeywordMetaData: ClassMetaData[],
 ): ClassMetaData[] =>
-  classNameData.map(obj => {
+  classMetaArr.map(classMeta => {
     const matcher = Object.entries(matchers).find(([_, regex]) => {
-      return regex.test(obj.source);
+      return regex.test(classMeta.source);
     });
 
     if (!matcher) {
-      obj.invalid = true;
-      return obj;
+      classMeta.invalid = true;
+      return classMeta;
     }
 
     const [matcherName, regex] = matcher;
 
     if (matcherName === 'keyword') {
-      const property = generatedKeywordMetaData.find(
-        generated => generated.source === obj.source,
+      const property = generatedKeywordMetaData.find(generated =>
+        new RegExp(generated.source).test(classMeta.source),
       ).property;
-      obj.property = property;
+      classMeta.property = property;
 
-      return obj;
+      return classMeta;
     }
 
     const pluginSeparatorsRegex = new RegExp(
       `[${props.map(prop => prop.pluginSeparator).join('')}]`,
     );
 
-    const propIdentifier = obj.source
+    const propIdentifier = classMeta.source
       .match(regex)[2]
       .replace(pluginSeparatorsRegex, '');
 
@@ -48,6 +48,6 @@ export const addPropertyData = (
       }
     }).prop;
 
-    obj.property = property;
-    return obj;
+    classMeta.property = property;
+    return classMeta;
   });

@@ -10,11 +10,11 @@ export const generatePrefixSuffixdMatchers = (plugins: Plugin[]) => {
   }
 
   const prefixedPlugins = plugins.filter(
-    plugin => plugin.identifierType === 'prefix',
+    plugin => plugin.affixType === 'prefix',
   );
 
   const suffixedPlugins = plugins.filter(
-    plugin => plugin.identifierType === 'suffix',
+    plugin => plugin.affixType === 'suffix',
   );
 
   let prefixes;

@@ -16,12 +16,17 @@ export type ExplodedClassSource = {
 export type ClassMetaData = {
   property?: CSSProps;
   source: string;
+  selector?: string;
   explodedSource?: ExplodedClassSource;
   keyword?: boolean;
   valuePlugin?: string;
   valuePluginType?: 'pattern' | 'lookup';
-  modifierPlugin?: string;
+  atrulePlugin?: string;
+  atruleModifier?: string;
   selectorPlugin?: string;
+  selectorModifier?: string;
+  valueModifier?: string;
   classObject?: ClassObject;
   invalid?: boolean;
+  css?: string;
 };

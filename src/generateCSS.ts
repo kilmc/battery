@@ -6,8 +6,11 @@ export const generateCSS = (
   classNames: string[],
   config: BatteryConfig,
 ): string => {
-  const classMeta = addMetaData(classNames, config);
-  const processedClasses = classMeta.map(classMetaToCSS);
+  const classMetaArr = addMetaData(classNames, config);
+  const processedClasses = classMetaArr.map(classMeta => {
+    classMeta.css = classMetaToCSS(classMeta, config.plugins);
+    return classMeta;
+  });
 
-  return processedClasses.join(' ');
+  return processedClasses.map(c => c.css).join(' ');
 };

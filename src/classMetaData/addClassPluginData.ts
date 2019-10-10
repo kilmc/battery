@@ -1,0 +1,68 @@
+import { ClassMetaData } from 'types/classname';
+import { Plugin } from 'types/plugin-config';
+
+const addAffixData = (
+  affixType: 'prefix' | 'suffix',
+  affix: string,
+  plugins: Plugin[],
+) => {
+  const affixPlugins = plugins.filter(plugin => plugin.affixType === affixType);
+  const matchedPlugin = affixPlugins.find(plugin => {
+    return plugin.modifiers
+      .map(modifier => modifier.identifier)
+      .includes(affix);
+  });
+
+  if (!matchedPlugin) {
+    return {};
+  }
+
+  const matchedModifier = matchedPlugin.modifiers.find(
+    modifier => modifier.identifier === affix,
+  );
+
+  const pluginName = matchedPlugin.name;
+  const pluginType = matchedPlugin.type;
+  const modifierName = matchedModifier.name;
+
+  let affixData: {
+    atrulePlugin?: string;
+    atruleModifier?: string;
+    selectorPlugin?: string;
+    selectorModifier?: string;
+  } = {};
+
+  if (pluginType === 'at-rule') {
+    affixData.atrulePlugin = pluginName;
+    affixData.atruleModifier = modifierName;
+  } else if (pluginType === 'selector') {
+    affixData.selectorPlugin = pluginName;
+    affixData.selectorModifier = modifierName;
+  }
+
+  return affixData;
+};
+
+export const addClassPluginData = (
+  classMetaArr: ClassMetaData[],
+  plugins: Plugin[],
+): ClassMetaData[] => {
+  if (plugins && plugins.filter(plugin => plugin.affixType).length < 1) {
+    return classMetaArr;
+  }
+
+  return classMetaArr.map(classMeta => {
+    const { prefix, suffix } = classMeta.explodedSource;
+    let prefixData = {};
+    let suffixData = {};
+
+    if (prefix) {
+      prefixData = addAffixData('prefix', prefix, plugins);
+    }
+
+    if (suffix) {
+      suffixData = addAffixData('suffix', suffix, plugins);
+    }
+    return { ...classMeta, ...prefixData, ...suffixData };
+  });
+};
