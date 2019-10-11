@@ -3,6 +3,7 @@ import { BatteryConfig } from 'types/battery-config';
 import { ModifierFn } from 'types/plugin-config';
 import { pseudoPlugin } from 'fixtures/plugins/pseudo';
 import { hoverTargetPlugin } from 'fixtures/plugins/hoverTarget';
+import { breakpointPlugin } from 'fixtures/plugins/breakpoint';
 
 describe('generateCSS', () => {
   describe('Handles keywords', () => {
@@ -279,6 +280,48 @@ describe('generateCSS', () => {
       it('renders valid CSS', () => {
         expect(generateCSS(input, config).trim()).toEqual(
           '.hover-bg-contain:hover { background-size: contain } .hover-target:hover .hover-item-text-center { text-align: center }'.trim(),
+        );
+      });
+    });
+  });
+
+  describe('Handles atrule plugins', () => {
+    const input = ['bg-contain-md', 'bg-cover-md', 'text-center-sm'];
+    const config: BatteryConfig = {
+      props: [
+        {
+          prop: 'background-size',
+          propIdentifier: 'bg',
+          keywordSeparator: '-',
+          keywordValues: {
+            contain: 'contain',
+            cover: 'cover',
+          },
+        },
+        {
+          prop: 'text-align',
+          propIdentifier: 'text',
+          keywordSeparator: '-',
+          keywordValues: {
+            center: 'center',
+          },
+        },
+      ],
+      plugins: [breakpointPlugin],
+    };
+
+    describe('', () => {
+      it('renders valid CSS', () => {
+        expect(generateCSS(input, config).replace(/\s/g, '')).toEqual(
+          `
+          @media (min-width: 560px) {
+            .text-center-sm { text-align: center }
+          }
+          @media (min-width: 940px) {
+            .bg-contain-md { background-size: contain }
+            .bg-cover-md { background-size: cover }
+          }
+        `.replace(/\s/g, ''),
         );
       });
     });

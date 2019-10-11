@@ -12,7 +12,7 @@ describe('classMetaToCSS', () => {
           'background-size': 'contain',
         },
       };
-      expect(classMetaToCSS(classMetaData)).toEqual(
+      expect(classMetaToCSS(classMetaData, [])).toEqual(
         '.bg-contain { background-size: contain }'.trim(),
       );
     });
