@@ -37,7 +37,6 @@ export const addClassObjectData = (
         modifier => modifier.name === classMeta.valueModifier,
       ).modifierFn;
       value = modifierFn(value, classMeta.explodedSource.modifierIdentifier);
-    } else {
     }
 
     classMeta.classObject = { [classMeta.property]: value };

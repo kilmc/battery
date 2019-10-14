@@ -8,26 +8,6 @@ const unique = (arr: any[]) => [...new Set(arr)];
 const capitalizeFirstLetter = (x: string) =>
   x.charAt(0).toUpperCase() + x.slice(1);
 
-const groupByAtRuleAttribute = (
-  attribute: 'atruleModifier' | 'atrulePlugin',
-  classMetaArr: ClassMetaData[],
-) => {
-  return classMetaArr.reduce(
-    (accum, classMeta) => {
-      if (classMeta[attribute]) {
-        accum[classMeta[attribute]]
-          ? accum[classMeta[attribute]].push(classMeta)
-          : (accum[classMeta[attribute]] = [classMeta]);
-
-        return accum;
-      } else {
-        return accum;
-      }
-    },
-    {} as { [k: string]: ClassMetaData[] },
-  );
-};
-
 const processAtRulePlugins = (
   classMetaArr: ClassMetaData[],
   plugins: Plugin[],

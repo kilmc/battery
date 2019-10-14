@@ -8,7 +8,7 @@ enum SubPropKeys {
   ALL = 'all',
 }
 
-type SubProp = { [key in SubPropKeys]?: string };
+type SubProp = { [key in SubPropKeys]?: string[] };
 type ModifierSubset = { name: string; modifiers: string[] };
 
 export type UserPropConfig = {
