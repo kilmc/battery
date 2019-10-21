@@ -39,7 +39,7 @@ export const addPropertyData = (
 
     const property = props.find(prop => {
       if (propIdentifier.length > 0 && prop.propIdentifier) {
-        const matched = propIdentifier.match(new RegExp(prop.propIdentifier));
+        const matched = prop.propIdentifier.match(new RegExp(propIdentifier));
         return prop.plugin === matcherName && matched && matched.length > 0;
       } else if (propIdentifier.length === 0 && prop.pluginDefault) {
         return prop.plugin === matcherName && prop.pluginDefault;

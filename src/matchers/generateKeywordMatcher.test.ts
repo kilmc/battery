@@ -9,12 +9,12 @@ describe('generateKeywordMatchers', () => {
         const classMetaData: ClassMetaData[] = [
           {
             source: 'absolute',
-            property: 'position',
+            property: ['position'],
             keyword: true,
           },
           {
             source: 'block',
-            property: 'display',
+            property: ['display'],
             keyword: true,
           },
         ];
@@ -27,17 +27,17 @@ describe('generateKeywordMatchers', () => {
         const classMetaData: ClassMetaData[] = [
           {
             source: 'absolute',
-            property: 'position',
+            property: ['position'],
             keyword: true,
           },
           {
             source: 'block',
-            property: 'display',
+            property: ['display'],
             keyword: true,
           },
           {
             source: 'bg-contain',
-            property: 'background-size',
+            property: ['background-size'],
             keyword: true,
           },
         ];
@@ -76,12 +76,12 @@ describe('generateKeywordMatchers', () => {
       const classMetaData: ClassMetaData[] = [
         {
           source: 'absolute',
-          property: 'position',
+          property: ['position'],
           keyword: true,
         },
         {
           source: 'block',
-          property: 'display',
+          property: ['display'],
           keyword: true,
         },
       ];

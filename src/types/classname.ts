@@ -14,7 +14,7 @@ export type ExplodedClassSource = {
 };
 
 export type ClassMetaData = {
-  property?: CSSProps;
+  property?: CSSProps[];
   source: string;
   selector?: string;
   explodedSource?: ExplodedClassSource;

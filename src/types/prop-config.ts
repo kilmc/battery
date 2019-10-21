@@ -1,18 +1,19 @@
-enum SubPropKeys {
-  TOP = 'top',
-  RIGHT = 'right',
-  BOTTOM = 'bottom',
-  LEFT = 'left',
-  HORIZONTAL = 'horizontal',
-  VERTICAL = 'vertical',
-  ALL = 'all',
-}
+import { CSSProps } from 'types/css-props';
 
-type SubProp = { [key in SubPropKeys]?: string[] };
+export type SubPropKeys =
+  | 'top'
+  | 'right'
+  | 'bottom'
+  | 'left'
+  | 'horizontal'
+  | 'vertical'
+  | 'all';
+
+type SubProp = { [key in SubPropKeys]?: string };
 type ModifierSubset = { name: string; modifiers: string[] };
 
 export type UserPropConfig = {
-  prop: CSSProps;
+  prop: CSSProps[];
   propIdentifier?: string;
   pluginDefault?: boolean;
   subProps?: SubProp;

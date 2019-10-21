@@ -3,6 +3,7 @@ import { classMetaToCSS } from 'css/classMetaToCSS';
 import { addMetaData } from 'classMetaData/addMetaData';
 import { ClassMetaData } from 'types/classname';
 import { Plugin } from 'types/plugin-config';
+import { convertSubProps } from 'config/processSubProps';
 
 const unique = (arr: any[]) => [...new Set(arr)];
 const capitalizeFirstLetter = (x: string) =>
@@ -56,10 +57,14 @@ export const generateCSS = (
   classNames: string[],
   config: BatteryConfig,
 ): string => {
-  const classMetaArr = addMetaData(classNames, config);
+  const processedConfig = {
+    ...config,
+    props: [...convertSubProps(config.props)],
+  };
+  const classMetaArr = addMetaData(classNames, processedConfig);
 
   const processedClasses = classMetaArr.map(classMeta => {
-    classMeta.css = classMetaToCSS(classMeta, config.plugins);
+    classMeta.css = classMetaToCSS(classMeta, processedConfig.plugins);
     return classMeta;
   });
 
@@ -71,7 +76,7 @@ export const generateCSS = (
   const nonAtRuleCSS = nonAtRuleClasses.map(c => c.css);
   let atRuleCSS = [];
   if (atRuleClasses.length > 0) {
-    atRuleCSS = processAtRulePlugins(atRuleClasses, config.plugins);
+    atRuleCSS = processAtRulePlugins(atRuleClasses, processedConfig.plugins);
   }
 
   return [...nonAtRuleCSS, ...atRuleCSS].join(' ');

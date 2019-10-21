@@ -1,20 +1,25 @@
 import { ClassMetaData } from 'types/classname';
 import { BatteryConfig } from 'types/battery-config';
+import { generateClassObject } from 'utils/classObjects';
+
+const isPropMatch = (arr1: string[], arr2: string[]) => {
+  return arr1.every(item => arr2.includes(item));
+};
 
 export const addClassObjectData = (
   classMetaArr: ClassMetaData[],
   config: BatteryConfig,
 ) => {
   return classMetaArr.map(classMeta => {
-    const propConfig = config.props.find(
-      propConfig => propConfig.prop === classMeta.property,
+    const propConfig = config.props.find(propConfig =>
+      isPropMatch(propConfig.prop, classMeta.property),
     );
     let value = '';
 
     if (classMeta.keyword) {
       value =
         propConfig.keywordValues[classMeta.explodedSource.valueIdentifier];
-      classMeta.classObject = { [classMeta.property]: value };
+      classMeta.classObject = generateClassObject(classMeta.property, value);
       return classMeta;
     }
 
@@ -39,7 +44,7 @@ export const addClassObjectData = (
       value = modifierFn(value, classMeta.explodedSource.modifierIdentifier);
     }
 
-    classMeta.classObject = { [classMeta.property]: value };
+    classMeta.classObject = generateClassObject(classMeta.property, value);
 
     return classMeta;
   });

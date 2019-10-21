@@ -26,7 +26,7 @@ describe('addMetaData', () => {
           source: 'block',
           selector: 'block',
           keyword: true,
-          property: 'display',
+          property: ['display'],
           explodedSource: {
             prefix: '',
             prefixSeparator: '',
@@ -46,7 +46,7 @@ describe('addMetaData', () => {
           source: 'absolute',
           selector: 'absolute',
           keyword: true,
-          property: 'position',
+          property: ['position'],
           explodedSource: {
             prefix: '',
             prefixSeparator: '',
@@ -66,7 +66,7 @@ describe('addMetaData', () => {
           source: 'bg-contain',
           selector: 'bg-contain',
           keyword: true,
-          property: 'background-size',
+          property: ['background-size'],
           explodedSource: {
             prefix: '',
             prefixSeparator: '',
@@ -99,7 +99,7 @@ describe('addMetaData', () => {
           source: 'bg-white',
           selector: 'bg-white',
           keyword: false,
-          property: 'background-color',
+          property: ['background-color'],
           valuePlugin: 'color',
           valuePluginType: 'lookup',
           explodedSource: {
@@ -121,7 +121,7 @@ describe('addMetaData', () => {
           source: 'bg-white_10',
           selector: 'bg-white_10',
           keyword: false,
-          property: 'background-color',
+          property: ['background-color'],
           valuePlugin: 'color',
           valuePluginType: 'lookup',
           explodedSource: {
@@ -144,7 +144,7 @@ describe('addMetaData', () => {
           source: 'z100',
           selector: 'z100',
           keyword: false,
-          property: 'z-index',
+          property: ['z-index'],
           valuePlugin: 'integer',
           valuePluginType: 'pattern',
           explodedSource: {
@@ -166,7 +166,7 @@ describe('addMetaData', () => {
           source: 'w3',
           selector: 'w3',
           keyword: false,
-          property: 'width',
+          property: ['width'],
           valuePlugin: 'lengthUnit',
           valuePluginType: 'pattern',
           explodedSource: {
@@ -214,7 +214,7 @@ describe('addMetaData', () => {
           source: 'bg-white-md',
           selector: 'bg-white-md',
           keyword: false,
-          property: 'background-color',
+          property: ['background-color'],
           valuePlugin: 'color',
           valuePluginType: 'lookup',
           atrulePlugin: 'breakpoint',
@@ -238,7 +238,7 @@ describe('addMetaData', () => {
           source: 'hover-bg-white_10',
           selector: 'hover-bg-white_10',
           keyword: false,
-          property: 'background-color',
+          property: ['background-color'],
           valuePlugin: 'color',
           valuePluginType: 'lookup',
           selectorPlugin: 'pseudo',
@@ -263,7 +263,7 @@ describe('addMetaData', () => {
           source: 'z100-lg',
           selector: 'z100-lg',
           keyword: false,
-          property: 'z-index',
+          property: ['z-index'],
           valuePlugin: 'integer',
           valuePluginType: 'pattern',
           atrulePlugin: 'breakpoint',
@@ -287,7 +287,7 @@ describe('addMetaData', () => {
           source: 'hover-item-bg-contain',
           selector: 'hover-item-bg-contain',
           keyword: true,
-          property: 'background-size',
+          property: ['background-size'],
           selectorPlugin: 'hoverTarget',
           selectorModifier: 'hoverItem',
           explodedSource: {

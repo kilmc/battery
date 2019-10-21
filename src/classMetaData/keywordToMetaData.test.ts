@@ -8,7 +8,7 @@ describe('keywordToMetaData', () => {
       const config: BatteryConfig = {
         props: [
           {
-            prop: 'background-size',
+            prop: ['background-size'],
             propIdentifier: 'bg',
             keywordSeparator: '-',
             keywordValues: {
@@ -27,7 +27,7 @@ describe('keywordToMetaData', () => {
             valueSeparator: '-',
             valueIdentifier: 'contain',
           },
-          property: 'background-size',
+          property: ['background-size'],
           keyword: true,
           classObject: {
             'background-size': 'contain',
@@ -40,7 +40,7 @@ describe('keywordToMetaData', () => {
             valueSeparator: '-',
             valueIdentifier: 'cover',
           },
-          property: 'background-size',
+          property: ['background-size'],
           keyword: true,
           classObject: {
             'background-size': 'cover',
@@ -54,7 +54,7 @@ describe('keywordToMetaData', () => {
       const config: BatteryConfig = {
         props: [
           {
-            prop: 'display',
+            prop: ['display'],
             keywordValues: {
               block: 'block',
               inline: 'inline',
@@ -70,7 +70,7 @@ describe('keywordToMetaData', () => {
             valueSeparator: '',
             valueIdentifier: 'block',
           },
-          property: 'display',
+          property: ['display'],
           keyword: true,
           classObject: {
             display: 'block',
@@ -84,7 +84,7 @@ describe('keywordToMetaData', () => {
             valueSeparator: '',
             valueIdentifier: 'inline',
           },
-          property: 'display',
+          property: ['display'],
           keyword: true,
           classObject: {
             display: 'inline',

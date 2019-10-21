@@ -28,7 +28,7 @@ type TextProps = 'text-align' | 'text-decoration' | 'text-transform';
 
 type FlexProps = 'flex' | 'flex-shrink' | 'flex-grow' | 'flex-basis';
 
-type CSSProps =
+export type CSSProps =
   | BackgroundProps
   | 'color'
   | 'display'

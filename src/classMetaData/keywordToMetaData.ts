@@ -1,5 +1,6 @@
 import { ClassMetaData } from 'types/classname';
 import { BatteryConfig } from 'types/battery-config';
+import { generateClassObject } from 'utils/classObjects';
 
 export const keywordToMetaData = (config: BatteryConfig): ClassMetaData[] => {
   const keywordProps = config.props.filter(prop => prop.keywordValues);
@@ -27,9 +28,7 @@ export const keywordToMetaData = (config: BatteryConfig): ClassMetaData[] => {
               valueSeparator: keywordSeparator,
               valueIdentifier,
             },
-            classObject: {
-              [prop]: value,
-            },
+            classObject: generateClassObject(prop, value),
           };
 
           return accum.concat(classMetaDataObj);

@@ -4,6 +4,8 @@ import { ModifierFn } from 'types/plugin-config';
 import { pseudoPlugin } from 'fixtures/plugins/pseudo';
 import { hoverTargetPlugin } from 'fixtures/plugins/hoverTarget';
 import { breakpointPlugin } from 'fixtures/plugins/breakpoint';
+import { margin } from 'fixtures/props/margin';
+import { lengthUnitsPlugin } from 'fixtures/plugins/lengthUnits';
 
 describe('generateCSS', () => {
   describe('Handles keywords', () => {
@@ -12,7 +14,7 @@ describe('generateCSS', () => {
       const config: BatteryConfig = {
         props: [
           {
-            prop: 'background-size',
+            prop: ['background-size'],
             propIdentifier: 'bg',
             keywordSeparator: '-',
             keywordValues: {
@@ -21,7 +23,7 @@ describe('generateCSS', () => {
             },
           },
           {
-            prop: 'text-align',
+            prop: ['text-align'],
             propIdentifier: 'text',
             keywordSeparator: '-',
             keywordValues: {
@@ -43,13 +45,13 @@ describe('generateCSS', () => {
       const config: BatteryConfig = {
         props: [
           {
-            prop: 'display',
+            prop: ['display'],
             keywordValues: {
               block: 'block',
             },
           },
           {
-            prop: 'position',
+            prop: ['position'],
             keywordValues: {
               absolute: 'absolute',
             },
@@ -65,18 +67,54 @@ describe('generateCSS', () => {
     });
   });
 
+  describe('Handles subProps', () => {
+    describe('standard set', () => {
+      const classNames = ['mb2', 'mt10p', 'm3', 'mr1'];
+      const config: BatteryConfig = {
+        props: [margin],
+        plugins: [lengthUnitsPlugin],
+      };
+      it('renders valid CSS', () => {
+        expect(generateCSS(classNames, config).replace(/\s/g, '')).toEqual(
+          `
+          .mb2 { margin-bottom: 0.75rem }
+          .mt10p { margin-top: 10% }
+          .m3 { margin: 1.125rem }
+          .mr1 { margin-right: 0.375rem }
+          `.replace(/\s/g, ''),
+        );
+      });
+    });
+
+    describe('multiple prop set', () => {
+      const classNames = ['mx2', 'my50p'];
+      const config: BatteryConfig = {
+        props: [margin],
+        plugins: [lengthUnitsPlugin],
+      };
+      it('renders valid CSS', () => {
+        expect(generateCSS(classNames, config).replace(/\s/g, '')).toEqual(
+          `
+          .mx2 { margin-right: 0.75rem; margin-left: 0.75rem }
+          .my50p { margin-top: 50%; margin-bottom: 50% }
+          `.replace(/\s/g, ''),
+        );
+      });
+    });
+  });
+
   describe('Handles pattern plugins', () => {
     describe('with NO modifiers', () => {
       const input = ['z100', 'flex1'];
       const config: BatteryConfig = {
         props: [
           {
-            prop: 'z-index',
+            prop: ['z-index'],
             propIdentifier: 'z',
             plugin: 'integer',
           },
           {
-            prop: 'flex',
+            prop: ['flex'],
             propIdentifier: 'flex',
             plugin: 'integer',
           },
@@ -98,12 +136,12 @@ describe('generateCSS', () => {
       const config: BatteryConfig = {
         props: [
           {
-            prop: 'width',
+            prop: ['width'],
             propIdentifier: 'w',
             plugin: 'lengthUnit',
           },
           {
-            prop: 'height',
+            prop: ['height'],
             propIdentifier: 'h',
             plugin: 'lengthUnit',
           },
@@ -136,7 +174,7 @@ describe('generateCSS', () => {
       const config: BatteryConfig = {
         props: [
           {
-            prop: 'margin',
+            prop: ['margin'],
             propIdentifier: 'm',
             plugin: 'lengthUnit',
           },
@@ -174,12 +212,12 @@ describe('generateCSS', () => {
       const config: BatteryConfig = {
         props: [
           {
-            prop: 'color',
+            prop: ['color'],
             pluginDefault: true,
             plugin: 'color',
           },
           {
-            prop: 'background-color',
+            prop: ['background-color'],
             propIdentifier: 'bg',
             pluginSeparator: '-',
             plugin: 'color',
@@ -215,12 +253,12 @@ describe('generateCSS', () => {
       const config: BatteryConfig = {
         props: [
           {
-            prop: 'color',
+            prop: ['color'],
             pluginDefault: true,
             plugin: 'color',
           },
           {
-            prop: 'background-color',
+            prop: ['background-color'],
             propIdentifier: 'bg',
             pluginSeparator: '-',
             plugin: 'color',
@@ -256,7 +294,7 @@ describe('generateCSS', () => {
     const config: BatteryConfig = {
       props: [
         {
-          prop: 'background-size',
+          prop: ['background-size'],
           propIdentifier: 'bg',
           keywordSeparator: '-',
           keywordValues: {
@@ -265,7 +303,7 @@ describe('generateCSS', () => {
           },
         },
         {
-          prop: 'text-align',
+          prop: ['text-align'],
           propIdentifier: 'text',
           keywordSeparator: '-',
           keywordValues: {
@@ -290,7 +328,7 @@ describe('generateCSS', () => {
     const config: BatteryConfig = {
       props: [
         {
-          prop: 'background-size',
+          prop: ['background-size'],
           propIdentifier: 'bg',
           keywordSeparator: '-',
           keywordValues: {
@@ -299,7 +337,7 @@ describe('generateCSS', () => {
           },
         },
         {
-          prop: 'text-align',
+          prop: ['text-align'],
           propIdentifier: 'text',
           keywordSeparator: '-',
           keywordValues: {
