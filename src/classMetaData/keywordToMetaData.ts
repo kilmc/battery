@@ -19,14 +19,23 @@ export const keywordToMetaData = (config: BatteryConfig): ClassMetaData[] => {
             prop,
           } = propConfig;
 
+          const isDefaultValue = valueIdentifier === '__DEFAULT__';
+          const sanitizedValueIdentifier = isDefaultValue
+            ? ''
+            : valueIdentifier;
+
+          const processedSource = isDefaultValue
+            ? `${propIdentifier}${sanitizedValueIdentifier}`
+            : `${propIdentifier}${keywordSeparator}${sanitizedValueIdentifier}`;
+
           const classMetaDataObj = {
-            source: `${propIdentifier}${keywordSeparator}${valueIdentifier}`,
+            source: processedSource,
             keyword: true,
             property: prop,
             explodedSource: {
               propIdentifier: propIdentifier,
               valueSeparator: keywordSeparator,
-              valueIdentifier,
+              valueIdentifier: sanitizedValueIdentifier,
             },
             classObject: generateClassObject(prop, value),
           };

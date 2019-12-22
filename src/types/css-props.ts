@@ -5,6 +5,34 @@ type BackgroundProps =
   | 'background-repeat'
   | 'backround-image';
 
+type BorderShorthandProps =
+  | 'border'
+  | 'border-top'
+  | 'border-right'
+  | 'border-bottom'
+  | 'border-left';
+
+type BorderColorProps =
+  | 'border-color'
+  | 'border-top-color'
+  | 'border-right-color'
+  | 'border-bottom-color'
+  | 'border-left-color';
+
+type BorderStyleProps =
+  | 'border-style'
+  | 'border-top-style'
+  | 'border-right-style'
+  | 'border-bottom-style'
+  | 'border-left-style';
+
+type BorderWidthProps =
+  | 'border-width'
+  | 'border-top-width'
+  | 'border-right-width'
+  | 'border-bottom-width'
+  | 'border-left-width';
+
 type MarginProps =
   | 'margin'
   | 'margin-top'
@@ -30,6 +58,10 @@ type FlexProps = 'flex' | 'flex-shrink' | 'flex-grow' | 'flex-basis';
 
 export type CSSProps =
   | BackgroundProps
+  | BorderShorthandProps
+  | BorderColorProps
+  | BorderStyleProps
+  | BorderWidthProps
   | 'color'
   | 'display'
   | 'fill'

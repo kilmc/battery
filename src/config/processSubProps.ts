@@ -20,7 +20,8 @@ const processedProp = (propsArr: string[], baseProp: CSSProps) => {
   if (propsArr.length === 0) {
     return [baseProp];
   }
-  return propsArr.every(p => !!p.match('border-'))
+
+  return baseProp.match('border-')
     ? propsArr.map(subProp => formatBorderProp(baseProp, subProp))
     : propsArr.map(subProp => `${baseProp}-${subProp}` as CSSProps);
 };

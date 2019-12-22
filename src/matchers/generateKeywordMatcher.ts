@@ -12,6 +12,7 @@ export const generateKeywordMatcher = (
   const sortedClassNames = toCapture(
     metaDataArr.map(metaData => `${metaData.source}`),
   );
+
   return {
     keyword: new RegExp(`(${prefixes})${sortedClassNames}(${suffixes})`),
   };

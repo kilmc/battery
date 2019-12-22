@@ -10,9 +10,12 @@ export type SubPropKeys =
   | 'all';
 
 type SubProp = { [key in SubPropKeys]?: string };
-type ModifierSubset = { name: string; modifiers: string[] };
+interface ModifierSubset {
+  name: string;
+  modifiers: string[];
+}
 
-export type UserPropConfig = {
+export interface UserPropConfig {
   prop: CSSProps[];
   propIdentifier?: string;
   pluginDefault?: boolean;
@@ -22,4 +25,4 @@ export type UserPropConfig = {
   keywordSeparator?: string;
   keywordValues?: { [k: string]: string };
   plugin?: string | ModifierSubset[];
-};
+}

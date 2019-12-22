@@ -65,6 +65,26 @@ describe('generateCSS', () => {
         );
       });
     });
+
+    describe('with a default value', () => {
+      const input = ['border'];
+      const config: BatteryConfig = {
+        props: [
+          {
+            prop: ['border'],
+            propIdentifier: 'border',
+            keywordSeparator: '-',
+            keywordValues: { __DEFAULT__: '1px solid #000' },
+          },
+        ],
+      };
+
+      test('renders valid CSS', () => {
+        expect(generateCSS(input, config)).toEqual(
+          '.border { border: 1px solid #000 }',
+        );
+      });
+    });
   });
 
   describe('Handles subProps', () => {
@@ -97,6 +117,41 @@ describe('generateCSS', () => {
           `
           .mx2 { margin-right: 0.75rem; margin-left: 0.75rem }
           .my50p { margin-top: 50%; margin-bottom: 50% }
+          `.replace(/\s/g, ''),
+        );
+      });
+    });
+
+    describe('border prop set', () => {
+      const classNames = ['border-top-solid', 'border-x-dashed'];
+      const config: BatteryConfig = {
+        props: [
+          {
+            prop: ['border-style'],
+            propIdentifier: 'border',
+            subPropSeparator: '-',
+            subProps: {
+              top: 'top',
+              right: 'right',
+              bottom: 'bottom',
+              left: 'left',
+              horizontal: 'x',
+              vertical: 'y',
+            },
+            keywordSeparator: '-',
+            keywordValues: {
+              solid: 'solid',
+              dashed: 'dashed',
+            },
+          },
+        ],
+        plugins: [lengthUnitsPlugin],
+      };
+      it('renders valid CSS', () => {
+        expect(generateCSS(classNames, config).replace(/\s/g, '')).toEqual(
+          `
+          .border-top-solid { border-top-style: solid }
+          .border-x-dashed {  border-right-style: dashed; border-left-style: dashed}
           `.replace(/\s/g, ''),
         );
       });
