@@ -21,7 +21,7 @@ const getPlugins = (
   if (!plugins) return {};
 
   return Object.entries(matchers)
-    .filter(([matcherName, _]) => {
+    .filter(([matcherName]) => {
       const valuePlugins = plugins
         .filter(plugin => pluginTypes.includes(plugin.type))
         .map(plugin => `${plugin.name}`);
@@ -70,9 +70,7 @@ export const addMetaData = (
 
   // Adds: source, invalid, selector
   const withSourceData = addSourceData(classNames, matchers);
-  const { validClassMeta, invalidClassMeta } = sortValidAndInvalid(
-    withSourceData,
-  );
+  const { validClassMeta } = sortValidAndInvalid(withSourceData);
 
   // Adds: keyword
   const withKeywordData = addKeywordData(validClassMeta, matchers);

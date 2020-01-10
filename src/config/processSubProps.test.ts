@@ -1,8 +1,27 @@
-import { margin } from 'fixtures/props/margin';
 import { convertSubProps } from './processSubProps';
+import { UserPropConfig } from 'types/prop-config';
 
 describe('processSubProps', () => {
   it('converts configs with subProps into their own separate configs', () => {
+    const margin: UserPropConfig = {
+      prop: ['margin'],
+      propIdentifier: 'm',
+      subProps: {
+        all: '',
+        top: 't',
+        right: 'r',
+        bottom: 'b',
+        left: 'l',
+        vertical: 'y',
+        horizontal: 'x',
+      },
+      keywordSeparator: '',
+      keywordValues: {
+        auto: 'auto',
+      },
+      plugin: 'lengthUnit',
+    };
+
     const props = [margin];
     const marginSubProps = [
       {

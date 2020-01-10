@@ -12,9 +12,10 @@ export const margin: UserPropConfig = {
     vertical: 'y',
     horizontal: 'x',
   },
-  keywordSeparator: '',
+  keywordSeparator: '-',
   keywordValues: {
     auto: 'auto',
+    inherit: 'inherit',
   },
   plugin: 'lengthUnit',
 };

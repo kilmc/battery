@@ -54,7 +54,15 @@ type WidthProps = 'width' | 'max-width' | 'min-width';
 
 type TextProps = 'text-align' | 'text-decoration' | 'text-transform';
 
-type FlexProps = 'flex' | 'flex-shrink' | 'flex-grow' | 'flex-basis';
+type FlexProps =
+  | 'flex'
+  | 'flex-shrink'
+  | 'flex-grow'
+  | 'flex-basis'
+  | 'align-items'
+  | 'align-self'
+  | 'align-content'
+  | 'justify-content';
 
 export type CSSProps =
   | BackgroundProps

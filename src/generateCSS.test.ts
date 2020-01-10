@@ -6,6 +6,11 @@ import { hoverTargetPlugin } from 'fixtures/plugins/hoverTarget';
 import { breakpointPlugin } from 'fixtures/plugins/breakpoint';
 import { margin } from 'fixtures/props/margin';
 import { lengthUnitsPlugin } from 'fixtures/plugins/lengthUnits';
+import { UserPropConfig } from 'types/prop-config';
+
+const testOutput = (source: string, expectation: string) => {
+  expect(source.replace(/\s/g, '')).toEqual(expectation.replace(/\s/g, ''));
+};
 
 describe('generateCSS', () => {
   describe('Handles keywords', () => {
@@ -34,8 +39,9 @@ describe('generateCSS', () => {
       };
 
       it('renders valid CSS', () => {
-        expect(generateCSS(input, config).trim()).toEqual(
-          '.bg-contain { background-size: contain } .text-center { text-align: center }'.trim(),
+        testOutput(
+          generateCSS(input, config),
+          '.bg-contain { background-size: contain } .text-center { text-align: center }',
         );
       });
     });
@@ -60,8 +66,9 @@ describe('generateCSS', () => {
       };
 
       test('renders valid CSS', () => {
-        expect(generateCSS(input, config).trim()).toEqual(
-          '.block { display: block } .absolute { position: absolute }'.trim(),
+        testOutput(
+          generateCSS(input, config),
+          '.block { display: block } .absolute { position: absolute }',
         );
       });
     });
@@ -80,7 +87,8 @@ describe('generateCSS', () => {
       };
 
       test('renders valid CSS', () => {
-        expect(generateCSS(input, config)).toEqual(
+        testOutput(
+          generateCSS(input, config),
           '.border { border: 1px solid #000 }',
         );
       });
@@ -95,13 +103,14 @@ describe('generateCSS', () => {
         plugins: [lengthUnitsPlugin],
       };
       it('renders valid CSS', () => {
-        expect(generateCSS(classNames, config).replace(/\s/g, '')).toEqual(
+        testOutput(
+          generateCSS(classNames, config),
           `
-          .mb2 { margin-bottom: 0.75rem }
-          .mt10p { margin-top: 10% }
           .m3 { margin: 1.125rem }
+          .mb2 { margin-bottom: 0.75rem }
           .mr1 { margin-right: 0.375rem }
-          `.replace(/\s/g, ''),
+          .mt10p { margin-top: 10% }
+          `,
         );
       });
     });
@@ -113,11 +122,12 @@ describe('generateCSS', () => {
         plugins: [lengthUnitsPlugin],
       };
       it('renders valid CSS', () => {
-        expect(generateCSS(classNames, config).replace(/\s/g, '')).toEqual(
+        testOutput(
+          generateCSS(classNames, config),
           `
           .mx2 { margin-right: 0.75rem; margin-left: 0.75rem }
           .my50p { margin-top: 50%; margin-bottom: 50% }
-          `.replace(/\s/g, ''),
+          `,
         );
       });
     });
@@ -148,11 +158,12 @@ describe('generateCSS', () => {
         plugins: [lengthUnitsPlugin],
       };
       it('renders valid CSS', () => {
-        expect(generateCSS(classNames, config).replace(/\s/g, '')).toEqual(
+        testOutput(
+          generateCSS(classNames, config),
           `
-          .border-top-solid { border-top-style: solid }
           .border-x-dashed {  border-right-style: dashed; border-left-style: dashed}
-          `.replace(/\s/g, ''),
+          .border-top-solid { border-top-style: solid }
+          `,
         );
       });
     });
@@ -180,8 +191,9 @@ describe('generateCSS', () => {
       };
 
       it('renders valid CSS', () => {
-        expect(generateCSS(input, config).trim()).toEqual(
-          '.z100 { z-index: 100 } .flex1 { flex: 1 }'.trim(),
+        testOutput(
+          generateCSS(input, config),
+          ' .flex1 { flex: 1 } .z100 { z-index: 100 }',
         );
       });
     });
@@ -218,8 +230,9 @@ describe('generateCSS', () => {
       };
 
       it('renders valid CSS', () => {
-        expect(generateCSS(input, config).trim()).toEqual(
-          '.w100p { width: 100% } .h50p { height: 50% }'.trim(),
+        testOutput(
+          generateCSS(input, config),
+          '.h50p { height: 50% } .w100p { width: 100% }',
         );
       });
     });
@@ -254,9 +267,7 @@ describe('generateCSS', () => {
       };
 
       it('renders valid CSS', () => {
-        expect(generateCSS(input, config).trim()).toEqual(
-          '.m3 { margin: 1.8rem }'.trim(),
-        );
+        testOutput(generateCSS(input, config), '.m3 { margin: 1.8rem }');
       });
     });
   });
@@ -288,8 +299,9 @@ describe('generateCSS', () => {
       };
 
       it('renders valid CSS', () => {
-        expect(generateCSS(input, config).trim()).toEqual(
-          '.bg-black { background-color: #000000 } .white { color: #FFFFFF }'.trim(),
+        testOutput(
+          generateCSS(input, config),
+          '.bg-black { background-color: #000000 } .white { color: #FFFFFF }',
         );
       });
     });
@@ -337,8 +349,9 @@ describe('generateCSS', () => {
       };
 
       it('renders valid CSS', () => {
-        expect(generateCSS(input, config).trim()).toEqual(
-          '.bg-black_50 { background-color: rgba(0,0,0,0.5) } .white_01 { color: rgba(255,255,255,0.01) }'.trim(),
+        testOutput(
+          generateCSS(input, config),
+          '.bg-black_50 { background-color: rgba(0,0,0,0.5) } .white_01 { color: rgba(255,255,255,0.01) }',
         );
       });
     });
@@ -371,8 +384,9 @@ describe('generateCSS', () => {
 
     describe('', () => {
       it('renders valid CSS', () => {
-        expect(generateCSS(input, config).trim()).toEqual(
-          '.hover-bg-contain:hover { background-size: contain } .hover-target:hover .hover-item-text-center { text-align: center }'.trim(),
+        testOutput(
+          generateCSS(input, config),
+          '.hover-bg-contain:hover { background-size: contain } .hover-target:hover .hover-item-text-center { text-align: center }',
         );
       });
     });
@@ -405,7 +419,8 @@ describe('generateCSS', () => {
 
     describe('', () => {
       it('renders valid CSS', () => {
-        expect(generateCSS(input, config).replace(/\s/g, '')).toEqual(
+        testOutput(
+          generateCSS(input, config),
           `
           @media (min-width: 560px) {
             .text-center-sm { text-align: center }
@@ -413,8 +428,94 @@ describe('generateCSS', () => {
           @media (min-width: 940px) {
             .bg-contain-md { background-size: contain }
             .bg-cover-md { background-size: cover }
-          }
-        `.replace(/\s/g, ''),
+          }`,
+        );
+      });
+    });
+  });
+
+  describe('Sorts', () => {
+    describe('into descending alpha-numeric order', () => {
+      const backgroundSize: UserPropConfig = {
+        prop: ['background-size'],
+        propIdentifier: 'bg',
+        keywordSeparator: '-',
+        keywordValues: {
+          contain: 'contain',
+          cover: 'cover',
+        },
+      };
+      const textAlign: UserPropConfig = {
+        prop: ['text-align'],
+        propIdentifier: 'text',
+        keywordSeparator: '-',
+        keywordValues: {
+          center: 'center',
+        },
+      };
+      const classNames = [
+        'text-center',
+        'bg-cover',
+        'mb2',
+        'mt10p',
+        'm3',
+        'mr1',
+        'bg-contain',
+        'mr2',
+        'mr3',
+        'mt11',
+        'mt11p',
+      ];
+      const config: BatteryConfig = {
+        props: [margin, backgroundSize, textAlign],
+        plugins: [lengthUnitsPlugin],
+      };
+      it('renders valid CSS', () => {
+        testOutput(
+          generateCSS(classNames, config),
+          `
+            .bg-contain { background-size: contain }
+            .bg-cover { background-size: cover }
+            .m3 { margin: 1.125rem }
+            .mb2 { margin-bottom: 0.75rem }
+            .mr1 { margin-right: 0.375rem }
+            .mr2 { margin-right: 0.75rem }
+            .mr3 { margin-right: 1.125rem }
+            .mt11 { margin-top: 4.125rem }
+            .mt10p { margin-top: 10% }
+            .mt11p { margin-top: 11% }
+            .text-center { text-align: center }
+          `,
+        );
+      });
+    });
+
+    describe('moves auto and inherit values to the bottom of the list', () => {
+      const margin: UserPropConfig = {
+        prop: ['margin'],
+        propIdentifier: 'm',
+        keywordSeparator: '-',
+        keywordValues: {
+          base: '1rem',
+          zzzz: '10rem',
+          auto: 'auto',
+          inherit: 'inherit',
+        },
+      };
+      const classNames = ['m-auto', 'm-zzzz', 'm-inherit', 'm-base'];
+      const config: BatteryConfig = {
+        props: [margin],
+        plugins: [lengthUnitsPlugin],
+      };
+      it('renders valid CSS', () => {
+        testOutput(
+          generateCSS(classNames, config),
+          `
+            .m-base { margin: 1rem }
+            .m-zzzz { margin: 10rem }
+            .m-auto { margin: auto }
+            .m-inherit { margin: inherit }
+            `,
         );
       });
     });

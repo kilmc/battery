@@ -4,10 +4,7 @@ import { addMetaData } from 'classMetaData/addMetaData';
 import { ClassMetaData } from 'types/classname';
 import { Plugin } from 'types/plugin-config';
 import { convertSubProps } from 'config/processSubProps';
-
-const unique = (arr: any[]) => [...new Set(arr)];
-const capitalizeFirstLetter = (x: string) =>
-  x.charAt(0).toUpperCase() + x.slice(1);
+import { sortAlphaNum } from 'utils/string';
 
 const processAtRulePlugins = (
   classMetaArr: ClassMetaData[],
@@ -19,6 +16,7 @@ const processAtRulePlugins = (
       const pluginModifiers = plugin.modifiers.map(modifier => modifier.name);
       return [plugin.name, pluginModifiers];
     });
+
   return atRuleProcessingOrder.reduce((accum, [atRuleName, modifierNames]) => {
     const atRuleClassMeta = classMetaArr.filter(
       classMeta => classMeta.atrulePlugin === atRuleName,
@@ -41,9 +39,9 @@ const processAtRulePlugins = (
           pluginModifier => pluginModifier.name === modifierName,
         );
 
-        const atRuleCss = `@${plugin.atrule} ${
-          modifier.condition
-        } { ${modifierCSS} }`;
+        const atRuleCss = `
+          @${plugin.atrule} ${modifier.condition} { ${modifierCSS} }
+        `;
         return cssArr.concat(atRuleCss);
       },
       [] as string[],
@@ -51,6 +49,54 @@ const processAtRulePlugins = (
 
     return accum.concat(atRuleCSSArr);
   }, []);
+};
+
+const sortClassMetaByProperty = (classMetaArr: ClassMetaData[]) =>
+  [...classMetaArr].sort((a, b) => sortAlphaNum(a.property[0], b.property[0]));
+
+const sortGroupedClassMetaBySource = (classMetaArr: ClassMetaData[]) =>
+  Object.values(
+    classMetaArr.reduce(
+      (accum, classMeta) => {
+        accum[classMeta.property[0]]
+          ? (accum[classMeta.property[0]] = accum[classMeta.property[0]].concat(
+              classMeta,
+            ))
+          : (accum[classMeta.property[0]] = [classMeta]);
+
+        return accum;
+      },
+      {} as { [k: string]: ClassMetaData[] },
+    ),
+  )
+    .map(propGroup =>
+      propGroup.sort((a, b) => sortAlphaNum(a.source, b.source)),
+    )
+    .reduce((xs, x) => xs.concat(x));
+
+const autoAndInheritToBottom = (classMetaArr: ClassMetaData[]) => {
+  const hasOverrideValues = (classMeta: ClassMetaData) =>
+    Object.values(classMeta.classObject).every(value =>
+      ['auto', 'inherit'].includes(value),
+    );
+  const withoutOverrideValues = classMetaArr.filter(
+    classMeta => !hasOverrideValues(classMeta),
+  );
+  const overrideValues = [...classMetaArr].filter(hasOverrideValues);
+
+  return withoutOverrideValues.concat(overrideValues);
+};
+
+const processRootCSS = (rootClasses: ClassMetaData[]) => {
+  if (rootClasses.length < 1) {
+    return [];
+  } else {
+    const groupedByProperty = sortClassMetaByProperty(rootClasses);
+    const sortedBySource = sortGroupedClassMetaBySource(groupedByProperty);
+    const withOverridesAtTheBottom = autoAndInheritToBottom(sortedBySource);
+
+    return withOverridesAtTheBottom.map(c => c.css);
+  }
 };
 
 export const generateCSS = (
@@ -63,21 +109,19 @@ export const generateCSS = (
   };
   const classMetaArr = addMetaData(classNames, processedConfig);
 
-  const processedClasses = classMetaArr.map(classMeta => {
+  const withCssData = classMetaArr.map(classMeta => {
     classMeta.css = classMetaToCSS(classMeta, processedConfig.plugins);
     return classMeta;
   });
 
-  const atRuleClasses = processedClasses.filter(c => !!c.atrulePlugin);
-  const nonAtRuleClasses = processedClasses.filter(
-    x => !atRuleClasses.includes(x),
-  );
+  const atRuleClasses = withCssData.filter(c => !!c.atrulePlugin);
+  const rootClasses = withCssData.filter(x => !atRuleClasses.includes(x));
 
-  const nonAtRuleCSS = nonAtRuleClasses.map(c => c.css);
+  const rootCSS = processRootCSS(rootClasses);
   let atRuleCSS = [];
   if (atRuleClasses.length > 0) {
     atRuleCSS = processAtRulePlugins(atRuleClasses, processedConfig.plugins);
   }
 
-  return [...nonAtRuleCSS, ...atRuleCSS].join(' ');
+  return [...rootCSS, ...atRuleCSS].join(' ');
 };

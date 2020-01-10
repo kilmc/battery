@@ -13,3 +13,5 @@ export const baseToCapture = (nonCapture: boolean) => (
 
 export const toCapture = baseToCapture(false);
 export const toGroup = baseToCapture(true);
+
+export const unique = (arr: any[]) => [...new Set(arr)];
