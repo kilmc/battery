@@ -1,7 +1,11 @@
-export type ClassObject = { [key in CSSProps]?: string };
-export type ClassObjectGroup = { [k: string]: ClassObject };
+import { CSSProps } from './css-props';
 
-export type ExplodedClassSource = {
+export type ClassObject = { [key in CSSProps]?: string };
+export interface ClassObjectGroup {
+  [k: string]: ClassObject;
+}
+
+export interface ExplodedClassSource {
   prefix?: string;
   prefixSeparator?: string;
   suffix?: string;
@@ -11,9 +15,9 @@ export type ExplodedClassSource = {
   valueIdentifier: string;
   modifierSeparator?: string;
   modifierIdentifier?: string;
-};
+}
 
-export type ClassMetaData = {
+export interface ClassMetaData {
   property?: CSSProps[];
   source: string;
   selector?: string;
@@ -29,4 +33,4 @@ export type ClassMetaData = {
   classObject?: ClassObject;
   invalid?: boolean;
   css?: string;
-};
+}

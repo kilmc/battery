@@ -1,5 +1,5 @@
 export type Matcher = RegExp;
-export type Matchers = {
+export interface Matchers {
   keyword?: Matcher;
   [k: string]: Matcher;
-};
+}
