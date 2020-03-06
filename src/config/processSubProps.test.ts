@@ -15,7 +15,7 @@ describe('processSubProps', () => {
         vertical: 'y',
         horizontal: 'x',
       },
-      keywordSeparator: '',
+      valueSeparator: '',
       values: {
         auto: 'auto',
       },
@@ -27,7 +27,7 @@ describe('processSubProps', () => {
       {
         cssProperty: ['margin'],
         classNamespace: 'm',
-        keywordSeparator: '',
+        valueSeparator: '',
         values: {
           auto: 'auto',
         },
@@ -36,7 +36,7 @@ describe('processSubProps', () => {
       {
         cssProperty: ['margin-top'],
         classNamespace: 'mt',
-        keywordSeparator: '',
+        valueSeparator: '',
         values: {
           auto: 'auto',
         },
@@ -45,7 +45,7 @@ describe('processSubProps', () => {
       {
         cssProperty: ['margin-right'],
         classNamespace: 'mr',
-        keywordSeparator: '',
+        valueSeparator: '',
         values: {
           auto: 'auto',
         },
@@ -54,7 +54,7 @@ describe('processSubProps', () => {
       {
         cssProperty: ['margin-bottom'],
         classNamespace: 'mb',
-        keywordSeparator: '',
+        valueSeparator: '',
         values: {
           auto: 'auto',
         },
@@ -63,7 +63,7 @@ describe('processSubProps', () => {
       {
         cssProperty: ['margin-left'],
         classNamespace: 'ml',
-        keywordSeparator: '',
+        valueSeparator: '',
         values: {
           auto: 'auto',
         },
@@ -72,7 +72,7 @@ describe('processSubProps', () => {
       {
         cssProperty: ['margin-top', 'margin-bottom'],
         classNamespace: 'my',
-        keywordSeparator: '',
+        valueSeparator: '',
         values: {
           auto: 'auto',
         },
@@ -81,7 +81,7 @@ describe('processSubProps', () => {
       {
         cssProperty: ['margin-right', 'margin-left'],
         classNamespace: 'mx',
-        keywordSeparator: '',
+        valueSeparator: '',
         values: {
           auto: 'auto',
         },

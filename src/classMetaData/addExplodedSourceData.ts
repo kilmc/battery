@@ -23,10 +23,12 @@ const setValueSeparator = (
   propConfig: UserPropConfig,
   classMeta: ClassMetaData,
 ): ExplodedClassSource => {
-  const { keywordSeparator = '', pluginSeparator = '' } = propConfig;
-  const valueSeparator = classMeta.keyword ? keywordSeparator : pluginSeparator;
+  const { valueSeparator = '', pluginSeparator = '' } = propConfig;
+  const explodedValueSeparator = classMeta.keyword
+    ? valueSeparator
+    : pluginSeparator;
 
-  return { ...explodedSource, valueSeparator };
+  return { ...explodedSource, valueSeparator: explodedValueSeparator };
 };
 
 const setModifierData = (

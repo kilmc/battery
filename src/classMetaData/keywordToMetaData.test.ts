@@ -10,7 +10,7 @@ describe('keywordToMetaData', () => {
           {
             cssProperty: ['background-size'],
             classNamespace: 'bg',
-            keywordSeparator: '-',
+            valueSeparator: '-',
             values: {
               contain: 'contain',
               cover: 'cover',

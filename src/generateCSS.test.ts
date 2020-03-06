@@ -21,7 +21,7 @@ describe('generateCSS', () => {
           {
             cssProperty: ['background-size'],
             classNamespace: 'bg',
-            keywordSeparator: '-',
+            valueSeparator: '-',
             values: {
               contain: 'contain',
               cover: 'cover',
@@ -30,7 +30,7 @@ describe('generateCSS', () => {
           {
             cssProperty: ['text-align'],
             classNamespace: 'text',
-            keywordSeparator: '-',
+            valueSeparator: '-',
             values: {
               center: 'center',
             },
@@ -80,7 +80,7 @@ describe('generateCSS', () => {
           {
             cssProperty: ['border'],
             classNamespace: 'border',
-            keywordSeparator: '-',
+            valueSeparator: '-',
             values: { __DEFAULT__: '1px solid #000' },
           },
         ],
@@ -148,7 +148,7 @@ describe('generateCSS', () => {
               horizontal: 'x',
               vertical: 'y',
             },
-            keywordSeparator: '-',
+            valueSeparator: '-',
             values: {
               solid: 'solid',
               dashed: 'dashed',
@@ -364,7 +364,7 @@ describe('generateCSS', () => {
         {
           cssProperty: ['background-size'],
           classNamespace: 'bg',
-          keywordSeparator: '-',
+          valueSeparator: '-',
           values: {
             contain: 'contain',
             cover: 'cover',
@@ -373,7 +373,7 @@ describe('generateCSS', () => {
         {
           cssProperty: ['text-align'],
           classNamespace: 'text',
-          keywordSeparator: '-',
+          valueSeparator: '-',
           values: {
             center: 'center',
           },
@@ -399,7 +399,7 @@ describe('generateCSS', () => {
         {
           cssProperty: ['background-size'],
           classNamespace: 'bg',
-          keywordSeparator: '-',
+          valueSeparator: '-',
           values: {
             contain: 'contain',
             cover: 'cover',
@@ -408,7 +408,7 @@ describe('generateCSS', () => {
         {
           cssProperty: ['text-align'],
           classNamespace: 'text',
-          keywordSeparator: '-',
+          valueSeparator: '-',
           values: {
             center: 'center',
           },
@@ -439,7 +439,7 @@ describe('generateCSS', () => {
       const backgroundSize: UserPropConfig = {
         cssProperty: ['background-size'],
         classNamespace: 'bg',
-        keywordSeparator: '-',
+        valueSeparator: '-',
         values: {
           contain: 'contain',
           cover: 'cover',
@@ -448,7 +448,7 @@ describe('generateCSS', () => {
       const textAlign: UserPropConfig = {
         cssProperty: ['text-align'],
         classNamespace: 'text',
-        keywordSeparator: '-',
+        valueSeparator: '-',
         values: {
           center: 'center',
         },
@@ -494,7 +494,7 @@ describe('generateCSS', () => {
       const margin: UserPropConfig = {
         cssProperty: ['margin'],
         classNamespace: 'm',
-        keywordSeparator: '-',
+        valueSeparator: '-',
         values: {
           base: '1rem',
           zzzz: '10rem',
