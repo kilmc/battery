@@ -1,13 +1,13 @@
 {
   "compilerOptions": {
     "baseUrl": "src",
-    "declaration": true,
-    "declarationDir": "./dist",
-    "module": "es6",
-    "noImplicitAny": true,
-    "outDir": "./dist",
-    "target": "es5",
     "esModuleInterop": true,
+    "lib": ["ESNext", "DOM"],
+    "module": "es6",
+    "moduleResolution": "node",
+    "noImplicitAny": true,
+    "rootDir": "src",
+    "target": "es5",
     "downlevelIteration": true
   },
   "include": ["src/**/*", "test/**/*", "src/fixtures/**/*"],
