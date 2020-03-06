@@ -1,12 +1,14 @@
 {
   "compilerOptions": {
     "baseUrl": "src",
+    "rootDir": "src",
+    "declaration": true,
+    "declarationDir": "./dist/types",
     "esModuleInterop": true,
     "lib": ["ESNext", "DOM"],
     "module": "es6",
     "moduleResolution": "node",
     "noImplicitAny": true,
-    "rootDir": "src",
     "target": "es5",
     "downlevelIteration": true
   },

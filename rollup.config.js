@@ -4,16 +4,12 @@ import pkg from './package.json';
 
 export default {
   input: 'src/index.ts',
-  output: [
-    {
-      file: pkg.main,
-      format: 'cjs',
-    },
-    {
-      file: pkg.module,
-      format: 'es',
-    },
-  ],
+  output: {
+    // use CommonJS for now, until Node.js fully supports ES Modules
+    // https://medium.com/@nodejs/announcing-a-new-experimental-modules-1be8d2d6c2ff
+    format: 'cjs',
+    dir: 'dist',
+  },
   external: [
     ...Object.keys(pkg.dependencies || {}),
     ...Object.keys(pkg.peerDependencies || {}),

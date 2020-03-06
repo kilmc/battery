@@ -2,37 +2,35 @@
   "name": "@battery/core",
   "version": "0.0.6",
   "main": "dist/index.js",
-  "module": "dist/index.es.js",
+  "types": "dist/types",
   "repository": "git@github.com:kilmc/battery",
   "author": "Kilian McMahon",
   "license": "MIT",
   "description": "Battery is a system to generate infinite, composable, atomic styles that eliminates code bloat and automatically documents itself.",
+  "dependencies": {},
   "devDependencies": {
-    "@babel/core": "^7.4.5",
-    "@babel/preset-env": "^7.4.5",
+    "@babel/core": "^7.8.7",
+    "@babel/preset-env": "^7.8.7",
     "@rollup/plugin-typescript": "^4.0.0",
     "@types/jest": "^24.0.13",
     "@typescript-eslint/eslint-plugin": "^1.9.0",
     "@typescript-eslint/parser": "^1.9.0",
     "babel-jest": "^24.8.0",
-    "babel-preset-es2015-rollup": "^3.0.0",
     "eslint": "^5.16.0",
     "eslint-config-prettier": "^4.3.0",
     "eslint-plugin-prettier": "^3.1.0",
     "jest": "^24.8.0",
     "prettier": "^1.17.1",
-    "rollup": "1.31.0",
-    "rollup-plugin-babel": "^4.3.2",
+    "rollup": "1.32.1",
+    "rollup-plugin-babel": "^4.3.3",
     "ts-jest": "^24.0.2",
     "tslib": "^1.11.1",
+    "tslint": "^6.0.0",
     "typescript": "3.8.3"
   },
   "scripts": {
     "build": "rollup -c",
     "watch": "rollup -c -w",
     "test": "jest --watch"
-  },
-  "dependencies": {
-    "tslint": "^6.0.0"
   }
 }
