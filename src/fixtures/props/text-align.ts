@@ -1,7 +1,7 @@
 import { UserPropConfig } from 'types/prop-config';
 
 export const textAlign: UserPropConfig = {
-  prop: ['text-align'],
+  cssProperty: ['text-align'],
   propIdentifier: 'text',
   keywordSeparator: '-',
   keywordValues: {

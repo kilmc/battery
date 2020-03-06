@@ -1,7 +1,7 @@
 import { UserPropConfig } from 'types/prop-config';
 
 export const textColor: UserPropConfig = {
-  prop: ['color'],
+  cssProperty: ['color'],
   propIdentifier: 'text',
   pluginDefault: true,
   plugin: 'color',

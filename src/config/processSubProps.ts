@@ -37,15 +37,18 @@ export const convertSubProps = (props: UserPropConfig[]) => {
             propIdentifier,
             subProps,
             subPropSeparator = '',
-            prop,
+            cssProperty,
             ...rest
           } = propConfig;
 
-          const newProp = processedProp(subPropMapper[subPropGroup], prop[0]);
+          const newProp = processedProp(
+            subPropMapper[subPropGroup],
+            cssProperty[0],
+          );
 
           const newPropIdentifier = `${propIdentifier}${subPropSeparator}${subPropIdentifier}`;
           const newPropConfig = {
-            prop: newProp,
+            cssProperty: newProp,
             propIdentifier: newPropIdentifier,
             ...rest,
           };

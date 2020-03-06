@@ -46,7 +46,7 @@ export const addPropertyData = (
       } else {
         return false;
       }
-    }).prop;
+    }).cssProperty;
 
     classMeta.property = property;
     return classMeta;

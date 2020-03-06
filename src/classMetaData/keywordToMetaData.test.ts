@@ -8,7 +8,7 @@ describe('keywordToMetaData', () => {
       const config: BatteryConfig = {
         props: [
           {
-            prop: ['background-size'],
+            cssProperty: ['background-size'],
             propIdentifier: 'bg',
             keywordSeparator: '-',
             keywordValues: {
@@ -54,7 +54,7 @@ describe('keywordToMetaData', () => {
       const config: BatteryConfig = {
         props: [
           {
-            prop: ['display'],
+            cssProperty: ['display'],
             keywordValues: {
               block: 'block',
               inline: 'inline',

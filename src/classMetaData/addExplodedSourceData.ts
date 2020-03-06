@@ -202,7 +202,7 @@ export const addExplodedSourceData = (
     };
 
     const propConfig = props.find(
-      propConfig => propConfig.prop === classMeta.property,
+      propConfig => propConfig.cssProperty === classMeta.property,
     );
 
     const withPropIdentifier = setPropIdentifier(explodedSource, propConfig);

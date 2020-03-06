@@ -16,7 +16,7 @@ export const keywordToMetaData = (config: BatteryConfig): ClassMetaData[] => {
           const {
             keywordSeparator = '',
             propIdentifier = '',
-            prop,
+            cssProperty,
           } = propConfig;
 
           const isDefaultValue = valueIdentifier === '__DEFAULT__';
@@ -31,13 +31,13 @@ export const keywordToMetaData = (config: BatteryConfig): ClassMetaData[] => {
           const classMetaDataObj = {
             source: processedSource,
             keyword: true,
-            property: prop,
+            property: cssProperty,
             explodedSource: {
               propIdentifier: propIdentifier,
               valueSeparator: keywordSeparator,
               valueIdentifier: sanitizedValueIdentifier,
             },
-            classObject: generateClassObject(prop, value),
+            classObject: generateClassObject(cssProperty, value),
           };
 
           return accum.concat(classMetaDataObj);

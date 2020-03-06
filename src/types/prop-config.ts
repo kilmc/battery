@@ -16,7 +16,7 @@ interface ModifierSubset {
 }
 
 export interface UserPropConfig {
-  prop: CSSProps[];
+  cssProperty: CSSProps[];
   propIdentifier?: string;
   pluginDefault?: boolean;
   subProps?: SubProp;

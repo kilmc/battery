@@ -12,7 +12,7 @@ export const addClassObjectData = (
 ) => {
   return classMetaArr.map(classMeta => {
     const propConfig = config.props.find(propConfig =>
-      isPropMatch(propConfig.prop, classMeta.property),
+      isPropMatch(propConfig.cssProperty, classMeta.property),
     );
     let value = '';
 

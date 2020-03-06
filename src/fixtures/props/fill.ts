@@ -1,7 +1,7 @@
 import { UserPropConfig } from 'types/prop-config';
 
 export const fillColor: UserPropConfig = {
-  prop: ['fill'],
+  cssProperty: ['fill'],
   propIdentifier: 'fill',
   pluginSeparator: '-',
   plugin: 'color',

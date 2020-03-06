@@ -1,7 +1,7 @@
 import { UserPropConfig } from 'types/prop-config';
 
 export const position: UserPropConfig = {
-  prop: ['position'],
+  cssProperty: ['position'],
   keywordValues: {
     absolute: 'absolute',
   },

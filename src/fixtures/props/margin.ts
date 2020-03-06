@@ -1,7 +1,7 @@
 import { UserPropConfig } from 'types/prop-config';
 
 export const margin: UserPropConfig = {
-  prop: ['margin'],
+  cssProperty: ['margin'],
   propIdentifier: 'm',
   subProps: {
     all: '',

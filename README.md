@@ -40,7 +40,7 @@ The following are some examples of `propConfig`'s and what Battery will output g
 
 ```javascript
 const textAlign = {
-  prop: 'text-align',
+  cssProperty: 'text-align',
   propName: 'text',
   keywordValues: {
     separator: '-',
@@ -65,7 +65,7 @@ const input = ['text-left','text-center','text-right']
 
 ```javascript
 const position = {
-  prop: 'position',
+  cssProperty: 'position',
   propName: '',
   keywordValues: {
     values: {
@@ -93,7 +93,7 @@ const input = ['static', 'relative', 'absolute', 'fixed', 'sticky']
 ```javascript
 const zIndex = {
   propName: 'z',
-  prop: 'z-index',
+  cssProperty: 'z-index',
   enablePlugin: 'integers'
 }
 
@@ -110,7 +110,7 @@ const input = ['z1', 'z20', 'z-10', 'z-999']
 
 ```javascript
 const backgroundColor = {
-  prop: 'background-color',
+  cssProperty: 'background-color',
   propName: 'bg',
   separator: '-',
   keywordValues: {
@@ -153,7 +153,7 @@ This object allows you to manually set up values for your `property`. This can b
 
 ```javascript
 const alignItems = {
-  prop: 'align-items',
+  cssProperty: 'align-items',
   propName: 'items',
   keywordValues: {
     separator: '-',
@@ -194,7 +194,7 @@ A `propConfig` can to be set as the `pluginDefault`. This allows Battery to dete
 
 ```javascript
 const color = {
-  prop: 'color',
+  cssProperty: 'color',
   propName: '',
   keywordValues: {
     values: { transparent: 'transparent' }
@@ -242,7 +242,7 @@ const integersPlugin = {
 };
 
 const flexShrink = {
-  prop: 'flex-shrink',
+  cssProperty: 'flex-shrink',
   propName: 'shrink',
   enablePlugin: 'integers'
 };
@@ -277,19 +277,19 @@ const lengthUnitsPlugin = {
 }
 
 const width = {
-  prop: 'width',
+  cssProperty: 'width',
   propName: 'w',
   enablePlugin: 'lengthUnits'
 }
 
 const positionTop = {
-  prop: 'top',
+  cssProperty: 'top',
   propName: 't',
   enablePlugin: 'lengthUnits'
 }
 
 const fontSize = {
-  prop: 'font-size',
+  cssProperty: 'font-size',
   propName: 'f-size',
   propSeparator: '-'
   enablePlugin: 'lengthUnits'

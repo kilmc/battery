@@ -4,7 +4,7 @@ import { UserPropConfig } from 'types/prop-config';
 describe('processSubProps', () => {
   it('converts configs with subProps into their own separate configs', () => {
     const margin: UserPropConfig = {
-      prop: ['margin'],
+      cssProperty: ['margin'],
       propIdentifier: 'm',
       subProps: {
         all: '',
@@ -25,7 +25,7 @@ describe('processSubProps', () => {
     const props = [margin];
     const marginSubProps = [
       {
-        prop: ['margin'],
+        cssProperty: ['margin'],
         propIdentifier: 'm',
         keywordSeparator: '',
         keywordValues: {
@@ -34,7 +34,7 @@ describe('processSubProps', () => {
         plugin: 'lengthUnit',
       },
       {
-        prop: ['margin-top'],
+        cssProperty: ['margin-top'],
         propIdentifier: 'mt',
         keywordSeparator: '',
         keywordValues: {
@@ -43,7 +43,7 @@ describe('processSubProps', () => {
         plugin: 'lengthUnit',
       },
       {
-        prop: ['margin-right'],
+        cssProperty: ['margin-right'],
         propIdentifier: 'mr',
         keywordSeparator: '',
         keywordValues: {
@@ -52,7 +52,7 @@ describe('processSubProps', () => {
         plugin: 'lengthUnit',
       },
       {
-        prop: ['margin-bottom'],
+        cssProperty: ['margin-bottom'],
         propIdentifier: 'mb',
         keywordSeparator: '',
         keywordValues: {
@@ -61,7 +61,7 @@ describe('processSubProps', () => {
         plugin: 'lengthUnit',
       },
       {
-        prop: ['margin-left'],
+        cssProperty: ['margin-left'],
         propIdentifier: 'ml',
         keywordSeparator: '',
         keywordValues: {
@@ -70,7 +70,7 @@ describe('processSubProps', () => {
         plugin: 'lengthUnit',
       },
       {
-        prop: ['margin-top', 'margin-bottom'],
+        cssProperty: ['margin-top', 'margin-bottom'],
         propIdentifier: 'my',
         keywordSeparator: '',
         keywordValues: {
@@ -79,7 +79,7 @@ describe('processSubProps', () => {
         plugin: 'lengthUnit',
       },
       {
-        prop: ['margin-right', 'margin-left'],
+        cssProperty: ['margin-right', 'margin-left'],
         propIdentifier: 'mx',
         keywordSeparator: '',
         keywordValues: {

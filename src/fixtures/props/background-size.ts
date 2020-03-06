@@ -1,7 +1,7 @@
 import { UserPropConfig } from 'types/prop-config';
 
 export const backgroundSize: UserPropConfig = {
-  prop: ['background-size'],
+  cssProperty: ['background-size'],
   propIdentifier: 'bg',
   keywordSeparator: '-',
   keywordValues: {
