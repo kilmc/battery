@@ -11,7 +11,7 @@ export interface ExplodedClassSource {
   suffix?: string;
   suffixSeparator?: string;
   classNamespace?: string;
-  valueSeparator?: string;
+  valueOrPluginSeparator?: string;
   valueIdentifier: string;
   modifierSeparator?: string;
   modifierIdentifier?: string;

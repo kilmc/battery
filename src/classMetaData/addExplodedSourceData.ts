@@ -24,11 +24,11 @@ const setValueSeparator = (
   classMeta: ClassMetaData,
 ): ExplodedClassSource => {
   const { valueSeparator = '', pluginSeparator = '' } = propConfig;
-  const explodedValueSeparator = classMeta.keyword
+  const valueOrPluginSeparator = classMeta.keyword
     ? valueSeparator
     : pluginSeparator;
 
-  return { ...explodedSource, valueSeparator: explodedValueSeparator };
+  return { ...explodedSource, valueOrPluginSeparator };
 };
 
 const setModifierData = (
@@ -75,10 +75,10 @@ const determineKeywordValueIdentifier = (
   keywordMatcher: Matcher,
 ) => {
   const classNameBody = classMeta.source.match(keywordMatcher)[2];
-  const { classNamespace, valueSeparator } = explodedSource;
+  const { classNamespace, valueOrPluginSeparator } = explodedSource;
   const valueIdentifier = classNameBody
     .replace(classNamespace, '')
-    .replace(valueSeparator, '');
+    .replace(valueOrPluginSeparator, '');
 
   return valueIdentifier;
 };
@@ -195,7 +195,7 @@ export const addExplodedSourceData = (
       prefix: '',
       prefixSeparator: '',
       classNamespace: '',
-      valueSeparator: '',
+      valueOrPluginSeparator: '',
       valueIdentifier: '',
       modifierSeparator: '',
       modifierIdentifier: '',

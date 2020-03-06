@@ -28,13 +28,13 @@ export const keywordToMetaData = (config: BatteryConfig): ClassMetaData[] => {
             ? `${classNamespace}${sanitizedValueIdentifier}`
             : `${classNamespace}${valueSeparator}${sanitizedValueIdentifier}`;
 
-          const classMetaDataObj = {
+          const classMetaDataObj: ClassMetaData = {
             source: processedSource,
             keyword: true,
             property: cssProperty,
             explodedSource: {
               classNamespace: classNamespace,
-              valueSeparator: valueSeparator,
+              valueOrPluginSeparator: valueSeparator,
               valueIdentifier: sanitizedValueIdentifier,
             },
             classObject: generateClassObject(cssProperty, value),

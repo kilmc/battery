@@ -24,7 +24,7 @@ describe('keywordToMetaData', () => {
           source: 'bg-contain',
           explodedSource: {
             classNamespace: 'bg',
-            valueSeparator: '-',
+            valueOrPluginSeparator: '-',
             valueIdentifier: 'contain',
           },
           property: ['background-size'],
@@ -37,7 +37,7 @@ describe('keywordToMetaData', () => {
           source: 'bg-cover',
           explodedSource: {
             classNamespace: 'bg',
-            valueSeparator: '-',
+            valueOrPluginSeparator: '-',
             valueIdentifier: 'cover',
           },
           property: ['background-size'],
@@ -50,7 +50,7 @@ describe('keywordToMetaData', () => {
 
       expect(keywordToMetaData(config)).toEqual(expectedBackgroundSizeResult);
     });
-    describe('When classNamespace and valueSeparator are undefined', () => {
+    describe('When classNamespace and valueOrPluginSeparator are undefined', () => {
       const config: BatteryConfig = {
         props: [
           {
@@ -67,7 +67,7 @@ describe('keywordToMetaData', () => {
           source: 'block',
           explodedSource: {
             classNamespace: '',
-            valueSeparator: '',
+            valueOrPluginSeparator: '',
             valueIdentifier: 'block',
           },
           property: ['display'],
@@ -81,7 +81,7 @@ describe('keywordToMetaData', () => {
           source: 'inline',
           explodedSource: {
             classNamespace: '',
-            valueSeparator: '',
+            valueOrPluginSeparator: '',
             valueIdentifier: 'inline',
           },
           property: ['display'],
