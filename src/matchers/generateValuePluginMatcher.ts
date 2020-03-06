@@ -79,7 +79,7 @@ export const generateValuePluginMatcher = (
   const matchers: Matchers = plugins.reduce((accum: Matchers, plugin) => {
     const { name: pluginName } = plugin;
     const pluginProps = propConfigs.filter(
-      propConfig => propConfig.plugin === pluginName,
+      propConfig => propConfig.valuePlugin === pluginName,
     );
 
     if (pluginProps.length === 0) {

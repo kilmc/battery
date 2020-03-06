@@ -4,5 +4,5 @@ export const textColor: UserPropConfig = {
   cssProperty: ['color'],
   classNamespace: 'text',
   pluginDefault: true,
-  plugin: 'color',
+  valuePlugin: 'color',
 };

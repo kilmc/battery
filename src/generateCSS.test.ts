@@ -177,12 +177,12 @@ describe('generateCSS', () => {
           {
             cssProperty: ['z-index'],
             classNamespace: 'z',
-            plugin: 'integer',
+            valuePlugin: 'integer',
           },
           {
             cssProperty: ['flex'],
             classNamespace: 'flex',
-            plugin: 'integer',
+            valuePlugin: 'integer',
           },
         ],
         plugins: [
@@ -205,12 +205,12 @@ describe('generateCSS', () => {
           {
             cssProperty: ['width'],
             classNamespace: 'w',
-            plugin: 'lengthUnit',
+            valuePlugin: 'lengthUnit',
           },
           {
             cssProperty: ['height'],
             classNamespace: 'h',
-            plugin: 'lengthUnit',
+            valuePlugin: 'lengthUnit',
           },
         ],
         plugins: [
@@ -244,7 +244,7 @@ describe('generateCSS', () => {
           {
             cssProperty: ['margin'],
             classNamespace: 'm',
-            plugin: 'lengthUnit',
+            valuePlugin: 'lengthUnit',
           },
         ],
         plugins: [
@@ -280,13 +280,13 @@ describe('generateCSS', () => {
           {
             cssProperty: ['color'],
             pluginDefault: true,
-            plugin: 'color',
+            valuePlugin: 'color',
           },
           {
             cssProperty: ['background-color'],
             classNamespace: 'bg',
             pluginSeparator: '-',
-            plugin: 'color',
+            valuePlugin: 'color',
           },
         ],
         plugins: [
@@ -322,13 +322,13 @@ describe('generateCSS', () => {
           {
             cssProperty: ['color'],
             pluginDefault: true,
-            plugin: 'color',
+            valuePlugin: 'color',
           },
           {
             cssProperty: ['background-color'],
             classNamespace: 'bg',
             pluginSeparator: '-',
-            plugin: 'color',
+            valuePlugin: 'color',
           },
         ],
         plugins: [

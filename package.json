@@ -30,5 +30,8 @@
     "build": "rollup -c",
     "watch": "rollup -c -w",
     "test": "jest --watch"
+  },
+  "dependencies": {
+    "tslint": "^6.0.0"
   }
 }

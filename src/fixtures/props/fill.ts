@@ -4,5 +4,5 @@ export const fillColor: UserPropConfig = {
   cssProperty: ['fill'],
   classNamespace: 'fill',
   pluginSeparator: '-',
-  plugin: 'color',
+  valuePlugin: 'color',
 };

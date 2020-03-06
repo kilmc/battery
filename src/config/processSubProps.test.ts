@@ -19,7 +19,7 @@ describe('processSubProps', () => {
       keywordValues: {
         auto: 'auto',
       },
-      plugin: 'lengthUnit',
+      valuePlugin: 'lengthUnit',
     };
 
     const props = [margin];
@@ -31,7 +31,7 @@ describe('processSubProps', () => {
         keywordValues: {
           auto: 'auto',
         },
-        plugin: 'lengthUnit',
+        valuePlugin: 'lengthUnit',
       },
       {
         cssProperty: ['margin-top'],
@@ -40,7 +40,7 @@ describe('processSubProps', () => {
         keywordValues: {
           auto: 'auto',
         },
-        plugin: 'lengthUnit',
+        valuePlugin: 'lengthUnit',
       },
       {
         cssProperty: ['margin-right'],
@@ -49,7 +49,7 @@ describe('processSubProps', () => {
         keywordValues: {
           auto: 'auto',
         },
-        plugin: 'lengthUnit',
+        valuePlugin: 'lengthUnit',
       },
       {
         cssProperty: ['margin-bottom'],
@@ -58,7 +58,7 @@ describe('processSubProps', () => {
         keywordValues: {
           auto: 'auto',
         },
-        plugin: 'lengthUnit',
+        valuePlugin: 'lengthUnit',
       },
       {
         cssProperty: ['margin-left'],
@@ -67,7 +67,7 @@ describe('processSubProps', () => {
         keywordValues: {
           auto: 'auto',
         },
-        plugin: 'lengthUnit',
+        valuePlugin: 'lengthUnit',
       },
       {
         cssProperty: ['margin-top', 'margin-bottom'],
@@ -76,7 +76,7 @@ describe('processSubProps', () => {
         keywordValues: {
           auto: 'auto',
         },
-        plugin: 'lengthUnit',
+        valuePlugin: 'lengthUnit',
       },
       {
         cssProperty: ['margin-right', 'margin-left'],
@@ -85,7 +85,7 @@ describe('processSubProps', () => {
         keywordValues: {
           auto: 'auto',
         },
-        plugin: 'lengthUnit',
+        valuePlugin: 'lengthUnit',
       },
     ];
 

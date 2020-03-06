@@ -40,9 +40,11 @@ export const addPropertyData = (
     const property = props.find(prop => {
       if (classNamespace.length > 0 && prop.classNamespace) {
         const matched = prop.classNamespace.match(new RegExp(classNamespace));
-        return prop.plugin === matcherName && matched && matched.length > 0;
+        return (
+          prop.valuePlugin === matcherName && matched && matched.length > 0
+        );
       } else if (classNamespace.length === 0 && prop.pluginDefault) {
-        return prop.plugin === matcherName && prop.pluginDefault;
+        return prop.valuePlugin === matcherName && prop.pluginDefault;
       } else {
         return false;
       }

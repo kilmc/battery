@@ -24,5 +24,5 @@ export interface UserPropConfig {
   pluginSeparator?: string;
   keywordSeparator?: string;
   keywordValues?: { [k: string]: string };
-  plugin?: string | ModifierSubset[];
+  valuePlugin?: string | ModifierSubset[];
 }

@@ -17,5 +17,5 @@ export const margin: UserPropConfig = {
     auto: 'auto',
     inherit: 'inherit',
   },
-  plugin: 'lengthUnit',
+  valuePlugin: 'lengthUnit',
 };

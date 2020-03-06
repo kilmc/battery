@@ -4,5 +4,5 @@ export const backgroundColor: UserPropConfig = {
   cssProperty: ['background-color'],
   classNamespace: 'bg',
   pluginSeparator: '-',
-  plugin: 'color',
+  valuePlugin: 'color',
 };

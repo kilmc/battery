@@ -15,7 +15,7 @@ describe('keywordToMetaData', () => {
               contain: 'contain',
               cover: 'cover',
             },
-            plugin: 'lengthUnits',
+            valuePlugin: 'lengthUnits',
           },
         ],
       };
