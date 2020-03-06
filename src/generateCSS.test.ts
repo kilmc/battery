@@ -22,7 +22,7 @@ describe('generateCSS', () => {
             cssProperty: ['background-size'],
             classNamespace: 'bg',
             keywordSeparator: '-',
-            keywordValues: {
+            values: {
               contain: 'contain',
               cover: 'cover',
             },
@@ -31,7 +31,7 @@ describe('generateCSS', () => {
             cssProperty: ['text-align'],
             classNamespace: 'text',
             keywordSeparator: '-',
-            keywordValues: {
+            values: {
               center: 'center',
             },
           },
@@ -52,13 +52,13 @@ describe('generateCSS', () => {
         props: [
           {
             cssProperty: ['display'],
-            keywordValues: {
+            values: {
               block: 'block',
             },
           },
           {
             cssProperty: ['position'],
-            keywordValues: {
+            values: {
               absolute: 'absolute',
             },
           },
@@ -81,7 +81,7 @@ describe('generateCSS', () => {
             cssProperty: ['border'],
             classNamespace: 'border',
             keywordSeparator: '-',
-            keywordValues: { __DEFAULT__: '1px solid #000' },
+            values: { __DEFAULT__: '1px solid #000' },
           },
         ],
       };
@@ -149,7 +149,7 @@ describe('generateCSS', () => {
               vertical: 'y',
             },
             keywordSeparator: '-',
-            keywordValues: {
+            values: {
               solid: 'solid',
               dashed: 'dashed',
             },
@@ -365,7 +365,7 @@ describe('generateCSS', () => {
           cssProperty: ['background-size'],
           classNamespace: 'bg',
           keywordSeparator: '-',
-          keywordValues: {
+          values: {
             contain: 'contain',
             cover: 'cover',
           },
@@ -374,7 +374,7 @@ describe('generateCSS', () => {
           cssProperty: ['text-align'],
           classNamespace: 'text',
           keywordSeparator: '-',
-          keywordValues: {
+          values: {
             center: 'center',
           },
         },
@@ -400,7 +400,7 @@ describe('generateCSS', () => {
           cssProperty: ['background-size'],
           classNamespace: 'bg',
           keywordSeparator: '-',
-          keywordValues: {
+          values: {
             contain: 'contain',
             cover: 'cover',
           },
@@ -409,7 +409,7 @@ describe('generateCSS', () => {
           cssProperty: ['text-align'],
           classNamespace: 'text',
           keywordSeparator: '-',
-          keywordValues: {
+          values: {
             center: 'center',
           },
         },
@@ -440,7 +440,7 @@ describe('generateCSS', () => {
         cssProperty: ['background-size'],
         classNamespace: 'bg',
         keywordSeparator: '-',
-        keywordValues: {
+        values: {
           contain: 'contain',
           cover: 'cover',
         },
@@ -449,7 +449,7 @@ describe('generateCSS', () => {
         cssProperty: ['text-align'],
         classNamespace: 'text',
         keywordSeparator: '-',
-        keywordValues: {
+        values: {
           center: 'center',
         },
       };
@@ -495,7 +495,7 @@ describe('generateCSS', () => {
         cssProperty: ['margin'],
         classNamespace: 'm',
         keywordSeparator: '-',
-        keywordValues: {
+        values: {
           base: '1rem',
           zzzz: '10rem',
           auto: 'auto',

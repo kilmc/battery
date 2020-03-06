@@ -16,7 +16,7 @@ describe('processSubProps', () => {
         horizontal: 'x',
       },
       keywordSeparator: '',
-      keywordValues: {
+      values: {
         auto: 'auto',
       },
       valuePlugin: 'lengthUnit',
@@ -28,7 +28,7 @@ describe('processSubProps', () => {
         cssProperty: ['margin'],
         classNamespace: 'm',
         keywordSeparator: '',
-        keywordValues: {
+        values: {
           auto: 'auto',
         },
         valuePlugin: 'lengthUnit',
@@ -37,7 +37,7 @@ describe('processSubProps', () => {
         cssProperty: ['margin-top'],
         classNamespace: 'mt',
         keywordSeparator: '',
-        keywordValues: {
+        values: {
           auto: 'auto',
         },
         valuePlugin: 'lengthUnit',
@@ -46,7 +46,7 @@ describe('processSubProps', () => {
         cssProperty: ['margin-right'],
         classNamespace: 'mr',
         keywordSeparator: '',
-        keywordValues: {
+        values: {
           auto: 'auto',
         },
         valuePlugin: 'lengthUnit',
@@ -55,7 +55,7 @@ describe('processSubProps', () => {
         cssProperty: ['margin-bottom'],
         classNamespace: 'mb',
         keywordSeparator: '',
-        keywordValues: {
+        values: {
           auto: 'auto',
         },
         valuePlugin: 'lengthUnit',
@@ -64,7 +64,7 @@ describe('processSubProps', () => {
         cssProperty: ['margin-left'],
         classNamespace: 'ml',
         keywordSeparator: '',
-        keywordValues: {
+        values: {
           auto: 'auto',
         },
         valuePlugin: 'lengthUnit',
@@ -73,7 +73,7 @@ describe('processSubProps', () => {
         cssProperty: ['margin-top', 'margin-bottom'],
         classNamespace: 'my',
         keywordSeparator: '',
-        keywordValues: {
+        values: {
           auto: 'auto',
         },
         valuePlugin: 'lengthUnit',
@@ -82,7 +82,7 @@ describe('processSubProps', () => {
         cssProperty: ['margin-right', 'margin-left'],
         classNamespace: 'mx',
         keywordSeparator: '',
-        keywordValues: {
+        values: {
           auto: 'auto',
         },
         valuePlugin: 'lengthUnit',

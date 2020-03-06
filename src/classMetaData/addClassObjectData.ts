@@ -19,8 +19,8 @@ export const addClassObjectData = (
     if (classMeta.keyword) {
       value =
         classMeta.explodedSource.valueIdentifier === ''
-          ? propConfig.keywordValues['__DEFAULT__']
-          : propConfig.keywordValues[classMeta.explodedSource.valueIdentifier];
+          ? propConfig.values['__DEFAULT__']
+          : propConfig.values[classMeta.explodedSource.valueIdentifier];
       classMeta.classObject = generateClassObject(classMeta.property, value);
       return classMeta;
     }

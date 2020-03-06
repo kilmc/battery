@@ -13,7 +13,7 @@ export const margin: UserPropConfig = {
     horizontal: 'x',
   },
   keywordSeparator: '-',
-  keywordValues: {
+  values: {
     auto: 'auto',
     inherit: 'inherit',
   },

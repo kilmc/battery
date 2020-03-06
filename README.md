@@ -42,7 +42,7 @@ The following are some examples of `propConfig`'s and what Battery will output g
 const textAlign = {
   cssProperty: 'text-align',
   propName: 'text',
-  keywordValues: {
+  values: {
     separator: '-',
     values: {
       left: 'left',
@@ -67,7 +67,7 @@ const input = ['text-left','text-center','text-right']
 const position = {
   cssProperty: 'position',
   propName: '',
-  keywordValues: {
+  values: {
     values: {
       static: 'static',
       relative: 'relative',
@@ -113,7 +113,7 @@ const backgroundColor = {
   cssProperty: 'background-color',
   propName: 'bg',
   separator: '-',
-  keywordValues: {
+  values: {
     separator: '-',
     values: {
       transparent: 'transparent'
@@ -145,7 +145,7 @@ This sets the identifier in the classname to tell Battery which property the cla
 
 This sets the separator between the `propName` and the `value` identifiers in the class.
 
-#### `keywordValues` : _object_
+#### `values` : _object_
 
 This object allows you to manually set up values for your `property`. This can be used for `keyword` values as determined by the CSS spec, or it can be used when you can't easily create a plugin to handle generating these values.
 
@@ -155,7 +155,7 @@ This object allows you to manually set up values for your `property`. This can b
 const alignItems = {
   cssProperty: 'align-items',
   propName: 'items',
-  keywordValues: {
+  values: {
     separator: '-',
     values: {
     'start': 'flex-start',
@@ -196,7 +196,7 @@ A `propConfig` can to be set as the `pluginDefault`. This allows Battery to dete
 const color = {
   cssProperty: 'color',
   propName: '',
-  keywordValues: {
+  values: {
     values: { transparent: 'transparent' }
   },
   pluginDefault: true,

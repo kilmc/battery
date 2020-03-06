@@ -4,7 +4,7 @@ export const backgroundSize: UserPropConfig = {
   cssProperty: ['background-size'],
   classNamespace: 'bg',
   keywordSeparator: '-',
-  keywordValues: {
+  values: {
     contain: 'contain',
     cover: 'cover',
   },

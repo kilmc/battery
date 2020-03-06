@@ -3,7 +3,7 @@ import { BatteryConfig } from 'types/battery-config';
 import { generateClassObject } from 'utils/classObjects';
 
 export const keywordToMetaData = (config: BatteryConfig): ClassMetaData[] => {
-  const keywordProps = config.props.filter(prop => prop.keywordValues);
+  const keywordProps = config.props.filter(prop => prop.values);
 
   if (keywordProps.length === 0) {
     return [];
@@ -11,7 +11,7 @@ export const keywordToMetaData = (config: BatteryConfig): ClassMetaData[] => {
 
   return keywordProps
     .map(propConfig => [
-      ...Object.entries(propConfig.keywordValues).reduce(
+      ...Object.entries(propConfig.values).reduce(
         (accum, [valueIdentifier, value]) => {
           const {
             keywordSeparator = '',

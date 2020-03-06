@@ -4,7 +4,7 @@ export const textAlign: UserPropConfig = {
   cssProperty: ['text-align'],
   classNamespace: 'text',
   keywordSeparator: '-',
-  keywordValues: {
+  values: {
     center: 'center',
   },
 };

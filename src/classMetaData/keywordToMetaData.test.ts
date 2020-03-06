@@ -11,7 +11,7 @@ describe('keywordToMetaData', () => {
             cssProperty: ['background-size'],
             classNamespace: 'bg',
             keywordSeparator: '-',
-            keywordValues: {
+            values: {
               contain: 'contain',
               cover: 'cover',
             },
@@ -55,7 +55,7 @@ describe('keywordToMetaData', () => {
         props: [
           {
             cssProperty: ['display'],
-            keywordValues: {
+            values: {
               block: 'block',
               inline: 'inline',
             },
