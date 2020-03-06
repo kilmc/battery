@@ -33,15 +33,15 @@ export const addPropertyData = (
       `[${props.map(prop => prop.pluginSeparator).join('')}]`,
     );
 
-    const propIdentifier = classMeta.source
+    const classNamespace = classMeta.source
       .match(regex)[2]
       .replace(pluginSeparatorsRegex, '');
 
     const property = props.find(prop => {
-      if (propIdentifier.length > 0 && prop.propIdentifier) {
-        const matched = prop.propIdentifier.match(new RegExp(propIdentifier));
+      if (classNamespace.length > 0 && prop.classNamespace) {
+        const matched = prop.classNamespace.match(new RegExp(classNamespace));
         return prop.plugin === matcherName && matched && matched.length > 0;
-      } else if (propIdentifier.length === 0 && prop.pluginDefault) {
+      } else if (classNamespace.length === 0 && prop.pluginDefault) {
         return prop.plugin === matcherName && prop.pluginDefault;
       } else {
         return false;

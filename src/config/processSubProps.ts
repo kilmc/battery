@@ -34,7 +34,7 @@ export const convertSubProps = (props: UserPropConfig[]) => {
       const generatedConfigs = Object.entries(subPropsConfig).reduce(
         (accum, [subPropGroup, subPropIdentifier]: [SubPropKeys, string]) => {
           const {
-            propIdentifier,
+            classNamespace,
             subProps,
             subPropSeparator = '',
             cssProperty,
@@ -46,10 +46,10 @@ export const convertSubProps = (props: UserPropConfig[]) => {
             cssProperty[0],
           );
 
-          const newPropIdentifier = `${propIdentifier}${subPropSeparator}${subPropIdentifier}`;
+          const newPropIdentifier = `${classNamespace}${subPropSeparator}${subPropIdentifier}`;
           const newPropConfig = {
             cssProperty: newProp,
-            propIdentifier: newPropIdentifier,
+            classNamespace: newPropIdentifier,
             ...rest,
           };
           return accum.concat(newPropConfig);

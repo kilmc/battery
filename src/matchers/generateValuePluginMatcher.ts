@@ -57,14 +57,14 @@ const generatePropMatcher = (pluginPropConfigs: UserPropConfig[]) => {
   const defaultProp = pluginPropConfigs.filter(c => c.pluginDefault);
   const hasDefaultProp = defaultProp.length > 0;
 
-  const propIdentifiers = pluginPropConfigs
+  const classNamespaces = pluginPropConfigs
     .filter(c => !c.pluginDefault)
     .map(propConfig => {
-      const { propIdentifier, pluginSeparator = '' } = propConfig;
-      return `${propIdentifier}${pluginSeparator}`;
+      const { classNamespace, pluginSeparator = '' } = propConfig;
+      return `${classNamespace}${pluginSeparator}`;
     });
 
-  return toCapture(propIdentifiers, hasDefaultProp);
+  return toCapture(classNamespaces, hasDefaultProp);
 };
 
 export const generateValuePluginMatcher = (

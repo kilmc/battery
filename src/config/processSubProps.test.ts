@@ -5,7 +5,7 @@ describe('processSubProps', () => {
   it('converts configs with subProps into their own separate configs', () => {
     const margin: UserPropConfig = {
       cssProperty: ['margin'],
-      propIdentifier: 'm',
+      classNamespace: 'm',
       subProps: {
         all: '',
         top: 't',
@@ -26,7 +26,7 @@ describe('processSubProps', () => {
     const marginSubProps = [
       {
         cssProperty: ['margin'],
-        propIdentifier: 'm',
+        classNamespace: 'm',
         keywordSeparator: '',
         keywordValues: {
           auto: 'auto',
@@ -35,7 +35,7 @@ describe('processSubProps', () => {
       },
       {
         cssProperty: ['margin-top'],
-        propIdentifier: 'mt',
+        classNamespace: 'mt',
         keywordSeparator: '',
         keywordValues: {
           auto: 'auto',
@@ -44,7 +44,7 @@ describe('processSubProps', () => {
       },
       {
         cssProperty: ['margin-right'],
-        propIdentifier: 'mr',
+        classNamespace: 'mr',
         keywordSeparator: '',
         keywordValues: {
           auto: 'auto',
@@ -53,7 +53,7 @@ describe('processSubProps', () => {
       },
       {
         cssProperty: ['margin-bottom'],
-        propIdentifier: 'mb',
+        classNamespace: 'mb',
         keywordSeparator: '',
         keywordValues: {
           auto: 'auto',
@@ -62,7 +62,7 @@ describe('processSubProps', () => {
       },
       {
         cssProperty: ['margin-left'],
-        propIdentifier: 'ml',
+        classNamespace: 'ml',
         keywordSeparator: '',
         keywordValues: {
           auto: 'auto',
@@ -71,7 +71,7 @@ describe('processSubProps', () => {
       },
       {
         cssProperty: ['margin-top', 'margin-bottom'],
-        propIdentifier: 'my',
+        classNamespace: 'my',
         keywordSeparator: '',
         keywordValues: {
           auto: 'auto',
@@ -80,7 +80,7 @@ describe('processSubProps', () => {
       },
       {
         cssProperty: ['margin-right', 'margin-left'],
-        propIdentifier: 'mx',
+        classNamespace: 'mx',
         keywordSeparator: '',
         keywordValues: {
           auto: 'auto',

@@ -10,7 +10,7 @@ export interface ExplodedClassSource {
   prefixSeparator?: string;
   suffix?: string;
   suffixSeparator?: string;
-  propIdentifier?: string;
+  classNamespace?: string;
   valueSeparator?: string;
   valueIdentifier: string;
   modifierSeparator?: string;

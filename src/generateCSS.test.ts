@@ -20,7 +20,7 @@ describe('generateCSS', () => {
         props: [
           {
             cssProperty: ['background-size'],
-            propIdentifier: 'bg',
+            classNamespace: 'bg',
             keywordSeparator: '-',
             keywordValues: {
               contain: 'contain',
@@ -29,7 +29,7 @@ describe('generateCSS', () => {
           },
           {
             cssProperty: ['text-align'],
-            propIdentifier: 'text',
+            classNamespace: 'text',
             keywordSeparator: '-',
             keywordValues: {
               center: 'center',
@@ -79,7 +79,7 @@ describe('generateCSS', () => {
         props: [
           {
             cssProperty: ['border'],
-            propIdentifier: 'border',
+            classNamespace: 'border',
             keywordSeparator: '-',
             keywordValues: { __DEFAULT__: '1px solid #000' },
           },
@@ -138,7 +138,7 @@ describe('generateCSS', () => {
         props: [
           {
             cssProperty: ['border-style'],
-            propIdentifier: 'border',
+            classNamespace: 'border',
             subPropSeparator: '-',
             subProps: {
               top: 'top',
@@ -176,12 +176,12 @@ describe('generateCSS', () => {
         props: [
           {
             cssProperty: ['z-index'],
-            propIdentifier: 'z',
+            classNamespace: 'z',
             plugin: 'integer',
           },
           {
             cssProperty: ['flex'],
-            propIdentifier: 'flex',
+            classNamespace: 'flex',
             plugin: 'integer',
           },
         ],
@@ -204,12 +204,12 @@ describe('generateCSS', () => {
         props: [
           {
             cssProperty: ['width'],
-            propIdentifier: 'w',
+            classNamespace: 'w',
             plugin: 'lengthUnit',
           },
           {
             cssProperty: ['height'],
-            propIdentifier: 'h',
+            classNamespace: 'h',
             plugin: 'lengthUnit',
           },
         ],
@@ -243,7 +243,7 @@ describe('generateCSS', () => {
         props: [
           {
             cssProperty: ['margin'],
-            propIdentifier: 'm',
+            classNamespace: 'm',
             plugin: 'lengthUnit',
           },
         ],
@@ -284,7 +284,7 @@ describe('generateCSS', () => {
           },
           {
             cssProperty: ['background-color'],
-            propIdentifier: 'bg',
+            classNamespace: 'bg',
             pluginSeparator: '-',
             plugin: 'color',
           },
@@ -326,7 +326,7 @@ describe('generateCSS', () => {
           },
           {
             cssProperty: ['background-color'],
-            propIdentifier: 'bg',
+            classNamespace: 'bg',
             pluginSeparator: '-',
             plugin: 'color',
           },
@@ -363,7 +363,7 @@ describe('generateCSS', () => {
       props: [
         {
           cssProperty: ['background-size'],
-          propIdentifier: 'bg',
+          classNamespace: 'bg',
           keywordSeparator: '-',
           keywordValues: {
             contain: 'contain',
@@ -372,7 +372,7 @@ describe('generateCSS', () => {
         },
         {
           cssProperty: ['text-align'],
-          propIdentifier: 'text',
+          classNamespace: 'text',
           keywordSeparator: '-',
           keywordValues: {
             center: 'center',
@@ -398,7 +398,7 @@ describe('generateCSS', () => {
       props: [
         {
           cssProperty: ['background-size'],
-          propIdentifier: 'bg',
+          classNamespace: 'bg',
           keywordSeparator: '-',
           keywordValues: {
             contain: 'contain',
@@ -407,7 +407,7 @@ describe('generateCSS', () => {
         },
         {
           cssProperty: ['text-align'],
-          propIdentifier: 'text',
+          classNamespace: 'text',
           keywordSeparator: '-',
           keywordValues: {
             center: 'center',
@@ -438,7 +438,7 @@ describe('generateCSS', () => {
     describe('into descending alpha-numeric order', () => {
       const backgroundSize: UserPropConfig = {
         cssProperty: ['background-size'],
-        propIdentifier: 'bg',
+        classNamespace: 'bg',
         keywordSeparator: '-',
         keywordValues: {
           contain: 'contain',
@@ -447,7 +447,7 @@ describe('generateCSS', () => {
       };
       const textAlign: UserPropConfig = {
         cssProperty: ['text-align'],
-        propIdentifier: 'text',
+        classNamespace: 'text',
         keywordSeparator: '-',
         keywordValues: {
           center: 'center',
@@ -493,7 +493,7 @@ describe('generateCSS', () => {
     describe('moves auto and inherit values to the bottom of the list', () => {
       const margin: UserPropConfig = {
         cssProperty: ['margin'],
-        propIdentifier: 'm',
+        classNamespace: 'm',
         keywordSeparator: '-',
         keywordValues: {
           base: '1rem',

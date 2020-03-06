@@ -2,7 +2,7 @@ import { UserPropConfig } from 'types/prop-config';
 
 export const backgroundSize: UserPropConfig = {
   cssProperty: ['background-size'],
-  propIdentifier: 'bg',
+  classNamespace: 'bg',
   keywordSeparator: '-',
   keywordValues: {
     contain: 'contain',

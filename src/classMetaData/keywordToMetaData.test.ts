@@ -9,7 +9,7 @@ describe('keywordToMetaData', () => {
         props: [
           {
             cssProperty: ['background-size'],
-            propIdentifier: 'bg',
+            classNamespace: 'bg',
             keywordSeparator: '-',
             keywordValues: {
               contain: 'contain',
@@ -23,7 +23,7 @@ describe('keywordToMetaData', () => {
         {
           source: 'bg-contain',
           explodedSource: {
-            propIdentifier: 'bg',
+            classNamespace: 'bg',
             valueSeparator: '-',
             valueIdentifier: 'contain',
           },
@@ -36,7 +36,7 @@ describe('keywordToMetaData', () => {
         {
           source: 'bg-cover',
           explodedSource: {
-            propIdentifier: 'bg',
+            classNamespace: 'bg',
             valueSeparator: '-',
             valueIdentifier: 'cover',
           },
@@ -50,7 +50,7 @@ describe('keywordToMetaData', () => {
 
       expect(keywordToMetaData(config)).toEqual(expectedBackgroundSizeResult);
     });
-    describe('When propIdentifier and valueSeparator are undefined', () => {
+    describe('When classNamespace and valueSeparator are undefined', () => {
       const config: BatteryConfig = {
         props: [
           {
@@ -66,7 +66,7 @@ describe('keywordToMetaData', () => {
         expect(keywordToMetaData(config)[0]).toEqual({
           source: 'block',
           explodedSource: {
-            propIdentifier: '',
+            classNamespace: '',
             valueSeparator: '',
             valueIdentifier: 'block',
           },
@@ -80,7 +80,7 @@ describe('keywordToMetaData', () => {
         expect(keywordToMetaData(config)[1]).toEqual({
           source: 'inline',
           explodedSource: {
-            propIdentifier: '',
+            classNamespace: '',
             valueSeparator: '',
             valueIdentifier: 'inline',
           },

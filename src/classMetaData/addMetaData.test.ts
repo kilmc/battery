@@ -30,7 +30,7 @@ describe('addMetaData', () => {
           explodedSource: {
             prefix: '',
             prefixSeparator: '',
-            propIdentifier: '',
+            classNamespace: '',
             valueSeparator: '',
             valueIdentifier: 'block',
             modifierSeparator: '',
@@ -50,7 +50,7 @@ describe('addMetaData', () => {
           explodedSource: {
             prefix: '',
             prefixSeparator: '',
-            propIdentifier: '',
+            classNamespace: '',
             valueSeparator: '',
             valueIdentifier: 'absolute',
             modifierSeparator: '',
@@ -70,7 +70,7 @@ describe('addMetaData', () => {
           explodedSource: {
             prefix: '',
             prefixSeparator: '',
-            propIdentifier: 'bg',
+            classNamespace: 'bg',
             valueSeparator: '-',
             valueIdentifier: 'contain',
             modifierSeparator: '',
@@ -105,7 +105,7 @@ describe('addMetaData', () => {
           explodedSource: {
             prefix: '',
             prefixSeparator: '',
-            propIdentifier: 'bg',
+            classNamespace: 'bg',
             valueSeparator: '-',
             valueIdentifier: 'white',
             modifierSeparator: '',
@@ -127,7 +127,7 @@ describe('addMetaData', () => {
           explodedSource: {
             prefix: '',
             prefixSeparator: '',
-            propIdentifier: 'bg',
+            classNamespace: 'bg',
             valueSeparator: '-',
             valueIdentifier: 'white',
             modifierSeparator: '_',
@@ -150,7 +150,7 @@ describe('addMetaData', () => {
           explodedSource: {
             prefix: '',
             prefixSeparator: '',
-            propIdentifier: 'z',
+            classNamespace: 'z',
             valueSeparator: '',
             valueIdentifier: '100',
             modifierSeparator: '',
@@ -172,7 +172,7 @@ describe('addMetaData', () => {
           explodedSource: {
             prefix: '',
             prefixSeparator: '',
-            propIdentifier: 'w',
+            classNamespace: 'w',
             valueSeparator: '',
             valueIdentifier: '3',
             modifierSeparator: '',
@@ -222,7 +222,7 @@ describe('addMetaData', () => {
           explodedSource: {
             prefix: '',
             prefixSeparator: '',
-            propIdentifier: 'bg',
+            classNamespace: 'bg',
             valueSeparator: '-',
             valueIdentifier: 'white',
             modifierSeparator: '',
@@ -246,7 +246,7 @@ describe('addMetaData', () => {
           explodedSource: {
             prefix: 'hover',
             prefixSeparator: '-',
-            propIdentifier: 'bg',
+            classNamespace: 'bg',
             valueSeparator: '-',
             valueIdentifier: 'white',
             modifierSeparator: '_',
@@ -271,7 +271,7 @@ describe('addMetaData', () => {
           explodedSource: {
             prefix: '',
             prefixSeparator: '',
-            propIdentifier: 'z',
+            classNamespace: 'z',
             valueSeparator: '',
             valueIdentifier: '100',
             modifierSeparator: '',
@@ -293,7 +293,7 @@ describe('addMetaData', () => {
           explodedSource: {
             prefix: 'hover-item',
             prefixSeparator: '-',
-            propIdentifier: 'bg',
+            classNamespace: 'bg',
             valueSeparator: '-',
             valueIdentifier: 'contain',
             modifierSeparator: '',

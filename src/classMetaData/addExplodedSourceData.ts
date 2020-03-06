@@ -11,11 +11,11 @@ const setPropIdentifier = (
   explodedSource: ExplodedClassSource,
   propConfig: UserPropConfig,
 ): ExplodedClassSource => {
-  const propIdentifier = propConfig.propIdentifier
-    ? propConfig.propIdentifier
+  const classNamespace = propConfig.classNamespace
+    ? propConfig.classNamespace
     : '';
 
-  return { ...explodedSource, propIdentifier };
+  return { ...explodedSource, classNamespace };
 };
 
 const setValueSeparator = (
@@ -73,9 +73,9 @@ const determineKeywordValueIdentifier = (
   keywordMatcher: Matcher,
 ) => {
   const classNameBody = classMeta.source.match(keywordMatcher)[2];
-  const { propIdentifier, valueSeparator } = explodedSource;
+  const { classNamespace, valueSeparator } = explodedSource;
   const valueIdentifier = classNameBody
-    .replace(propIdentifier, '')
+    .replace(classNamespace, '')
     .replace(valueSeparator, '');
 
   return valueIdentifier;
@@ -192,7 +192,7 @@ export const addExplodedSourceData = (
     const explodedSource: ExplodedClassSource = {
       prefix: '',
       prefixSeparator: '',
-      propIdentifier: '',
+      classNamespace: '',
       valueSeparator: '',
       valueIdentifier: '',
       modifierSeparator: '',
