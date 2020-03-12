@@ -1,16 +1,23 @@
-import resolve from 'rollup-plugin-node-resolve';
-import babel from 'rollup-plugin-babel';
+import typescript from '@rollup/plugin-typescript';
+
+import pkg from './package.json';
 
 export default {
-  input: 'src/index.js',
+  input: 'src/index.ts',
   output: {
-    file: 'dist/main.js',
-    format: 'cjs'
+    // use CommonJS for now, until Node.js fully supports ES Modules
+    // https://medium.com/@nodejs/announcing-a-new-experimental-modules-1be8d2d6c2ff
+    format: 'cjs',
+    dir: 'dist',
   },
+  external: [
+    ...Object.keys(pkg.dependencies || {}),
+    ...Object.keys(pkg.peerDependencies || {}),
+  ],
+
   plugins: [
-    resolve(),
-    babel({
-      exclude: 'node_modules/**'
-    })
-  ]
+    typescript({
+      typescript: require('typescript'),
+    }),
+  ],
 };

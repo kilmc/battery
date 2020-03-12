@@ -1,18 +1,17 @@
 module.exports = {
-  env: {
-    browser: true,
-    es6: true
-  },
-  extends: 'eslint:recommended',
+  parser: '@typescript-eslint/parser', // Specifies the ESLint parser
+  extends: [
+    'plugin:@typescript-eslint/recommended', // Uses the recommended rules from the @typescript-eslint/eslint-plugin
+    'prettier/@typescript-eslint', // Uses eslint-config-prettier to disable ESLint rules from @typescript-eslint/eslint-plugin that would conflict with prettier
+    'plugin:prettier/recommended', // Enables eslint-plugin-prettier and displays prettier errors as ESLint errors. Make sure this is always the last configuration in the extends array.
+  ],
   parserOptions: {
-    ecmaFeatures: {
-      experimentalObjectRestSpread: true
-    },
-    sourceType: 'module'
+    ecmaVersion: 2018, // Allows for the parsing of modern ECMAScript features
+    sourceType: 'module', // Allows for the use of imports
+    project: './tsconfig.json',
   },
   rules: {
-    'linebreak-style': ['error', 'unix'],
-    quotes: ['error', 'single'],
-    semi: ['error', 'always']
-  }
+    '@typescript-eslint/explicit-function-return-type': 'off',
+    '@typescript-eslint/no-object-literal-type-assertion': 'off',
+  },
 };

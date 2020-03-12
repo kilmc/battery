@@ -40,9 +40,9 @@ The following are some examples of `propConfig`'s and what Battery will output g
 
 ```javascript
 const textAlign = {
-  prop: 'text-align',
+  cssProperty: 'text-align',
   propName: 'text',
-  keywordValues: {
+  values: {
     separator: '-',
     values: {
       left: 'left',
@@ -65,9 +65,9 @@ const input = ['text-left','text-center','text-right']
 
 ```javascript
 const position = {
-  prop: 'position',
+  cssProperty: 'position',
   propName: '',
-  keywordValues: {
+  values: {
     values: {
       static: 'static',
       relative: 'relative',
@@ -93,7 +93,7 @@ const input = ['static', 'relative', 'absolute', 'fixed', 'sticky']
 ```javascript
 const zIndex = {
   propName: 'z',
-  prop: 'z-index',
+  cssProperty: 'z-index',
   enablePlugin: 'integers'
 }
 
@@ -110,10 +110,10 @@ const input = ['z1', 'z20', 'z-10', 'z-999']
 
 ```javascript
 const backgroundColor = {
-  prop: 'background-color',
+  cssProperty: 'background-color',
   propName: 'bg',
   separator: '-',
-  keywordValues: {
+  values: {
     separator: '-',
     values: {
       transparent: 'transparent'
@@ -145,7 +145,7 @@ This sets the identifier in the classname to tell Battery which property the cla
 
 This sets the separator between the `propName` and the `value` identifiers in the class.
 
-#### `keywordValues` : _object_
+#### `values` : _object_
 
 This object allows you to manually set up values for your `property`. This can be used for `keyword` values as determined by the CSS spec, or it can be used when you can't easily create a plugin to handle generating these values.
 
@@ -153,9 +153,9 @@ This object allows you to manually set up values for your `property`. This can b
 
 ```javascript
 const alignItems = {
-  prop: 'align-items',
+  cssProperty: 'align-items',
   propName: 'items',
-  keywordValues: {
+  values: {
     separator: '-',
     values: {
     'start': 'flex-start',
@@ -194,9 +194,9 @@ A `propConfig` can to be set as the `pluginDefault`. This allows Battery to dete
 
 ```javascript
 const color = {
-  prop: 'color',
+  cssProperty: 'color',
   propName: '',
-  keywordValues: {
+  values: {
     values: { transparent: 'transparent' }
   },
   pluginDefault: true,
@@ -242,7 +242,7 @@ const integersPlugin = {
 };
 
 const flexShrink = {
-  prop: 'flex-shrink',
+  cssProperty: 'flex-shrink',
   propName: 'shrink',
   enablePlugin: 'integers'
 };
@@ -277,19 +277,19 @@ const lengthUnitsPlugin = {
 }
 
 const width = {
-  prop: 'width',
+  cssProperty: 'width',
   propName: 'w',
   enablePlugin: 'lengthUnits'
 }
 
 const positionTop = {
-  prop: 'top',
+  cssProperty: 'top',
   propName: 't',
   enablePlugin: 'lengthUnits'
 }
 
 const fontSize = {
-  prop: 'font-size',
+  cssProperty: 'font-size',
   propName: 'f-size',
   propSeparator: '-'
   enablePlugin: 'lengthUnits'
