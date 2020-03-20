@@ -1,4 +1,4 @@
-import { CSSProps } from 'types/css-props';
+import { CSSProperties } from 'types/css';
 
 export type SubPropKeys =
   | 'top'
@@ -16,7 +16,7 @@ interface ModifierSubset {
 }
 
 export interface UserPropConfig {
-  cssProperty: CSSProps[];
+  cssProperty: CSSProperties[];
   classNamespace?: string;
   pluginDefault?: boolean;
   subProps?: SubProp;
