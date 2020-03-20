@@ -1,7 +1,10 @@
 import { ClassMetaData } from 'types/classname';
-import { Plugin } from 'types/plugin-config';
+import { PluginConfig } from 'types/plugin-config';
 
-export const classMetaToCSS = (classMeta: ClassMetaData, plugins: Plugin[]) => {
+export const classMetaToCSS = (
+  classMeta: ClassMetaData,
+  plugins: PluginConfig[],
+) => {
   const desclarations = Object.entries(classMeta.classObject)
     .reduce((accum, [property, value]) => {
       return accum.concat(`${property}: ${value}`);

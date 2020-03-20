@@ -2,13 +2,13 @@ import { BatteryConfig } from 'types/battery-config';
 import { classMetaToCSS } from 'css/classMetaToCSS';
 import { addMetaData } from 'classMetaData/addMetaData';
 import { ClassMetaData } from 'types/classname';
-import { Plugin } from 'types/plugin-config';
+import { PluginConfig } from 'types/plugin-config';
 import { convertSubProps } from 'config/processSubProps';
 import { sortAlphaNum } from 'utils/string';
 
 const processAtRulePlugins = (
   classMetaArr: ClassMetaData[],
-  plugins: Plugin[],
+  plugins: PluginConfig[],
 ) => {
   const atRuleProcessingOrder: [string, string[]][] = plugins
     .filter(plugin => plugin.atrule)

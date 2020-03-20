@@ -1,4 +1,4 @@
-import { Plugin } from 'types/plugin-config';
+import { PluginConfig } from 'types/plugin-config';
 import { DeveloperPropertyConfig } from 'types/property-config';
 import { Matcher, Matchers } from 'types/matchers';
 import { toCapture, toGroup } from 'utils/array';
@@ -6,7 +6,7 @@ import { generatePrefixSuffixdMatchers } from './generatePrefixSuffixMatchers';
 
 const generateValueRegex = (
   valueArr: string[],
-  plugin: Plugin,
+  plugin: PluginConfig,
   captureSubGroups = false,
 ) => {
   const captureOrGroup = captureSubGroups ? toCapture : toGroup;
@@ -31,7 +31,7 @@ const generateValueRegex = (
 };
 
 export const generateValueMatcher = (
-  plugin: Plugin,
+  plugin: PluginConfig,
   captureSubGroups = false,
 ) => {
   switch (plugin.type) {
@@ -68,7 +68,7 @@ const generatePropMatcher = (pluginPropConfigs: DeveloperPropertyConfig[]) => {
 };
 
 export const generateValuePluginMatcher = (
-  plugins: Plugin[],
+  plugins: PluginConfig[],
   propConfigs: DeveloperPropertyConfig[],
 ): { [k: string]: Matcher } => {
   if (!plugins || plugins.length < 1) {

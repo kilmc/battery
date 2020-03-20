@@ -1,11 +1,11 @@
 import { ClassMetaData } from 'types/classname';
 import { Matchers } from 'types/matchers';
-import { Plugin } from 'types/plugin-config';
+import { PluginConfig } from 'types/plugin-config';
 
 export const addValuePluginData = (
   classMetaArr: ClassMetaData[],
   valuePluginMatchers: Matchers,
-  plugins: Plugin[],
+  plugins: PluginConfig[],
 ): ClassMetaData[] => {
   return classMetaArr.map(classMeta => {
     if (classMeta.keyword) return classMeta;
@@ -15,7 +15,7 @@ export const addValuePluginData = (
       },
     );
 
-    const plugin: Plugin = plugins.find(
+    const plugin: PluginConfig = plugins.find(
       pluginConfig => pluginConfig.name === pluginName[0],
     );
 

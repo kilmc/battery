@@ -1,6 +1,6 @@
-import { Plugin } from 'types/plugin-config';
+import { PluginConfig } from 'types/plugin-config';
 
-export const generatePrefixSuffixdMatchers = (plugins: Plugin[]) => {
+export const generatePrefixSuffixdMatchers = (plugins: PluginConfig[]) => {
   const baseObject = {
     prefixes: '^',
     suffixes: '$',

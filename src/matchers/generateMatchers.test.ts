@@ -1,12 +1,7 @@
 import { generateMatchers } from 'matchers/generateMatchers';
 import { DeveloperBatteryConfig } from 'types/battery-config';
-import { display } from 'fixtures/props/display';
-import { position } from 'fixtures/props/position';
 import { keywordToMetaData } from 'classMetaData/keywordToMetaData';
-import { textColor } from 'fixtures/props/color';
-import { backgroundColor } from 'fixtures/props/background-color';
-import { Plugin } from 'types/plugin-config';
-import { fillColor } from 'fixtures/props/fill';
+import { PluginConfig } from 'types/plugin-config';
 
 describe('generateMatchers', () => {
   describe('Given a valid batteryConfig', () => {
@@ -39,7 +34,7 @@ describe('generateMatchers', () => {
 
     describe('when the config contains a lookup plugin', () => {
       it('generates a regex to match classes associated with a specific plugin', () => {
-        const colorPlugin: Plugin = {
+        const colorPlugin: PluginConfig = {
           type: 'lookup',
           name: 'color',
           values: {

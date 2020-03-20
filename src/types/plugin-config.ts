@@ -9,7 +9,7 @@ interface Modifier {
   condition?: string;
 }
 
-export interface Plugin {
+export interface PluginConfig {
   type: 'pattern' | 'lookup' | 'selector' | 'at-rule';
   name: string;
   atrule?: 'media' | 'font-face';

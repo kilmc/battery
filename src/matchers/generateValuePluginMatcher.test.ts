@@ -1,13 +1,12 @@
 import { generateValuePluginMatcher } from 'matchers/generateValuePluginMatcher';
-import { Plugin, ModifierFn } from 'types/plugin-config';
-import { PropertyConfig } from 'types/property-config';
+import { PluginConfig, ModifierFn } from 'types/plugin-config';
+import { PropertyConfig, DeveloperPropertyConfig } from 'types/property-config';
 import { backgroundColor } from 'fixtures/props/background-color';
-import { fillColor } from 'fixtures/props/fill';
 import { textColor } from 'fixtures/props/color';
 import { zIndex } from 'fixtures/props/z-index';
 
 describe('generateValuePluginMatcher', () => {
-  const colorPlugin: Plugin = {
+  const colorPlugin: PluginConfig = {
     type: 'lookup',
     name: 'color',
     values: {
@@ -19,8 +18,21 @@ describe('generateValuePluginMatcher', () => {
   describe('Value plugins', () => {
     describe('Handle no multiple props', () => {
       it('Then it generates a regex to match classes using the plugin', () => {
-        const plugins: Plugin[] = [colorPlugin];
-        const props: PropertyConfig[] = [backgroundColor, fillColor];
+        const plugins: PluginConfig[] = [colorPlugin];
+        const props: DeveloperPropertyConfig[] = [
+          {
+            cssProperty: ['background-color'],
+            classNamespace: 'bg',
+            pluginSeparator: '-',
+            valuePlugin: 'color',
+          },
+          {
+            cssProperty: ['fill'],
+            classNamespace: 'fill',
+            pluginSeparator: '-',
+            valuePlugin: 'color',
+          },
+        ];
 
         expect(generateValuePluginMatcher(plugins, props)).toEqual({
           color: /(^)(fill-|bg-)(black|white|pink)($)/,
@@ -29,8 +41,15 @@ describe('generateValuePluginMatcher', () => {
     });
 
     describe('Handle single prop set as plugin default', () => {
-      const plugins: Plugin[] = [colorPlugin];
-      const props: PropertyConfig[] = [textColor];
+      const plugins: PluginConfig[] = [colorPlugin];
+      const props: DeveloperPropertyConfig[] = [
+        {
+          cssProperty: ['color'],
+          classNamespace: 'text',
+          pluginDefault: true,
+          valuePlugin: 'color',
+        },
+      ];
       it('generates a matcher', () => {
         expect(generateValuePluginMatcher(plugins, props)).toEqual({
           color: /(^)(black|white|pink)($)/,
@@ -39,8 +58,21 @@ describe('generateValuePluginMatcher', () => {
     });
 
     describe('Handle multiple props with one set as plugin default', () => {
-      const plugins: Plugin[] = [colorPlugin];
-      const props: PropertyConfig[] = [textColor, backgroundColor];
+      const plugins: PluginConfig[] = [colorPlugin];
+      const props: DeveloperPropertyConfig[] = [
+        {
+          cssProperty: ['color'],
+          classNamespace: 'text',
+          pluginDefault: true,
+          valuePlugin: 'color',
+        },
+        {
+          cssProperty: ['background-color'],
+          classNamespace: 'bg',
+          pluginSeparator: '-',
+          valuePlugin: 'color',
+        },
+      ];
 
       it('generates a matcher', () => {
         expect(generateValuePluginMatcher(plugins, props)).toEqual({
@@ -50,8 +82,8 @@ describe('generateValuePluginMatcher', () => {
     });
 
     describe('Handle no props using the plugin', () => {
-      const plugins: Plugin[] = [colorPlugin];
-      const props: PropertyConfig[] = [];
+      const plugins: PluginConfig[] = [colorPlugin];
+      const props: DeveloperPropertyConfig[] = [];
 
       it('does NOT generate a matcher', () => {
         expect(generateValuePluginMatcher(plugins, props)).toEqual({});
@@ -59,7 +91,7 @@ describe('generateValuePluginMatcher', () => {
     });
 
     describe('"Lookup" type plugin', () => {
-      const lookupPlugin: Plugin = {
+      const lookupPlugin: PluginConfig = {
         type: 'lookup',
         name: 'color',
         values: {
@@ -69,8 +101,15 @@ describe('generateValuePluginMatcher', () => {
         },
       };
 
-      const plugins: Plugin[] = [lookupPlugin];
-      const props: PropertyConfig[] = [backgroundColor];
+      const plugins: PluginConfig[] = [lookupPlugin];
+      const props: DeveloperPropertyConfig[] = [
+        {
+          cssProperty: ['background-color'],
+          classNamespace: 'bg',
+          pluginSeparator: '-',
+          valuePlugin: 'color',
+        },
+      ];
 
       it('generates a regex that contains each value from the pluginConfig', () => {
         const matcher = generateValuePluginMatcher(plugins, props).color;
@@ -81,7 +120,7 @@ describe('generateValuePluginMatcher', () => {
     });
 
     describe('"Pattern" type plugin', () => {
-      const integerPlugin: Plugin = {
+      const integerPlugin: PluginConfig = {
         type: 'pattern',
         name: 'integer',
         identifier: /-?\d{1,4}/,
@@ -89,8 +128,14 @@ describe('generateValuePluginMatcher', () => {
 
       describe('And none of the props using the plugin are set as the default', () => {
         it('Then it generates a regex to match classes using the plugin', () => {
-          const plugins: Plugin[] = [integerPlugin];
-          const props: PropertyConfig[] = [zIndex];
+          const plugins: PluginConfig[] = [integerPlugin];
+          const props: DeveloperPropertyConfig[] = [
+            {
+              cssProperty: ['z-index'],
+              classNamespace: 'z',
+              valuePlugin: 'integer',
+            },
+          ];
 
           expect(generateValuePluginMatcher(plugins, props)).toEqual({
             integer: /(^)(z)(-?\d{1,4})($)/,
@@ -103,7 +148,7 @@ describe('generateValuePluginMatcher', () => {
   describe('Class plugins', () => {
     describe('Handle prefixes', () => {
       const formatPseudo: ModifierFn = (cx, pseudo) => `${cx}:${pseudo}`;
-      const pseudoPlugin: Plugin = {
+      const pseudoPlugin: PluginConfig = {
         name: 'pseudos',
         type: 'selector',
         affixType: 'prefix',
@@ -122,9 +167,22 @@ describe('generateValuePluginMatcher', () => {
           },
         ],
       };
-      const plugins: Plugin[] = [colorPlugin, pseudoPlugin];
+      const plugins: PluginConfig[] = [colorPlugin, pseudoPlugin];
 
-      const props: PropertyConfig[] = [textColor, backgroundColor];
+      const props: DeveloperPropertyConfig[] = [
+        {
+          cssProperty: ['color'],
+          classNamespace: 'text',
+          pluginDefault: true,
+          valuePlugin: 'color',
+        },
+        {
+          cssProperty: ['background-color'],
+          classNamespace: 'bg',
+          pluginSeparator: '-',
+          valuePlugin: 'color',
+        },
+      ];
 
       it('generates a matcher', () => {
         expect(generateValuePluginMatcher(plugins, props)).toEqual({
@@ -134,7 +192,7 @@ describe('generateValuePluginMatcher', () => {
     });
 
     describe('Handle suffixes', () => {
-      const breakpointsPlugin: Plugin = {
+      const breakpointsPlugin: PluginConfig = {
         name: 'breakpoints',
         type: 'at-rule',
         atrule: 'media',
@@ -161,9 +219,22 @@ describe('generateValuePluginMatcher', () => {
         ],
       };
 
-      const plugins: Plugin[] = [colorPlugin, breakpointsPlugin];
+      const plugins: PluginConfig[] = [colorPlugin, breakpointsPlugin];
 
-      const props: PropertyConfig[] = [textColor, backgroundColor];
+      const props: DeveloperPropertyConfig[] = [
+        {
+          cssProperty: ['color'],
+          classNamespace: 'text',
+          pluginDefault: true,
+          valuePlugin: 'color',
+        },
+        {
+          cssProperty: ['background-color'],
+          classNamespace: 'bg',
+          pluginSeparator: '-',
+          valuePlugin: 'color',
+        },
+      ];
 
       it('generates a matcher', () => {
         expect(generateValuePluginMatcher(plugins, props)).toEqual({

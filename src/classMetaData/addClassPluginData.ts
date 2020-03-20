@@ -1,10 +1,10 @@
 import { ClassMetaData } from 'types/classname';
-import { Plugin } from 'types/plugin-config';
+import { PluginConfig } from 'types/plugin-config';
 
 const addAffixData = (
   affixType: 'prefix' | 'suffix',
   affix: string,
-  plugins: Plugin[],
+  plugins: PluginConfig[],
 ) => {
   const affixPlugins = plugins.filter(plugin => plugin.affixType === affixType);
   const matchedPlugin = affixPlugins.find(plugin => {
@@ -45,7 +45,7 @@ const addAffixData = (
 
 export const addClassPluginData = (
   classMetaArr: ClassMetaData[],
-  plugins: Plugin[],
+  plugins: PluginConfig[],
 ): ClassMetaData[] => {
   if (plugins && plugins.filter(plugin => plugin.affixType).length < 1) {
     return classMetaArr;

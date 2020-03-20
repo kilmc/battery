@@ -8,7 +8,7 @@ import { keywordToMetaData } from './keywordToMetaData';
 import { addPropertyData } from './addPropertyData';
 import { addValuePluginData } from './addValuePluginData';
 import { Matchers } from 'types/matchers';
-import { Plugin } from 'types/plugin-config';
+import { PluginConfig } from 'types/plugin-config';
 import { addExplodedSourceData } from './addExplodedSourceData';
 import { addModifierPluginData } from './addModifierPluginData';
 import { addClassPluginData } from './addClassPluginData';
@@ -16,7 +16,7 @@ import { addClassPluginData } from './addClassPluginData';
 const getPlugins = (
   pluginTypes: string[],
   matchers: Matchers,
-  plugins: Plugin[],
+  plugins: PluginConfig[],
 ) => {
   if (!plugins) return {};
 
