@@ -1,6 +1,6 @@
-import { CSSProps } from './css-props';
+import { CSSProperties } from 'types/css';
 
-export type ClassObject = { [key in CSSProps]?: string };
+export type ClassObject = { [key in CSSProperties]?: string };
 export interface ClassObjectGroup {
   [k: string]: ClassObject;
 }
@@ -18,7 +18,7 @@ export interface ExplodedClassSource {
 }
 
 export interface ClassMetaData {
-  property?: CSSProps[];
+  property?: CSSProperties[];
   source: string;
   selector?: string;
   explodedSource?: ExplodedClassSource;
