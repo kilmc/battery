@@ -288,21 +288,21 @@ var keywordToMetaData = function (config) {
     return keywordProps
         .map(function (propConfig) { return __spread(Object.entries(propConfig.values).reduce(function (accum, _a) {
         var _b = __read(_a, 2), valueIdentifier = _b[0], value = _b[1];
-        var _c = propConfig.keywordSeparator, keywordSeparator = _c === void 0 ? '' : _c, _d = propConfig.classNamespace, classNamespace = _d === void 0 ? '' : _d, cssProperty = propConfig.cssProperty;
+        var _c = propConfig.valueSeparator, valueSeparator = _c === void 0 ? '' : _c, _d = propConfig.classNamespace, classNamespace = _d === void 0 ? '' : _d, cssProperty = propConfig.cssProperty;
         var isDefaultValue = valueIdentifier === '__DEFAULT__';
         var sanitizedValueIdentifier = isDefaultValue
             ? ''
             : valueIdentifier;
         var processedSource = isDefaultValue
             ? "" + classNamespace + sanitizedValueIdentifier
-            : "" + classNamespace + keywordSeparator + sanitizedValueIdentifier;
+            : "" + classNamespace + valueSeparator + sanitizedValueIdentifier;
         var classMetaDataObj = {
             source: processedSource,
             keyword: true,
             property: cssProperty,
             explodedSource: {
                 classNamespace: classNamespace,
-                valueSeparator: keywordSeparator,
+                valueOrPluginSeparator: valueSeparator,
                 valueIdentifier: sanitizedValueIdentifier,
             },
             classObject: generateClassObject(cssProperty, value),
@@ -397,9 +397,11 @@ var setPropIdentifier = function (explodedSource, propConfig) {
     return __assign(__assign({}, explodedSource), { classNamespace: classNamespace });
 };
 var setValueSeparator = function (explodedSource, propConfig, classMeta) {
-    var _a = propConfig.keywordSeparator, keywordSeparator = _a === void 0 ? '' : _a, _b = propConfig.pluginSeparator, pluginSeparator = _b === void 0 ? '' : _b;
-    var valueSeparator = classMeta.keyword ? keywordSeparator : pluginSeparator;
-    return __assign(__assign({}, explodedSource), { valueSeparator: valueSeparator });
+    var _a = propConfig.valueSeparator, valueSeparator = _a === void 0 ? '' : _a, _b = propConfig.pluginSeparator, pluginSeparator = _b === void 0 ? '' : _b;
+    var valueOrPluginSeparator = classMeta.keyword
+        ? valueSeparator
+        : pluginSeparator;
+    return __assign(__assign({}, explodedSource), { valueOrPluginSeparator: valueOrPluginSeparator });
 };
 var setModifierData = function (explodedSource, classMeta, matchers, plugins) {
     var value = classMeta.source.match(matchers[classMeta.valuePlugin])[3];
@@ -423,10 +425,10 @@ var setModifierData = function (explodedSource, classMeta, matchers, plugins) {
 };
 var determineKeywordValueIdentifier = function (explodedSource, classMeta, keywordMatcher) {
     var classNameBody = classMeta.source.match(keywordMatcher)[2];
-    var classNamespace = explodedSource.classNamespace, valueSeparator = explodedSource.valueSeparator;
+    var classNamespace = explodedSource.classNamespace, valueOrPluginSeparator = explodedSource.valueOrPluginSeparator;
     var valueIdentifier = classNameBody
         .replace(classNamespace, '')
-        .replace(valueSeparator, '');
+        .replace(valueOrPluginSeparator, '');
     return valueIdentifier;
 };
 var determinePluginValueIdentifier = function (explodedSource, classMeta, matchers) {
@@ -498,7 +500,7 @@ var addExplodedSourceData = function (classMetaArr, config, matchers, plugins) {
             prefix: '',
             prefixSeparator: '',
             classNamespace: '',
-            valueSeparator: '',
+            valueOrPluginSeparator: '',
             valueIdentifier: '',
             modifierSeparator: '',
             modifierIdentifier: '',
@@ -662,8 +664,8 @@ var processedProp = function (propsArr, baseProp) {
         ? propsArr.map(function (subProp) { return formatBorderProp(baseProp, subProp); })
         : propsArr.map(function (subProp) { return baseProp + "-" + subProp; });
 };
-var convertSubProps = function (props) {
-    var convertedPropConfigs = props
+var convertSubProps = function (config) {
+    var convertedPropConfigs = config.props
         .filter(function (propConfig) { return typeof propConfig.subProps === 'object'; })
         .map(function (propConfig) {
         var subPropsConfig = propConfig.subProps;
@@ -678,8 +680,8 @@ var convertSubProps = function (props) {
         return generatedConfigs;
     })
         .reduce(function (xs, x) { return xs.concat(x); }, []);
-    var propsWithoutSubPropConfigs = props.filter(function (propConfig) { return typeof propConfig.subProps !== 'object'; });
-    return __spread(propsWithoutSubPropConfigs, convertedPropConfigs);
+    var propsWithoutSubPropConfigs = config.props.filter(function (propConfig) { return typeof propConfig.subProps !== 'object'; });
+    return __assign(__assign({}, config), { props: __spread(propsWithoutSubPropConfigs, convertedPropConfigs) });
 };
 
 function sortAlphaNum(a, b) {
@@ -759,8 +761,15 @@ var processRootCSS = function (rootClasses) {
         return withOverridesAtTheBottom.map(function (c) { return c.css; });
     }
 };
+var processConfig = function (config) {
+    var withStringCSSProperties = __assign(__assign({}, config), { props: config.props.map(function (prop) {
+            return __assign(__assign({}, prop), { cssProperty: [prop.cssProperty] });
+        }) });
+    var withSubProps = convertSubProps(withStringCSSProperties);
+    return withSubProps;
+};
 var generateCSS = function (classNames, config) {
-    var processedConfig = __assign(__assign({}, config), { props: __spread(convertSubProps(config.props)) });
+    var processedConfig = processConfig(config);
     var classMetaArr = addMetaData(classNames, processedConfig);
     var withCssData = classMetaArr.map(function (classMeta) {
         classMeta.css = classMetaToCSS(classMeta, processedConfig.plugins);
