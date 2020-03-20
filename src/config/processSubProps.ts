@@ -1,9 +1,9 @@
 import { UserPropConfig, SubPropKeys } from 'types/prop-config';
-import { CSSProps } from 'types/css-props';
+import { CSSProperties } from 'types/css';
 
 const formatBorderProp = (rootProp: string, subProp: string) => {
   const [start, end] = rootProp.split('-');
-  return `${start}-${subProp}-${end}` as CSSProps;
+  return `${start}-${subProp}-${end}` as CSSProperties;
 };
 
 const subPropMapper: { [key in SubPropKeys]: string[] } = {
@@ -16,14 +16,14 @@ const subPropMapper: { [key in SubPropKeys]: string[] } = {
   vertical: ['top', 'bottom'],
 };
 
-const processedProp = (propsArr: string[], baseProp: CSSProps) => {
+const processedProp = (propsArr: string[], baseProp: CSSProperties) => {
   if (propsArr.length === 0) {
     return [baseProp];
   }
 
   return baseProp.match('border-')
     ? propsArr.map(subProp => formatBorderProp(baseProp, subProp))
-    : propsArr.map(subProp => `${baseProp}-${subProp}` as CSSProps);
+    : propsArr.map(subProp => `${baseProp}-${subProp}` as CSSProperties);
 };
 
 export const convertSubProps = (props: UserPropConfig[]) => {

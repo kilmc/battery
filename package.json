@@ -7,7 +7,9 @@
   "author": "Kilian McMahon",
   "license": "MIT",
   "description": "Battery is a system to generate infinite, composable, atomic styles that eliminates code bloat and automatically documents itself.",
-  "dependencies": {},
+  "dependencies": {
+    "csstype": "^2.6.9"
+  },
   "devDependencies": {
     "@babel/core": "^7.8.7",
     "@babel/preset-env": "^7.8.7",
