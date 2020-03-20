@@ -1,4 +1,4 @@
-import { SubPropKeys, DeveloperPropertyConfig } from 'types/prop-config';
+import { SubPropKeys, DeveloperPropertyConfig } from 'types/property-config';
 import { CSSProperties } from 'types/css';
 import { DeveloperBatteryConfig } from 'types/battery-config';
 

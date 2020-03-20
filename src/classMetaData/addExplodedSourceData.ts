@@ -3,7 +3,7 @@ import { DeveloperBatteryConfig } from 'types/battery-config';
 import { Matchers, Matcher } from 'types/matchers';
 import { Plugin } from 'types/plugin-config';
 import { generateValueMatcher } from 'matchers/generateValuePluginMatcher';
-import { DeveloperPropertyConfig } from 'types/prop-config';
+import { DeveloperPropertyConfig } from 'types/property-config';
 import { generateModifierMatchers } from 'matchers/generateModifierMatchers';
 import { getMatcherName } from 'matchers/utils';
 

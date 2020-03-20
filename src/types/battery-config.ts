@@ -1,4 +1,4 @@
-import { PropertyConfig, DeveloperPropertyConfig } from './prop-config';
+import { PropertyConfig, DeveloperPropertyConfig } from './property-config';
 import { Plugin } from './plugin-config';
 
 export interface BatteryConfig {

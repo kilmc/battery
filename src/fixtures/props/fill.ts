@@ -1,4 +1,4 @@
-import { PropertyConfig } from 'types/prop-config';
+import { PropertyConfig } from 'types/property-config';
 
 export const fillColor: PropertyConfig = {
   cssProperty: 'fill',

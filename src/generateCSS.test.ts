@@ -6,7 +6,7 @@ import { hoverTargetPlugin } from 'fixtures/plugins/hoverTarget';
 import { breakpointPlugin } from 'fixtures/plugins/breakpoint';
 import { margin } from 'fixtures/props/margin';
 import { lengthUnitsPlugin } from 'fixtures/plugins/lengthUnits';
-import { PropertyConfig } from 'types/prop-config';
+import { PropertyConfig } from 'types/property-config';
 
 const testOutput = (source: string, expectation: string) => {
   expect(source.replace(/\s/g, '')).toEqual(expectation.replace(/\s/g, ''));

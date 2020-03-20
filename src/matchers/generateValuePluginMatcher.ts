@@ -1,5 +1,5 @@
 import { Plugin } from 'types/plugin-config';
-import { DeveloperPropertyConfig } from 'types/prop-config';
+import { DeveloperPropertyConfig } from 'types/property-config';
 import { Matcher, Matchers } from 'types/matchers';
 import { toCapture, toGroup } from 'utils/array';
 import { generatePrefixSuffixdMatchers } from './generatePrefixSuffixMatchers';

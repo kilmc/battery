@@ -1,6 +1,6 @@
 import { generateValuePluginMatcher } from 'matchers/generateValuePluginMatcher';
 import { Plugin, ModifierFn } from 'types/plugin-config';
-import { PropertyConfig } from 'types/prop-config';
+import { PropertyConfig } from 'types/property-config';
 import { backgroundColor } from 'fixtures/props/background-color';
 import { fillColor } from 'fixtures/props/fill';
 import { textColor } from 'fixtures/props/color';
