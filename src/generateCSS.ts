@@ -99,14 +99,22 @@ const processRootCSS = (rootClasses: ClassMetaData[]) => {
   }
 };
 
+const processConfig = (config: BatteryConfig) => {
+  const withStringCSSProperties = {
+    ...config,
+    props: config.props.map(prop => {
+      return { ...prop, cssProperty: [prop.cssProperty] };
+    }),
+  };
+  const withSubProps = convertSubProps(withStringCSSProperties);
+  return withSubProps;
+};
+
 export const generateCSS = (
   classNames: string[],
   config: BatteryConfig,
 ): string => {
-  const processedConfig = {
-    ...config,
-    props: [...convertSubProps(config.props)],
-  };
+  const processedConfig = processConfig(config);
   const classMetaArr = addMetaData(classNames, processedConfig);
 
   const withCssData = classMetaArr.map(classMeta => {

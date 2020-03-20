@@ -1,7 +1,7 @@
 import { PropertyConfig } from 'types/prop-config';
 
 export const margin: PropertyConfig = {
-  cssProperty: ['margin'],
+  cssProperty: 'margin',
   classNamespace: 'm',
   subProps: {
     all: '',

@@ -1,5 +1,5 @@
 import { ClassMetaData } from 'types/classname';
-import { BatteryConfig } from 'types/battery-config';
+import { DeveloperBatteryConfig } from 'types/battery-config';
 import { generateClassObject } from 'utils/classObjects';
 
 const isPropMatch = (arr1: string[], arr2: string[]) => {
@@ -8,7 +8,7 @@ const isPropMatch = (arr1: string[], arr2: string[]) => {
 
 export const addClassObjectData = (
   classMetaArr: ClassMetaData[],
-  config: BatteryConfig,
+  config: DeveloperBatteryConfig,
 ) => {
   return classMetaArr.map(classMeta => {
     const propConfig = config.props.find(propConfig =>

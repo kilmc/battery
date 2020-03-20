@@ -1,8 +1,10 @@
 import { ClassMetaData } from 'types/classname';
-import { BatteryConfig } from 'types/battery-config';
+import { DeveloperBatteryConfig } from 'types/battery-config';
 import { generateClassObject } from 'utils/classObjects';
 
-export const keywordToMetaData = (config: BatteryConfig): ClassMetaData[] => {
+export const keywordToMetaData = (
+  config: DeveloperBatteryConfig,
+): ClassMetaData[] => {
   const keywordProps = config.props.filter(prop => prop.values);
 
   if (keywordProps.length === 0) {

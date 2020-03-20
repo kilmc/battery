@@ -1,7 +1,7 @@
 import { PropertyConfig } from 'types/prop-config';
 
 export const width: PropertyConfig = {
-  cssProperty: ['width'],
+  cssProperty: 'width',
   classNamespace: 'w',
   valuePlugin: 'lengthUnit',
 };

@@ -1,15 +1,15 @@
 import { ClassMetaData, ExplodedClassSource } from 'types/classname';
-import { BatteryConfig } from 'types/battery-config';
+import { DeveloperBatteryConfig } from 'types/battery-config';
 import { Matchers, Matcher } from 'types/matchers';
 import { Plugin } from 'types/plugin-config';
 import { generateValueMatcher } from 'matchers/generateValuePluginMatcher';
-import { PropertyConfig } from 'types/prop-config';
+import { DeveloperPropertyConfig } from 'types/prop-config';
 import { generateModifierMatchers } from 'matchers/generateModifierMatchers';
 import { getMatcherName } from 'matchers/utils';
 
 const setPropIdentifier = (
   explodedSource: ExplodedClassSource,
-  propConfig: PropertyConfig,
+  propConfig: DeveloperPropertyConfig,
 ): ExplodedClassSource => {
   const classNamespace = propConfig.classNamespace
     ? propConfig.classNamespace
@@ -20,7 +20,7 @@ const setPropIdentifier = (
 
 const setValueSeparator = (
   explodedSource: ExplodedClassSource,
-  propConfig: PropertyConfig,
+  propConfig: DeveloperPropertyConfig,
   classMeta: ClassMetaData,
 ): ExplodedClassSource => {
   const { valueSeparator = '', pluginSeparator = '' } = propConfig;
@@ -184,7 +184,7 @@ const setPrefixSuffixData = (
 
 export const addExplodedSourceData = (
   classMetaArr: ClassMetaData[],
-  config: BatteryConfig,
+  config: DeveloperBatteryConfig,
   matchers: Matchers,
   plugins: Plugin[],
 ) => {

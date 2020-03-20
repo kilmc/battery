@@ -1,4 +1,4 @@
-import { BatteryConfig } from 'types/battery-config';
+import { DeveloperBatteryConfig } from 'types/battery-config';
 import { position } from 'fixtures/props/position';
 import { display } from 'fixtures/props/display';
 import { addMetaData } from './addMetaData';
@@ -15,8 +15,31 @@ import { hoverTargetPlugin } from 'fixtures/plugins/hoverTarget';
 
 describe('addMetaData', () => {
   describe('Handles keyword classNames', () => {
-    const config: BatteryConfig = {
-      props: [position, display, backgroundSize],
+    const config: DeveloperBatteryConfig = {
+      props: [
+        {
+          cssProperty: ['position'],
+          values: {
+            absolute: 'absolute',
+          },
+        },
+        {
+          cssProperty: ['display'],
+          values: {
+            block: 'block',
+          },
+        },
+        {
+          cssProperty: ['background-size'],
+          classNamespace: 'bg',
+          valueSeparator: '-',
+          values: {
+            contain: 'contain',
+            cover: 'cover',
+          },
+          valuePlugin: 'lengthUnit',
+        },
+      ],
     };
     const inputClassNames = ['block', 'absolute', 'bg-contain'];
 
@@ -87,8 +110,35 @@ describe('addMetaData', () => {
   });
 
   describe('Handles value plugin classNames', () => {
-    const config: BatteryConfig = {
-      props: [zIndex, backgroundColor, backgroundSize, width],
+    const config: DeveloperBatteryConfig = {
+      props: [
+        {
+          cssProperty: ['z-index'],
+          classNamespace: 'z',
+          valuePlugin: 'integer',
+        },
+        {
+          cssProperty: ['background-color'],
+          classNamespace: 'bg',
+          pluginSeparator: '-',
+          valuePlugin: 'color',
+        },
+        {
+          cssProperty: ['background-size'],
+          classNamespace: 'bg',
+          valueSeparator: '-',
+          values: {
+            contain: 'contain',
+            cover: 'cover',
+          },
+          valuePlugin: 'lengthUnit',
+        },
+        {
+          cssProperty: ['width'],
+          classNamespace: 'w',
+          valuePlugin: 'lengthUnit',
+        },
+      ],
       plugins: [integerPlugin, colorPlugin, lengthUnitsPlugin],
     };
     const inputClassNames = ['bg-white', 'bg-white_10', 'z100', 'w3'];
@@ -190,8 +240,35 @@ describe('addMetaData', () => {
   });
 
   describe('Handles class plugin classNames', () => {
-    const config: BatteryConfig = {
-      props: [zIndex, backgroundColor, backgroundSize, width],
+    const config: DeveloperBatteryConfig = {
+      props: [
+        {
+          cssProperty: ['z-index'],
+          classNamespace: 'z',
+          valuePlugin: 'integer',
+        },
+        {
+          cssProperty: ['background-color'],
+          classNamespace: 'bg',
+          pluginSeparator: '-',
+          valuePlugin: 'color',
+        },
+        {
+          cssProperty: ['background-size'],
+          classNamespace: 'bg',
+          valueSeparator: '-',
+          values: {
+            contain: 'contain',
+            cover: 'cover',
+          },
+          valuePlugin: 'lengthUnit',
+        },
+        {
+          cssProperty: ['width'],
+          classNamespace: 'w',
+          valuePlugin: 'lengthUnit',
+        },
+      ],
       plugins: [
         integerPlugin,
         colorPlugin,

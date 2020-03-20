@@ -1,7 +1,7 @@
 import { PropertyConfig } from 'types/prop-config';
 
 export const backgroundSize: PropertyConfig = {
-  cssProperty: ['background-size'],
+  cssProperty: 'background-size',
   classNamespace: 'bg',
   valueSeparator: '-',
   values: {

@@ -1,5 +1,5 @@
 import { generateMatchers } from 'matchers/generateMatchers';
-import { BatteryConfig } from 'types/battery-config';
+import { DeveloperBatteryConfig } from 'types/battery-config';
 import { display } from 'fixtures/props/display';
 import { position } from 'fixtures/props/position';
 import { keywordToMetaData } from 'classMetaData/keywordToMetaData';
@@ -11,8 +11,21 @@ import { fillColor } from 'fixtures/props/fill';
 describe('generateMatchers', () => {
   describe('Given a valid batteryConfig', () => {
     describe('when the config contains keyword classes', () => {
-      const config: BatteryConfig = {
-        props: [display, position],
+      const config: DeveloperBatteryConfig = {
+        props: [
+          {
+            cssProperty: ['display'],
+            values: {
+              block: 'block',
+            },
+          },
+          {
+            cssProperty: ['position'],
+            values: {
+              absolute: 'absolute',
+            },
+          },
+        ],
       };
 
       const classMetaData = keywordToMetaData(config);
@@ -36,8 +49,27 @@ describe('generateMatchers', () => {
           },
         };
 
-        const config: BatteryConfig = {
-          props: [fillColor, backgroundColor, textColor],
+        const config: DeveloperBatteryConfig = {
+          props: [
+            {
+              cssProperty: ['fill'],
+              classNamespace: 'fill',
+              pluginSeparator: '-',
+              valuePlugin: 'color',
+            },
+            {
+              cssProperty: ['background-color'],
+              classNamespace: 'bg',
+              pluginSeparator: '-',
+              valuePlugin: 'color',
+            },
+            {
+              cssProperty: ['color'],
+              classNamespace: 'text',
+              pluginDefault: true,
+              valuePlugin: 'color',
+            },
+          ],
           plugins: [colorPlugin],
         };
         expect(generateMatchers(config, []).color).toEqual(

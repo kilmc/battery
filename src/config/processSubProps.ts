@@ -1,5 +1,6 @@
-import { PropertyConfig, SubPropKeys } from 'types/prop-config';
+import { SubPropKeys, DeveloperPropertyConfig } from 'types/prop-config';
 import { CSSProperties } from 'types/css';
+import { DeveloperBatteryConfig } from 'types/battery-config';
 
 const formatBorderProp = (rootProp: string, subProp: string) => {
   const [start, end] = rootProp.split('-');
@@ -26,8 +27,8 @@ const processedProp = (propsArr: string[], baseProp: CSSProperties) => {
     : propsArr.map(subProp => `${baseProp}-${subProp}` as CSSProperties);
 };
 
-export const convertSubProps = (props: PropertyConfig[]) => {
-  const convertedPropConfigs = props
+export const convertSubProps = (config: DeveloperBatteryConfig) => {
+  const convertedPropConfigs = config.props
     .filter(propConfig => typeof propConfig.subProps === 'object')
     .map(propConfig => {
       const subPropsConfig = propConfig.subProps;
@@ -54,15 +55,18 @@ export const convertSubProps = (props: PropertyConfig[]) => {
           };
           return accum.concat(newPropConfig);
         },
-        [] as PropertyConfig[],
+        [] as DeveloperPropertyConfig[],
       );
       return generatedConfigs;
     })
     .reduce((xs, x) => xs.concat(x), []);
 
-  const propsWithoutSubPropConfigs = props.filter(
+  const propsWithoutSubPropConfigs = config.props.filter(
     propConfig => typeof propConfig.subProps !== 'object',
   );
 
-  return [...propsWithoutSubPropConfigs, ...convertedPropConfigs];
+  return {
+    ...config,
+    props: [...propsWithoutSubPropConfigs, ...convertedPropConfigs],
+  };
 };

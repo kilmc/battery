@@ -1,5 +1,5 @@
 import { ClassMetaData } from 'types/classname';
-import { BatteryConfig } from 'types/battery-config';
+import { DeveloperBatteryConfig } from 'types/battery-config';
 import { addClassObjectData } from './addClassObjectData';
 import { addKeywordData } from './addKeywordData';
 import { addSourceData } from './addSourceData';
@@ -58,7 +58,7 @@ const sortValidAndInvalid = (classMeta: ClassMetaData[]) =>
 
 export const addMetaData = (
   classNames: string[],
-  config: BatteryConfig,
+  config: DeveloperBatteryConfig,
 ): ClassMetaData[] => {
   const keywords = keywordToMetaData(config);
   const matchers = generateMatchers(config, keywords);

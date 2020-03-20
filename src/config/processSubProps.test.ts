@@ -1,9 +1,10 @@
 import { convertSubProps } from './processSubProps';
-import { PropertyConfig } from 'types/prop-config';
+import { PropertyConfig, DeveloperPropertyConfig } from 'types/prop-config';
+import { DeveloperBatteryConfig } from 'types/battery-config';
 
 describe('processSubProps', () => {
   it('converts configs with subProps into their own separate configs', () => {
-    const margin: PropertyConfig = {
+    const margin: DeveloperPropertyConfig = {
       cssProperty: ['margin'],
       classNamespace: 'm',
       subProps: {
@@ -23,7 +24,7 @@ describe('processSubProps', () => {
     };
 
     const props = [margin];
-    const marginSubProps = [
+    const marginSubProps: DeveloperPropertyConfig[] = [
       {
         cssProperty: ['margin'],
         classNamespace: 'm',
@@ -89,6 +90,10 @@ describe('processSubProps', () => {
       },
     ];
 
-    expect(convertSubProps(props)).toEqual(marginSubProps);
+    const config: DeveloperBatteryConfig = {
+      props,
+    };
+
+    expect(convertSubProps(config).props).toEqual(marginSubProps);
   });
 });
