@@ -1,6 +1,6 @@
-import { UserPropConfig } from 'types/prop-config';
+import { PropertyConfig } from 'types/prop-config';
 
-export const margin: UserPropConfig = {
+export const margin: PropertyConfig = {
   cssProperty: ['margin'],
   classNamespace: 'm',
   subProps: {

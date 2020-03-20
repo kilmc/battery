@@ -1,9 +1,9 @@
 import { convertSubProps } from './processSubProps';
-import { UserPropConfig } from 'types/prop-config';
+import { PropertyConfig } from 'types/prop-config';
 
 describe('processSubProps', () => {
   it('converts configs with subProps into their own separate configs', () => {
-    const margin: UserPropConfig = {
+    const margin: PropertyConfig = {
       cssProperty: ['margin'],
       classNamespace: 'm',
       subProps: {

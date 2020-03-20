@@ -1,6 +1,6 @@
-import { UserPropConfig } from 'types/prop-config';
+import { PropertyConfig } from 'types/prop-config';
 
-export const backgroundSize: UserPropConfig = {
+export const backgroundSize: PropertyConfig = {
   cssProperty: ['background-size'],
   classNamespace: 'bg',
   valueSeparator: '-',

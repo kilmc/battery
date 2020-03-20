@@ -3,13 +3,13 @@ import { BatteryConfig } from 'types/battery-config';
 import { Matchers, Matcher } from 'types/matchers';
 import { Plugin } from 'types/plugin-config';
 import { generateValueMatcher } from 'matchers/generateValuePluginMatcher';
-import { UserPropConfig } from 'types/prop-config';
+import { PropertyConfig } from 'types/prop-config';
 import { generateModifierMatchers } from 'matchers/generateModifierMatchers';
 import { getMatcherName } from 'matchers/utils';
 
 const setPropIdentifier = (
   explodedSource: ExplodedClassSource,
-  propConfig: UserPropConfig,
+  propConfig: PropertyConfig,
 ): ExplodedClassSource => {
   const classNamespace = propConfig.classNamespace
     ? propConfig.classNamespace
@@ -20,7 +20,7 @@ const setPropIdentifier = (
 
 const setValueSeparator = (
   explodedSource: ExplodedClassSource,
-  propConfig: UserPropConfig,
+  propConfig: PropertyConfig,
   classMeta: ClassMetaData,
 ): ExplodedClassSource => {
   const { valueSeparator = '', pluginSeparator = '' } = propConfig;

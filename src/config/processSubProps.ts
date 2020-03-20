@@ -1,4 +1,4 @@
-import { UserPropConfig, SubPropKeys } from 'types/prop-config';
+import { PropertyConfig, SubPropKeys } from 'types/prop-config';
 import { CSSProperties } from 'types/css';
 
 const formatBorderProp = (rootProp: string, subProp: string) => {
@@ -26,7 +26,7 @@ const processedProp = (propsArr: string[], baseProp: CSSProperties) => {
     : propsArr.map(subProp => `${baseProp}-${subProp}` as CSSProperties);
 };
 
-export const convertSubProps = (props: UserPropConfig[]) => {
+export const convertSubProps = (props: PropertyConfig[]) => {
   const convertedPropConfigs = props
     .filter(propConfig => typeof propConfig.subProps === 'object')
     .map(propConfig => {
@@ -54,7 +54,7 @@ export const convertSubProps = (props: UserPropConfig[]) => {
           };
           return accum.concat(newPropConfig);
         },
-        [] as UserPropConfig[],
+        [] as PropertyConfig[],
       );
       return generatedConfigs;
     })

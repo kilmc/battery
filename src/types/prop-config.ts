@@ -15,7 +15,7 @@ interface ModifierSubset {
   modifiers: string[];
 }
 
-export interface UserPropConfig {
+export interface PropertyConfig {
   cssProperty: CSSProperties[];
   classNamespace?: string;
   pluginDefault?: boolean;

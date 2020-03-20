@@ -1,11 +1,11 @@
 import { ClassMetaData } from 'types/classname';
 import { Matchers } from 'types/matchers';
-import { UserPropConfig } from 'types/prop-config';
+import { PropertyConfig } from 'types/prop-config';
 
 export const addPropertyData = (
   classMetaArr: ClassMetaData[],
   matchers: Matchers,
-  props: UserPropConfig[],
+  props: PropertyConfig[],
   generatedKeywordMetaData: ClassMetaData[],
 ): ClassMetaData[] =>
   classMetaArr.map(classMeta => {

@@ -1,6 +1,6 @@
-import { UserPropConfig } from 'types/prop-config';
+import { PropertyConfig } from 'types/prop-config';
 
-export const backgroundColor: UserPropConfig = {
+export const backgroundColor: PropertyConfig = {
   cssProperty: ['background-color'],
   classNamespace: 'bg',
   pluginSeparator: '-',

@@ -1,6 +1,6 @@
-import { UserPropConfig } from 'types/prop-config';
+import { PropertyConfig } from 'types/prop-config';
 
-export const textColor: UserPropConfig = {
+export const textColor: PropertyConfig = {
   cssProperty: ['color'],
   classNamespace: 'text',
   pluginDefault: true,

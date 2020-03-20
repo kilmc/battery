@@ -1,6 +1,6 @@
-import { UserPropConfig } from 'types/prop-config';
+import { PropertyConfig } from 'types/prop-config';
 
-export const flex: UserPropConfig = {
+export const flex: PropertyConfig = {
   cssProperty: ['flex'],
   classNamespace: 'flex',
   valuePlugin: 'integer',

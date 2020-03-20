@@ -6,7 +6,7 @@ import { hoverTargetPlugin } from 'fixtures/plugins/hoverTarget';
 import { breakpointPlugin } from 'fixtures/plugins/breakpoint';
 import { margin } from 'fixtures/props/margin';
 import { lengthUnitsPlugin } from 'fixtures/plugins/lengthUnits';
-import { UserPropConfig } from 'types/prop-config';
+import { PropertyConfig } from 'types/prop-config';
 
 const testOutput = (source: string, expectation: string) => {
   expect(source.replace(/\s/g, '')).toEqual(expectation.replace(/\s/g, ''));
@@ -436,7 +436,7 @@ describe('generateCSS', () => {
 
   describe('Sorts', () => {
     describe('into descending alpha-numeric order', () => {
-      const backgroundSize: UserPropConfig = {
+      const backgroundSize: PropertyConfig = {
         cssProperty: ['background-size'],
         classNamespace: 'bg',
         valueSeparator: '-',
@@ -445,7 +445,7 @@ describe('generateCSS', () => {
           cover: 'cover',
         },
       };
-      const textAlign: UserPropConfig = {
+      const textAlign: PropertyConfig = {
         cssProperty: ['text-align'],
         classNamespace: 'text',
         valueSeparator: '-',
@@ -491,7 +491,7 @@ describe('generateCSS', () => {
     });
 
     describe('moves auto and inherit values to the bottom of the list', () => {
-      const margin: UserPropConfig = {
+      const margin: PropertyConfig = {
         cssProperty: ['margin'],
         classNamespace: 'm',
         valueSeparator: '-',

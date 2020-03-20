@@ -1,5 +1,5 @@
 import { Plugin } from 'types/plugin-config';
-import { UserPropConfig } from 'types/prop-config';
+import { PropertyConfig } from 'types/prop-config';
 import { Matcher, Matchers } from 'types/matchers';
 import { toCapture, toGroup } from 'utils/array';
 import { generatePrefixSuffixdMatchers } from './generatePrefixSuffixMatchers';
@@ -53,7 +53,7 @@ export const generateValueMatcher = (
   }
 };
 
-const generatePropMatcher = (pluginPropConfigs: UserPropConfig[]) => {
+const generatePropMatcher = (pluginPropConfigs: PropertyConfig[]) => {
   const defaultProp = pluginPropConfigs.filter(c => c.pluginDefault);
   const hasDefaultProp = defaultProp.length > 0;
 
@@ -69,7 +69,7 @@ const generatePropMatcher = (pluginPropConfigs: UserPropConfig[]) => {
 
 export const generateValuePluginMatcher = (
   plugins: Plugin[],
-  propConfigs: UserPropConfig[],
+  propConfigs: PropertyConfig[],
 ): { [k: string]: Matcher } => {
   if (!plugins || plugins.length < 1) {
     return {};
