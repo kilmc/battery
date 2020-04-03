@@ -1,5 +1,5 @@
-import { ClassMetaData } from 'types/classname';
-import { Matchers } from 'types/matchers';
+import { ClassMetaData } from '../types/classname';
+import { Matchers } from '../types/matchers';
 
 export const addKeywordData = (
   classMetaArr: ClassMetaData[],

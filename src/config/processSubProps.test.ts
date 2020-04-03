@@ -1,6 +1,9 @@
 import { convertSubProps } from './processSubProps';
-import { PropertyConfig, DeveloperPropertyConfig } from 'types/property-config';
-import { DeveloperBatteryConfig } from 'types/battery-config';
+import {
+  PropertyConfig,
+  DeveloperPropertyConfig,
+} from '../types/property-config';
+import { DeveloperBatteryConfig } from '../types/battery-config';
 
 describe('processSubProps', () => {
   it('converts configs with subProps into their own separate configs', () => {

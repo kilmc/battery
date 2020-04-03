@@ -1,12 +1,12 @@
 import { generateCSS } from './generateCSS';
-import { BatteryConfig } from 'types/battery-config';
-import { ModifierFn } from 'types/plugin-config';
-import { pseudoPlugin } from 'fixtures/plugins/pseudo';
-import { hoverTargetPlugin } from 'fixtures/plugins/hoverTarget';
-import { breakpointPlugin } from 'fixtures/plugins/breakpoint';
-import { margin } from 'fixtures/props/margin';
-import { lengthUnitsPlugin } from 'fixtures/plugins/lengthUnits';
-import { PropertyConfig } from 'types/property-config';
+import { BatteryConfig } from './types/battery-config';
+import { ModifierFn } from './types/plugin-config';
+import { pseudoPlugin } from './fixtures/plugins/pseudo';
+import { hoverTargetPlugin } from './fixtures/plugins/hoverTarget';
+import { breakpointPlugin } from './fixtures/plugins/breakpoint';
+import { margin } from './fixtures/props/margin';
+import { lengthUnitsPlugin } from './fixtures/plugins/lengthUnits';
+import { PropertyConfig } from './types/property-config';
 
 const testOutput = (source: string, expectation: string) => {
   expect(source.replace(/\s/g, '')).toEqual(expectation.replace(/\s/g, ''));

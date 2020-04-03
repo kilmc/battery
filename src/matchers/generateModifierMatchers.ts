@@ -1,5 +1,5 @@
-import { PluginConfig } from 'types/plugin-config';
-import { Matchers } from 'types/matchers';
+import { PluginConfig } from '../types/plugin-config';
+import { Matchers } from '../types/matchers';
 
 export const generateModifierMatchers = (plugin: PluginConfig) => {
   return plugin.modifiers.reduce(

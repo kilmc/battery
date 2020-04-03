@@ -1,7 +1,7 @@
-import { generateMatchers } from 'matchers/generateMatchers';
-import { DeveloperBatteryConfig } from 'types/battery-config';
-import { keywordToMetaData } from 'classMetaData/keywordToMetaData';
-import { PluginConfig } from 'types/plugin-config';
+import { generateMatchers } from '../matchers/generateMatchers';
+import { DeveloperBatteryConfig } from '../types/battery-config';
+import { keywordToMetaData } from '../classMetaData/keywordToMetaData';
+import { PluginConfig } from '../types/plugin-config';
 
 describe('generateMatchers', () => {
   describe('Given a valid batteryConfig', () => {

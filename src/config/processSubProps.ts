@@ -1,6 +1,6 @@
-import { SubPropKeys, DeveloperPropertyConfig } from 'types/property-config';
-import { CSSProperties } from 'types/css';
-import { DeveloperBatteryConfig } from 'types/battery-config';
+import { SubPropKeys, DeveloperPropertyConfig } from '../types/property-config';
+import { CSSProperties } from '../types/css';
+import { DeveloperBatteryConfig } from '../types/battery-config';
 
 const formatBorderProp = (rootProp: string, subProp: string) => {
   const [start, end] = rootProp.split('-');

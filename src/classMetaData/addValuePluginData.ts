@@ -1,6 +1,6 @@
-import { ClassMetaData } from 'types/classname';
-import { Matchers } from 'types/matchers';
-import { PluginConfig } from 'types/plugin-config';
+import { ClassMetaData } from '../types/classname';
+import { Matchers } from '../types/matchers';
+import { PluginConfig } from '../types/plugin-config';
 
 export const addValuePluginData = (
   classMetaArr: ClassMetaData[],

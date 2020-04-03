@@ -1,17 +1,11 @@
-import { DeveloperBatteryConfig } from 'types/battery-config';
-import { position } from 'fixtures/props/position';
-import { display } from 'fixtures/props/display';
+import { DeveloperBatteryConfig } from '../types/battery-config';
 import { addMetaData } from './addMetaData';
-import { backgroundSize } from 'fixtures/props/background-size';
-import { zIndex } from 'fixtures/props/z-index';
-import { colorPlugin } from 'fixtures/plugins/color';
-import { backgroundColor } from 'fixtures/props/background-color';
-import { integerPlugin } from 'fixtures/plugins/integer';
-import { lengthUnitsPlugin } from 'fixtures/plugins/lengthUnits';
-import { width } from 'fixtures/props/width';
-import { breakpointPlugin } from 'fixtures/plugins/breakpoint';
-import { pseudoPlugin } from 'fixtures/plugins/pseudo';
-import { hoverTargetPlugin } from 'fixtures/plugins/hoverTarget';
+import { colorPlugin } from '../fixtures/plugins/color';
+import { integerPlugin } from '../fixtures/plugins/integer';
+import { lengthUnitsPlugin } from '../fixtures/plugins/lengthUnits';
+import { breakpointPlugin } from '../fixtures/plugins/breakpoint';
+import { pseudoPlugin } from '../fixtures/plugins/pseudo';
+import { hoverTargetPlugin } from '../fixtures/plugins/hoverTarget';
 
 describe('addMetaData', () => {
   describe('Handles keyword classNames', () => {

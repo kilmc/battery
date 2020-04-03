@@ -1,4 +1,4 @@
-import { PluginConfig, ModifierFn } from 'types/plugin-config';
+import { PluginConfig, ModifierFn } from '../../types/plugin-config';
 
 const hexToRgba: ModifierFn = (hex, opacity) => {
   const hexValue = hex.replace('#', '');

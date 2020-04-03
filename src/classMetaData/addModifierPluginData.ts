@@ -1,7 +1,7 @@
-import { ClassMetaData } from 'types/classname';
-import { PluginConfig } from 'types/plugin-config';
-import { getMatcherName } from 'matchers/utils';
-import { generateModifierMatchers } from 'matchers/generateModifierMatchers';
+import { ClassMetaData } from '../types/classname';
+import { PluginConfig } from '../types/plugin-config';
+import { getMatcherName } from '../matchers/utils';
+import { generateModifierMatchers } from '../matchers/generateModifierMatchers';
 
 export const addModifierPluginData = (
   classMetaArr: ClassMetaData[],

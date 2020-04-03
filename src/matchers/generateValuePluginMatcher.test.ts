@@ -1,9 +1,12 @@
-import { generateValuePluginMatcher } from 'matchers/generateValuePluginMatcher';
-import { PluginConfig, ModifierFn } from 'types/plugin-config';
-import { PropertyConfig, DeveloperPropertyConfig } from 'types/property-config';
-import { backgroundColor } from 'fixtures/props/background-color';
-import { textColor } from 'fixtures/props/color';
-import { zIndex } from 'fixtures/props/z-index';
+import { generateValuePluginMatcher } from '../matchers/generateValuePluginMatcher';
+import { PluginConfig, ModifierFn } from '../types/plugin-config';
+import {
+  PropertyConfig,
+  DeveloperPropertyConfig,
+} from '../types/property-config';
+import { backgroundColor } from '../fixtures/props/background-color';
+import { textColor } from '../fixtures/props/color';
+import { zIndex } from '../fixtures/props/z-index';
 
 describe('generateValuePluginMatcher', () => {
   const colorPlugin: PluginConfig = {

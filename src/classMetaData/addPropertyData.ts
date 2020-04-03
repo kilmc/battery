@@ -1,6 +1,6 @@
-import { ClassMetaData } from 'types/classname';
-import { Matchers } from 'types/matchers';
-import { DeveloperPropertyConfig } from 'types/property-config';
+import { ClassMetaData } from '../types/classname';
+import { Matchers } from '../types/matchers';
+import { DeveloperPropertyConfig } from '../types/property-config';
 
 export const addPropertyData = (
   classMetaArr: ClassMetaData[],

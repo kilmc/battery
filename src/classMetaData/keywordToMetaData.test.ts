@@ -1,6 +1,6 @@
 import { keywordToMetaData } from './keywordToMetaData';
-import { BatteryConfig, DeveloperBatteryConfig } from 'types/battery-config';
-import { ClassMetaData } from 'types/classname';
+import { BatteryConfig, DeveloperBatteryConfig } from '../types/battery-config';
+import { ClassMetaData } from '../types/classname';
 
 describe('keywordToMetaData', () => {
   describe('Given a config containing keyword class definitions', () => {

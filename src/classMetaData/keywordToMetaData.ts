@@ -1,6 +1,6 @@
-import { ClassMetaData } from 'types/classname';
-import { DeveloperBatteryConfig } from 'types/battery-config';
-import { generateClassObject } from 'utils/classObjects';
+import { ClassMetaData } from '../types/classname';
+import { DeveloperBatteryConfig } from '../types/battery-config';
+import { generateClassObject } from '../utils/classObjects';
 
 export const keywordToMetaData = (
   config: DeveloperBatteryConfig,

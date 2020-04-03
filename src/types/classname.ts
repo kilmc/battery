@@ -1,4 +1,4 @@
-import { CSSProperties } from 'types/css';
+import { CSSProperties } from '../types/css';
 
 export type ClassObject = { [key in CSSProperties]?: string };
 export interface ClassObjectGroup {

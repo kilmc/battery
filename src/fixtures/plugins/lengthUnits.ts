@@ -1,4 +1,4 @@
-import { ModifierFn, PluginConfig } from 'types/plugin-config';
+import { ModifierFn, PluginConfig } from '../../types/plugin-config';
 
 const pxToRem: ModifierFn = value => `${parseInt(value) / 16}rem`;
 const ratio: ModifierFn = value => {

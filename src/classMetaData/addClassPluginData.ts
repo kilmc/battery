@@ -1,5 +1,5 @@
-import { ClassMetaData } from 'types/classname';
-import { PluginConfig } from 'types/plugin-config';
+import { ClassMetaData } from '../types/classname';
+import { PluginConfig } from '../types/plugin-config';
 
 const addAffixData = (
   affixType: 'prefix' | 'suffix',

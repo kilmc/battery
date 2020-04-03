@@ -1,6 +1,6 @@
-import { ClassMetaData } from 'types/classname';
-import { toCapture } from 'utils/array';
-import { PluginConfig } from 'types/plugin-config';
+import { ClassMetaData } from '../types/classname';
+import { toCapture } from '../utils/array';
+import { PluginConfig } from '../types/plugin-config';
 import { generatePrefixSuffixdMatchers } from './generatePrefixSuffixMatchers';
 
 export const generateKeywordMatcher = (

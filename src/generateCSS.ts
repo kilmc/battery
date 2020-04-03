@@ -1,10 +1,10 @@
-import { BatteryConfig } from 'types/battery-config';
-import { classMetaToCSS } from 'css/classMetaToCSS';
-import { addMetaData } from 'classMetaData/addMetaData';
-import { ClassMetaData } from 'types/classname';
-import { PluginConfig } from 'types/plugin-config';
-import { convertSubProps } from 'config/processSubProps';
-import { sortAlphaNum } from 'utils/string';
+import { BatteryConfig } from './types/battery-config';
+import { classMetaToCSS } from './css/classMetaToCSS';
+import { addMetaData } from './classMetaData/addMetaData';
+import { ClassMetaData } from './types/classname';
+import { PluginConfig } from './types/plugin-config';
+import { convertSubProps } from './config/processSubProps';
+import { sortAlphaNum } from './utils/string';
 
 const processAtRulePlugins = (
   classMetaArr: ClassMetaData[],

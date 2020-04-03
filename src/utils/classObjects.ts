@@ -1,4 +1,4 @@
-import { CSSProperties } from 'types/css';
+import { CSSProperties } from '../types/css';
 
 export const generateClassObject = (
   propsArr: CSSProperties[],

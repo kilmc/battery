@@ -1,7 +1,7 @@
-import { DeveloperBatteryConfig } from 'types/battery-config';
-import { ClassMetaData } from 'types/classname';
-import { generateKeywordMatcher } from 'matchers/generateKeywordMatcher';
-import { Matchers } from 'types/matchers';
+import { DeveloperBatteryConfig } from '../types/battery-config';
+import { ClassMetaData } from '../types/classname';
+import { generateKeywordMatcher } from '../matchers/generateKeywordMatcher';
+import { Matchers } from '../types/matchers';
 import { generateValuePluginMatcher } from './generateValuePluginMatcher';
 
 export const generateMatchers = (

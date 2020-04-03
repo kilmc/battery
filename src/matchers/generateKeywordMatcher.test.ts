@@ -1,6 +1,6 @@
-import { generateKeywordMatcher } from 'matchers/generateKeywordMatcher';
-import { ClassMetaData } from 'types/classname';
-import { ModifierFn, PluginConfig } from 'types/plugin-config';
+import { generateKeywordMatcher } from '../matchers/generateKeywordMatcher';
+import { ClassMetaData } from '../types/classname';
+import { ModifierFn, PluginConfig } from '../types/plugin-config';
 
 describe('generateKeywordMatchers', () => {
   describe('Given a valid batteryConfig', () => {

@@ -1,7 +1,7 @@
-import { ClassMetaData } from 'types/classname';
-import { DeveloperBatteryConfig } from 'types/battery-config';
-import { generateClassObject } from 'utils/classObjects';
-import { PluginConfig } from 'types/plugin-config';
+import { ClassMetaData } from '../types/classname';
+import { DeveloperBatteryConfig } from '../types/battery-config';
+import { generateClassObject } from '../utils/classObjects';
+import { PluginConfig } from '../types/plugin-config';
 
 const isPropMatch = (arr1: string[], arr2: string[]) => {
   return arr1.every(item => arr2.includes(item));
