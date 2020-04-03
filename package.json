@@ -2,7 +2,7 @@
   "name": "@battery/core",
   "version": "0.1.1",
   "main": "dist/index.js",
-  "types": "dist/types",
+  "types": "dist/index.d.ts",
   "repository": "git@github.com:kilmc/battery",
   "author": "Kilian McMahon",
   "license": "MIT",
