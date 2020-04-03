@@ -36,7 +36,6 @@ export const convertSubProps = (config: DeveloperBatteryConfig) => {
         (accum, [subPropGroup, subPropIdentifier]: [SubPropKeys, string]) => {
           const {
             classNamespace,
-            subProps,
             subPropSeparator = '',
             cssProperty,
             ...rest

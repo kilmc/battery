@@ -9,11 +9,9 @@ export const addValuePluginData = (
 ): ClassMetaData[] => {
   return classMetaArr.map(classMeta => {
     if (classMeta.keyword) return classMeta;
-    const pluginName = Object.entries(valuePluginMatchers).find(
-      ([_, regex]) => {
-        return regex.test(classMeta.source);
-      },
-    );
+    const pluginName = Object.entries(valuePluginMatchers).find(([, regex]) => {
+      return regex.test(classMeta.source);
+    });
 
     const plugin: PluginConfig = plugins.find(
       pluginConfig => pluginConfig.name === pluginName[0],

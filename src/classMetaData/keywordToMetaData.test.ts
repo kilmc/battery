@@ -1,5 +1,5 @@
 import { keywordToMetaData } from './keywordToMetaData';
-import { BatteryConfig, DeveloperBatteryConfig } from '../types/battery-config';
+import { DeveloperBatteryConfig } from '../types/battery-config';
 import { ClassMetaData } from '../types/classname';
 
 describe('keywordToMetaData', () => {

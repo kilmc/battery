@@ -6,7 +6,7 @@ export const addSourceData = (
   matchers: Matchers,
 ): ClassMetaData[] =>
   classNameArr.map(className => {
-    const matcher = Object.entries(matchers).find(([_, regex]) => {
+    const matcher = Object.entries(matchers).find(([, regex]) => {
       return regex.test(className);
     });
 

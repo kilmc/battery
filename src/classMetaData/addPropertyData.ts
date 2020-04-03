@@ -9,7 +9,7 @@ export const addPropertyData = (
   generatedKeywordMetaData: ClassMetaData[],
 ): ClassMetaData[] =>
   classMetaArr.map(classMeta => {
-    const matcher = Object.entries(matchers).find(([_, regex]) => {
+    const matcher = Object.entries(matchers).find(([, regex]) => {
       return regex.test(classMeta.source);
     });
 

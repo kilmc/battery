@@ -143,7 +143,7 @@ const setPrefixSuffixData = (
   matchers: Matchers,
   plugins: PluginConfig[],
 ) => {
-  const matcherArr = Object.entries(matchers).find(([matcherName, _]) => {
+  const matcherArr = Object.entries(matchers).find(([matcherName]) => {
     return (
       matcherName === classMeta.valuePlugin ||
       (classMeta.keyword && matcherName === 'keyword')
