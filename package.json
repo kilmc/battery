@@ -28,8 +28,8 @@
     "typescript": "3.8.3"
   },
   "scripts": {
-    "build": "tsc -c",
-    "watch": "tsc -c -w",
+    "build": "tsc",
+    "watch": "tsc -w",
     "test": "jest --watch"
   }
 }
