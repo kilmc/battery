@@ -1,8 +1,8 @@
 import { colorPlugin } from 'fixtures/plugins/color';
-import { UserPropConfig } from 'types/prop-config';
+import { PropertyConfig } from '../../types/property-config';
 
-export const textColor: UserPropConfig = {
-  cssProperty: ['color'],
+export const textColor: PropertyConfig = {
+  cssProperty: 'color',
   classNamespace: 'text',
   pluginDefault: true,
   valuePlugin: colorPlugin,

@@ -1,12 +1,12 @@
 import { generateCSS } from './generateCSS';
-import { BatteryConfig } from 'types/battery-config';
-import { ModifierFn } from 'types/plugin-config';
-import { pseudoPlugin } from 'fixtures/plugins/pseudo';
-import { hoverTargetPlugin } from 'fixtures/plugins/hoverTarget';
-import { breakpointPlugin } from 'fixtures/plugins/breakpoint';
-import { margin } from 'fixtures/props/margin';
-import { lengthUnitsPlugin } from 'fixtures/plugins/lengthUnits';
-import { UserPropConfig } from 'types/prop-config';
+import { BatteryConfig } from './types/battery-config';
+import { ModifierFn } from './types/plugin-config';
+import { pseudoPlugin } from './fixtures/plugins/pseudo';
+import { hoverTargetPlugin } from './fixtures/plugins/hoverTarget';
+import { breakpointPlugin } from './fixtures/plugins/breakpoint';
+import { margin } from './fixtures/props/margin';
+import { lengthUnitsPlugin } from './fixtures/plugins/lengthUnits';
+import { PropertyConfig } from './types/property-config';
 
 const testOutput = (source: string, expectation: string) => {
   expect(source.replace(/\s/g, '')).toEqual(expectation.replace(/\s/g, ''));
@@ -19,7 +19,7 @@ describe('generateCSS', () => {
       const config: BatteryConfig = {
         props: [
           {
-            cssProperty: ['background-size'],
+            cssProperty: 'background-size',
             classNamespace: 'bg',
             valueSeparator: '-',
             values: {
@@ -28,7 +28,7 @@ describe('generateCSS', () => {
             },
           },
           {
-            cssProperty: ['text-align'],
+            cssProperty: 'text-align',
             classNamespace: 'text',
             valueSeparator: '-',
             values: {
@@ -51,13 +51,13 @@ describe('generateCSS', () => {
       const config: BatteryConfig = {
         props: [
           {
-            cssProperty: ['display'],
+            cssProperty: 'display',
             values: {
               block: 'block',
             },
           },
           {
-            cssProperty: ['position'],
+            cssProperty: 'position',
             values: {
               absolute: 'absolute',
             },
@@ -78,7 +78,7 @@ describe('generateCSS', () => {
       const config: BatteryConfig = {
         props: [
           {
-            cssProperty: ['border'],
+            cssProperty: 'border',
             classNamespace: 'border',
             valueSeparator: '-',
             values: { __DEFAULT__: '1px solid #000' },
@@ -137,7 +137,7 @@ describe('generateCSS', () => {
       const config: BatteryConfig = {
         props: [
           {
-            cssProperty: ['border-style'],
+            cssProperty: 'border-style',
             classNamespace: 'border',
             subPropSeparator: '-',
             subProps: {
@@ -175,12 +175,12 @@ describe('generateCSS', () => {
       const config: BatteryConfig = {
         props: [
           {
-            cssProperty: ['z-index'],
+            cssProperty: 'z-index',
             classNamespace: 'z',
             valuePlugin: 'integer',
           },
           {
-            cssProperty: ['flex'],
+            cssProperty: 'flex',
             classNamespace: 'flex',
             valuePlugin: 'integer',
           },
@@ -203,12 +203,12 @@ describe('generateCSS', () => {
       const config: BatteryConfig = {
         props: [
           {
-            cssProperty: ['width'],
+            cssProperty: 'width',
             classNamespace: 'w',
             valuePlugin: 'lengthUnit',
           },
           {
-            cssProperty: ['height'],
+            cssProperty: 'height',
             classNamespace: 'h',
             valuePlugin: 'lengthUnit',
           },
@@ -241,7 +241,7 @@ describe('generateCSS', () => {
       const config: BatteryConfig = {
         props: [
           {
-            cssProperty: ['margin'],
+            cssProperty: 'margin',
             classNamespace: 'm',
             valuePlugin: 'lengthUnit',
           },
@@ -276,12 +276,12 @@ describe('generateCSS', () => {
       const config: BatteryConfig = {
         props: [
           {
-            cssProperty: ['color'],
+            cssProperty: 'color',
             pluginDefault: true,
             valuePlugin: 'color',
           },
           {
-            cssProperty: ['background-color'],
+            cssProperty: 'background-color',
             classNamespace: 'bg',
             pluginSeparator: '-',
             valuePlugin: 'color',
@@ -318,12 +318,12 @@ describe('generateCSS', () => {
       const config: BatteryConfig = {
         props: [
           {
-            cssProperty: ['color'],
+            cssProperty: 'color',
             pluginDefault: true,
             valuePlugin: 'color',
           },
           {
-            cssProperty: ['background-color'],
+            cssProperty: 'background-color',
             classNamespace: 'bg',
             pluginSeparator: '-',
             valuePlugin: 'color',
@@ -359,7 +359,7 @@ describe('generateCSS', () => {
     const config: BatteryConfig = {
       props: [
         {
-          cssProperty: ['background-size'],
+          cssProperty: 'background-size',
           classNamespace: 'bg',
           valueSeparator: '-',
           values: {
@@ -368,7 +368,7 @@ describe('generateCSS', () => {
           },
         },
         {
-          cssProperty: ['text-align'],
+          cssProperty: 'text-align',
           classNamespace: 'text',
           valueSeparator: '-',
           values: {
@@ -394,7 +394,7 @@ describe('generateCSS', () => {
     const config: BatteryConfig = {
       props: [
         {
-          cssProperty: ['background-size'],
+          cssProperty: 'background-size',
           classNamespace: 'bg',
           valueSeparator: '-',
           values: {
@@ -403,7 +403,7 @@ describe('generateCSS', () => {
           },
         },
         {
-          cssProperty: ['text-align'],
+          cssProperty: 'text-align',
           classNamespace: 'text',
           valueSeparator: '-',
           values: {
@@ -433,8 +433,8 @@ describe('generateCSS', () => {
 
   describe('Sorts', () => {
     describe('into descending alpha-numeric order', () => {
-      const backgroundSize: UserPropConfig = {
-        cssProperty: ['background-size'],
+      const backgroundSize: PropertyConfig = {
+        cssProperty: 'background-size',
         classNamespace: 'bg',
         valueSeparator: '-',
         values: {
@@ -442,8 +442,8 @@ describe('generateCSS', () => {
           cover: 'cover',
         },
       };
-      const textAlign: UserPropConfig = {
-        cssProperty: ['text-align'],
+      const textAlign: PropertyConfig = {
+        cssProperty: 'text-align',
         classNamespace: 'text',
         valueSeparator: '-',
         values: {
@@ -488,8 +488,8 @@ describe('generateCSS', () => {
     });
 
     describe('moves auto and inherit values to the bottom of the list', () => {
-      const margin: UserPropConfig = {
-        cssProperty: ['margin'],
+      const margin: PropertyConfig = {
+        cssProperty: 'margin',
         classNamespace: 'm',
         valueSeparator: '-',
         values: {

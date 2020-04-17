@@ -1,7 +1,7 @@
-import { UserPropConfig } from 'types/prop-config';
+import { PropertyConfig } from '../../types/property-config';
 
-export const display: UserPropConfig = {
-  cssProperty: ['display'],
+export const display: PropertyConfig = {
+  cssProperty: 'display',
   values: {
     block: 'block',
   },

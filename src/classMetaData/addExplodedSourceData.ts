@@ -1,15 +1,15 @@
-import { ClassMetaData, ExplodedClassSource } from 'types/classname';
-import { BatteryConfig } from 'types/battery-config';
-import { Matchers, Matcher } from 'types/matchers';
-import { Plugin } from 'types/plugin-config';
-import { generateValueMatcher } from 'matchers/generateValuePluginMatcher';
-import { UserPropConfig } from 'types/prop-config';
-import { generateModifierMatchers } from 'matchers/generateModifierMatchers';
-import { getMatcherName } from 'matchers/utils';
+import { ClassMetaData, ExplodedClassSource } from '../types/classname';
+import { DeveloperBatteryConfig } from '../types/battery-config';
+import { Matchers, Matcher } from '../types/matchers';
+import { PluginConfig } from '../types/plugin-config';
+import { generateValueMatcher } from '../matchers/generateValuePluginMatcher';
+import { DeveloperPropertyConfig } from '../types/property-config';
+import { generateModifierMatchers } from '../matchers/generateModifierMatchers';
+import { getMatcherName } from '../matchers/utils';
 
 const setPropIdentifier = (
   explodedSource: ExplodedClassSource,
-  propConfig: UserPropConfig,
+  propConfig: DeveloperPropertyConfig,
 ): ExplodedClassSource => {
   const classNamespace = propConfig.classNamespace
     ? propConfig.classNamespace
@@ -20,7 +20,7 @@ const setPropIdentifier = (
 
 const setValueSeparator = (
   explodedSource: ExplodedClassSource,
-  propConfig: UserPropConfig,
+  propConfig: DeveloperPropertyConfig,
   classMeta: ClassMetaData,
 ): ExplodedClassSource => {
   const { valueSeparator = '', pluginSeparator = '' } = propConfig;
@@ -35,7 +35,7 @@ const setModifierData = (
   explodedSource: ExplodedClassSource,
   classMeta: ClassMetaData,
   matchers: Matchers,
-  plugins: Plugin[],
+  plugins: PluginConfig[],
 ): ExplodedClassSource => {
   const value = classMeta.source.match(matchers[classMeta.valuePlugin])[3];
   const plugin = plugins.find(
@@ -114,7 +114,7 @@ const setValueIdentifier = (
 const setClassModifierData = (
   affixType: 'prefix' | 'suffix',
   match: string,
-  plugins: Plugin[],
+  plugins: PluginConfig[],
 ) => {
   const prefixModifiers = plugins
     .filter(plugin => plugin.affixType === affixType)
@@ -142,9 +142,9 @@ const setPrefixSuffixData = (
   explodedSource: ExplodedClassSource,
   classMeta: ClassMetaData,
   matchers: Matchers,
-  plugins: Plugin[],
+  plugins: PluginConfig[],
 ) => {
-  const matcherArr = Object.entries(matchers).find(([matcherName, _]) => {
+  const matcherArr = Object.entries(matchers).find(([matcherName]) => {
     return (
       matcherName === classMeta.valuePlugin ||
       (classMeta.keyword && matcherName === 'keyword')
@@ -185,9 +185,9 @@ const setPrefixSuffixData = (
 
 export const addExplodedSourceData = (
   classMetaArr: ClassMetaData[],
-  config: BatteryConfig,
+  config: DeveloperBatteryConfig,
   matchers: Matchers,
-  plugins: Plugin[],
+  plugins: PluginConfig[],
 ) => {
   const { props } = config;
 

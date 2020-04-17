@@ -1,4 +1,4 @@
-import { ModifierFn, Plugin } from 'types/plugin-config';
+import { ModifierFn, PluginConfig } from '../../types/plugin-config';
 
 const pxToRem: ModifierFn = value => `${parseInt(value) / 16}rem`;
 const ratio: ModifierFn = value => {
@@ -7,7 +7,7 @@ const ratio: ModifierFn = value => {
   return pxToRem(convertedValue);
 };
 
-export const lengthUnitsPlugin: Plugin = {
+export const lengthUnitsPlugin: PluginConfig = {
   type: 'pattern',
   name: 'lengthUnit',
   identifier: /-?\d+/,

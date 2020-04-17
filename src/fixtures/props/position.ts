@@ -1,7 +1,7 @@
-import { UserPropConfig } from 'types/prop-config';
+import { PropertyConfig } from '../../types/property-config';
 
-export const position: UserPropConfig = {
-  cssProperty: ['position'],
+export const position: PropertyConfig = {
+  cssProperty: 'position',
   values: {
     absolute: 'absolute',
   },

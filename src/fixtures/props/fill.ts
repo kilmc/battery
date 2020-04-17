@@ -1,7 +1,7 @@
-import { UserPropConfig } from 'types/prop-config';
+import { PropertyConfig } from '../../types/property-config';
 
-export const fillColor: UserPropConfig = {
-  cssProperty: ['fill'],
+export const fillColor: PropertyConfig = {
+  cssProperty: 'fill',
   classNamespace: 'fill',
   pluginSeparator: '-',
   valuePlugin: 'color',

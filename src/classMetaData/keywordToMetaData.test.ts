@@ -1,11 +1,11 @@
 import { keywordToMetaData } from './keywordToMetaData';
-import { BatteryConfig } from 'types/battery-config';
-import { ClassMetaData } from 'types/classname';
+import { DeveloperBatteryConfig } from '../types/battery-config';
+import { ClassMetaData } from '../types/classname';
 
 describe('keywordToMetaData', () => {
   describe('Given a config containing keyword class definitions', () => {
     test('Then it generates meta information for the class', () => {
-      const config: BatteryConfig = {
+      const config: DeveloperBatteryConfig = {
         props: [
           {
             cssProperty: ['background-size'],
@@ -51,7 +51,7 @@ describe('keywordToMetaData', () => {
       expect(keywordToMetaData(config)).toEqual(expectedBackgroundSizeResult);
     });
     describe('When classNamespace and valueOrPluginSeparator are undefined', () => {
-      const config: BatteryConfig = {
+      const config: DeveloperBatteryConfig = {
         props: [
           {
             cssProperty: ['display'],

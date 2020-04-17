@@ -1,6 +1,6 @@
-import { Plugin } from 'types/plugin-config';
+import { PluginConfig } from '../../types/plugin-config';
 
-export const hoverTargetPlugin: Plugin = {
+export const hoverTargetPlugin: PluginConfig = {
   name: 'hoverTarget',
   type: 'selector',
   affixType: 'prefix',

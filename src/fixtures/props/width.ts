@@ -1,7 +1,7 @@
-import { UserPropConfig } from 'types/prop-config';
+import { PropertyConfig } from '../../types/property-config';
 
-export const width: UserPropConfig = {
-  cssProperty: ['width'],
+export const width: PropertyConfig = {
+  cssProperty: 'width',
   classNamespace: 'w',
   valuePlugin: 'lengthUnit',
 };

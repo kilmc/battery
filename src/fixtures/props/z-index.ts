@@ -1,7 +1,7 @@
-import { UserPropConfig } from 'types/prop-config';
+import { PropertyConfig } from '../../types/property-config';
 
-export const zIndex: UserPropConfig = {
-  cssProperty: ['z-index'],
+export const zIndex: PropertyConfig = {
+  cssProperty: 'z-index',
   classNamespace: 'z',
   valuePlugin: 'integer',
 };

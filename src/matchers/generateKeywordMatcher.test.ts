@@ -1,6 +1,6 @@
-import { generateKeywordMatcher } from 'matchers/generateKeywordMatcher';
-import { ClassMetaData } from 'types/classname';
-import { ModifierFn, Plugin } from 'types/plugin-config';
+import { generateKeywordMatcher } from '../matchers/generateKeywordMatcher';
+import { ClassMetaData } from '../types/classname';
+import { ModifierFn, PluginConfig } from '../types/plugin-config';
 
 describe('generateKeywordMatchers', () => {
   describe('Given a valid batteryConfig', () => {
@@ -51,7 +51,7 @@ describe('generateKeywordMatchers', () => {
   describe('Class plugins', () => {
     describe('Handle prefixes', () => {
       const formatPseudo: ModifierFn = (cx, pseudo) => `${cx}:${pseudo}`;
-      const classPlugins: Plugin[] = [
+      const classPlugins: PluginConfig[] = [
         {
           name: 'pseudos',
           type: 'selector',

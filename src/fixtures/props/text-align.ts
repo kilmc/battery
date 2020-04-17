@@ -1,7 +1,7 @@
-import { UserPropConfig } from 'types/prop-config';
+import { PropertyConfig } from '../../types/property-config';
 
-export const textAlign: UserPropConfig = {
-  cssProperty: ['text-align'],
+export const textAlign: PropertyConfig = {
+  cssProperty: 'text-align',
   classNamespace: 'text',
   valueSeparator: '-',
   values: {

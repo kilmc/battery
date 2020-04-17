@@ -1,9 +1,10 @@
-import { UserPropConfig, SubPropKeys } from 'types/prop-config';
-import { CSSProps } from 'types/css-props';
+import { SubPropKeys, DeveloperPropertyConfig } from '../types/property-config';
+import { CSSProperties } from '../types/css';
+import { DeveloperBatteryConfig } from '../types/battery-config';
 
 const formatBorderProp = (rootProp: string, subProp: string) => {
   const [start, end] = rootProp.split('-');
-  return `${start}-${subProp}-${end}` as CSSProps;
+  return `${start}-${subProp}-${end}` as CSSProperties;
 };
 
 const subPropMapper: { [key in SubPropKeys]: string[] } = {
@@ -16,18 +17,18 @@ const subPropMapper: { [key in SubPropKeys]: string[] } = {
   vertical: ['top', 'bottom'],
 };
 
-const processedProp = (propsArr: string[], baseProp: CSSProps) => {
+const processedProp = (propsArr: string[], baseProp: CSSProperties) => {
   if (propsArr.length === 0) {
     return [baseProp];
   }
 
   return baseProp.match('border-')
     ? propsArr.map(subProp => formatBorderProp(baseProp, subProp))
-    : propsArr.map(subProp => `${baseProp}-${subProp}` as CSSProps);
+    : propsArr.map(subProp => `${baseProp}-${subProp}` as CSSProperties);
 };
 
-export const convertSubProps = (props: UserPropConfig[]) => {
-  const convertedPropConfigs = props
+export const convertSubProps = (config: DeveloperBatteryConfig) => {
+  const convertedPropConfigs = config.props
     .filter(propConfig => typeof propConfig.subProps === 'object')
     .map(propConfig => {
       const subPropsConfig = propConfig.subProps;
@@ -35,9 +36,10 @@ export const convertSubProps = (props: UserPropConfig[]) => {
         (accum, [subPropGroup, subPropIdentifier]: [SubPropKeys, string]) => {
           const {
             classNamespace,
-            subProps,
             subPropSeparator = '',
             cssProperty,
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            subProps,
             ...rest
           } = propConfig;
 
@@ -54,15 +56,18 @@ export const convertSubProps = (props: UserPropConfig[]) => {
           };
           return accum.concat(newPropConfig);
         },
-        [] as UserPropConfig[],
+        [] as DeveloperPropertyConfig[],
       );
       return generatedConfigs;
     })
     .reduce((xs, x) => xs.concat(x), []);
 
-  const propsWithoutSubPropConfigs = props.filter(
+  const propsWithoutSubPropConfigs = config.props.filter(
     propConfig => typeof propConfig.subProps !== 'object',
   );
 
-  return [...propsWithoutSubPropConfigs, ...convertedPropConfigs];
+  return {
+    ...config,
+    props: [...propsWithoutSubPropConfigs, ...convertedPropConfigs],
+  };
 };

@@ -1,8 +1,8 @@
 import { colorPlugin } from 'fixtures/plugins/color';
-import { UserPropConfig } from 'types/prop-config';
+import { PropertyConfig } from '../../types/property-config';
 
-export const backgroundColor: UserPropConfig = {
-  cssProperty: ['background-color'],
+export const backgroundColor: PropertyConfig = {
+  cssProperty: 'background-color',
   classNamespace: 'bg',
   pluginSeparator: '-',
   valuePlugin: colorPlugin,

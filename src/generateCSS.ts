@@ -1,14 +1,14 @@
-import { BatteryConfig } from 'types/battery-config';
-import { classMetaToCSS } from 'css/classMetaToCSS';
-import { addMetaData } from 'classMetaData/addMetaData';
-import { ClassMetaData } from 'types/classname';
-import { Plugin } from 'types/plugin-config';
-import { convertSubProps } from 'config/processSubProps';
-import { sortAlphaNum } from 'utils/string';
+import { BatteryConfig } from './types/battery-config';
+import { classMetaToCSS } from './css/classMetaToCSS';
+import { addMetaData } from './classMetaData/addMetaData';
+import { ClassMetaData } from './types/classname';
+import { PluginConfig } from './types/plugin-config';
+import { convertSubProps } from './config/processSubProps';
+import { sortAlphaNum } from './utils/string';
 
 const processAtRulePlugins = (
   classMetaArr: ClassMetaData[],
-  plugins: Plugin[],
+  plugins: PluginConfig[],
 ) => {
   const atRuleOrder: [Plugin, string[]][] = plugins
     .filter(plugin => plugin.atrule)
@@ -100,14 +100,22 @@ const processRootCSS = (rootClasses: ClassMetaData[]) => {
   }
 };
 
+const processConfig = (config: BatteryConfig) => {
+  const withStringCSSProperties = {
+    ...config,
+    props: config.props.map(prop => {
+      return { ...prop, cssProperty: [prop.cssProperty] };
+    }),
+  };
+  const withSubProps = convertSubProps(withStringCSSProperties);
+  return withSubProps;
+};
+
 export const generateCSS = (
   classNames: string[],
   config: BatteryConfig,
 ): string => {
-  const processedConfig = {
-    ...config,
-    props: [...convertSubProps(config.props)],
-  };
+  const processedConfig = processConfig(config);
   const classMetaArr = addMetaData(classNames, processedConfig);
 
   const withCssData = classMetaArr.map(classMeta => {

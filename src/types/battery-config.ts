@@ -1,7 +1,12 @@
-import { UserPropConfig } from './prop-config';
-import { Plugin } from './plugin-config';
+import { PropertyConfig, DeveloperPropertyConfig } from './property-config';
+import { PluginConfig } from './plugin-config';
 
 export interface BatteryConfig {
-  props: UserPropConfig[];
-  plugins?: Plugin[];
+  props: PropertyConfig[];
+  plugins?: PluginConfig[];
+}
+
+export interface DeveloperBatteryConfig {
+  props: DeveloperPropertyConfig[];
+  plugins?: PluginConfig[];
 }

@@ -1,5 +1,5 @@
 import { classMetaToCSS } from './classMetaToCSS';
-import { ClassMetaData } from 'types/classname';
+import { ClassMetaData } from '../types/classname';
 
 describe('classMetaToCSS', () => {
   describe('Given a valid classMetaData object', () => {

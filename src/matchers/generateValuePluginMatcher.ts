@@ -1,12 +1,12 @@
-import { Plugin } from 'types/plugin-config';
-import { UserPropConfig } from 'types/prop-config';
-import { Matcher, Matchers } from 'types/matchers';
-import { toCapture, toGroup } from 'utils/array';
+import { PluginConfig } from '../types/plugin-config';
+import { DeveloperPropertyConfig } from '../types/property-config';
+import { Matcher, Matchers } from '../types/matchers';
+import { toCapture, toGroup } from '../utils/array';
 import { generatePrefixSuffixdMatchers } from './generatePrefixSuffixMatchers';
 
 const generateValueRegex = (
   valueArr: string[],
-  plugin: Plugin,
+  plugin: PluginConfig,
   captureSubGroups = false,
 ) => {
   const captureOrGroup = captureSubGroups ? toCapture : toGroup;
@@ -31,7 +31,7 @@ const generateValueRegex = (
 };
 
 export const generateValueMatcher = (
-  plugin: Plugin,
+  plugin: PluginConfig,
   captureSubGroups = false,
 ) => {
   switch (plugin.type) {
@@ -53,7 +53,7 @@ export const generateValueMatcher = (
   }
 };
 
-const generatePropMatcher = (pluginPropConfigs: UserPropConfig[]) => {
+const generatePropMatcher = (pluginPropConfigs: DeveloperPropertyConfig[]) => {
   const defaultProp = pluginPropConfigs.filter(c => c.pluginDefault);
   const hasDefaultProp = defaultProp.length > 0;
 
@@ -68,8 +68,8 @@ const generatePropMatcher = (pluginPropConfigs: UserPropConfig[]) => {
 };
 
 export const generateValuePluginMatcher = (
-  plugins: Plugin[],
-  propConfigs: UserPropConfig[],
+  plugins: PluginConfig[],
+  propConfigs: DeveloperPropertyConfig[],
 ): { [k: string]: Matcher } => {
   if (!plugins || plugins.length < 1) {
     return {};

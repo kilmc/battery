@@ -1,6 +1,6 @@
-import { Plugin } from 'types/plugin-config';
+import { PluginConfig } from '../../types/plugin-config';
 
-export const breakpointPlugin: Plugin = {
+export const breakpointPlugin: PluginConfig = {
   name: 'breakpoint',
   type: 'at-rule',
   atrule: 'media',

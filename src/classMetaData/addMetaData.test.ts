@@ -1,22 +1,39 @@
-import { BatteryConfig } from 'types/battery-config';
-import { position } from 'fixtures/props/position';
-import { display } from 'fixtures/props/display';
+import { DeveloperBatteryConfig } from '../types/battery-config';
 import { addMetaData } from './addMetaData';
-import { backgroundSize } from 'fixtures/props/background-size';
-import { zIndex } from 'fixtures/props/z-index';
-import { colorPlugin } from 'fixtures/plugins/color';
-import { backgroundColor } from 'fixtures/props/background-color';
-import { integerPlugin } from 'fixtures/plugins/integer';
-import { lengthUnitsPlugin } from 'fixtures/plugins/lengthUnits';
-import { width } from 'fixtures/props/width';
-import { breakpointPlugin } from 'fixtures/plugins/breakpoint';
-import { pseudoPlugin } from 'fixtures/plugins/pseudo';
-import { hoverTargetPlugin } from 'fixtures/plugins/hoverTarget';
+import { colorPlugin } from '../fixtures/plugins/color';
+import { integerPlugin } from '../fixtures/plugins/integer';
+import { lengthUnitsPlugin } from '../fixtures/plugins/lengthUnits';
+import { breakpointPlugin } from '../fixtures/plugins/breakpoint';
+import { pseudoPlugin } from '../fixtures/plugins/pseudo';
+import { hoverTargetPlugin } from '../fixtures/plugins/hoverTarget';
 
 describe('addMetaData', () => {
   describe('Handles keyword classNames', () => {
-    const config: BatteryConfig = {
-      props: [position, display, backgroundSize],
+    const config: DeveloperBatteryConfig = {
+      props: [
+        {
+          cssProperty: ['position'],
+          values: {
+            absolute: 'absolute',
+          },
+        },
+        {
+          cssProperty: ['display'],
+          values: {
+            block: 'block',
+          },
+        },
+        {
+          cssProperty: ['background-size'],
+          classNamespace: 'bg',
+          valueSeparator: '-',
+          values: {
+            contain: 'contain',
+            cover: 'cover',
+          },
+          valuePlugin: 'lengthUnit',
+        },
+      ],
     };
     const inputClassNames = ['block', 'absolute', 'bg-contain'];
 
@@ -87,8 +104,35 @@ describe('addMetaData', () => {
   });
 
   describe('Handles value plugin classNames', () => {
-    const config: BatteryConfig = {
-      props: [zIndex, backgroundColor, backgroundSize, width],
+    const config: DeveloperBatteryConfig = {
+      props: [
+        {
+          cssProperty: ['z-index'],
+          classNamespace: 'z',
+          valuePlugin: 'integer',
+        },
+        {
+          cssProperty: ['background-color'],
+          classNamespace: 'bg',
+          pluginSeparator: '-',
+          valuePlugin: 'color',
+        },
+        {
+          cssProperty: ['background-size'],
+          classNamespace: 'bg',
+          valueSeparator: '-',
+          values: {
+            contain: 'contain',
+            cover: 'cover',
+          },
+          valuePlugin: 'lengthUnit',
+        },
+        {
+          cssProperty: ['width'],
+          classNamespace: 'w',
+          valuePlugin: 'lengthUnit',
+        },
+      ],
       plugins: [integerPlugin, colorPlugin, lengthUnitsPlugin],
     };
     const inputClassNames = ['bg-white', 'bg-white_10', 'z100', 'w3'];
@@ -190,8 +234,35 @@ describe('addMetaData', () => {
   });
 
   describe('Handles class plugin classNames', () => {
-    const config: BatteryConfig = {
-      props: [zIndex, backgroundColor, backgroundSize, width],
+    const config: DeveloperBatteryConfig = {
+      props: [
+        {
+          cssProperty: ['z-index'],
+          classNamespace: 'z',
+          valuePlugin: 'integer',
+        },
+        {
+          cssProperty: ['background-color'],
+          classNamespace: 'bg',
+          pluginSeparator: '-',
+          valuePlugin: 'color',
+        },
+        {
+          cssProperty: ['background-size'],
+          classNamespace: 'bg',
+          valueSeparator: '-',
+          values: {
+            contain: 'contain',
+            cover: 'cover',
+          },
+          valuePlugin: 'lengthUnit',
+        },
+        {
+          cssProperty: ['width'],
+          classNamespace: 'w',
+          valuePlugin: 'lengthUnit',
+        },
+      ],
       plugins: [
         integerPlugin,
         colorPlugin,

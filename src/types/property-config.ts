@@ -1,5 +1,5 @@
-import { CSSProps } from 'types/css-props';
-import { Plugin } from 'types/plugin-config';
+import { PluginConfig } from 'types/plugin-config';
+import { CSSProperties } from '../types/css';
 
 export type SubPropKeys =
   | 'top'
@@ -12,8 +12,7 @@ export type SubPropKeys =
 
 type SubProp = { [key in SubPropKeys]?: string };
 
-export interface UserPropConfig {
-  cssProperty: CSSProps[];
+interface CorePropertyConfig {
   classNamespace?: string;
   pluginDefault?: boolean;
   subProps?: SubProp;
@@ -21,5 +20,13 @@ export interface UserPropConfig {
   pluginSeparator?: string;
   valueSeparator?: string;
   values?: { [k: string]: string };
-  valuePlugin?: Plugin;
+  valuePlugin?: PluginConfig;
+}
+
+export interface PropertyConfig extends CorePropertyConfig {
+  cssProperty: CSSProperties;
+}
+
+export interface DeveloperPropertyConfig extends CorePropertyConfig {
+  cssProperty: CSSProperties[];
 }

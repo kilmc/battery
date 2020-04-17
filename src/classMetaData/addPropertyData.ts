@@ -1,15 +1,15 @@
-import { ClassMetaData } from 'types/classname';
-import { Matchers } from 'types/matchers';
-import { UserPropConfig } from 'types/prop-config';
+import { ClassMetaData } from '../types/classname';
+import { Matchers } from '../types/matchers';
+import { DeveloperPropertyConfig } from '../types/property-config';
 
 export const addPropertyData = (
   classMetaArr: ClassMetaData[],
   matchers: Matchers,
-  props: UserPropConfig[],
+  props: DeveloperPropertyConfig[],
   generatedKeywordMetaData: ClassMetaData[],
 ): ClassMetaData[] =>
   classMetaArr.map(classMeta => {
-    const matcher = Object.entries(matchers).find(([_, regex]) => {
+    const matcher = Object.entries(matchers).find(([, regex]) => {
       return regex.test(classMeta.source);
     });
 

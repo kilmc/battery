@@ -1,7 +1,7 @@
-import { CSSProps } from './css-props';
-import { Plugin } from './plugin-config';
+import { PluginConfig } from './plugin-config';
+import { CSSProperties } from '../types/css';
 
-export type ClassObject = { [key in CSSProps]?: string };
+export type ClassObject = { [key in CSSProperties]?: string };
 export interface ClassObjectGroup {
   [k: string]: ClassObject;
 }
@@ -19,16 +19,16 @@ export interface ExplodedClassSource {
 }
 
 export interface ClassMetaData {
-  property?: CSSProps[];
+  property?: CSSProperties[];
   source: string;
   selector?: string;
   explodedSource?: ExplodedClassSource;
   keyword?: boolean;
-  valuePlugin?: Plugin;
+  valuePlugin?: PluginConfig;
   valuePluginType?: 'pattern' | 'lookup';
-  atrulePlugin?: Plugin;
+  atrulePlugin?: PluginConfig;
   atruleModifier?: string;
-  selectorPlugin?: Plugin;
+  selectorPlugin?: PluginConfig;
   selectorModifier?: string;
   valueModifier?: string;
   classObject?: ClassObject;
