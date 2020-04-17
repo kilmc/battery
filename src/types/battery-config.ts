@@ -3,10 +3,10 @@ import { PluginConfig } from './plugin-config';
 
 export interface BatteryConfig {
   props: PropertyConfig[];
-  plugins?: PluginConfig[];
+  plugins?: { [k: string]: PluginConfig };
 }
 
 export interface DeveloperBatteryConfig {
   props: DeveloperPropertyConfig[];
-  plugins?: PluginConfig[];
+  plugins?: { [k: string]: PluginConfig };
 }
