@@ -38,6 +38,8 @@ export const convertSubProps = (config: DeveloperBatteryConfig) => {
             classNamespace,
             subPropSeparator = '',
             cssProperty,
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            subProps,
             ...rest
           } = propConfig;
 
