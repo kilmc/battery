@@ -56,20 +56,18 @@ describe('generateKeywordMatchers', () => {
           name: 'pseudos',
           type: 'selector',
           affixType: 'prefix',
-          modifiers: [
-            {
-              name: 'hover',
+          modifiers: {
+            hover: {
               separator: '-',
               identifier: 'hover',
               modifierFn: formatPseudo,
             },
-            {
-              name: 'focus',
+            focus: {
               separator: '-',
               identifier: 'focus',
               modifierFn: formatPseudo,
-            },
-          ],
+            }
+          },
         },
       ];
 

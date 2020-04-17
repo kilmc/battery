@@ -16,18 +16,19 @@ describe('generateValuePluginMatcher', () => {
     describe('Handle no multiple props', () => {
       it('Then it generates a regex to match classes using the plugin', () => {
         const plugins: PluginConfig[] = [colorPlugin];
+
         const props: DeveloperPropertyConfig[] = [
           {
             cssProperty: ['background-color'],
             classNamespace: 'bg',
             pluginSeparator: '-',
-            valuePlugin: 'color',
+            valuePlugin: colorPlugin,
           },
           {
             cssProperty: ['fill'],
             classNamespace: 'fill',
             pluginSeparator: '-',
-            valuePlugin: 'color',
+            valuePlugin: colorPlugin,
           },
         ];
 
@@ -44,7 +45,7 @@ describe('generateValuePluginMatcher', () => {
           cssProperty: ['color'],
           classNamespace: 'text',
           pluginDefault: true,
-          valuePlugin: 'color',
+          valuePlugin: colorPlugin,
         },
       ];
       it('generates a matcher', () => {
@@ -61,13 +62,13 @@ describe('generateValuePluginMatcher', () => {
           cssProperty: ['color'],
           classNamespace: 'text',
           pluginDefault: true,
-          valuePlugin: 'color',
+          valuePlugin: colorPlugin,
         },
         {
           cssProperty: ['background-color'],
           classNamespace: 'bg',
           pluginSeparator: '-',
-          valuePlugin: 'color',
+          valuePlugin: colorPlugin,
         },
       ];
 
@@ -104,7 +105,7 @@ describe('generateValuePluginMatcher', () => {
           cssProperty: ['background-color'],
           classNamespace: 'bg',
           pluginSeparator: '-',
-          valuePlugin: 'color',
+          valuePlugin: colorPlugin,
         },
       ];
 
@@ -130,7 +131,7 @@ describe('generateValuePluginMatcher', () => {
             {
               cssProperty: ['z-index'],
               classNamespace: 'z',
-              valuePlugin: 'integer',
+              valuePlugin: integerPlugin,
             },
           ];
 
@@ -149,20 +150,18 @@ describe('generateValuePluginMatcher', () => {
         name: 'pseudos',
         type: 'selector',
         affixType: 'prefix',
-        modifiers: [
-          {
-            name: 'hover',
+        modifiers: {
+          hover: {
             separator: '-',
             identifier: 'hover',
             modifierFn: formatPseudo,
           },
-          {
-            name: 'focus',
+          focus: {
             separator: '-',
             identifier: 'focus',
             modifierFn: formatPseudo,
           },
-        ],
+        },
       };
       const plugins: PluginConfig[] = [colorPlugin, pseudoPlugin];
 
@@ -171,13 +170,13 @@ describe('generateValuePluginMatcher', () => {
           cssProperty: ['color'],
           classNamespace: 'text',
           pluginDefault: true,
-          valuePlugin: 'color',
+          valuePlugin: colorPlugin,
         },
         {
           cssProperty: ['background-color'],
           classNamespace: 'bg',
           pluginSeparator: '-',
-          valuePlugin: 'color',
+          valuePlugin: colorPlugin,
         },
       ];
 
@@ -194,26 +193,23 @@ describe('generateValuePluginMatcher', () => {
         type: 'at-rule',
         atrule: 'media',
         affixType: 'suffix',
-        modifiers: [
-          {
-            name: 'responsiveSmall',
+        modifiers: {
+          responsiveSmall: {
             identifier: 'sm',
             separator: '-',
             condition: '(min-width: 560px)',
           },
-          {
-            name: 'responsiveSmall',
+          responsiveMedium: {
             identifier: 'md',
             separator: '-',
             condition: '(min-width: 940px)',
           },
-          {
-            name: 'responsiveLarge',
+          responsiveLarge: {
             identifier: 'lg',
             separator: '-',
             condition: '(min-width: 1040px)',
           },
-        ],
+        },
       };
 
       const plugins: PluginConfig[] = [colorPlugin, breakpointsPlugin];
@@ -223,13 +219,13 @@ describe('generateValuePluginMatcher', () => {
           cssProperty: ['color'],
           classNamespace: 'text',
           pluginDefault: true,
-          valuePlugin: 'color',
+          valuePlugin: colorPlugin,
         },
         {
           cssProperty: ['background-color'],
           classNamespace: 'bg',
           pluginSeparator: '-',
-          valuePlugin: 'color',
+          valuePlugin: colorPlugin,
         },
       ];
 

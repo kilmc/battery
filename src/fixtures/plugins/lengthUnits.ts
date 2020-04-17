@@ -1,3 +1,4 @@
+import { BatteryConfig } from 'types/battery-config';
 import { ModifierFn, PluginConfig } from '../../types/plugin-config';
 
 const pxToRem: ModifierFn = value => `${parseInt(value) / 16}rem`;

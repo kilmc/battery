@@ -10,7 +10,7 @@ const processAtRulePlugins = (
   classMetaArr: ClassMetaData[],
   plugins: PluginConfig[],
 ) => {
-  const atRuleOrder: [Plugin, string[]][] = plugins
+  const atRuleOrder: [PluginConfig, string[]][] = plugins
     .filter(plugin => plugin.atrule)
     .map(plugin => {
       const pluginModifiers = Object.keys(plugin.modifiers);
@@ -19,7 +19,7 @@ const processAtRulePlugins = (
 
   return atRuleOrder.reduce((accum, [atRulePlugin, modifierNames]) => {
     const atRuleClassMeta = classMetaArr.filter(
-      classMeta => classMeta.atrulePlugin === atRulePlugin,
+      classMeta => classMeta.atrulePlugin.name === atRulePlugin.name,
     );
 
     const atRuleCSSArr = modifierNames.reduce(
@@ -39,7 +39,7 @@ const processAtRulePlugins = (
         const plugin = plugins.find(plugin => plugin === atRulePlugin);
         const modifier = plugin.modifiers[modifierName];
 
-        const atRuleCss = `
+        const atRuleCss = `accum[classMeta.property
           @${plugin.atrule} ${modifier.condition} { ${modifierCSS} }
         `;
 

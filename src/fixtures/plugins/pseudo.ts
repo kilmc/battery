@@ -16,4 +16,11 @@ export const pseudoPlugin: PluginConfig = {
       modifierFn: selector => `${selector}:focus`,
     },
   },
+  static: {
+    hover: {
+      'background-color': ['black', 'white', 'hotpink'],
+      display: [''],
+      blah: {},
+    },
+  },
 };

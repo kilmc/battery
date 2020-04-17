@@ -5,5 +5,5 @@ export const textColor: PropertyConfig = {
   cssProperty: 'color',
   classNamespace: 'text',
   pluginDefault: true,
-  valuePlugin: colorPlugin,
+  valuePlugin: colorPlugin(),
 };

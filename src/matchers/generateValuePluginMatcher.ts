@@ -15,7 +15,7 @@ const generateValueRegex = (
   if (plugin.modifiers) {
     modifierArr = !plugin.modifiers
       ? []
-      : plugin.modifiers.map(modifier => {
+      : Object.values(plugin.modifiers).map(modifier => {
           if (modifier.defaultModifier) return '';
 
           const { identifier, separator = '' } = modifier;
@@ -79,7 +79,7 @@ export const generateValuePluginMatcher = (
   const matchers: Matchers = plugins.reduce((accum: Matchers, plugin) => {
     const { name: pluginName } = plugin;
     const pluginProps = propConfigs.filter(
-      propConfig => propConfig.valuePlugin === pluginName,
+      propConfig => propConfig.valuePlugin.name === pluginName,
     );
 
     if (pluginProps.length === 0) {

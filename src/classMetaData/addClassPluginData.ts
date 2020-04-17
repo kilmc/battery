@@ -29,17 +29,17 @@ const addAffixData = (
   const modifierName = matchedModifier.name;
 
   let affixData: {
-    atrulePlugin?: Plugin;
+    atrulePlugin?: PluginConfig;
     atruleModifier?: string;
-    selectorPlugin?: Plugin;
+    selectorPlugin?: PluginConfig;
     selectorModifier?: string;
   } = {};
 
   if (pluginType === 'at-rule') {
-    affixData.atrulePlugin = pluginName;
+    affixData.atrulePlugin = matchedPlugin;
     affixData.atruleModifier = modifierName;
   } else if (pluginType === 'selector') {
-    affixData.selectorPlugin = pluginName;
+    affixData.selectorPlugin = matchedPlugin;
     affixData.selectorModifier = modifierName;
   }
 

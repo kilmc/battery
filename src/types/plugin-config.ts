@@ -1,3 +1,5 @@
+import { CSSProperties } from '../types/css';
+
 export type ModifierFn = (value: string, modifierValue?: string) => string;
 
 interface Modifier {
@@ -14,7 +16,8 @@ export interface PluginConfig {
   atrule?: 'media' | 'font-face';
   affixType?: 'prefix' | 'suffix';
   identifier?: RegExp | string;
-  modifiers?: { [k: string]: Modifier };
+  modifiers?: { [key: string]: Modifier };
   sampleValues?: string[];
   values?: { [k: string]: string };
+  static?: { [key: string]: { [k: keyof CSSProperties]: string[] } };
 }

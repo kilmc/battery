@@ -9,7 +9,13 @@ const hexToRgba: ModifierFn = (hex, opacity) => {
   return `rgba(${r},${g},${b},${parseInt(opacity) / 100})`;
 };
 
-export const colorPlugin: PluginConfig = {
+function BatteryPlugin(config: PluginConfig) {
+  return (options?: Pick<PluginConfig, 'static'>) => {
+    return _.merge(config, options);
+  };
+}
+
+export const colorPlugin = BatteryPlugin({
   type: 'lookup',
   name: 'color',
   values: {
@@ -24,4 +30,4 @@ export const colorPlugin: PluginConfig = {
       modifierFn: hexToRgba,
     },
   },
-};
+});

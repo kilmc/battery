@@ -13,7 +13,7 @@ export const addModifierPluginData = (
     const { modifierIdentifier } = classMeta.explodedSource;
     const hasNonDefaultModifier = modifierIdentifier.length > 0;
     const plugin = plugins.find(plugin => {
-      return plugin.name === classMeta.valuePlugin;
+      return plugin.name === classMeta.valuePlugin.name;
     });
 
     if (!plugin || !plugin.modifiers) return classMeta;

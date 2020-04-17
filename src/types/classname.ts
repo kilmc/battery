@@ -19,7 +19,7 @@ export interface ExplodedClassSource {
 }
 
 export interface ClassMetaData {
-  property?: CSSProperties[];
+  property?: string[];
   source: string;
   selector?: string;
   explodedSource?: ExplodedClassSource;

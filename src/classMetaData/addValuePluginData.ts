@@ -17,7 +17,7 @@ export const addValuePluginData = (
       pluginConfig => pluginConfig.name === pluginName[0],
     );
 
-    classMeta.valuePlugin = plugin.name;
+    classMeta.valuePlugin = plugin;
 
     if (plugin.type === 'lookup' || plugin.type === 'pattern') {
       classMeta.valuePluginType = plugin.type;
