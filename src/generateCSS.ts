@@ -6,6 +6,10 @@ import { PluginConfig } from './types/plugin-config';
 import { convertSubProps } from './config/processSubProps';
 import { sortAlphaNum } from './utils/string';
 import { generateStaticValueClassNames } from './static/generateStaticValueClassNames';
+import {
+  PropertyConfig,
+  DeveloperPropertyConfig,
+} from './types/property-config';
 
 const processAtRulePlugins = (
   classMetaArr: ClassMetaData[],
@@ -100,14 +104,18 @@ const processRootCSS = (rootClasses: ClassMetaData[]) => {
   }
 };
 
+const wrapCSSPropertyInArray = (
+  propertyConfig: PropertyConfig,
+): DeveloperPropertyConfig => {
+  return { ...propertyConfig, cssProperty: [propertyConfig.cssProperty] };
+};
+
 const processConfig = (config: BatteryConfig) => {
-  const withStringCSSProperties = {
+  const withProcessedPropertyConfigs = {
     ...config,
-    props: config.props.map(prop => {
-      return { ...prop, cssProperty: [prop.cssProperty] };
-    }),
+    props: config.props.map(wrapCSSPropertyInArray),
   };
-  const withSubProps = convertSubProps(withStringCSSProperties);
+  const withSubProps = convertSubProps(withProcessedPropertyConfigs);
   return withSubProps;
 };
 
