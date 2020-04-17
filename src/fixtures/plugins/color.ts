@@ -11,7 +11,6 @@ const hexToRgba: ModifierFn = (hex, opacity) => {
 
 export const colorPlugin: PluginConfig = {
   type: 'lookup',
-  name: 'color',
   values: {
     black: '#000000',
     white: '#FFFFFF',

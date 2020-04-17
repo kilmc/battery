@@ -11,11 +11,13 @@ interface Modifier {
 
 export interface PluginConfig {
   type: 'pattern' | 'lookup' | 'selector' | 'at-rule';
-  name: string;
   atrule?: 'media' | 'font-face';
   affixType?: 'prefix' | 'suffix';
   identifier?: RegExp | string;
   modifiers?: Modifier[];
   sampleValues?: string[];
   values?: { [k: string]: string };
+
+  // todo: can this be more strictly typed?
+  static?: { [k: string]: string[] };
 }

@@ -1,7 +1,6 @@
 import { PluginConfig } from '../../types/plugin-config';
 
 export const pseudoPlugin: PluginConfig = {
-  name: 'pseudo',
   type: 'selector',
   affixType: 'prefix',
   modifiers: [

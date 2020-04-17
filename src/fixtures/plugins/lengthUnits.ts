@@ -9,7 +9,6 @@ const ratio: ModifierFn = value => {
 
 export const lengthUnitsPlugin: PluginConfig = {
   type: 'pattern',
-  name: 'lengthUnit',
   identifier: /-?\d+/,
   modifiers: [
     {

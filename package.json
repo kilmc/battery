@@ -8,7 +8,9 @@
   "license": "MIT",
   "description": "Battery is a system to generate infinite, composable, atomic styles that eliminates code bloat and automatically documents itself.",
   "dependencies": {
-    "csstype": "^2.6.9"
+    "@types/lodash.merge": "^4.6.6",
+    "csstype": "^2.6.9",
+    "lodash.merge": "^4.6.2"
   },
   "devDependencies": {
     "@babel/core": "^7.8.7",
