@@ -54,8 +54,9 @@ const setModifierData = (
       return { ...explodedSource };
     }
 
-    const modifier = plugin.modifiers.find(m => m.name === modifierName[0]);
+    const modifier = plugin.modifiers[modifierName[0]];
     const { separator: modifierSeparator = '' } = modifier;
+
     return {
       ...explodedSource,
       modifierSeparator,
@@ -118,9 +119,9 @@ const setClassModifierData = (
   const prefixModifiers = plugins
     .filter(plugin => plugin.affixType === affixType)
     .map(plugin => plugin.modifiers)
-    .reduce((xs, x) => xs.concat(x));
+    .reduce((xs, x) => xs.concat(Object.values(x)), []);
 
-  const { separator = '' } = prefixModifiers.find(m =>
+  const { separator = '' } = Object.values(prefixModifiers).find(m =>
     new RegExp(m.identifier).test(match),
   );
 

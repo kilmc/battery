@@ -218,13 +218,12 @@ describe('generateCSS', () => {
             type: 'pattern',
             name: 'lengthUnit',
             identifier: /-?\d{1,4}/,
-            modifiers: [
-              {
-                name: 'percent',
+            modifiers: {
+              percent: {
                 identifier: 'p',
                 modifierFn: value => `${value}%`,
               },
-            ],
+            },
           },
         ],
       };
@@ -252,16 +251,15 @@ describe('generateCSS', () => {
             type: 'pattern',
             name: 'lengthUnit',
             identifier: /-?\d{1,4}/,
-            modifiers: [
-              {
-                name: 'baseline',
+            modifiers: {
+              baseline: {
                 defaultModifier: true,
                 modifierFn: value => {
                   const number = (parseInt(value) * 6) / 10;
                   return `${number}rem`;
                 },
               },
-            ],
+            },
           },
         ],
       };
@@ -336,14 +334,13 @@ describe('generateCSS', () => {
             type: 'lookup',
             name: 'color',
             values: { black: '#000000', white: '#FFFFFF' },
-            modifiers: [
-              {
-                name: 'opacity',
+            modifiers: {
+              opacity: {
                 modifierFn: hexToRgba,
                 separator: '_',
                 identifier: /\d+/,
               },
-            ],
+            },
           },
         ],
       };

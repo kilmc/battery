@@ -7,8 +7,9 @@ const addAffixData = (
   plugins: Plugin[],
 ) => {
   const affixPlugins = plugins.filter(plugin => plugin.affixType === affixType);
+
   const matchedPlugin = affixPlugins.find(plugin => {
-    return plugin.modifiers
+    return Object.values(plugin.modifiers)
       .map(modifier => modifier.identifier)
       .includes(affix);
   });
@@ -17,18 +18,20 @@ const addAffixData = (
     return {};
   }
 
-  const matchedModifier = matchedPlugin.modifiers.find(
+  const matchedModifier = Object.values(matchedPlugin.modifiers).find(
     modifier => modifier.identifier === affix,
   );
 
   const pluginName = matchedPlugin.name;
   const pluginType = matchedPlugin.type;
+
+  // needs to be the key of the modifier
   const modifierName = matchedModifier.name;
 
   let affixData: {
-    atrulePlugin?: string;
+    atrulePlugin?: Plugin;
     atruleModifier?: string;
-    selectorPlugin?: string;
+    selectorPlugin?: Plugin;
     selectorModifier?: string;
   } = {};
 

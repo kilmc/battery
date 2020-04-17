@@ -18,7 +18,7 @@ export const addModifierPluginData = (
 
     if (!plugin || !plugin.modifiers) return classMeta;
 
-    const defaultModifier = plugin.modifiers.find(
+    const defaultModifier = Object.values(plugin.modifiers).find(
       modifier => modifier.defaultModifier,
     );
 

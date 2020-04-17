@@ -4,18 +4,16 @@ export const pseudoPlugin: Plugin = {
   name: 'pseudo',
   type: 'selector',
   affixType: 'prefix',
-  modifiers: [
-    {
-      name: 'hover',
+  modifiers: {
+    hover: {
       separator: '-',
       identifier: 'hover',
       modifierFn: selector => `${selector}:hover`,
     },
-    {
-      name: 'focus',
+    focus: {
       separator: '-',
       identifier: 'focus',
       modifierFn: selector => `${selector}:focus`,
     },
-  ],
+  },
 };

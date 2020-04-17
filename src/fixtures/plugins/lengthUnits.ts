@@ -11,31 +11,26 @@ export const lengthUnitsPlugin: Plugin = {
   type: 'pattern',
   name: 'lengthUnit',
   identifier: /-?\d+/,
-  modifiers: [
-    {
-      name: 'ratio',
+  modifiers: {
+    ratio: {
       defaultModifier: true,
       modifierFn: ratio,
     },
-    {
-      name: 'pixels',
+    pixels: {
       identifier: 'px',
       modifierFn: pxToRem,
     },
-    {
-      name: 'percent',
+    percent: {
       identifier: 'p',
       modifierFn: value => `${value}%`,
     },
-    {
-      name: 'viewportHeight',
+    viewportHeight: {
       identifier: 'vh',
       modifierFn: value => `${value}vh`,
     },
-    {
-      name: 'viewportWidth',
+    viewportWidth: {
       identifier: 'vw',
       modifierFn: value => `${value}vw`,
     },
-  ],
+  },
 };

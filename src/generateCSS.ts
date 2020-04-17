@@ -10,16 +10,16 @@ const processAtRulePlugins = (
   classMetaArr: ClassMetaData[],
   plugins: Plugin[],
 ) => {
-  const atRuleProcessingOrder: [string, string[]][] = plugins
+  const atRuleOrder: [Plugin, string[]][] = plugins
     .filter(plugin => plugin.atrule)
     .map(plugin => {
-      const pluginModifiers = plugin.modifiers.map(modifier => modifier.name);
-      return [plugin.name, pluginModifiers];
+      const pluginModifiers = Object.keys(plugin.modifiers);
+      return [plugin, pluginModifiers];
     });
 
-  return atRuleProcessingOrder.reduce((accum, [atRuleName, modifierNames]) => {
+  return atRuleOrder.reduce((accum, [atRulePlugin, modifierNames]) => {
     const atRuleClassMeta = classMetaArr.filter(
-      classMeta => classMeta.atrulePlugin === atRuleName,
+      classMeta => classMeta.atrulePlugin === atRulePlugin,
     );
 
     const atRuleCSSArr = modifierNames.reduce(
@@ -31,17 +31,18 @@ const processAtRulePlugins = (
         if (modifierClassMeta.length < 1) {
           return cssArr;
         }
+
         const modifierCSS = modifierClassMeta
           .map(classMeta => classMeta.css)
           .join('');
-        const plugin = plugins.find(plugin => plugin.name === atRuleName);
-        const modifier = plugin.modifiers.find(
-          pluginModifier => pluginModifier.name === modifierName,
-        );
+
+        const plugin = plugins.find(plugin => plugin === atRulePlugin);
+        const modifier = plugin.modifiers[modifierName];
 
         const atRuleCss = `
           @${plugin.atrule} ${modifier.condition} { ${modifierCSS} }
         `;
+
         return cssArr.concat(atRuleCss);
       },
       [] as string[],

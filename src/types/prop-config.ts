@@ -1,4 +1,5 @@
 import { CSSProps } from 'types/css-props';
+import { Plugin } from 'types/plugin-config';
 
 export type SubPropKeys =
   | 'top'
@@ -10,10 +11,6 @@ export type SubPropKeys =
   | 'all';
 
 type SubProp = { [key in SubPropKeys]?: string };
-interface ModifierSubset {
-  name: string;
-  modifiers: string[];
-}
 
 export interface UserPropConfig {
   cssProperty: CSSProps[];
@@ -24,5 +21,5 @@ export interface UserPropConfig {
   pluginSeparator?: string;
   valueSeparator?: string;
   values?: { [k: string]: string };
-  valuePlugin?: string | ModifierSubset[];
+  valuePlugin?: Plugin;
 }

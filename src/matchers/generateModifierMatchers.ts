@@ -2,9 +2,10 @@ import { Plugin } from 'types/plugin-config';
 import { Matchers } from 'types/matchers';
 
 export const generateModifierMatchers = (plugin: Plugin) => {
-  return plugin.modifiers.reduce(
-    (accum, modifier) => {
-      const { name, separator = '', identifier } = modifier;
+  return Object.entries(plugin.modifiers).reduce(
+    (accum, [name, modifier]) => {
+      const { separator = '', identifier } = modifier;
+
       if (modifier.defaultModifier) {
         accum[name] = new RegExp('__DEFAULT__');
         return accum;

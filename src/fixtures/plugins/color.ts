@@ -17,12 +17,11 @@ export const colorPlugin: Plugin = {
     white: '#FFFFFF',
     pink: '#FF9DD8',
   },
-  modifiers: [
-    {
-      name: 'opacity',
+  modifiers: {
+    opacity: {
       separator: '_',
       identifier: /\d+/,
       modifierFn: hexToRgba,
     },
-  ],
+  },
 };
