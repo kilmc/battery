@@ -24,6 +24,7 @@ interface CorePropertyConfig {
   valueSeparator?: string;
   values?: { [k: string]: string };
   valuePlugin?: string | ModifierSubset[];
+  static?: { values: string[] };
 }
 
 export interface PropertyConfig extends CorePropertyConfig {

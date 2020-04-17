@@ -520,4 +520,35 @@ describe('generateCSS', () => {
       });
     });
   });
+
+  describe('When in static mode', () => {
+    describe('Handles generating values from a PropertyConfig', () => {
+      const textAlign: PropertyConfig = {
+        cssProperty: 'text-align',
+        classNamespace: 'text',
+        valueSeparator: '-',
+        values: {
+          center: 'center',
+          left: 'left',
+          right: 'right',
+        },
+        static: {
+          values: ['center', 'left', 'right'],
+        },
+      };
+      const config: BatteryConfig = {
+        props: [textAlign],
+      };
+      it('renders valid CSS', () => {
+        testOutput(
+          generateCSS([], config, true),
+          `
+          .text-center { text-align: center }
+          .text-left { text-align: left }
+          .text-right { text-align: right }
+          `,
+        );
+      });
+    });
+  });
 });

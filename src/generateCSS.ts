@@ -5,6 +5,7 @@ import { ClassMetaData } from './types/classname';
 import { PluginConfig } from './types/plugin-config';
 import { convertSubProps } from './config/processSubProps';
 import { sortAlphaNum } from './utils/string';
+import { generateStaticValueClassNames } from './static/generateStaticValueClassNames';
 
 const processAtRulePlugins = (
   classMetaArr: ClassMetaData[],
@@ -113,9 +114,18 @@ const processConfig = (config: BatteryConfig) => {
 export const generateCSS = (
   classNames: string[],
   config: BatteryConfig,
+  generateStaticLibrary: boolean = false,
 ): string => {
+  let processedClassNames: string[];
+
+  if (generateStaticLibrary) {
+    processedClassNames = config.props.flatMap(generateStaticValueClassNames);
+  } else {
+    processedClassNames = classNames;
+  }
+
   const processedConfig = processConfig(config);
-  const classMetaArr = addMetaData(classNames, processedConfig);
+  const classMetaArr = addMetaData(processedClassNames, processedConfig);
 
   const withCssData = classMetaArr.map(classMeta => {
     classMeta.css = classMetaToCSS(classMeta, processedConfig.plugins);
