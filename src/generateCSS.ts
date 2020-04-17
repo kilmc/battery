@@ -104,6 +104,18 @@ const processRootCSS = (rootClasses: ClassMetaData[]) => {
   }
 };
 
+const generateStaticValuesArr = (
+  propertyConfig: DeveloperPropertyConfig,
+  autoGenerateStaticValues: boolean = false,
+): DeveloperPropertyConfig => {
+  return autoGenerateStaticValues || propertyConfig.static
+    ? {
+        ...propertyConfig,
+        static: { values: Object.keys(propertyConfig.values) },
+      }
+    : propertyConfig;
+};
+
 const wrapCSSPropertyInArray = (
   propertyConfig: PropertyConfig,
 ): DeveloperPropertyConfig => {
@@ -111,9 +123,24 @@ const wrapCSSPropertyInArray = (
 };
 
 const processConfig = (config: BatteryConfig) => {
-  const withProcessedPropertyConfigs = {
+  const withStatic: BatteryConfig = {
     ...config,
-    props: config.props.map(wrapCSSPropertyInArray),
+    static: {
+      generateAllValues:
+        (config.static && config.static.generateAllValues) || false,
+    },
+  };
+
+  const withProcessedPropertyConfigs = {
+    ...withStatic,
+    props: config.props
+      .map(wrapCSSPropertyInArray)
+      .map(propertyConfig =>
+        generateStaticValuesArr(
+          propertyConfig,
+          withStatic.static.generateAllValues,
+        ),
+      ),
   };
   const withSubProps = convertSubProps(withProcessedPropertyConfigs);
   return withSubProps;
@@ -124,15 +151,17 @@ export const generateCSS = (
   config: BatteryConfig,
   generateStaticLibrary: boolean = false,
 ): string => {
+  const processedConfig = processConfig(config);
   let processedClassNames: string[];
 
   if (generateStaticLibrary) {
-    processedClassNames = config.props.flatMap(generateStaticValueClassNames);
+    processedClassNames = processedConfig.props.flatMap(
+      generateStaticValueClassNames,
+    );
   } else {
     processedClassNames = classNames;
   }
 
-  const processedConfig = processConfig(config);
   const classMetaArr = addMetaData(processedClassNames, processedConfig);
 
   const withCssData = classMetaArr.map(classMeta => {

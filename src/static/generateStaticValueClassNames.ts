@@ -1,7 +1,7 @@
-import { PropertyConfig } from '../types/property-config';
+import { DeveloperPropertyConfig } from '../types/property-config';
 
 export const generateStaticValueClassNames = (
-  propertyConfig: PropertyConfig,
+  propertyConfig: DeveloperPropertyConfig,
 ) => {
   if (!propertyConfig.static) {
     return [];
