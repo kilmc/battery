@@ -6,9 +6,8 @@ export const generateStaticValueClassNames = (
   if (!propertyConfig.static) {
     return [];
   }
-
   const { valueSeparator = '', classNamespace } = propertyConfig;
-  const values = propertyConfig.static.values;
-
-  return values.map(value => `${classNamespace}${valueSeparator}${value}`);
+  return propertyConfig.static.values.map(
+    value => `${classNamespace}${valueSeparator}${value}`,
+  );
 };
