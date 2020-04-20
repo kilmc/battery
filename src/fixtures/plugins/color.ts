@@ -1,4 +1,5 @@
-import { PluginConfig, ModifierFn } from '../../types/plugin-config';
+import { BatteryPlugin } from './../../battery-plugin';
+import { ModifierFn } from '../../types/plugin-config';
 
 const hexToRgba: ModifierFn = (hex, opacity) => {
   const hexValue = hex.replace('#', '');
@@ -9,7 +10,7 @@ const hexToRgba: ModifierFn = (hex, opacity) => {
   return `rgba(${r},${g},${b},${parseInt(opacity) / 100})`;
 };
 
-export const colorPlugin: PluginConfig = {
+export const colorPlugin = BatteryPlugin({
   type: 'lookup',
   values: {
     black: '#000000',
@@ -24,4 +25,4 @@ export const colorPlugin: PluginConfig = {
       modifierFn: hexToRgba,
     },
   ],
-};
+});

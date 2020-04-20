@@ -1,6 +1,6 @@
-import { PluginConfig } from '../../types/plugin-config';
+import { BatteryPlugin } from './../../battery-plugin';
 
-export const pseudoPlugin: PluginConfig = {
+export const pseudoPlugin = BatteryPlugin({
   type: 'selector',
   affixType: 'prefix',
   modifiers: [
@@ -17,4 +17,4 @@ export const pseudoPlugin: PluginConfig = {
       modifierFn: selector => `${selector}:focus`,
     },
   ],
-};
+});

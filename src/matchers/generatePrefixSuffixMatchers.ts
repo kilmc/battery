@@ -5,6 +5,7 @@ export const generatePrefixSuffixdMatchers = (plugins: PluginConfig[]) => {
     prefixes: '^',
     suffixes: '$',
   };
+
   if (!plugins || plugins.length < 1) {
     return baseObject;
   }

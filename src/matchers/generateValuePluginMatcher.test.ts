@@ -5,7 +5,6 @@ import { DeveloperPropertyConfig } from '../types/property-config';
 describe('generateValuePluginMatcher', () => {
   const colorPlugin: PluginConfig = {
     type: 'lookup',
-    name: 'color',
     values: {
       black: '#000000',
       white: '#ffffff',
@@ -16,18 +15,19 @@ describe('generateValuePluginMatcher', () => {
     describe('Handle no multiple props', () => {
       it('Then it generates a regex to match classes using the plugin', () => {
         const plugins: PluginConfig[] = [colorPlugin];
+
         const props: DeveloperPropertyConfig[] = [
           {
             cssProperty: ['background-color'],
             classNamespace: 'bg',
             pluginSeparator: '-',
-            valuePlugin: 'color',
+            valuePlugin: colorPlugin,
           },
           {
             cssProperty: ['fill'],
             classNamespace: 'fill',
             pluginSeparator: '-',
-            valuePlugin: 'color',
+            valuePlugin: colorPlugin,
           },
         ];
 
@@ -44,7 +44,7 @@ describe('generateValuePluginMatcher', () => {
           cssProperty: ['color'],
           classNamespace: 'text',
           pluginDefault: true,
-          valuePlugin: 'color',
+          valuePlugin: colorPlugin,
         },
       ];
       it('generates a matcher', () => {
@@ -61,13 +61,13 @@ describe('generateValuePluginMatcher', () => {
           cssProperty: ['color'],
           classNamespace: 'text',
           pluginDefault: true,
-          valuePlugin: 'color',
+          valuePlugin: colorPlugin,
         },
         {
           cssProperty: ['background-color'],
           classNamespace: 'bg',
           pluginSeparator: '-',
-          valuePlugin: 'color',
+          valuePlugin: colorPlugin,
         },
       ];
 
@@ -90,7 +90,6 @@ describe('generateValuePluginMatcher', () => {
     describe('"Lookup" type plugin', () => {
       const lookupPlugin: PluginConfig = {
         type: 'lookup',
-        name: 'color',
         values: {
           black: '#000000',
           white: '#ffffff',
@@ -104,7 +103,7 @@ describe('generateValuePluginMatcher', () => {
           cssProperty: ['background-color'],
           classNamespace: 'bg',
           pluginSeparator: '-',
-          valuePlugin: 'color',
+          valuePlugin: lookupPlugin,
         },
       ];
 
@@ -119,7 +118,6 @@ describe('generateValuePluginMatcher', () => {
     describe('"Pattern" type plugin', () => {
       const integerPlugin: PluginConfig = {
         type: 'pattern',
-        name: 'integer',
         identifier: /-?\d{1,4}/,
       };
 
@@ -130,7 +128,7 @@ describe('generateValuePluginMatcher', () => {
             {
               cssProperty: ['z-index'],
               classNamespace: 'z',
-              valuePlugin: 'integer',
+              valuePlugin: integerPlugin,
             },
           ];
 
@@ -146,7 +144,6 @@ describe('generateValuePluginMatcher', () => {
     describe('Handle prefixes', () => {
       const formatPseudo: ModifierFn = (cx, pseudo) => `${cx}:${pseudo}`;
       const pseudoPlugin: PluginConfig = {
-        name: 'pseudos',
         type: 'selector',
         affixType: 'prefix',
         modifiers: [
@@ -171,13 +168,13 @@ describe('generateValuePluginMatcher', () => {
           cssProperty: ['color'],
           classNamespace: 'text',
           pluginDefault: true,
-          valuePlugin: 'color',
+          valuePlugin: pseudoPlugin,
         },
         {
           cssProperty: ['background-color'],
           classNamespace: 'bg',
           pluginSeparator: '-',
-          valuePlugin: 'color',
+          valuePlugin: pseudoPlugin,
         },
       ];
 
@@ -190,7 +187,6 @@ describe('generateValuePluginMatcher', () => {
 
     describe('Handle suffixes', () => {
       const breakpointsPlugin: PluginConfig = {
-        name: 'breakpoints',
         type: 'at-rule',
         atrule: 'media',
         affixType: 'suffix',
@@ -223,13 +219,13 @@ describe('generateValuePluginMatcher', () => {
           cssProperty: ['color'],
           classNamespace: 'text',
           pluginDefault: true,
-          valuePlugin: 'color',
+          valuePlugin: breakpointsPlugin,
         },
         {
           cssProperty: ['background-color'],
           classNamespace: 'bg',
           pluginSeparator: '-',
-          valuePlugin: 'color',
+          valuePlugin: breakpointsPlugin,
         },
       ];
 

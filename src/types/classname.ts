@@ -25,7 +25,6 @@ export interface ClassMetaData {
   explodedSource?: ExplodedClassSource;
   keyword?: boolean;
   valuePlugin?: PluginConfig;
-  valuePluginType?: 'pattern' | 'lookup';
   atrulePlugin?: PluginConfig;
   atruleModifier?: string;
   selectorPlugin?: PluginConfig;

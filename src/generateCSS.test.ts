@@ -1,6 +1,8 @@
 import { generateCSS } from './generateCSS';
 import { BatteryConfig } from './types/battery-config';
 import { ModifierFn } from './types/plugin-config';
+import { colorPlugin } from './fixtures/plugins/color';
+import { integerPlugin } from './fixtures/plugins/integer';
 import { pseudoPlugin } from './fixtures/plugins/pseudo';
 import { hoverTargetPlugin } from './fixtures/plugins/hoverTarget';
 import { breakpointPlugin } from './fixtures/plugins/breakpoint';
@@ -100,7 +102,7 @@ describe('generateCSS', () => {
       const classNames = ['mb2', 'mt10p', 'm3', 'mr1'];
       const config: BatteryConfig = {
         props: [margin],
-        plugins: [lengthUnitsPlugin],
+        plugins: [],
       };
       it('renders valid CSS', () => {
         testOutput(
@@ -119,7 +121,7 @@ describe('generateCSS', () => {
       const classNames = ['mx2', 'my50p'];
       const config: BatteryConfig = {
         props: [margin],
-        plugins: [lengthUnitsPlugin],
+        plugins: [],
       };
       it('renders valid CSS', () => {
         testOutput(
@@ -155,7 +157,7 @@ describe('generateCSS', () => {
             },
           },
         ],
-        plugins: [lengthUnitsPlugin],
+        plugins: [],
       };
       it('renders valid CSS', () => {
         testOutput(
@@ -177,17 +179,15 @@ describe('generateCSS', () => {
           {
             cssProperty: 'z-index',
             classNamespace: 'z',
-            valuePlugin: 'integer',
+            valuePlugin: integerPlugin(),
           },
           {
             cssProperty: 'flex',
             classNamespace: 'flex',
-            valuePlugin: 'integer',
+            valuePlugin: integerPlugin(),
           },
         ],
-        plugins: [
-          { type: 'pattern', name: 'integer', identifier: /-?\d{1,4}/ },
-        ],
+        plugins: [],
       };
 
       it('renders valid CSS', () => {
@@ -205,28 +205,15 @@ describe('generateCSS', () => {
           {
             cssProperty: 'width',
             classNamespace: 'w',
-            valuePlugin: 'lengthUnit',
+            valuePlugin: lengthUnitsPlugin(),
           },
           {
             cssProperty: 'height',
             classNamespace: 'h',
-            valuePlugin: 'lengthUnit',
+            valuePlugin: lengthUnitsPlugin(),
           },
         ],
-        plugins: [
-          {
-            type: 'pattern',
-            name: 'lengthUnit',
-            identifier: /-?\d{1,4}/,
-            modifiers: [
-              {
-                name: 'percent',
-                identifier: 'p',
-                modifierFn: value => `${value}%`,
-              },
-            ],
-          },
-        ],
+        plugins: [],
       };
 
       it('renders valid CSS', () => {
@@ -244,26 +231,10 @@ describe('generateCSS', () => {
           {
             cssProperty: 'margin',
             classNamespace: 'm',
-            valuePlugin: 'lengthUnit',
+            valuePlugin: lengthUnitsPlugin(),
           },
         ],
-        plugins: [
-          {
-            type: 'pattern',
-            name: 'lengthUnit',
-            identifier: /-?\d{1,4}/,
-            modifiers: [
-              {
-                name: 'baseline',
-                defaultModifier: true,
-                modifierFn: value => {
-                  const number = (parseInt(value) * 6) / 10;
-                  return `${number}rem`;
-                },
-              },
-            ],
-          },
-        ],
+        plugins: [],
       };
 
       it('renders valid CSS', () => {
@@ -280,22 +251,16 @@ describe('generateCSS', () => {
           {
             cssProperty: 'color',
             pluginDefault: true,
-            valuePlugin: 'color',
+            valuePlugin: colorPlugin(),
           },
           {
             cssProperty: 'background-color',
             classNamespace: 'bg',
             pluginSeparator: '-',
-            valuePlugin: 'color',
+            valuePlugin: colorPlugin(),
           },
         ],
-        plugins: [
-          {
-            type: 'lookup',
-            name: 'color',
-            values: { black: '#000000', white: '#FFFFFF' },
-          },
-        ],
+        plugins: [],
       };
 
       it('renders valid CSS', () => {
@@ -322,30 +287,16 @@ describe('generateCSS', () => {
           {
             cssProperty: 'color',
             pluginDefault: true,
-            valuePlugin: 'color',
+            valuePlugin: colorPlugin(),
           },
           {
             cssProperty: 'background-color',
             classNamespace: 'bg',
             pluginSeparator: '-',
-            valuePlugin: 'color',
+            valuePlugin: colorPlugin(),
           },
         ],
-        plugins: [
-          {
-            type: 'lookup',
-            name: 'color',
-            values: { black: '#000000', white: '#FFFFFF' },
-            modifiers: [
-              {
-                name: 'opacity',
-                modifierFn: hexToRgba,
-                separator: '_',
-                identifier: /\d+/,
-              },
-            ],
-          },
-        ],
+        plugins: [],
       };
 
       it('renders valid CSS', () => {
@@ -379,7 +330,7 @@ describe('generateCSS', () => {
           },
         },
       ],
-      plugins: [pseudoPlugin, hoverTargetPlugin],
+      plugins: [pseudoPlugin(), hoverTargetPlugin()],
     };
 
     describe('', () => {
@@ -414,7 +365,7 @@ describe('generateCSS', () => {
           },
         },
       ],
-      plugins: [breakpointPlugin],
+      plugins: [breakpointPlugin()],
     };
 
     describe('', () => {
@@ -468,7 +419,7 @@ describe('generateCSS', () => {
       ];
       const config: BatteryConfig = {
         props: [margin, backgroundSize, textAlign],
-        plugins: [lengthUnitsPlugin],
+        plugins: [],
       };
       it('renders valid CSS', () => {
         testOutput(
@@ -505,7 +456,7 @@ describe('generateCSS', () => {
       const classNames = ['m-auto', 'm-zzzz', 'm-inherit', 'm-base'];
       const config: BatteryConfig = {
         props: [margin],
-        plugins: [lengthUnitsPlugin],
+        plugins: [],
       };
       it('renders valid CSS', () => {
         testOutput(
