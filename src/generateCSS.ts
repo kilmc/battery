@@ -5,6 +5,11 @@ import { ClassMetaData } from './types/classname';
 import { PluginConfig } from './types/plugin-config';
 import { convertSubProps } from './config/processSubProps';
 import { sortAlphaNum } from './utils/string';
+import { generateStaticValueClassNames } from './static/generateStaticValueClassNames';
+import {
+  PropertyConfig,
+  DeveloperPropertyConfig,
+} from './types/property-config';
 
 const processAtRulePlugins = (
   classMetaArr: ClassMetaData[],
@@ -99,23 +104,65 @@ const processRootCSS = (rootClasses: ClassMetaData[]) => {
   }
 };
 
+const generateStaticValuesArr = (
+  propertyConfig: DeveloperPropertyConfig,
+  autoGenerateStaticValues: boolean = false,
+): DeveloperPropertyConfig => {
+  return autoGenerateStaticValues || propertyConfig.static
+    ? {
+        ...propertyConfig,
+        static: { values: Object.keys(propertyConfig.values) },
+      }
+    : propertyConfig;
+};
+
+const wrapCSSPropertyInArray = (
+  propertyConfig: PropertyConfig,
+): DeveloperPropertyConfig => {
+  return { ...propertyConfig, cssProperty: [propertyConfig.cssProperty] };
+};
+
 const processConfig = (config: BatteryConfig) => {
-  const withStringCSSProperties = {
+  const withStatic: BatteryConfig = {
     ...config,
-    props: config.props.map(prop => {
-      return { ...prop, cssProperty: [prop.cssProperty] };
-    }),
+    static: {
+      generateAllValues:
+        (config.static && config.static.generateAllValues) || false,
+    },
   };
-  const withSubProps = convertSubProps(withStringCSSProperties);
+
+  const withProcessedPropertyConfigs = {
+    ...withStatic,
+    props: config.props
+      .map(wrapCSSPropertyInArray)
+      .map(propertyConfig =>
+        generateStaticValuesArr(
+          propertyConfig,
+          withStatic.static.generateAllValues,
+        ),
+      ),
+  };
+  const withSubProps = convertSubProps(withProcessedPropertyConfigs);
   return withSubProps;
 };
 
 export const generateCSS = (
   classNames: string[],
   config: BatteryConfig,
+  generateStaticLibrary: boolean = false,
 ): string => {
   const processedConfig = processConfig(config);
-  const classMetaArr = addMetaData(classNames, processedConfig);
+  let processedClassNames: string[];
+
+  if (generateStaticLibrary) {
+    processedClassNames = processedConfig.props.flatMap(
+      generateStaticValueClassNames,
+    );
+  } else {
+    processedClassNames = classNames;
+  }
+
+  const classMetaArr = addMetaData(processedClassNames, processedConfig);
 
   const withCssData = classMetaArr.map(classMeta => {
     classMeta.css = classMetaToCSS(classMeta, processedConfig.plugins);

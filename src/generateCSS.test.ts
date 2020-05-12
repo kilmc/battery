@@ -471,4 +471,73 @@ describe('generateCSS', () => {
       });
     });
   });
+
+  describe('When in static mode', () => {
+    describe('Handles generating values from a PropertyConfig', () => {
+      const textAlign: PropertyConfig = {
+        cssProperty: 'text-align',
+        classNamespace: 'text',
+        valueSeparator: '-',
+        values: {
+          center: 'center',
+          left: 'left',
+          right: 'right',
+        },
+        static: {
+          values: ['center', 'left', 'right'],
+        },
+      };
+      const config: BatteryConfig = {
+        props: [textAlign],
+      };
+      it('renders valid CSS', () => {
+        testOutput(
+          generateCSS([], config, true),
+          `
+          .text-center { text-align: center }
+          .text-left { text-align: left }
+          .text-right { text-align: right }
+          `,
+        );
+      });
+    });
+
+    describe('Handles automatically generating all values from a PropertyConfig', () => {
+      const display: PropertyConfig = {
+        cssProperty: 'display',
+        classNamespace: '',
+        values: {
+          inline: 'inline',
+          block: 'block',
+          'display-none': 'none',
+          flex: 'flex',
+          'inline-flex': 'inline-flex',
+          table: 'table',
+          grid: 'grid',
+        },
+      };
+
+      const config: BatteryConfig = {
+        props: [display],
+        static: {
+          generateAllValues: true,
+        },
+      };
+
+      it('renders valid CSS', () => {
+        testOutput(
+          generateCSS([], config, true),
+          `
+            .block { display: block }
+            .display-none { display: none }
+            .flex { display: flex }
+            .grid { display: grid }
+            .inline { display: inline }
+            .inline-flex { display: inline-flex }
+            .table { display: table }
+          `,
+        );
+      });
+    });
+  });
 });

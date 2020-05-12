@@ -25,6 +25,7 @@ interface CorePropertyConfig {
   valueSeparator?: string;
   values?: { [k: string]: string };
   valuePlugin?: PluginConfig;
+  static?: { values: string[] };
 }
 
 export interface PropertyConfig extends CorePropertyConfig {
