@@ -1,6 +1,7 @@
 import { convertSubProps } from './processSubProps';
 import { DeveloperPropertyConfig } from '../types/property-config';
 import { DeveloperBatteryConfig } from '../types/battery-config';
+import { lengthUnitsPlugin } from '../fixtures/plugins/lengthUnits';
 
 describe('processSubProps', () => {
   it('converts configs with subProps into their own separate configs', () => {
@@ -20,7 +21,7 @@ describe('processSubProps', () => {
       values: {
         auto: 'auto',
       },
-      valuePlugin: 'lengthUnit',
+      valuePlugin: lengthUnitsPlugin(),
     };
 
     const props = [margin];
@@ -32,7 +33,7 @@ describe('processSubProps', () => {
         values: {
           auto: 'auto',
         },
-        valuePlugin: 'lengthUnit',
+        valuePlugin: lengthUnitsPlugin(),
       },
       {
         cssProperty: ['margin-top'],
@@ -41,7 +42,7 @@ describe('processSubProps', () => {
         values: {
           auto: 'auto',
         },
-        valuePlugin: 'lengthUnit',
+        valuePlugin: lengthUnitsPlugin(),
       },
       {
         cssProperty: ['margin-right'],
@@ -50,7 +51,7 @@ describe('processSubProps', () => {
         values: {
           auto: 'auto',
         },
-        valuePlugin: 'lengthUnit',
+        valuePlugin: lengthUnitsPlugin(),
       },
       {
         cssProperty: ['margin-bottom'],
@@ -59,7 +60,7 @@ describe('processSubProps', () => {
         values: {
           auto: 'auto',
         },
-        valuePlugin: 'lengthUnit',
+        valuePlugin: lengthUnitsPlugin(),
       },
       {
         cssProperty: ['margin-left'],
@@ -68,7 +69,7 @@ describe('processSubProps', () => {
         values: {
           auto: 'auto',
         },
-        valuePlugin: 'lengthUnit',
+        valuePlugin: lengthUnitsPlugin(),
       },
       {
         cssProperty: ['margin-top', 'margin-bottom'],
@@ -77,7 +78,7 @@ describe('processSubProps', () => {
         values: {
           auto: 'auto',
         },
-        valuePlugin: 'lengthUnit',
+        valuePlugin: lengthUnitsPlugin(),
       },
       {
         cssProperty: ['margin-right', 'margin-left'],
@@ -86,7 +87,7 @@ describe('processSubProps', () => {
         values: {
           auto: 'auto',
         },
-        valuePlugin: 'lengthUnit',
+        valuePlugin: lengthUnitsPlugin(),
       },
     ];
 

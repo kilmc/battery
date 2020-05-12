@@ -64,9 +64,7 @@ describe('generateMatchers', () => {
               valuePlugin: colorPlugin,
             },
           ],
-          plugins: {
-            colorPlugin,
-          },
+          plugins: [],
         };
         expect(generateMatchers(config, []).color).toEqual(
           /(^)(fill-|bg-|)(black|white|pink)($)/,
