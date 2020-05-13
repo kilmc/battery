@@ -26,15 +26,14 @@ export const addClassObjectData = (
       return classMeta;
     }
 
-    const plugin: PluginConfig = config.plugins.find(
-      pluginConfig => pluginConfig.name === classMeta.valuePlugin,
-    );
+    const plugin = classMeta.valuePlugin;
+    const valuePluginType = plugin.type;
 
-    if (classMeta.valuePluginType === 'lookup') {
+    if (valuePluginType === 'lookup') {
       value = plugin.values[classMeta.explodedSource.valueIdentifier];
     }
 
-    if (classMeta.valuePluginType === 'pattern') {
+    if (valuePluginType === 'pattern') {
       value = classMeta.explodedSource.valueIdentifier;
     }
 

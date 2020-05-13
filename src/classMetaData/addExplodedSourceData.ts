@@ -37,10 +37,11 @@ const setModifierData = (
   matchers: Matchers,
   plugins: PluginConfig[],
 ): ExplodedClassSource => {
-  const value = classMeta.source.match(matchers[classMeta.valuePlugin])[3];
-  const plugin = plugins.find(
-    pluginConfig => pluginConfig.name === classMeta.valuePlugin,
-  );
+  const value = classMeta.source.match(
+    matchers[classMeta.property.join('')],
+  )[3];
+
+  const plugin = classMeta.valuePlugin;
 
   if (plugin.modifiers) {
     const valuePluginMatcher = generateValueMatcher(plugin, true);
@@ -88,7 +89,10 @@ const determinePluginValueIdentifier = (
   classMeta: ClassMetaData,
   matchers: Matchers,
 ) => {
-  const value = classMeta.source.match(matchers[classMeta.valuePlugin])[3];
+  const value = classMeta.source.match(
+    matchers[classMeta.property.join('')],
+  )[3];
+
   const { modifierIdentifier, modifierSeparator } = explodedSource;
 
   return value.replace(modifierIdentifier, '').replace(modifierSeparator, '');
@@ -143,9 +147,10 @@ const setPrefixSuffixData = (
   matchers: Matchers,
   plugins: PluginConfig[],
 ) => {
+  //todo: fix types
   const matcherArr = Object.entries(matchers).find(([matcherName]) => {
     return (
-      matcherName === classMeta.valuePlugin ||
+      matcherName === classMeta.property.join('') ||
       (classMeta.keyword && matcherName === 'keyword')
     );
   });

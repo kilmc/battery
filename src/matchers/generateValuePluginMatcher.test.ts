@@ -32,7 +32,8 @@ describe('generateValuePluginMatcher', () => {
         ];
 
         expect(generateValuePluginMatcher(plugins, props)).toEqual({
-          color: /(^)(fill-|bg-)(black|white|pink)($)/,
+          'background-color': /(^)(fill-|bg-)(black|white|pink)($)/,
+          fill: /(^)(fill-|bg-)(black|white|pink)($)/,
         });
       });
     });
@@ -74,6 +75,7 @@ describe('generateValuePluginMatcher', () => {
       it('generates a matcher', () => {
         expect(generateValuePluginMatcher(plugins, props)).toEqual({
           color: /(^)(bg-|)(black|white|pink)($)/,
+          'background-color': /(^)(bg-|)(black|white|pink)($)/,
         });
       });
     });
@@ -133,7 +135,7 @@ describe('generateValuePluginMatcher', () => {
           ];
 
           expect(generateValuePluginMatcher(plugins, props)).toEqual({
-            integer: /(^)(z)(-?\d{1,4})($)/,
+            'z-index': /(^)(z)(-?\d{1,4})($)/,
           });
         });
       });
@@ -161,26 +163,28 @@ describe('generateValuePluginMatcher', () => {
           },
         ],
       };
-      const plugins: PluginConfig[] = [colorPlugin, pseudoPlugin];
+
+      const plugins: PluginConfig[] = [pseudoPlugin];
 
       const props: DeveloperPropertyConfig[] = [
         {
           cssProperty: ['color'],
           classNamespace: 'text',
           pluginDefault: true,
-          valuePlugin: pseudoPlugin,
+          valuePlugin: colorPlugin,
         },
         {
           cssProperty: ['background-color'],
           classNamespace: 'bg',
           pluginSeparator: '-',
-          valuePlugin: pseudoPlugin,
+          valuePlugin: colorPlugin,
         },
       ];
 
       it('generates a matcher', () => {
         expect(generateValuePluginMatcher(plugins, props)).toEqual({
           color: /(hover-|focus-|^)(bg-|)(black|white|pink)($)/,
+          'background-color': /(hover-|focus-|^)(bg-|)(black|white|pink)($)/,
         });
       });
     });
@@ -212,26 +216,27 @@ describe('generateValuePluginMatcher', () => {
         ],
       };
 
-      const plugins: PluginConfig[] = [colorPlugin, breakpointsPlugin];
+      const plugins: PluginConfig[] = [breakpointsPlugin];
 
       const props: DeveloperPropertyConfig[] = [
         {
           cssProperty: ['color'],
           classNamespace: 'text',
           pluginDefault: true,
-          valuePlugin: breakpointsPlugin,
+          valuePlugin: colorPlugin,
         },
         {
           cssProperty: ['background-color'],
           classNamespace: 'bg',
           pluginSeparator: '-',
-          valuePlugin: breakpointsPlugin,
+          valuePlugin: colorPlugin,
         },
       ];
 
       it('generates a matcher', () => {
         expect(generateValuePluginMatcher(plugins, props)).toEqual({
           color: /(^)(bg-|)(black|white|pink)(-sm|-md|-lg|$)/,
+          'background-color': /(^)(bg-|)(black|white|pink)(-sm|-md|-lg|$)/,
         });
       });
     });

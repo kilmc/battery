@@ -1,27 +1,24 @@
+import { DeveloperPropertyConfig } from './../types/property-config';
 import { ClassMetaData } from '../types/classname';
 import { Matchers } from '../types/matchers';
-import { PluginConfig } from '../types/plugin-config';
 
 export const addValuePluginData = (
   classMetaArr: ClassMetaData[],
   valuePluginMatchers: Matchers,
-  plugins: PluginConfig[],
+  propConfigs: DeveloperPropertyConfig[],
 ): ClassMetaData[] => {
   return classMetaArr.map(classMeta => {
     if (classMeta.keyword) return classMeta;
-    const pluginName = Object.entries(valuePluginMatchers).find(([, regex]) => {
-      return regex.test(classMeta.source);
-    });
 
-    const plugin: PluginConfig = plugins.find(
-      pluginConfig => pluginConfig.name === pluginName[0],
+    const [matcherName, regex] = Object.entries(valuePluginMatchers).find(
+      ([, regex]) => regex.test(classMeta.source),
     );
 
-    classMeta.valuePlugin = plugin.name;
+    const propConfig = propConfigs.find(
+      config => config.cssProperty.join('') === matcherName,
+    );
 
-    if (plugin.type === 'lookup' || plugin.type === 'pattern') {
-      classMeta.valuePluginType = plugin.type;
-    }
+    classMeta.valuePlugin = propConfig.valuePlugin;
 
     return classMeta;
   });

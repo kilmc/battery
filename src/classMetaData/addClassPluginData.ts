@@ -21,22 +21,21 @@ const addAffixData = (
     modifier => modifier.identifier === affix,
   );
 
-  const pluginName = matchedPlugin.name;
   const pluginType = matchedPlugin.type;
   const modifierName = matchedModifier.name;
 
   let affixData: {
-    atrulePlugin?: string;
+    atrulePlugin?: PluginConfig;
     atruleModifier?: string;
-    selectorPlugin?: string;
+    selectorPlugin?: PluginConfig;
     selectorModifier?: string;
   } = {};
 
   if (pluginType === 'at-rule') {
-    affixData.atrulePlugin = pluginName;
+    affixData.atrulePlugin = matchedPlugin;
     affixData.atruleModifier = modifierName;
   } else if (pluginType === 'selector') {
-    affixData.selectorPlugin = pluginName;
+    affixData.selectorPlugin = matchedPlugin;
     affixData.selectorModifier = modifierName;
   }
 
