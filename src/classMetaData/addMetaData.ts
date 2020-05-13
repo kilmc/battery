@@ -37,7 +37,7 @@ export const addMetaData = (
   const keywords = keywordToMetaData(config);
   const matchers = generateMatchers(config, keywords);
 
-  console.log({ matchers });
+  console.log('DEBUG:', { matchers });
 
   // Adds: source, invalid, selector
   const withSourceData = addSourceData(classNames, matchers);

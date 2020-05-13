@@ -35,7 +35,6 @@ const setModifierData = (
   explodedSource: ExplodedClassSource,
   classMeta: ClassMetaData,
   matchers: Matchers,
-  plugins: PluginConfig[],
 ): ExplodedClassSource => {
   const value = classMeta.source.match(
     matchers[classMeta.property.join('')],
@@ -147,7 +146,6 @@ const setPrefixSuffixData = (
   matchers: Matchers,
   plugins: PluginConfig[],
 ) => {
-  //todo: fix types
   const matcherArr = Object.entries(matchers).find(([matcherName]) => {
     return (
       matcherName === classMeta.property.join('') ||
@@ -227,7 +225,6 @@ export const addExplodedSourceData = (
         withValueSeparator,
         classMeta,
         matchers,
-        plugins,
       );
     }
 

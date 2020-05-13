@@ -30,7 +30,6 @@ const generateValueRegex = (
     : toCapture(valueArr);
 };
 
-//todo:fix types
 export const generateValueMatcher = (
   plugin: PluginConfig,
   captureSubGroups = false,
@@ -50,7 +49,7 @@ export const generateValueMatcher = (
 
       return generateValueRegex([identifier], plugin, captureSubGroups);
     default:
-      console.log(`The plugin "${plugin.name}" must have a type.`);
+      console.log(`The plugin must have a type.`);
   }
 };
 
@@ -88,10 +87,10 @@ export const generateValuePluginMatcher = (
   }
 
   const { prefixes, suffixes } = generatePrefixSuffixdMatchers(globalPlugins);
-  const propMatcher = generatePropMatcher(configsWithValuePlugins);
 
   const matchers: Matchers = configsWithValuePlugins.reduce(
     (accum: Matchers, config) => {
+      const propMatcher = generatePropMatcher([config]);
       const valueMatcher = generateValueMatcher(config.valuePlugin);
 
       const regex = new RegExp(
