@@ -1,15 +1,9 @@
 import { ClassMetaData } from '../types/classname';
-import { PluginConfig } from '../types/plugin-config';
 import { getMatcherName } from '../matchers/utils';
 import { generateModifierMatchers } from '../matchers/generateModifierMatchers';
 
-export const addModifierPluginData = (
-  classMetaArr: ClassMetaData[],
-  plugins: PluginConfig[],
-) => {
+export const addValueModifierPluginData = (classMetaArr: ClassMetaData[]) => {
   return classMetaArr.map(classMeta => {
-    if (!plugins || plugins.length < 1) return classMeta;
-
     const { modifierIdentifier } = classMeta.explodedSource;
     const hasNonDefaultModifier = modifierIdentifier.length > 0;
     const plugin = classMeta.valuePlugin;

@@ -8,7 +8,7 @@ import { keywordToMetaData } from './keywordToMetaData';
 import { addPropertyData } from './addPropertyData';
 import { addValuePluginData } from './addValuePluginData';
 import { addExplodedSourceData } from './addExplodedSourceData';
-import { addModifierPluginData } from './addModifierPluginData';
+import { addValueModifierPluginData } from './addValueModifierPluginData';
 import { addClassPluginData } from './addClassPluginData';
 
 const sortValidAndInvalid = (classMeta: ClassMetaData[]) =>
@@ -70,10 +70,7 @@ export const addMetaData = (
   );
 
   // Adds: valueModifier
-  const withModifierPlugin = addModifierPluginData(
-    withExplodedSourceData,
-    config.plugins,
-  );
+  const withModifierPlugin = addValueModifierPluginData(withExplodedSourceData);
 
   // Adds: selectorPlugin, atrulePlugin
   const withClassPluginData = addClassPluginData(

@@ -3,7 +3,7 @@ export const baseToCapture = (nonCapture: boolean) => (
   optional = false,
 ) => {
   if (arr.length < 1) {
-    return '';
+    return '()';
   }
   const optionalRegex = optional ? '|' : '';
   const nonCaptureRegex = nonCapture ? '?:' : '';

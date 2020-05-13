@@ -238,7 +238,7 @@ describe('generateCSS', () => {
       };
 
       it('renders valid CSS', () => {
-        testOutput(generateCSS(input, config), '.m3 { margin: 1.8rem }');
+        testOutput(generateCSS(input, config), '.m3 { margin: 1.125rem }');
       });
     });
   });

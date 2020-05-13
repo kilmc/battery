@@ -66,9 +66,14 @@ describe('generateMatchers', () => {
           ],
           plugins: [],
         };
-        expect(generateMatchers(config, []).color).toEqual(
-          /(^)(fill-|bg-|)(black|white|pink)($)/,
-        );
+
+        const matchers = generateMatchers(config, []);
+
+        expect(matchers).toEqual({
+          color: /(^)()(black|white|pink)($)/,
+          fill: /(^)(fill-)(black|white|pink)($)/,
+          'background-color': /(^)(bg-)(black|white|pink)($)/,
+        });
       });
     });
   });
