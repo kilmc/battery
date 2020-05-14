@@ -40,8 +40,6 @@ export const addPropertyData = (
     const property = props.find(prop => {
       const valuePluginKey = prop.cssProperty.join('');
 
-      console.log('DEBUG:', { valuePluginKey, matcherName });
-
       if (classNamespace.length > 0 && prop.classNamespace) {
         const matched = prop.classNamespace.match(new RegExp(classNamespace));
         return valuePluginKey === matcherName && matched && matched.length > 0;

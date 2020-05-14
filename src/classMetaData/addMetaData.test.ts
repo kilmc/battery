@@ -144,7 +144,6 @@ describe('addMetaData', () => {
           keyword: false,
           property: ['background-color'],
           valuePlugin: colorPlugin(),
-          valuePluginType: 'lookup',
           explodedSource: {
             prefix: '',
             prefixSeparator: '',
@@ -166,7 +165,6 @@ describe('addMetaData', () => {
           keyword: false,
           property: ['background-color'],
           valuePlugin: colorPlugin(),
-          valuePluginType: 'lookup',
           explodedSource: {
             prefix: '',
             prefixSeparator: '',
@@ -189,7 +187,6 @@ describe('addMetaData', () => {
           keyword: false,
           property: ['z-index'],
           valuePlugin: integerPlugin(),
-          valuePluginType: 'pattern',
           explodedSource: {
             prefix: '',
             prefixSeparator: '',
@@ -211,7 +208,6 @@ describe('addMetaData', () => {
           keyword: false,
           property: ['width'],
           valuePlugin: lengthUnitsPlugin(),
-          valuePluginType: 'pattern',
           explodedSource: {
             prefix: '',
             prefixSeparator: '',
@@ -279,7 +275,6 @@ describe('addMetaData', () => {
           keyword: false,
           property: ['background-color'],
           valuePlugin: colorPlugin(),
-          valuePluginType: 'lookup',
           atrulePlugin: 'breakpoint',
           atruleModifier: 'responsiveMedium',
           explodedSource: {
@@ -303,7 +298,6 @@ describe('addMetaData', () => {
           keyword: false,
           property: ['background-color'],
           valuePlugin: colorPlugin(),
-          valuePluginType: 'lookup',
           selectorPlugin: 'pseudo',
           selectorModifier: 'hover',
           explodedSource: {
@@ -328,7 +322,6 @@ describe('addMetaData', () => {
           keyword: false,
           property: ['z-index'],
           valuePlugin: integerPlugin(),
-          valuePluginType: 'pattern',
           atrulePlugin: 'breakpoint',
           atruleModifier: 'responsiveLarge',
           explodedSource: {
