@@ -32,8 +32,8 @@ describe('generateValuePluginMatcher', () => {
         ];
 
         expect(generateValuePluginMatcher(plugins, props)).toEqual({
-          'background-color': /(^)(fill-|bg-)(black|white|pink)($)/,
-          fill: /(^)(fill-|bg-)(black|white|pink)($)/,
+          'background-color': /(^)(bg-)(black|white|pink)($)/,
+          fill: /(^)(fill-)(black|white|pink)($)/,
         });
       });
     });
@@ -50,7 +50,7 @@ describe('generateValuePluginMatcher', () => {
       ];
       it('generates a matcher', () => {
         expect(generateValuePluginMatcher(plugins, props)).toEqual({
-          color: /(^)(black|white|pink)($)/,
+          color: /(^)()(black|white|pink)($)/,
         });
       });
     });
@@ -74,8 +74,8 @@ describe('generateValuePluginMatcher', () => {
 
       it('generates a matcher', () => {
         expect(generateValuePluginMatcher(plugins, props)).toEqual({
-          color: /(^)(bg-|)(black|white|pink)($)/,
-          'background-color': /(^)(bg-|)(black|white|pink)($)/,
+          'background-color': /(^)(bg-)(black|white|pink)($)/,
+          color: /(^)()(black|white|pink)($)/,
         });
       });
     });
@@ -183,8 +183,8 @@ describe('generateValuePluginMatcher', () => {
 
       it('generates a matcher', () => {
         expect(generateValuePluginMatcher(plugins, props)).toEqual({
-          color: /(hover-|focus-|^)(bg-|)(black|white|pink)($)/,
-          'background-color': /(hover-|focus-|^)(bg-|)(black|white|pink)($)/,
+          'background-color': /(hover-|focus-|^)(bg-)(black|white|pink)($)/,
+          color: /(hover-|focus-|^)()(black|white|pink)($)/,
         });
       });
     });
@@ -235,8 +235,8 @@ describe('generateValuePluginMatcher', () => {
 
       it('generates a matcher', () => {
         expect(generateValuePluginMatcher(plugins, props)).toEqual({
-          color: /(^)(bg-|)(black|white|pink)(-sm|-md|-lg|$)/,
-          'background-color': /(^)(bg-|)(black|white|pink)(-sm|-md|-lg|$)/,
+          'background-color': /(^)(bg-)(black|white|pink)(-sm|-md|-lg|$)/,
+          color: /(^)()(black|white|pink)(-sm|-md|-lg|$)/,
         });
       });
     });
