@@ -1,4 +1,5 @@
 import { PropertyConfig } from '../../types/property-config';
+import { lengthUnitsPlugin } from '../../fixtures/plugins/lengthUnits';
 
 export const margin: PropertyConfig = {
   cssProperty: 'margin',
@@ -17,5 +18,5 @@ export const margin: PropertyConfig = {
     auto: 'auto',
     inherit: 'inherit',
   },
-  valuePlugin: 'lengthUnit',
+  valuePlugin: lengthUnitsPlugin(),
 };

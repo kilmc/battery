@@ -1,4 +1,5 @@
 import { PropertyConfig } from '../../types/property-config';
+import { lengthUnitsPlugin } from '../../fixtures/plugins/lengthUnits';
 
 export const backgroundSize: PropertyConfig = {
   cssProperty: 'background-size',
@@ -8,5 +9,5 @@ export const backgroundSize: PropertyConfig = {
     contain: 'contain',
     cover: 'cover',
   },
-  valuePlugin: 'lengthUnit',
+  valuePlugin: lengthUnitsPlugin(),
 };

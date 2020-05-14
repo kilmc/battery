@@ -1,4 +1,5 @@
 import { CSSProperties } from '../types/css';
+import { PluginConfig } from './plugin-config';
 
 export type ClassObject = { [key in CSSProperties]?: string };
 export interface ClassObjectGroup {
@@ -23,11 +24,10 @@ export interface ClassMetaData {
   selector?: string;
   explodedSource?: ExplodedClassSource;
   keyword?: boolean;
-  valuePlugin?: string;
-  valuePluginType?: 'pattern' | 'lookup';
-  atrulePlugin?: string;
+  valuePlugin?: PluginConfig;
+  atrulePlugin?: PluginConfig;
   atruleModifier?: string;
-  selectorPlugin?: string;
+  selectorPlugin?: PluginConfig;
   selectorModifier?: string;
   valueModifier?: string;
   classObject?: ClassObject;

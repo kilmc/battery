@@ -36,7 +36,7 @@ describe('generateMatchers', () => {
       it('generates a regex to match classes associated with a specific plugin', () => {
         const colorPlugin: PluginConfig = {
           type: 'lookup',
-          name: 'color',
+          separator: '-',
           values: {
             black: '#000000',
             white: '#ffffff',
@@ -49,27 +49,30 @@ describe('generateMatchers', () => {
             {
               cssProperty: ['fill'],
               classNamespace: 'fill',
-              pluginSeparator: '-',
-              valuePlugin: 'color',
+              valuePlugin: colorPlugin,
             },
             {
               cssProperty: ['background-color'],
               classNamespace: 'bg',
-              pluginSeparator: '-',
-              valuePlugin: 'color',
+              valuePlugin: colorPlugin,
             },
             {
               cssProperty: ['color'],
               classNamespace: 'text',
               pluginDefault: true,
-              valuePlugin: 'color',
+              valuePlugin: colorPlugin,
             },
           ],
-          plugins: [colorPlugin],
+          plugins: [],
         };
-        expect(generateMatchers(config, []).color).toEqual(
-          /(^)(fill-|bg-|)(black|white|pink)($)/,
-        );
+
+        const matchers = generateMatchers(config, []);
+
+        expect(matchers).toEqual({
+          color: /(^)()(black|white|pink)($)/,
+          fill: /(^)(fill-)(black|white|pink)($)/,
+          'background-color': /(^)(bg-)(black|white|pink)($)/,
+        });
       });
     });
   });

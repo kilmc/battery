@@ -1,7 +1,6 @@
-import { PluginConfig } from '../../types/plugin-config';
+import { BatteryPlugin } from './../../battery-plugin';
 
-export const hoverTargetPlugin: PluginConfig = {
-  name: 'hoverTarget',
+export const hoverTargetPlugin = BatteryPlugin({
   type: 'selector',
   affixType: 'prefix',
   modifiers: [
@@ -12,4 +11,4 @@ export const hoverTargetPlugin: PluginConfig = {
       modifierFn: selector => `hover-target:hover .${selector}`,
     },
   ],
-};
+});

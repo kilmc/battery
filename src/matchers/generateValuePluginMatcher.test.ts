@@ -1,85 +1,87 @@
+import { BatteryPlugin } from './../battery-plugin';
 import { generateValuePluginMatcher } from '../matchers/generateValuePluginMatcher';
 import { PluginConfig, ModifierFn } from '../types/plugin-config';
 import { DeveloperPropertyConfig } from '../types/property-config';
 
 describe('generateValuePluginMatcher', () => {
-  const colorPlugin: PluginConfig = {
+  const colorPlugin = BatteryPlugin({
     type: 'lookup',
-    name: 'color',
     values: {
       black: '#000000',
       white: '#ffffff',
       pink: '#ff9dd8',
     },
-  };
+  });
+
   describe('Value plugins', () => {
     describe('Handle no multiple props', () => {
       it('Then it generates a regex to match classes using the plugin', () => {
-        const plugins: PluginConfig[] = [colorPlugin];
+        const plugins: PluginConfig[] = [];
+
         const props: DeveloperPropertyConfig[] = [
           {
             cssProperty: ['background-color'],
             classNamespace: 'bg',
-            pluginSeparator: '-',
-            valuePlugin: 'color',
+            valuePlugin: colorPlugin({ separator: '-' }),
           },
           {
             cssProperty: ['fill'],
             classNamespace: 'fill',
-            pluginSeparator: '-',
-            valuePlugin: 'color',
+            valuePlugin: colorPlugin({ separator: '-' }),
           },
         ];
 
         expect(generateValuePluginMatcher(plugins, props)).toEqual({
-          color: /(^)(fill-|bg-)(black|white|pink)($)/,
+          'background-color': /(^)(bg-)(black|white|pink)($)/,
+          fill: /(^)(fill-)(black|white|pink)($)/,
         });
       });
     });
 
     describe('Handle single prop set as plugin default', () => {
-      const plugins: PluginConfig[] = [colorPlugin];
+      const plugins: PluginConfig[] = [];
+
       const props: DeveloperPropertyConfig[] = [
         {
           cssProperty: ['color'],
           classNamespace: 'text',
           pluginDefault: true,
-          valuePlugin: 'color',
+          valuePlugin: colorPlugin(),
         },
       ];
       it('generates a matcher', () => {
         expect(generateValuePluginMatcher(plugins, props)).toEqual({
-          color: /(^)(black|white|pink)($)/,
+          color: /(^)()(black|white|pink)($)/,
         });
       });
     });
 
     describe('Handle multiple props with one set as plugin default', () => {
-      const plugins: PluginConfig[] = [colorPlugin];
+      const plugins: PluginConfig[] = [];
       const props: DeveloperPropertyConfig[] = [
         {
           cssProperty: ['color'],
           classNamespace: 'text',
           pluginDefault: true,
-          valuePlugin: 'color',
+          valuePlugin: colorPlugin(),
         },
         {
           cssProperty: ['background-color'],
           classNamespace: 'bg',
-          pluginSeparator: '-',
-          valuePlugin: 'color',
+          valuePlugin: colorPlugin({ separator: '-' }),
         },
       ];
 
       it('generates a matcher', () => {
         expect(generateValuePluginMatcher(plugins, props)).toEqual({
-          color: /(^)(bg-|)(black|white|pink)($)/,
+          'background-color': /(^)(bg-)(black|white|pink)($)/,
+          color: /(^)()(black|white|pink)($)/,
         });
       });
     });
 
     describe('Handle no props using the plugin', () => {
-      const plugins: PluginConfig[] = [colorPlugin];
+      const plugins: PluginConfig[] = [];
       const props: DeveloperPropertyConfig[] = [];
 
       it('does NOT generate a matcher', () => {
@@ -88,23 +90,21 @@ describe('generateValuePluginMatcher', () => {
     });
 
     describe('"Lookup" type plugin', () => {
-      const lookupPlugin: PluginConfig = {
+      const lookupPlugin = BatteryPlugin({
         type: 'lookup',
-        name: 'color',
         values: {
           black: '#000000',
           white: '#ffffff',
           pink: '#ff9dd8',
         },
-      };
+      });
 
-      const plugins: PluginConfig[] = [lookupPlugin];
+      const plugins: PluginConfig[] = [];
       const props: DeveloperPropertyConfig[] = [
         {
           cssProperty: ['background-color'],
           classNamespace: 'bg',
-          pluginSeparator: '-',
-          valuePlugin: 'color',
+          valuePlugin: lookupPlugin({ separator: '-' }),
         },
       ];
 
@@ -119,7 +119,6 @@ describe('generateValuePluginMatcher', () => {
     describe('"Pattern" type plugin', () => {
       const integerPlugin: PluginConfig = {
         type: 'pattern',
-        name: 'integer',
         identifier: /-?\d{1,4}/,
       };
 
@@ -130,12 +129,12 @@ describe('generateValuePluginMatcher', () => {
             {
               cssProperty: ['z-index'],
               classNamespace: 'z',
-              valuePlugin: 'integer',
+              valuePlugin: integerPlugin,
             },
           ];
 
           expect(generateValuePluginMatcher(plugins, props)).toEqual({
-            integer: /(^)(z)(-?\d{1,4})($)/,
+            'z-index': /(^)(z)(-?\d{1,4})($)/,
           });
         });
       });
@@ -146,7 +145,6 @@ describe('generateValuePluginMatcher', () => {
     describe('Handle prefixes', () => {
       const formatPseudo: ModifierFn = (cx, pseudo) => `${cx}:${pseudo}`;
       const pseudoPlugin: PluginConfig = {
-        name: 'pseudos',
         type: 'selector',
         affixType: 'prefix',
         modifiers: [
@@ -164,33 +162,33 @@ describe('generateValuePluginMatcher', () => {
           },
         ],
       };
-      const plugins: PluginConfig[] = [colorPlugin, pseudoPlugin];
+
+      const plugins: PluginConfig[] = [pseudoPlugin];
 
       const props: DeveloperPropertyConfig[] = [
         {
           cssProperty: ['color'],
           classNamespace: 'text',
           pluginDefault: true,
-          valuePlugin: 'color',
+          valuePlugin: colorPlugin(),
         },
         {
           cssProperty: ['background-color'],
           classNamespace: 'bg',
-          pluginSeparator: '-',
-          valuePlugin: 'color',
+          valuePlugin: colorPlugin({ separator: '-' }),
         },
       ];
 
       it('generates a matcher', () => {
         expect(generateValuePluginMatcher(plugins, props)).toEqual({
-          color: /(hover-|focus-|^)(bg-|)(black|white|pink)($)/,
+          'background-color': /(hover-|focus-|^)(bg-)(black|white|pink)($)/,
+          color: /(hover-|focus-|^)()(black|white|pink)($)/,
         });
       });
     });
 
     describe('Handle suffixes', () => {
       const breakpointsPlugin: PluginConfig = {
-        name: 'breakpoints',
         type: 'at-rule',
         atrule: 'media',
         affixType: 'suffix',
@@ -216,26 +214,26 @@ describe('generateValuePluginMatcher', () => {
         ],
       };
 
-      const plugins: PluginConfig[] = [colorPlugin, breakpointsPlugin];
+      const plugins: PluginConfig[] = [breakpointsPlugin];
 
       const props: DeveloperPropertyConfig[] = [
         {
           cssProperty: ['color'],
           classNamespace: 'text',
           pluginDefault: true,
-          valuePlugin: 'color',
+          valuePlugin: colorPlugin(),
         },
         {
           cssProperty: ['background-color'],
           classNamespace: 'bg',
-          pluginSeparator: '-',
-          valuePlugin: 'color',
+          valuePlugin: colorPlugin({ separator: '-' }),
         },
       ];
 
       it('generates a matcher', () => {
         expect(generateValuePluginMatcher(plugins, props)).toEqual({
-          color: /(^)(bg-|)(black|white|pink)(-sm|-md|-lg|$)/,
+          'background-color': /(^)(bg-)(black|white|pink)(-sm|-md|-lg|$)/,
+          color: /(^)()(black|white|pink)(-sm|-md|-lg|$)/,
         });
       });
     });

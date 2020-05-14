@@ -30,7 +30,9 @@ export const addPropertyData = (
     }
 
     const pluginSeparatorsRegex = new RegExp(
-      `[${props.map(prop => prop.pluginSeparator).join('')}]`,
+      `[${props
+        .map(prop => (prop.valuePlugin || {}).separator || '')
+        .join('')}]`,
     );
 
     const classNamespace = classMeta.source
@@ -38,13 +40,13 @@ export const addPropertyData = (
       .replace(pluginSeparatorsRegex, '');
 
     const property = props.find(prop => {
+      const valuePluginKey = prop.cssProperty.join('');
+
       if (classNamespace.length > 0 && prop.classNamespace) {
         const matched = prop.classNamespace.match(new RegExp(classNamespace));
-        return (
-          prop.valuePlugin === matcherName && matched && matched.length > 0
-        );
+        return valuePluginKey === matcherName && matched && matched.length > 0;
       } else if (classNamespace.length === 0 && prop.pluginDefault) {
-        return prop.valuePlugin === matcherName && prop.pluginDefault;
+        return valuePluginKey === matcherName && prop.pluginDefault;
       } else {
         return false;
       }

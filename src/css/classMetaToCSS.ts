@@ -12,9 +12,9 @@ export const classMetaToCSS = (
     .join(';');
 
   if (classMeta.selectorPlugin) {
-    const selectorModifier = plugins
-      .find(plugin => plugin.name === classMeta.selectorPlugin)
-      .modifiers.find(modifier => modifier.name === classMeta.selectorModifier);
+    const selectorModifier = classMeta.selectorPlugin.modifiers.find(
+      modifier => modifier.name === classMeta.selectorModifier,
+    );
 
     classMeta.selector = selectorModifier.modifierFn(
       classMeta.selector,

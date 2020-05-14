@@ -1,4 +1,5 @@
-import { ModifierFn, PluginConfig } from '../../types/plugin-config';
+import { BatteryPlugin } from './../../battery-plugin';
+import { ModifierFn } from '../../types/plugin-config';
 
 const pxToRem: ModifierFn = value => `${parseInt(value) / 16}rem`;
 const ratio: ModifierFn = value => {
@@ -7,9 +8,8 @@ const ratio: ModifierFn = value => {
   return pxToRem(convertedValue);
 };
 
-export const lengthUnitsPlugin: PluginConfig = {
+export const lengthUnitsPlugin = BatteryPlugin({
   type: 'pattern',
-  name: 'lengthUnit',
   identifier: /-?\d+/,
   modifiers: [
     {
@@ -38,4 +38,4 @@ export const lengthUnitsPlugin: PluginConfig = {
       modifierFn: value => `${value}vw`,
     },
   ],
-};
+});

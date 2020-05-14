@@ -7,35 +7,9 @@ import { generateMatchers } from '../matchers/generateMatchers';
 import { keywordToMetaData } from './keywordToMetaData';
 import { addPropertyData } from './addPropertyData';
 import { addValuePluginData } from './addValuePluginData';
-import { Matchers } from '../types/matchers';
-import { PluginConfig } from '../types/plugin-config';
 import { addExplodedSourceData } from './addExplodedSourceData';
-import { addModifierPluginData } from './addModifierPluginData';
+import { addValueModifierPluginData } from './addValueModifierPluginData';
 import { addClassPluginData } from './addClassPluginData';
-
-const getPlugins = (
-  pluginTypes: string[],
-  matchers: Matchers,
-  plugins: PluginConfig[],
-) => {
-  if (!plugins) return {};
-
-  return Object.entries(matchers)
-    .filter(([matcherName]) => {
-      const valuePlugins = plugins
-        .filter(plugin => pluginTypes.includes(plugin.type))
-        .map(plugin => `${plugin.name}`);
-
-      return valuePlugins.includes(matcherName);
-    })
-    .reduce(
-      (accum, [matcherName, regex]) => {
-        accum[matcherName] = regex;
-        return accum;
-      },
-      {} as Matchers,
-    );
-};
 
 const sortValidAndInvalid = (classMeta: ClassMetaData[]) =>
   classMeta.reduce(
@@ -62,11 +36,6 @@ export const addMetaData = (
 ): ClassMetaData[] => {
   const keywords = keywordToMetaData(config);
   const matchers = generateMatchers(config, keywords);
-  const valuePluginMatchers = getPlugins(
-    ['pattern', 'lookup'],
-    matchers,
-    config.plugins,
-  );
 
   // Adds: source, invalid, selector
   const withSourceData = addSourceData(classNames, matchers);
@@ -75,11 +44,11 @@ export const addMetaData = (
   // Adds: keyword
   const withKeywordData = addKeywordData(validClassMeta, matchers);
 
-  // Adds: valuePlugin, valuePluginType
+  // Adds: valuePlugin
   const withValuePluginData = addValuePluginData(
     withKeywordData,
-    valuePluginMatchers,
-    config.plugins,
+    matchers,
+    config.props,
   );
 
   // Adds: property
@@ -99,10 +68,7 @@ export const addMetaData = (
   );
 
   // Adds: valueModifier
-  const withModifierPlugin = addModifierPluginData(
-    withExplodedSourceData,
-    config.plugins,
-  );
+  const withModifierPlugin = addValueModifierPluginData(withExplodedSourceData);
 
   // Adds: selectorPlugin, atrulePlugin
   const withClassPluginData = addClassPluginData(

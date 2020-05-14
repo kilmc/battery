@@ -49,7 +49,7 @@ export const generateValueMatcher = (
 
       return generateValueRegex([identifier], plugin, captureSubGroups);
     default:
-      console.log(`The plugin "${plugin.name}" must have a type.`);
+      console.log(`The plugin must have a type.`);
   }
 };
 
@@ -60,7 +60,9 @@ const generatePropMatcher = (pluginPropConfigs: DeveloperPropertyConfig[]) => {
   const classNamespaces = pluginPropConfigs
     .filter(c => !c.pluginDefault)
     .map(propConfig => {
-      const { classNamespace, pluginSeparator = '' } = propConfig;
+      const { classNamespace, valuePlugin } = propConfig;
+      const pluginSeparator = (valuePlugin && valuePlugin.separator) || '';
+
       return `${classNamespace}${pluginSeparator}`;
     });
 
@@ -68,33 +70,43 @@ const generatePropMatcher = (pluginPropConfigs: DeveloperPropertyConfig[]) => {
 };
 
 export const generateValuePluginMatcher = (
-  plugins: PluginConfig[],
+  globalPlugins: PluginConfig[],
   propConfigs: DeveloperPropertyConfig[],
 ): { [k: string]: Matcher } => {
-  if (!plugins || plugins.length < 1) {
+  const configsWithValuePlugins = propConfigs.filter(
+    ({ valuePlugin }) => !!valuePlugin,
+  );
+
+  const valuePlugins = configsWithValuePlugins.map(
+    ({ valuePlugin }) => valuePlugin,
+  );
+
+  if (
+    (!valuePlugins || valuePlugins.length < 1) &&
+    (!globalPlugins || globalPlugins.length < 1)
+  ) {
     return {};
   }
 
-  const { prefixes, suffixes } = generatePrefixSuffixdMatchers(plugins);
-  const matchers: Matchers = plugins.reduce((accum: Matchers, plugin) => {
-    const { name: pluginName } = plugin;
-    const pluginProps = propConfigs.filter(
-      propConfig => propConfig.valuePlugin === pluginName,
-    );
+  const { prefixes, suffixes } = generatePrefixSuffixdMatchers(globalPlugins);
 
-    if (pluginProps.length === 0) {
+  const matchers: Matchers = configsWithValuePlugins.reduce(
+    (accum: Matchers, config) => {
+      const propMatcher = generatePropMatcher([config]);
+      const valueMatcher = generateValueMatcher(config.valuePlugin);
+
+      const regex = new RegExp(
+        `(${prefixes})${propMatcher}${valueMatcher}(${suffixes})`,
+      );
+
+      const cssPropertyKey = config.cssProperty.join('');
+
+      accum[cssPropertyKey] = regex;
+
       return accum;
-    }
+    },
+    {},
+  );
 
-    const propMatcher = generatePropMatcher(pluginProps);
-    const valueMatcher = generateValueMatcher(plugin);
-
-    const regex = new RegExp(
-      `(${prefixes})${propMatcher}${valueMatcher}(${suffixes})`,
-    );
-
-    accum[pluginName] = regex;
-    return accum;
-  }, {});
   return matchers;
 };

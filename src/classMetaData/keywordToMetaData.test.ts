@@ -1,6 +1,7 @@
 import { keywordToMetaData } from './keywordToMetaData';
 import { DeveloperBatteryConfig } from '../types/battery-config';
 import { ClassMetaData } from '../types/classname';
+import { lengthUnitsPlugin } from '../fixtures/plugins/lengthUnits';
 
 describe('keywordToMetaData', () => {
   describe('Given a config containing keyword class definitions', () => {
@@ -15,7 +16,7 @@ describe('keywordToMetaData', () => {
               contain: 'contain',
               cover: 'cover',
             },
-            valuePlugin: 'lengthUnits',
+            valuePlugin: lengthUnitsPlugin(),
           },
         ],
       };

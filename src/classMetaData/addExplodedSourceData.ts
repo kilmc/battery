@@ -23,7 +23,9 @@ const setValueSeparator = (
   propConfig: DeveloperPropertyConfig,
   classMeta: ClassMetaData,
 ): ExplodedClassSource => {
-  const { valueSeparator = '', pluginSeparator = '' } = propConfig;
+  const { valueSeparator = '', valuePlugin } = propConfig;
+  const pluginSeparator = (valuePlugin && valuePlugin.separator) || '';
+
   const valueOrPluginSeparator = classMeta.keyword
     ? valueSeparator
     : pluginSeparator;
@@ -35,12 +37,12 @@ const setModifierData = (
   explodedSource: ExplodedClassSource,
   classMeta: ClassMetaData,
   matchers: Matchers,
-  plugins: PluginConfig[],
 ): ExplodedClassSource => {
-  const value = classMeta.source.match(matchers[classMeta.valuePlugin])[3];
-  const plugin = plugins.find(
-    pluginConfig => pluginConfig.name === classMeta.valuePlugin,
-  );
+  const value = classMeta.source.match(
+    matchers[classMeta.property.join('')],
+  )[3];
+
+  const plugin = classMeta.valuePlugin;
 
   if (plugin.modifiers) {
     const valuePluginMatcher = generateValueMatcher(plugin, true);
@@ -88,7 +90,10 @@ const determinePluginValueIdentifier = (
   classMeta: ClassMetaData,
   matchers: Matchers,
 ) => {
-  const value = classMeta.source.match(matchers[classMeta.valuePlugin])[3];
+  const value = classMeta.source.match(
+    matchers[classMeta.property.join('')],
+  )[3];
+
   const { modifierIdentifier, modifierSeparator } = explodedSource;
 
   return value.replace(modifierIdentifier, '').replace(modifierSeparator, '');
@@ -145,7 +150,7 @@ const setPrefixSuffixData = (
 ) => {
   const matcherArr = Object.entries(matchers).find(([matcherName]) => {
     return (
-      matcherName === classMeta.valuePlugin ||
+      matcherName === classMeta.property.join('') ||
       (classMeta.keyword && matcherName === 'keyword')
     );
   });
@@ -222,7 +227,6 @@ export const addExplodedSourceData = (
         withValueSeparator,
         classMeta,
         matchers,
-        plugins,
       );
     }
 

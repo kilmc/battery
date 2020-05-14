@@ -1,7 +1,6 @@
-import { PluginConfig } from '../../types/plugin-config';
+import { BatteryPlugin } from './../../battery-plugin';
 
-export const breakpointPlugin: PluginConfig = {
-  name: 'breakpoint',
+export const breakpointPlugin = BatteryPlugin({
   type: 'at-rule',
   atrule: 'media',
   affixType: 'suffix',
@@ -25,4 +24,4 @@ export const breakpointPlugin: PluginConfig = {
       condition: '(min-width: 1040px)',
     },
   ],
-};
+});

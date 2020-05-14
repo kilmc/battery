@@ -1,4 +1,5 @@
 import { CSSProperties } from '../types/css';
+import { PluginConfig } from './plugin-config';
 
 export type SubPropKeys =
   | 'top'
@@ -20,10 +21,9 @@ interface CorePropertyConfig {
   pluginDefault?: boolean;
   subProps?: SubProp;
   subPropSeparator?: string;
-  pluginSeparator?: string;
   valueSeparator?: string;
   values?: { [k: string]: string };
-  valuePlugin?: string | ModifierSubset[];
+  valuePlugin?: PluginConfig;
   static?: { values: string[] };
 }
 
