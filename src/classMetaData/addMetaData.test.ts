@@ -275,7 +275,7 @@ describe('addMetaData', () => {
           keyword: false,
           property: ['background-color'],
           valuePlugin: colorPlugin(),
-          atrulePlugin: 'breakpoint',
+          atrulePlugin: breakpointPlugin(),
           atruleModifier: 'responsiveMedium',
           explodedSource: {
             prefix: '',
@@ -298,7 +298,7 @@ describe('addMetaData', () => {
           keyword: false,
           property: ['background-color'],
           valuePlugin: colorPlugin(),
-          selectorPlugin: 'pseudo',
+          selectorPlugin: pseudoPlugin(),
           selectorModifier: 'hover',
           explodedSource: {
             prefix: 'hover',
@@ -322,7 +322,7 @@ describe('addMetaData', () => {
           keyword: false,
           property: ['z-index'],
           valuePlugin: integerPlugin(),
-          atrulePlugin: 'breakpoint',
+          atrulePlugin: breakpointPlugin(),
           atruleModifier: 'responsiveLarge',
           explodedSource: {
             prefix: '',
@@ -344,7 +344,7 @@ describe('addMetaData', () => {
           selector: 'hover-item-bg-contain',
           keyword: true,
           property: ['background-size'],
-          selectorPlugin: 'hoverTarget',
+          selectorPlugin: hoverTargetPlugin(),
           selectorModifier: 'hoverItem',
           explodedSource: {
             prefix: 'hover-item',
