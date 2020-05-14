@@ -16,7 +16,7 @@ const testOutput = (source: string, expectation: string) => {
 
 describe('generateCSS', () => {
   describe('Handles keywords', () => {
-    describe('with propIndicator', () => {
+    describe('with classNamespace', () => {
       const input = ['bg-contain', 'text-center'];
       const config: BatteryConfig = {
         props: [
@@ -48,7 +48,7 @@ describe('generateCSS', () => {
       });
     });
 
-    describe('with NO propIndicator', () => {
+    describe('with NO classNamespace', () => {
       const input = ['block', 'absolute'];
       const config: BatteryConfig = {
         props: [
@@ -71,6 +71,37 @@ describe('generateCSS', () => {
         testOutput(
           generateCSS(input, config),
           '.block { display: block } .absolute { position: absolute }',
+        );
+      });
+    });
+
+    describe('with clashing classNamespaces', () => {
+      const input = ['bg-contain', 'bg100p', 'bg-black'];
+      const config: BatteryConfig = {
+        props: [
+          {
+            cssProperty: 'background-size',
+            classNamespace: 'bg',
+            valueSeparator: '-',
+            valuePlugin: lengthUnitsPlugin(),
+            values: {
+              contain: 'contain',
+              cover: 'cover',
+            },
+          },
+          {
+            cssProperty: 'background-color',
+            classNamespace: 'bg',
+            pluginSeparator: '-',
+            valuePlugin: colorPlugin(),
+          },
+        ],
+      };
+
+      test('renders valid CSS', () => {
+        testOutput(
+          generateCSS(input, config),
+          '.bg-black { background-color: #000000 } .bg-contain { background-size: contain } .bg100p { background-size: 100% }',
         );
       });
     });

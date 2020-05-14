@@ -14,7 +14,9 @@ import { PluginConfig } from './../types/plugin-config';
  * ```
  */
 export const BatteryPlugin = (baseConfig: PluginConfig) => {
-  return (options?: Pick<PluginConfig, 'static'>): PluginConfig => {
+  return (
+    options?: Pick<PluginConfig, 'static' | 'separator'>,
+  ): PluginConfig => {
     return merge(baseConfig, options);
   };
 };
