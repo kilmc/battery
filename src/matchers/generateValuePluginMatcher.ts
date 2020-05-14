@@ -60,7 +60,9 @@ const generatePropMatcher = (pluginPropConfigs: DeveloperPropertyConfig[]) => {
   const classNamespaces = pluginPropConfigs
     .filter(c => !c.pluginDefault)
     .map(propConfig => {
-      const { classNamespace, pluginSeparator = '' } = propConfig;
+      const { classNamespace, valuePlugin } = propConfig;
+      const pluginSeparator = (valuePlugin && valuePlugin.separator) || '';
+
       return `${classNamespace}${pluginSeparator}`;
     });
 

@@ -36,6 +36,7 @@ describe('generateMatchers', () => {
       it('generates a regex to match classes associated with a specific plugin', () => {
         const colorPlugin: PluginConfig = {
           type: 'lookup',
+          separator: '-',
           values: {
             black: '#000000',
             white: '#ffffff',
@@ -48,13 +49,11 @@ describe('generateMatchers', () => {
             {
               cssProperty: ['fill'],
               classNamespace: 'fill',
-              pluginSeparator: '-',
               valuePlugin: colorPlugin,
             },
             {
               cssProperty: ['background-color'],
               classNamespace: 'bg',
-              pluginSeparator: '-',
               valuePlugin: colorPlugin,
             },
             {

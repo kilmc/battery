@@ -23,7 +23,9 @@ const setValueSeparator = (
   propConfig: DeveloperPropertyConfig,
   classMeta: ClassMetaData,
 ): ExplodedClassSource => {
-  const { valueSeparator = '', pluginSeparator = '' } = propConfig;
+  const { valueSeparator = '', valuePlugin } = propConfig;
+  const pluginSeparator = (valuePlugin && valuePlugin.separator) || '';
+
   const valueOrPluginSeparator = classMeta.keyword
     ? valueSeparator
     : pluginSeparator;

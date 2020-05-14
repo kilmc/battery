@@ -17,6 +17,7 @@ export interface PluginConfig {
   modifiers?: Modifier[];
   sampleValues?: string[];
   values?: { [k: string]: string };
+  separator?: string;
 
   // todo: can this be more strictly typed?
   static?: { [k: string]: string[] };

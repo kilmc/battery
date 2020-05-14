@@ -114,8 +114,7 @@ describe('addMetaData', () => {
         {
           cssProperty: ['background-color'],
           classNamespace: 'bg',
-          pluginSeparator: '-',
-          valuePlugin: colorPlugin(),
+          valuePlugin: colorPlugin({ separator: '-' }),
         },
         {
           cssProperty: ['background-size'],
@@ -239,8 +238,7 @@ describe('addMetaData', () => {
         {
           cssProperty: ['background-color'],
           classNamespace: 'bg',
-          pluginSeparator: '-',
-          valuePlugin: colorPlugin(),
+          valuePlugin: colorPlugin({ separator: '-' }),
         },
         {
           cssProperty: ['background-size'],

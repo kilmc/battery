@@ -30,7 +30,9 @@ export const addPropertyData = (
     }
 
     const pluginSeparatorsRegex = new RegExp(
-      `[${props.map(prop => prop.pluginSeparator).join('')}]`,
+      `[${props
+        .map(prop => (prop.valuePlugin || {}).separator || '')
+        .join('')}]`,
     );
 
     const classNamespace = classMeta.source

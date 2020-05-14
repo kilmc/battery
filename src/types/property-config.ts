@@ -21,7 +21,6 @@ interface CorePropertyConfig {
   pluginDefault?: boolean;
   subProps?: SubProp;
   subPropSeparator?: string;
-  pluginSeparator?: string;
   valueSeparator?: string;
   values?: { [k: string]: string };
   valuePlugin?: PluginConfig;

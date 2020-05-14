@@ -92,8 +92,7 @@ describe('generateCSS', () => {
           {
             cssProperty: 'background-color',
             classNamespace: 'bg',
-            pluginSeparator: '-',
-            valuePlugin: colorPlugin(),
+            valuePlugin: colorPlugin({ separator: '-' }),
           },
         ],
       };
@@ -287,8 +286,7 @@ describe('generateCSS', () => {
           {
             cssProperty: 'background-color',
             classNamespace: 'bg',
-            pluginSeparator: '-',
-            valuePlugin: colorPlugin(),
+            valuePlugin: colorPlugin({ separator: '-' }),
           },
         ],
         plugins: [],
@@ -323,8 +321,7 @@ describe('generateCSS', () => {
           {
             cssProperty: 'background-color',
             classNamespace: 'bg',
-            pluginSeparator: '-',
-            valuePlugin: colorPlugin(),
+            valuePlugin: colorPlugin({ separator: '-' }),
           },
         ],
         plugins: [],
