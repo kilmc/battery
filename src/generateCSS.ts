@@ -178,7 +178,7 @@ export const generateCSS = (
   const classMetaArr = addMetaData(processedClassNames, processedConfig);
 
   const withCssData = classMetaArr.map(classMeta => {
-    classMeta.css = classMetaToCSS(classMeta, processedConfig.plugins);
+    classMeta.css = classMetaToCSS(classMeta);
     return classMeta;
   });
 

@@ -9,6 +9,7 @@ import { breakpointPlugin } from './fixtures/plugins/breakpoint';
 import { margin } from './fixtures/props/margin';
 import { lengthUnitsPlugin } from './fixtures/plugins/lengthUnits';
 import { PropertyConfig } from './types/property-config';
+import { BatteryPlugin } from './battery-plugin';
 
 const testOutput = (source: string, expectation: string) => {
   expect(source.replace(/\s/g, '')).toEqual(expectation.replace(/\s/g, ''));
@@ -396,11 +397,10 @@ describe('generateCSS', () => {
       plugins: [breakpointPlugin()],
     };
 
-    describe('', () => {
-      it('renders valid CSS', () => {
-        testOutput(
-          generateCSS(input, config),
-          `
+    it('renders valid CSS', () => {
+      testOutput(
+        generateCSS(input, config),
+        `
           @media (min-width: 560px) {
             .text-center-sm { text-align: center }
           }
@@ -408,8 +408,7 @@ describe('generateCSS', () => {
             .bg-contain-md { background-size: contain }
             .bg-cover-md { background-size: cover }
           }`,
-        );
-      });
+      );
     });
   });
 
@@ -564,6 +563,85 @@ describe('generateCSS', () => {
             .inline-flex { display: inline-flex }
             .table { display: table }
           `,
+        );
+      });
+    });
+
+    describe('Handles escaping non-standard characters', () => {
+      const tailwindStyleBreakpointPlugin = BatteryPlugin({
+        type: 'at-rule',
+        atrule: 'media',
+        affixType: 'prefix',
+        modifiers: [
+          {
+            name: 'responsiveSmall',
+            identifier: 'sm',
+            separator: ':',
+            condition: '(min-width: 560px)',
+          },
+          {
+            name: 'responsiveMedium',
+            identifier: 'md',
+            separator: ':',
+            condition: '(min-width: 940px)',
+          },
+        ],
+      });
+
+      const remPlugin = BatteryPlugin({
+        type: 'pattern',
+        identifier: new RegExp(/\d+.\d+?/),
+        modifiers: [
+          {
+            name: 'rem',
+            modifierFn: value => `${parseFloat(value)}rem`,
+            defaultModifier: true,
+          },
+        ],
+      });
+      const input = ['md:bg-contain', 'md:bg-cover', 'sm:text-center', 'fz1.5'];
+      const config: BatteryConfig = {
+        props: [
+          {
+            cssProperty: 'background-size',
+            classNamespace: 'bg',
+            valueSeparator: '-',
+            values: {
+              contain: 'contain',
+              cover: 'cover',
+            },
+          },
+          {
+            cssProperty: 'text-align',
+            classNamespace: 'text',
+            valueSeparator: '-',
+            values: {
+              center: 'center',
+            },
+          },
+          {
+            cssProperty: 'font-size',
+            classNamespace: 'fz',
+            valuePlugin: remPlugin(),
+          },
+        ],
+        plugins: [tailwindStyleBreakpointPlugin()],
+      };
+
+      it('renders valid CSS', () => {
+        testOutput(
+          generateCSS(input, config),
+          `
+            .fz1\\.5 {
+              font-size: 1.5rem
+            }
+            @media (min-width: 560px) {
+              .sm\\:text-center { text-align: center }
+            }
+            @media (min-width: 940px) {
+              .md\\:bg-contain { background-size: contain }
+              .md\\:bg-cover { background-size: cover }
+            }`,
         );
       });
     });

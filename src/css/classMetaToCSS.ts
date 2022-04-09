@@ -1,10 +1,6 @@
 import { ClassMetaData } from '../types/classname';
-import { PluginConfig } from '../types/plugin-config';
 
-export const classMetaToCSS = (
-  classMeta: ClassMetaData,
-  plugins: PluginConfig[],
-) => {
+export const classMetaToCSS = (classMeta: ClassMetaData) => {
   const desclarations = Object.entries(classMeta.classObject)
     .reduce((accum, [property, value]) => {
       return accum.concat(`${property}: ${value}`);
@@ -20,7 +16,12 @@ export const classMetaToCSS = (
       classMeta.selector,
       classMeta.explodedSource.prefix,
     );
+
+    return `.${classMeta.selector} { ${desclarations} }`;
   }
 
-  return `.${classMeta.selector} { ${desclarations} }`;
+  return `.${classMeta.selector.replace(
+    /(:|\.)/,
+    '\\$1',
+  )} { ${desclarations} }`;
 };
