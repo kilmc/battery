@@ -10,6 +10,7 @@ import { margin } from './fixtures/props/margin';
 import { lengthUnitsPlugin } from './fixtures/plugins/lengthUnits';
 import { PropertyConfig } from './types/property-config';
 import { BatteryPlugin } from './battery-plugin';
+import { padding } from './fixtures/props/padding';
 
 const testOutput = (source: string, expectation: string) => {
   expect(source.replace(/\s/g, '')).toEqual(expectation.replace(/\s/g, ''));
@@ -130,9 +131,9 @@ describe('generateCSS', () => {
 
   describe('Handles subProps', () => {
     describe('standard set', () => {
-      const classNames = ['mb2', 'mt10p', 'm3', 'mr1'];
+      const classNames = ['mb2', 'mt10p', 'm3', 'mr1', 'p10vw'];
       const config: BatteryConfig = {
-        props: [margin],
+        props: [margin, padding],
         plugins: [],
       };
       it('renders valid CSS', () => {
@@ -143,6 +144,7 @@ describe('generateCSS', () => {
           .mb2 { margin-bottom: 0.75rem }
           .mr1 { margin-right: 0.375rem }
           .mt10p { margin-top: 10% }
+          .p10vw { padding:10vw }
           `,
         );
       });
@@ -590,7 +592,7 @@ describe('generateCSS', () => {
 
       const remPlugin = BatteryPlugin({
         type: 'pattern',
-        identifier: new RegExp(/\d+.\d+?/),
+        identifier: new RegExp(/\d+(?:.\d+)?/),
         modifiers: [
           {
             name: 'rem',

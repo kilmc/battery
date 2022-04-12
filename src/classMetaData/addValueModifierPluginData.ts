@@ -15,9 +15,13 @@ export const addValueModifierPluginData = (classMetaArr: ClassMetaData[]) => {
     );
 
     if (hasNonDefaultModifier) {
+      const {
+        modifierSeparator,
+        modifierIdentifier,
+      } = classMeta.explodedSource;
       const modifierName = getMatcherName(
         generateModifierMatchers(plugin),
-        classMeta.source,
+        `${modifierSeparator}${modifierIdentifier}`,
       )[0];
 
       classMeta.valueModifier = modifierName;

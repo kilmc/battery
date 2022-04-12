@@ -49,7 +49,7 @@ const setModifierData = (
     const matchedModifier = value.match(valuePluginMatcher)[3];
     const modifierName = getMatcherName(
       generateModifierMatchers(plugin),
-      classMeta.source,
+      matchedModifier,
     );
 
     if (!modifierName) {
